@@ -1,0 +1,12 @@
+platform :ios,'8.0'
+target 'KeTing' do
+pod 'AFNetworking'
+pod 'MJRefresh'
+pod 'Masonry'
+pod 'HMSegmentedControl'
+pod 'SDWebImage'
+pod 'IQKeyboardManager'
+pod 'Reachability'
+pod 'StreamingKit'
+pod 'ReactiveObjC'
+end

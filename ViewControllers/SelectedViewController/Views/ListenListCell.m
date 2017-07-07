@@ -1,0 +1,164 @@
+//
+//  ListenListCell.m
+//  KeTing
+//
+//  Created by 吴孔锐 on 2017/6/12.
+//  Copyright © 2017年 wurui. All rights reserved.
+//
+
+#import "ListenListCell.h"
+
+@implementation ListenListCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+}
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self creatUI];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    return self;
+}
+- (void)creatUI{
+
+    self.leftImg = [KTFactory creatImageViewWithImage:@"default_h"];
+    self.nameLabel = [KTFactory creatLabelWithText:@""
+                                         fontValue:font750(30)
+                                         textColor:KTColor_MainBlack
+                                     textAlignment:NSTextAlignmentLeft];
+    self.descLabel = [KTFactory creatLabelWithText:@""
+                                         fontValue:font750(24)
+                                         textColor:KTColor_lightGray
+                                     textAlignment:NSTextAlignmentLeft];
+    self.descLabel.numberOfLines = 2;
+    self.timeLabel = [KTFactory creatLabelWithText:@""
+                                         fontValue:font750(24)
+                                         textColor:KTColor_lightGray
+                                     textAlignment:NSTextAlignmentLeft];
+    self.saleStatus = [KTFactory creatLabelWithText:@"限免"
+                                          fontValue:font750(24)
+                                          textColor:KTColor_IconOrange
+                                      textAlignment:NSTextAlignmentCenter];
+    self.priceLabel = [KTFactory creatLabelWithText:@"¥0.99/季度"
+                                          fontValue:font750(24)
+                                          textColor:KTColor_MainOrange
+                                      textAlignment:NSTextAlignmentLeft];
+    self.shopCar = [KTFactory creatButtonWithNormalImage:@"addshopcar" selectImage:@"listen_Added"];
+    self.buybtn = [KTFactory creatButtonWithTitle:@"购买"
+                                  backGroundColor:[UIColor clearColor]
+                                        textColor:KTColor_MainOrange
+                                         textSize:font750(30)];
+    self.buybtn.layer.borderColor = KTColor_MainOrange.CGColor;
+    self.buybtn.layer.borderWidth = 1.0f;
+    self.buybtn.layer.cornerRadius = 2.0f;
+    self.bottomLine = [KTFactory creatLineView];
+    
+    [self addSubview:self.leftImg];
+    [self addSubview:self.nameLabel];
+    [self addSubview:self.descLabel];
+    [self addSubview:self.timeLabel];
+    [self addSubview:self.saleStatus];
+    [self addSubview:self.priceLabel];
+    [self addSubview:self.shopCar];
+    [self addSubview:self.buybtn];
+    [self addSubview:self.bottomLine];
+}
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    [self.leftImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(24)));
+        make.top.equalTo(@(Anno750(30)));
+        make.height.equalTo(@(Anno750(190)));
+        make.width.equalTo(@(Anno750(140)));
+    }];
+    [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(Anno750(30)));
+        make.left.equalTo(self.leftImg.mas_right).offset(Anno750(24));
+        make.right.equalTo(@(-Anno750(24)));
+    }];
+    [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.nameLabel.mas_left);
+        make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(20));
+        make.right.equalTo(@(-Anno750(24)));
+    }];
+    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.descLabel.mas_left);
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(10));
+    }];
+    [self.saleStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.nameLabel.mas_left);
+        make.bottom.equalTo(self.leftImg.mas_bottom);
+        make.width.equalTo(@(Anno750(70)));
+        make.height.equalTo(@(Anno750(30)));
+    }];
+    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (self.saleStatus.hidden) {
+            make.left.equalTo(self.nameLabel.mas_left);
+        }else{
+            make.left.equalTo(self.saleStatus.mas_right).offset(Anno750(10));
+        }
+        make.bottom.equalTo(self.leftImg.mas_bottom);
+    }];
+    [self.buybtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(@(-Anno750(24)));
+        make.bottom.equalTo(self.leftImg.mas_bottom);
+        make.height.equalTo(@(Anno750(46)));
+        make.width.equalTo(@(Anno750(100)));
+    }];
+    
+    [self.shopCar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.buybtn.mas_left).offset(Anno750(-40));
+        make.centerY.equalTo(self.buybtn.mas_centerY);
+        make.width.equalTo(@(Anno750(40)));
+        make.height.equalTo(@(Anno750(40)));
+    }];
+    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(24)));
+        make.right.equalTo(@(Anno750(-24)));
+        make.bottom.equalTo(@0);
+        make.height.equalTo(@0.5);
+    }];
+
+}
+
+- (void)updateWithListenModel:(HomeListenModel *)model{
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    self.nameLabel.text = model.name;
+    self.descLabel.text = model.summary;
+    self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:model.audioLong.intValue andTotalTime:model.audioLong.intValue]];
+    if (model.isFree) {
+        self.saleStatus.text = @"免费";
+        [KTFactory setLabel:self.saleStatus BorderColor:[UIColor clearColor] with:0 cornerRadius:0];
+        self.shopCar.hidden = YES;
+        self.buybtn.hidden = YES;
+    }else{
+        //限免
+        if ([model.promotionType intValue] == 2) {
+            self.saleStatus.hidden = NO;
+            self.saleStatus.text = @"限免";
+            [KTFactory setLabel:self.saleStatus BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.price];
+            self.shopCar.hidden = YES;
+            self.buybtn.hidden = YES;
+        }else{
+            self.saleStatus.hidden = YES;
+            self.priceLabel.text = model.price;
+            self.priceLabel.textColor = KTColor_MainOrange;
+            self.shopCar.hidden = NO;
+            self.buybtn.hidden = NO;
+        }
+    }
+    self.shopCar.selected = model.iscart;
+}
+
+
+@end
