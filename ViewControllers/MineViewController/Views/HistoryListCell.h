@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
-#import "HistoryModel.h"
+#import "HomeTopModel.h"
 #import "HomeTopModel.h"
 #import "HomeListenModel.h"
 @interface HistoryListCell : UITableViewCell
@@ -18,6 +18,6 @@
 @property (nonatomic, strong) UILabel * tagLabel;
 @property (nonatomic, strong) UILabel * playStatus;
 @property (nonatomic, strong) UIView * lineView;
-- (void)updateWithHistoryModel:(HistoryModel *)model;
+- (void)updateWithHistoryModel:(HomeTopModel *)model;
 
 @end

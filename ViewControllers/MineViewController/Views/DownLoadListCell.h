@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
-#import "HistoryModel.h"
+#import "HomeTopModel.h"
 @interface DownLoadListCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UILabel * tagLabel;
+@property (nonatomic, strong) UILabel * playStatus;
 @property (nonatomic, strong) UIView * line;
+
+- (void)updateWithHistoryModel:(HomeTopModel *)model;
 @end

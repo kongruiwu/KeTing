@@ -9,7 +9,8 @@
 #import "HistoryViewController.h"
 #import "TopHeaderView.h"
 #import "HistoryListCell.h"
-#import "HistoryModel.h"
+#import "HomeTopModel.h"
+#import "AudioPlayerViewController.h"
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) TopHeaderView * header;
@@ -34,6 +35,7 @@
     self.dataArray = [NSMutableArray new];
     self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [self.header updateWithImages:@[@"my_play",@"my_ delete"] titles:@[@"    播放全部",@"    全部清空"]];
+    [self.header.cateBtn addTarget:self action:@selector(playAllAudio) forControlEvents:UIControlEventTouchUpInside];
     [self.header.downLoadBtn addTarget:self action:@selector(deleteAllHistory) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.header];
     
@@ -99,6 +101,13 @@
     [cell updateWithHistoryModel:self.dataArray[indexPath.row]];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+    [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.dataArray[indexPath.row]];
+    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
 - (void)refreshData{
     self.page = 1;
     [self.dataArray removeAllObjects];
@@ -123,7 +132,7 @@
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
         }
         for (int i = 0; i<datas.count; i++) {
-            HistoryModel * model = [[HistoryModel alloc]initWithDictionary:datas[i]];
+            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
             [self.dataArray addObject:model];
         }
         
@@ -147,7 +156,7 @@
     }];
 }
 - (void)deleteHistoryatIndex:(NSInteger)index{
-    HistoryModel * model = self.dataArray[index];
+    HomeTopModel * model = self.dataArray[index];
     NSDictionary * params = @{
                               @"idStr":model.audioId
                               };
@@ -161,8 +170,18 @@
     NSDictionary * params = @{};
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_DelHistory complete:^(id result) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除成功" duration:1.0f];
+        [self.dataArray removeAllObjects];
+        [self.tabview reloadData];
+        [self showNullViewWithNullViewType:NullTypeNoneListen];
     } errorBlock:^(KTError *error) {
         
     }];
+}
+- (void)playAllAudio{
+    [AudioPlayer instance].currentAudio = self.dataArray[0];
+    [AudioPlayer instance].playList = self.dataArray;
+    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 @end

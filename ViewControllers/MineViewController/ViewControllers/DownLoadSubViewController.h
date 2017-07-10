@@ -10,6 +10,6 @@
 
 @interface DownLoadSubViewController : BaseViewController
 
-@property (nonatomic, assign) BOOL isDownLoading;
 
+- (instancetype)initWithDownLoadingStatus:(BOOL)rec;
 @end

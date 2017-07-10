@@ -8,14 +8,23 @@
 
 #import "DownLoadSubViewController.h"
 #import "DownLoadListCell.h"
-#import "HistoryModel.h"
+#import "HomeTopModel.h"
 @interface DownLoadSubViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
+@property (nonatomic, assign) BOOL isDownLoading;
 @end
 
 @implementation DownLoadSubViewController
+
+- (instancetype)initWithDownLoadingStatus:(BOOL)rec{
+    self = [super init];
+    if (self) {
+        self.isDownLoading = rec;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,18 +61,19 @@
     if (!cell) {
         cell = [[DownLoadListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
+    [cell updateWithHistoryModel:self.dataArray[indexPath.row]];
     return cell;
 }
 - (void)getData{
     
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid,
-                              @"downStatus":@(self.isDownLoading)
+                              @"downStatus":self.isDownLoading?@1:@0
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_DownLoad complete:^(id result) {
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
-            HistoryModel * model = [[HistoryModel alloc]initWithDictionary:arr[i]];
+            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
             [self.dataArray addObject:model];
         }
         [self.tabview reloadData];

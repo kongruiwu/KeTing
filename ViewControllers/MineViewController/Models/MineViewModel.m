@@ -18,7 +18,7 @@
     return self;
 }
 - (void)reloadData{
-    
+    self.msgStr = @"";
     self.FirstSection = [self getArrayWithTitles:@[@"我的钱包",@"已购",@"购物车"] Images:@[@"my_wallet",@"my_ buy",@"my_shopcar"]];
     self.SeconSection = [self getArrayWithTitles:@[@"收听历史",@"我赞过的",@"已下载音频"] Images:@[@"my_history",@"my_like",@"my_ music"]];
     self.ThirdSection = [self getArrayWithTitles:@[@"我的消息",@"设置"] Images:@[@"my_news",@"my_set"]];

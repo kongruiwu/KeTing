@@ -57,4 +57,24 @@
 @property (nonatomic, assign) BOOL isSelectDown;
 /**是否显示toolsbar*/
 @property (nonatomic, assign) BOOL showTools;
+
+/**音频主键*/
+@property (nonatomic, strong) NSNumber * downPercent;
+/**下载进度  0  下载中， 下载完成*/
+@property (nonatomic, strong) NSNumber * downStatus;
+/**下载设备号*/
+@property (nonatomic, strong) NSString * deviceNo;
+/**终端*/
+@property (nonatomic, strong) NSString * systemVersion;
+/**系统版本 手机类型*/
+@property (nonatomic, strong) NSString * phoneType;
+/**是否删除*/
+@property (nonatomic, assign) BOOL isDel;
+
+/**关联听书、声度、头条类型*/
+@property (nonatomic, strong) NSNumber * relationType;
+/**关联听书、声度、头条id*/
+@property (nonatomic, strong) NSNumber * relationId;
+/**收听时长*/
+@property (nonatomic, strong) NSNumber * playLong;
 @end

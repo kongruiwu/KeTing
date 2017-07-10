@@ -9,6 +9,7 @@
 #import "MyShopedViewController.h"
 #import "MyShopedCollectionCell.h"
 #import "HomeListenModel.h"
+#import "ListenDetailViewController.h"
 @interface MyShopedViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView * collectView;
@@ -58,6 +59,12 @@
     MyShopedCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyShopedCollectionCell" forIndexPath:indexPath];
     [cell updateWithHomeListenModel:self.dataArray[indexPath.row]];
     return cell;
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    ListenDetailViewController * vc = [[ListenDetailViewController alloc]init];
+    HomeListenModel * model = self.dataArray[indexPath.row];
+    vc.listenID = model.listenId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)refreshData{
     self.page = 1;

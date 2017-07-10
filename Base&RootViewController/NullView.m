@@ -78,6 +78,10 @@
             imageName = @"";
             desc = @"暂时没有任何记录";
             break;
+        case NullTypeNoneMessage:
+            imageName = @"";
+            desc = @"暂时没有任何消息";
+            break;
         default:
             break;
     }

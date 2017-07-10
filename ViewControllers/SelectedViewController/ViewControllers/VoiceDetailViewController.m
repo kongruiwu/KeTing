@@ -39,6 +39,9 @@
     [self creatUI];
     [self getData];
 }
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)creatUI{
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT  ) style:UITableViewStylePlain];

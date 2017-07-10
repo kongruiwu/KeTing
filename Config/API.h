@@ -78,4 +78,14 @@
 #define Page_Liked          @"v1/support"
 //下载
 #define Page_DownLoad       @"v1/download"
+//我的消息
+#define Page_Meesage        @"v1/message"
+//未读消息数量
+#define Page_MessageCount   @"v1/mesCount"
+//读消息
+#define Page_MessageStatus  @"v1/mesStatus"
+//购物车数量
+#define Page_ShopCarCount   @"v1/cartCount"
+//随时听
+#define page_TimeListen     @"v1/searchAlways"
 #endif /* API_h */

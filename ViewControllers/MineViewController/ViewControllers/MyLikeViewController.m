@@ -90,8 +90,6 @@
             [weakSelf.mainScroll addSubview:vc.view];
             [weakSelf addChildViewController:vc];
             [weakSelf.viewControllers replaceObjectAtIndex:index withObject:vc];
-        }else{
-//            vc 
         }
         [UIView animateWithDuration:0.3f animations:^{
             weakSelf.mainScroll.contentOffset = CGPointMake(UI_WIDTH * index, 0);
@@ -111,9 +109,6 @@
         [self.mainScroll addSubview:vc.view];
         [self addChildViewController:vc];
         [self.viewControllers replaceObjectAtIndex:index withObject:vc];
-    }else{
-        MyLikeSubViewController *vc = self.viewControllers[index];
-//        [vc updatedata];
     }
 }
 

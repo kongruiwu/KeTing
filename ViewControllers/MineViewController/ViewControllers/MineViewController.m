@@ -27,6 +27,7 @@
 @property (nonatomic, strong) MineHeader * header;
 @property (nonatomic, strong) UIView * clearView;
 
+
 @end
 
 @implementation MineViewController
@@ -38,6 +39,9 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[UserManager manager] getUserInfo];
     [[UserManager manager] registerDelgate:self];
+    [self getMessageCount];
+    [self getUserBalance];
+    [self getShopCarCount];
     [self.header updateDatas];
 }
 - (void)getUserInfoSucess{
@@ -118,6 +122,7 @@
         
         }else if(indexPath.section == 2){
             if (indexPath.row == 0) {
+                [self readMessage];
                 [self.navigationController pushViewController:[MessageViewController new] animated:YES];
             }else if(indexPath.row == 1){
                 [self.navigationController pushViewController:[SettingViewController new] animated:YES];
@@ -139,5 +144,64 @@
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
         [self presentViewController:nav animated:YES completion:nil];
     }
+}
+/**奇怪么？为啥这里还有个请求？  问问那个sb陶兴国吧*/
+- (void)getMessageCount{
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_MessageCount complete:^(id result) {
+        if (result[@"count"]) {
+            NSArray * datas = self.viewModel.dataArray[2];
+            MineListModel * model = datas[0];
+            model.desc = [NSString stringWithFormat:@"%@",result[@"count"]];
+            NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:2];
+            [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+        if (result[@"list"]) {
+            self.viewModel.msgStr = result[@"list"];
+        }
+    } errorBlock:^(KTError *error) {
+        
+    }];
+}
+//又一个傻逼操作
+- (void)readMessage{
+    if (self.viewModel.msgStr.length == 0) {
+        return;
+    }
+    NSDictionary * params = @{
+                             @"messageIdStr":self.viewModel.msgStr
+                              };
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_MessageStatus complete:^(id result) {
+        
+    } errorBlock:^(KTError *error) {
+        
+    }];
+}
+- (void)getUserBalance{
+    NSDictionary * params = @{};
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
+        NSDictionary * dic = result[@"list"];
+        if (dic[@"accountBalance"]) {
+            NSArray * datas = self.viewModel.dataArray[0];
+            MineListModel * model = datas[0];
+            model.desc = [NSString stringWithFormat:@"¥%@",dic[@"accountBalance"]];
+            NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    } errorBlock:^(KTError *error) {
+        
+    }];
+}
+- (void)getShopCarCount{
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
+        if (result) {
+            NSArray * datas = self.viewModel.dataArray[0];
+            MineListModel * model = datas[2];
+            model.desc = [NSString stringWithFormat:@"%@",result];
+            NSIndexPath * indexpath = [NSIndexPath indexPathForRow:2 inSection:0];
+            [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    } errorBlock:^(KTError *error) {
+        
+    }];
 }
 @end

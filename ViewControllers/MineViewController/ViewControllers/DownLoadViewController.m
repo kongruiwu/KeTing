@@ -60,14 +60,12 @@
     self.mainScroll.delegate = self;
     [self.view addSubview:self.mainScroll];
     
-    DownLoadSubViewController * leftvc = [[DownLoadSubViewController alloc]init];
+    DownLoadSubViewController * leftvc = [[DownLoadSubViewController alloc]initWithDownLoadingStatus:NO];
     leftvc.view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64);
-    leftvc.isDownLoading = NO;
     [self.mainScroll addSubview:leftvc.view];
     [self addChildViewController:leftvc];
-    DownLoadSubViewController * rightvc = [[DownLoadSubViewController alloc]init];
+    DownLoadSubViewController * rightvc = [[DownLoadSubViewController alloc]initWithDownLoadingStatus:YES];
     rightvc.view.frame = CGRectMake(UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64);
-    rightvc.isDownLoading = YES;
     [self.mainScroll addSubview:rightvc.view];
     [self addChildViewController:rightvc];
 }

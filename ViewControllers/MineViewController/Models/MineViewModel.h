@@ -11,6 +11,8 @@
 @interface MineViewModel : NSObject
 
 @property (nonatomic, strong) NSArray * dataArray;
+//未读信息id 与数量
+@property (nonatomic, strong) NSString * msgStr;
 
 @property (nonatomic, strong) NSArray<MineListModel *> * FirstSection;
 @property (nonatomic, strong) NSArray<MineListModel *> * SeconSection;

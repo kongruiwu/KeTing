@@ -65,7 +65,6 @@
 @implementation AudioPlayerViewController
 
 
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavAlpha];
@@ -99,7 +98,7 @@
     self.audioPhoto.layer.masksToBounds = YES;
     self.currntNum = [KTFactory creatLabelWithText:@""
                                          fontValue:font750(24)
-                                         textColor:Audio_gray
+                                         textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentCenter];
     self.playBtn = [KTFactory creatButtonWithNormalImage:@"play_play" selectImage:@"play-sto"];
     self.backButton = [KTFactory creatButtonWithNormalImage:@"play_ back" selectImage:@""];

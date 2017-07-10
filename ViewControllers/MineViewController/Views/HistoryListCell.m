@@ -77,7 +77,7 @@
         make.bottom.equalTo(@0);
     }];
 }
-- (void)updateWithHistoryModel:(HistoryModel *)model{
+- (void)updateWithHistoryModel:(HomeTopModel *)model{
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"defaultImage"]];
     self.nameLabel.text = model.audioName;
     NSMutableString * tagString = [[NSMutableString alloc]init];
@@ -87,7 +87,7 @@
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.tagLabel.text = [NSString stringWithFormat:@"%@%@",time,tagString];
     float value = [model.playLong floatValue]/[model.audioLong floatValue];
-    self.playStatus.text = [NSString stringWithFormat:@"已播放：%d%%",(int)(value * 100)];
+    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }
 
 @end

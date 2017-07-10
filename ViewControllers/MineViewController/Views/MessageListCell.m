@@ -62,4 +62,8 @@
         make.height.equalTo(@0.5);
     }];
 }
+- (void)updateWithMessageModel:(MessageModel *)model{
+    self.nameLabel.text = model.messageContent;
+    self.timelabel.text = [KTFactory timestampSwitchTime:[model.sendTime integerValue]];
+}
 @end

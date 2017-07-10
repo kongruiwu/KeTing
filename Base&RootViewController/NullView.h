@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger,NullType){
     NullTypeNoneSerach  ,   //暂无搜索内容
     NullTypeNoneDown    ,   //暂无下载
     NullTypeNoneTopUp   ,   //暂无充值记录
+    NullTypeNoneMessage ,   //暂无信息
 };
 
 @interface NullView : UIView

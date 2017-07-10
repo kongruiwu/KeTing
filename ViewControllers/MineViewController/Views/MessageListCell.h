@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+#import "MessageModel.h"
 @interface MessageListCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UILabel * timelabel;
 @property (nonatomic, strong) UIView * lineView;
-
+- (void)updateWithMessageModel:(MessageModel *)model;
 @end

@@ -37,9 +37,14 @@
                                         fontValue:font750(24)
                                         textColor:KTColor_lightGray
                                     textAlignment:NSTextAlignmentLeft];
+    self.playStatus = [KTFactory creatLabelWithText:@"已播放3%"
+                                          fontValue:font750(24)
+                                          textColor:KTColor_MainOrange
+                                      textAlignment:NSTextAlignmentLeft];
     self.line = [KTFactory creatLineView];
     [self addSubview:self.nameLabel];
     [self addSubview:self.tagLabel];
+    [self addSubview:self.playStatus];
     [self addSubview:self.line];
     
 }
@@ -52,8 +57,11 @@
     }];
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
-        make.right.equalTo(@(-Anno750(24)));
         make.bottom.equalTo(@(-Anno750(20)));
+    }];
+    [self.playStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.tagLabel.mas_right).offset(Anno750(20));
+        make.centerY.equalTo(self.tagLabel.mas_centerY);
     }];
     [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
@@ -63,8 +71,16 @@
     }];
     
 }
-- (void)updateWithHistoryModel:(HistoryModel *)model{
-    
+- (void)updateWithHistoryModel:(HomeTopModel *)model{
+    self.nameLabel.text = model.audioName;
+    NSMutableString * tagString = [[NSMutableString alloc]init];
+    for (int i = 0; i<model.tagModels.count; i++) {
+        [tagString appendString:[NSString stringWithFormat:@"    %@",model.tagModels[i].tagName]];
+    }
+    NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
+    self.tagLabel.text = [NSString stringWithFormat:@"%@%@",time,tagString];
+    float value = [model.playLong floatValue]/[model.audioLong floatValue];
+    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }
 
 @end

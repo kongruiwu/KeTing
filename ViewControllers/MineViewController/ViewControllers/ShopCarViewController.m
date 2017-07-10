@@ -11,6 +11,7 @@
 #import "ShopCarFooter.h"
 #import "HomeListenModel.h"
 #import "ShopCarHander.h"
+#import "ListenDetailViewController.h"
 @interface ShopCarViewController ()<UITableViewDelegate,UITableViewDataSource,ShopCarDelegate>
 
 @property (nonatomic, strong)UITableView *tabview;
@@ -21,13 +22,17 @@
 
 @implementation ShopCarViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"购物车" color:KTColor_MainBlack];
     [self creatUI];
-    [self getData];
 }
 - (void)creatUI{
     self.hander = [ShopCarHander hander];
@@ -74,7 +79,9 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    ListenDetailViewController * vc = [[ListenDetailViewController alloc]init];
+    vc.listenID = self.hander.dataArray[indexPath.row].listenId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)getData{
@@ -90,7 +97,8 @@
             model.isSelect = NO;
             [self.hander.dataArray addObject:model];
         }
-        [self.tabview reloadData];
+        self.footer.selectBtn.selected = NO;
+        [self ShopCarSelectAll:self.footer.selectBtn];
         if (arr.count == 0) {
             [self showNullViewWithNullViewType:NullTypeNoneShopCar];
         }

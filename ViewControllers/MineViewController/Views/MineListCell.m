@@ -64,7 +64,7 @@
         make.centerY.equalTo(@0);
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.arrowIcon.mas_left).offset(Anno750(15));
+        make.right.equalTo(self.arrowIcon.mas_left).offset(-Anno750(15));
         make.centerY.equalTo(@0);
     }];
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -79,5 +79,6 @@
     self.descLabel.hidden = model.desc.length > 0 ? NO : YES;
     self.nameLabel.text = model.titleString;
     self.leftImg.image = [UIImage imageNamed:model.imgName];
+    self.descLabel.text = model.desc;
 }
 @end

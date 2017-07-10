@@ -29,7 +29,6 @@
 		8B3CEED51F0E04CC00AE5B81 /* NullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CEED41F0E04CC00AE5B81 /* NullView.m */; };
 		8B3CEED81F0E10AF00AE5B81 /* TopUpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CEED71F0E10AF00AE5B81 /* TopUpModel.m */; };
 		8B3CEEDB1F0E271D00AE5B81 /* ShopCarHander.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CEEDA1F0E271D00AE5B81 /* ShopCarHander.m */; };
-		8B3CEEDE1F0E2EA500AE5B81 /* HistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CEEDD1F0E2EA500AE5B81 /* HistoryModel.m */; };
 		8B3CEEE11F0E2F8200AE5B81 /* TagsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CEEE01F0E2F8200AE5B81 /* TagsModel.m */; };
 		8B4095EC1F0201DE00AA22D3 /* UserInfoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4095EB1F0201DE00AA22D3 /* UserInfoListCell.m */; };
 		8B4095F31F0206D000AA22D3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4095F21F0206D000AA22D3 /* LoginViewController.m */; };
@@ -136,6 +135,9 @@
 		8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF84CF31EE4FB480072637D /* BaseViewController.m */; };
 		8BF84CF71EE4FB820072637D /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF84CF61EE4FB820072637D /* BaseModel.m */; };
 		8BF84D041EE4FF000072637D /* HMSegmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF84D031EE4FF000072637D /* HMSegmentViewController.m */; };
+		8BFB091D1F0F585C00FA30F0 /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB091C1F0F585C00FA30F0 /* MessageModel.m */; };
+		8BFB09201F0F87C200FA30F0 /* PorgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB091F1F0F87C200FA30F0 /* PorgressView.m */; };
+		8BFB09231F0F8B2500FA30F0 /* UAProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB09221F0F8B2500FA30F0 /* UAProgressView.m */; };
 		8FF782EBA13D47D762986F04 /* libPods-KeTing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76003AEA8175C7294536DAB5 /* libPods-KeTing.a */; };
 /* End PBXBuildFile section */
 
@@ -204,8 +206,6 @@
 		8B3CEED71F0E10AF00AE5B81 /* TopUpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopUpModel.m; sourceTree = "<group>"; };
 		8B3CEED91F0E271D00AE5B81 /* ShopCarHander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCarHander.h; sourceTree = "<group>"; };
 		8B3CEEDA1F0E271D00AE5B81 /* ShopCarHander.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCarHander.m; sourceTree = "<group>"; };
-		8B3CEEDC1F0E2EA500AE5B81 /* HistoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryModel.h; sourceTree = "<group>"; };
-		8B3CEEDD1F0E2EA500AE5B81 /* HistoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryModel.m; sourceTree = "<group>"; };
 		8B3CEEDF1F0E2F8200AE5B81 /* TagsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsModel.h; sourceTree = "<group>"; };
 		8B3CEEE01F0E2F8200AE5B81 /* TagsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsModel.m; sourceTree = "<group>"; };
 		8B4095EA1F0201DE00AA22D3 /* UserInfoListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoListCell.h; sourceTree = "<group>"; };
@@ -418,6 +418,12 @@
 		8BF84CF91EE4FC6C0072637D /* ConfigHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHeader.h; sourceTree = "<group>"; };
 		8BF84D021EE4FF000072637D /* HMSegmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentViewController.h; sourceTree = "<group>"; };
 		8BF84D031EE4FF000072637D /* HMSegmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentViewController.m; sourceTree = "<group>"; };
+		8BFB091B1F0F585C00FA30F0 /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		8BFB091C1F0F585C00FA30F0 /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		8BFB091E1F0F87C200FA30F0 /* PorgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PorgressView.h; sourceTree = "<group>"; };
+		8BFB091F1F0F87C200FA30F0 /* PorgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PorgressView.m; sourceTree = "<group>"; };
+		8BFB09211F0F8B2500FA30F0 /* UAProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAProgressView.h; sourceTree = "<group>"; };
+		8BFB09221F0F8B2500FA30F0 /* UAProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -529,8 +535,8 @@
 				8B3CEED71F0E10AF00AE5B81 /* TopUpModel.m */,
 				8B3CEED91F0E271D00AE5B81 /* ShopCarHander.h */,
 				8B3CEEDA1F0E271D00AE5B81 /* ShopCarHander.m */,
-				8B3CEEDC1F0E2EA500AE5B81 /* HistoryModel.h */,
-				8B3CEEDD1F0E2EA500AE5B81 /* HistoryModel.m */,
+				8BFB091B1F0F585C00FA30F0 /* MessageModel.h */,
+				8BFB091C1F0F585C00FA30F0 /* MessageModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -857,6 +863,10 @@
 		8BF602A21EEFC7EC00322545 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BFB09211F0F8B2500FA30F0 /* UAProgressView.h */,
+				8BFB09221F0F8B2500FA30F0 /* UAProgressView.m */,
+				8BFB091E1F0F87C200FA30F0 /* PorgressView.h */,
+				8BFB091F1F0F87C200FA30F0 /* PorgressView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1346,6 +1356,7 @@
 				8B2D73FE1F0CB06F00E1BF4B /* AboutusViewController.m in Sources */,
 				8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */,
 				8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */,
+				8BFB091D1F0F585C00FA30F0 /* MessageModel.m in Sources */,
 				8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */,
 				8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */,
 				8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */,
@@ -1373,6 +1384,7 @@
 				8B4F22A81EF11E74005E1D21 /* SubscribeSectionHeader.m in Sources */,
 				8B8743071EEE776800324FA2 /* ListenListViewController.m in Sources */,
 				8B53EA871EE5210A009EA76D /* KTFactory.m in Sources */,
+				8BFB09201F0F87C200FA30F0 /* PorgressView.m in Sources */,
 				8B40FE6C1EE69217005F9342 /* Commond.m in Sources */,
 				8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */,
 				8BF84CF71EE4FB820072637D /* BaseModel.m in Sources */,
@@ -1407,6 +1419,7 @@
 				8BF091C81F04F5F5006478E9 /* MoneyHeaderCell.m in Sources */,
 				8BF602981EEFB06E00322545 /* ListenDetailViewController.m in Sources */,
 				8B8742E71EEE2EC300324FA2 /* PlayListCell.m in Sources */,
+				8BFB09231F0F8B2500FA30F0 /* UAProgressView.m in Sources */,
 				8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */,
 				8B3CEED81F0E10AF00AE5B81 /* TopUpModel.m in Sources */,
 				8BF6028F1EEF6D6600322545 /* VoiceDetailHeader.m in Sources */,
@@ -1452,7 +1465,6 @@
 				8B7FA6431F0A400400FA01B4 /* DownLoadListCell.m in Sources */,
 				8B2D740A1F0CD76400E1BF4B /* DataModel.m in Sources */,
 				8B8743041EEE774E00324FA2 /* VoiceDetailViewController.m in Sources */,
-				8B3CEEDE1F0E2EA500AE5B81 /* HistoryModel.m in Sources */,
 				8B696E241EEA4D8800A11A0F /* TagAudioModel.m in Sources */,
 				8B8F01081F00D8850027AABD /* MineHeader.m in Sources */,
 				8BF6029E1EEFC37F00322545 /* AnchorDetailViewController.m in Sources */,

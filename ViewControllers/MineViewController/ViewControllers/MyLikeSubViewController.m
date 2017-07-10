@@ -12,6 +12,9 @@
 #import "HomeTopModel.h"
 #import "HomeVoiceCell.h"
 #import "ListenListCell.h"
+#import "AudioPlayerViewController.h"
+#import "ListenDetailViewController.h"
+#import "VoiceDetailViewController.h"
 
 @interface MyLikeSubViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -66,6 +69,7 @@
         if (!cell) {
             cell = [[HistoryListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
+        [cell updateWithHistoryModel:self.dataArray[indexPath.row]];
         return cell;
     }else if(self.subType == LIKESUBTYPEBOOK){
         static NSString * cellid = @"ListenListCell";
@@ -86,6 +90,26 @@
     }
     
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.subType == LIKESUBTYPEBOOK) {
+        HomeListenModel * model = self.dataArray[indexPath.row];
+        ListenDetailViewController * vc = [[ListenDetailViewController alloc]init];
+        vc.listenID = model.listenId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if(self.subType == LIKESUBTYPEBUY){
+        HomeListenModel * model = self.dataArray[indexPath.row];
+        VoiceDetailViewController * vc = [[VoiceDetailViewController alloc]init];
+        vc.voiceID = model.listenId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+        [AudioPlayer instance].playList = self.dataArray;
+        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+}
+
 - (void)getData{
     NSDictionary * pamrams = @{
                                @"userId":[UserManager manager].userid,
