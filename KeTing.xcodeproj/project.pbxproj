@@ -1639,7 +1639,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e44dbea9-5171-4c62-b4ae-376fd94940d9";
+				PROVISIONING_PROFILE = "74ae7948-9fe1-425c-a269-58656ef1b582";
 				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Debug;
@@ -1656,7 +1656,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e44dbea9-5171-4c62-b4ae-376fd94940d9";
+				PROVISIONING_PROFILE = "74ae7948-9fe1-425c-a269-58656ef1b582";
 				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Release;

@@ -16,6 +16,8 @@
 
 #import "AudioPlayerViewController.h"
 
+#import "AudioDownLoader.h"
+
 @interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate>
 
 @property (nonatomic, strong) UITableView * tabview;
@@ -192,6 +194,8 @@
 - (void)downLoadAudio:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.dataArray[index.row];
+    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:model];
 }
 #pragma mark - 查看音频文档
 - (void)checkAudioText:(UIButton *)button{

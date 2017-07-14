@@ -147,6 +147,9 @@
 }
 /**奇怪么？为啥这里还有个请求？  问问那个sb陶兴国吧*/
 - (void)getMessageCount{
+    if (![UserManager manager].isLogin) {
+        return;
+    }
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_MessageCount complete:^(id result) {
         if (result[@"count"]) {
             NSArray * datas = self.viewModel.dataArray[2];
@@ -164,6 +167,9 @@
 }
 //又一个傻逼操作
 - (void)readMessage{
+    if (![UserManager manager].isLogin) {
+        return;
+    }
     if (self.viewModel.msgStr.length == 0) {
         return;
     }
@@ -177,6 +183,9 @@
     }];
 }
 - (void)getUserBalance{
+    if (![UserManager manager].isLogin) {
+        return;
+    }
     NSDictionary * params = @{};
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
         NSDictionary * dic = result[@"list"];
@@ -192,6 +201,10 @@
     }];
 }
 - (void)getShopCarCount{
+    if (![UserManager manager].isLogin) {
+        return;
+    }
+    
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
         if (result) {
             NSArray * datas = self.viewModel.dataArray[0];
