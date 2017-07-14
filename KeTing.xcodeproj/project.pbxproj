@@ -91,6 +91,9 @@
 		8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743091EEE799400324FA2 /* ListenListCell.m */; };
 		8B8F01081F00D8850027AABD /* MineHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F01071F00D8850027AABD /* MineHeader.m */; };
 		8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */; };
+		8B9B9EE51F137C16004A2283 /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B9EE41F137C16004A2283 /* HistoryManager.m */; };
+		8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */; };
+		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E141F05F1E200FFACA9 /* TopUpListViewController.m */; };
@@ -331,6 +334,12 @@
 		8B8F01071F00D8850027AABD /* MineHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeader.m; sourceTree = "<group>"; };
 		8B8F01091F00EB9B0027AABD /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		8B9B9EE31F137C16004A2283 /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryManager.h; sourceTree = "<group>"; };
+		8B9B9EE41F137C16004A2283 /* HistoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryManager.m; sourceTree = "<group>"; };
+		8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDownLoader.h; sourceTree = "<group>"; };
+		8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDownLoader.m; sourceTree = "<group>"; };
+		8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceSectionCell.h; sourceTree = "<group>"; };
+		8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceSectionCell.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -757,6 +766,8 @@
 				8B8743091EEE799400324FA2 /* ListenListCell.m */,
 				8BF6028D1EEF6D6600322545 /* VoiceDetailHeader.h */,
 				8BF6028E1EEF6D6600322545 /* VoiceDetailHeader.m */,
+				8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */,
+				8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */,
 				8BF602901EEF755B00322545 /* VoiceSummaryCell.h */,
 				8BF602911EEF755B00322545 /* VoiceSummaryCell.m */,
 				8BF602931EEF7B1400322545 /* VoiceUpdateListCell.h */,
@@ -832,6 +843,24 @@
 			);
 			name = ShareView;
 			path = ../ViewControllers/ShareView;
+			sourceTree = "<group>";
+		};
+		8B9B9EE21F137C04004A2283 /* HistoryManager */ = {
+			isa = PBXGroup;
+			children = (
+				8B9B9EE31F137C16004A2283 /* HistoryManager.h */,
+				8B9B9EE41F137C16004A2283 /* HistoryManager.m */,
+			);
+			path = HistoryManager;
+			sourceTree = "<group>";
+		};
+		8BA3DCFA1F1764DB00D5ACB5 /* AudioDownLoader */ = {
+			isa = PBXGroup;
+			children = (
+				8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */,
+				8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */,
+			);
+			path = AudioDownLoader;
 			sourceTree = "<group>";
 		};
 		8BF6029F1EEFC7EC00322545 /* TimeListenViewController */ = {
@@ -1022,6 +1051,8 @@
 		8BF84CB21EE4F6620072637D = {
 			isa = PBXGroup;
 			children = (
+				8BA3DCFA1F1764DB00D5ACB5 /* AudioDownLoader */,
+				8B9B9EE21F137C04004A2283 /* HistoryManager */,
 				8B7AB4CE1F0391110068CAE7 /* UserManager */,
 				8B6437411EE8D35D00FA53EF /* AudioPlayer */,
 				8B53EA801EE52097009EA76D /* Tools */,
@@ -1353,10 +1384,12 @@
 				8B8742FB1EEE646800324FA2 /* PlayCloseListView.m in Sources */,
 				8B53EA9A1EE550BD009EA76D /* HomeFinancialCell.m in Sources */,
 				8B4F22991EF0DA69005E1D21 /* AnchorModel.m in Sources */,
+				8B9B9EE51F137C16004A2283 /* HistoryManager.m in Sources */,
 				8B2D73FE1F0CB06F00E1BF4B /* AboutusViewController.m in Sources */,
 				8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */,
 				8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */,
 				8BFB091D1F0F585C00FA30F0 /* MessageModel.m in Sources */,
+				8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */,
 				8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */,
 				8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */,
 				8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */,
@@ -1378,6 +1411,7 @@
 				8B2D73951F0B83F500E1BF4B /* PushSettingViewController.m in Sources */,
 				8B696E211EEA480300A11A0F /* CateDetailViewController.m in Sources */,
 				8B4F229C1EF10FD8005E1D21 /* NoneSubscribeCell.m in Sources */,
+				8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */,
 				8BF84D041EE4FF000072637D /* HMSegmentViewController.m in Sources */,
 				8B7AB4D41F0391F10068CAE7 /* UserManager.m in Sources */,
 				8BE25E241F06210E00FFACA9 /* MyShopedCollectionCell.m in Sources */,
@@ -1605,7 +1639,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad4b97a1-2a92-4208-ab1e-5cb87f3d6f52";
+				PROVISIONING_PROFILE = "e44dbea9-5171-4c62-b4ae-376fd94940d9";
 				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Debug;
@@ -1622,7 +1656,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad4b97a1-2a92-4208-ab1e-5cb87f3d6f52";
+				PROVISIONING_PROFILE = "e44dbea9-5171-4c62-b4ae-376fd94940d9";
 				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Release;

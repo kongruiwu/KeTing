@@ -204,4 +204,26 @@
         
     }];
 }
+
+//设置头部拉伸效果
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    //图片高度
+    CGFloat imageHeight = self.header.frame.size.height;
+    //图片宽度
+    CGFloat imageWidth = UI_WIDTH;
+    //图片上下偏移量
+    CGFloat imageOffsetY = scrollView.contentOffset.y;
+    
+    
+    //上移
+    if (imageOffsetY < 0) {
+        CGFloat totalOffset = imageHeight + ABS(imageOffsetY);
+        CGFloat f = totalOffset / imageHeight;
+        
+        self.header.groundImg.frame = CGRectMake(-(imageWidth * f - imageWidth) * 0.5, imageOffsetY, imageWidth * f, totalOffset);
+    }
+    
+}
+
 @end

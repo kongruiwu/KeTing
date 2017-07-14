@@ -44,11 +44,11 @@
                                          fontValue:font750(24)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
-    self.saleStatus = [KTFactory creatLabelWithText:@"限免"
+    self.saleStatus = [KTFactory creatLabelWithText:@""
                                           fontValue:font750(24)
                                           textColor:KTColor_IconOrange
                                       textAlignment:NSTextAlignmentCenter];
-    self.priceLabel = [KTFactory creatLabelWithText:@"¥0.99/季度"
+    self.priceLabel = [KTFactory creatLabelWithText:@""
                                           fontValue:font750(24)
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
@@ -61,6 +61,10 @@
     self.buybtn.layer.borderWidth = 1.0f;
     self.buybtn.layer.cornerRadius = 2.0f;
     self.bottomLine = [KTFactory creatLineView];
+    
+    [self.shopCar addTarget:self action:@selector(shopCarBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.buybtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     [self addSubview:self.leftImg];
     [self addSubview:self.nameLabel];
@@ -94,18 +98,13 @@
         make.left.equalTo(self.descLabel.mas_left);
         make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(10));
     }];
+    
     [self.saleStatus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLabel.mas_left);
         make.bottom.equalTo(self.leftImg.mas_bottom);
-        make.width.equalTo(@(Anno750(70)));
-        make.height.equalTo(@(Anno750(30)));
     }];
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (self.saleStatus.hidden) {
-            make.left.equalTo(self.nameLabel.mas_left);
-        }else{
-            make.left.equalTo(self.saleStatus.mas_right).offset(Anno750(10));
-        }
+        make.left.equalTo(self.saleStatus.mas_right);
         make.bottom.equalTo(self.leftImg.mas_bottom);
     }];
     [self.buybtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -135,30 +134,41 @@
     self.nameLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:model.audioLong.intValue andTotalTime:model.audioLong.intValue]];
+    
+    self.shopCar.hidden = self.buybtn.hidden = model.Isbuy || model.isFree || [model.promotionType integerValue] == 2? YES: NO;
+    self.priceLabel.hidden =  model.isFree? YES:NO;
+    self.saleStatus.hidden = !self.shopCar.hidden;
     if (model.isFree) {
-        self.saleStatus.text = @"免费";
-        [KTFactory setLabel:self.saleStatus BorderColor:[UIColor clearColor] with:0 cornerRadius:0];
-        self.shopCar.hidden = YES;
-        self.buybtn.hidden = YES;
+        self.saleStatus.text = @"免费  ";
     }else{
         //限免
         if ([model.promotionType intValue] == 2) {
-            self.saleStatus.hidden = NO;
-            self.saleStatus.text = @"限免";
-            [KTFactory setLabel:self.saleStatus BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            self.saleStatus.text = @"限免  ";
             self.priceLabel.attributedText = [KTFactory setFreePriceString:model.price];
-            self.shopCar.hidden = YES;
-            self.buybtn.hidden = YES;
+
         }else{
-            self.saleStatus.hidden = YES;
             self.priceLabel.text = model.price;
             self.priceLabel.textColor = KTColor_MainOrange;
-            self.shopCar.hidden = NO;
-            self.buybtn.hidden = NO;
+            self.saleStatus.text = @"";
         }
     }
     self.shopCar.selected = model.iscart;
 }
-
+- (void)shopCarBtnClick:(UIButton *)btn{
+    if (btn.selected) {
+        if ([self.delegate respondsToSelector:@selector(checkShopCar)]) {
+            [self.delegate checkShopCar];
+        }
+    }else{
+        if ([self.delegate respondsToSelector:@selector(addToShopCar:)]) {
+            [self.delegate addToShopCar:btn];
+        }
+    }
+}
+- (void)buyBtnClick:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(buyThisBook:)]) {
+        [self.delegate buyThisBook:btn];
+    }
+}
 
 @end

@@ -9,6 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
 #import "HomeListenModel.h"
+
+@protocol ListenListDelegate <NSObject>
+
+- (void)addToShopCar:(UIButton *)btn;
+- (void)buyThisBook:(UIButton *)btn;
+- (void)checkShopCar;
+
+@end
+
 @interface ListenListCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView * leftImg;
@@ -20,7 +29,7 @@
 @property (nonatomic, strong) UIButton * shopCar;
 @property (nonatomic, strong) UIButton * buybtn;
 @property (nonatomic, strong) UIView * bottomLine;
-
+@property (nonatomic, assign) id<ListenListDelegate> delegate;
 
 - (void)updateWithListenModel:(HomeListenModel *)model;
 

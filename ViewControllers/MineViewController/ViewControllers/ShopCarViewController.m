@@ -33,6 +33,7 @@
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"购物车" color:KTColor_MainBlack];
     [self creatUI];
+    [self drawRightDeleteBtn];
 }
 - (void)creatUI{
     self.hander = [ShopCarHander hander];
@@ -51,6 +52,13 @@
         make.bottom.equalTo(@0);
     }];
 }
+- (void)drawRightDeleteBtn{
+    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithTitle:@"清空购物车" style:UIBarButtonItemStylePlain target:self action:@selector(removeAllDatas)];
+    self.navigationItem.rightBarButtonItem = barItem;
+    [self.navigationItem.rightBarButtonItem setTintColor:KTColor_darkGray];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:font750(28)],NSFontAttributeName, nil] forState:UIControlStateNormal];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.hander.dataArray.count;
 }
@@ -105,6 +113,26 @@
     } errorBlock:^(KTError *error) {
         
     }];
+}
+- (void)removeAllDatas{
+    
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要清空购物车么？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary * params = @{
+                                  @"userId":[UserManager manager].userid
+                                  };
+        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ClearS complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"购物车清空成功" duration:1.0f];
+            [self showNullViewWithNullViewType:NullTypeNoneShopCar];
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }];
+    UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:sure];
+    [alert addAction:cannce];
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma mark -购物车全选

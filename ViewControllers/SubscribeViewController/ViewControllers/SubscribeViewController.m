@@ -19,6 +19,8 @@
 @property (nonatomic, strong)UITableView * tabview;
 //推荐数组
 @property (nonatomic, strong) NSMutableArray * recomendArray;
+//订阅数组
+@property (nonatomic, strong) NSMutableArray * listArray;
 
 @end
 
@@ -27,11 +29,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
-    [self getData];
+    [self getSubscribeData];
+    [self getListData];
 }
 
 - (void)creatUI{
     self.recomendArray = [NSMutableArray new];
+    self.listArray = [NSMutableArray new];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -48,6 +52,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        
         return Anno750(336);
     }
     return Anno750(520);
@@ -113,15 +118,21 @@
     
 }
 
-- (void)getData{
-    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribe complete:^(id result) {
+- (void)getSubscribeData{
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_SubscribeRec complete:^(id result) {
         NSArray * datas = (NSArray *)result;
         for (int i = 0; i<datas.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:datas[i]];
             [self.recomendArray addObject:model];
         }
         [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationRight];
+    } errorBlock:^(KTError *error) {
         
+    }];
+}
+- (void)getListData{
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribed complete:^(id result) {
+        NSArray * array = result[@"list"];
         
     } errorBlock:^(KTError *error) {
         

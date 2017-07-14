@@ -69,7 +69,16 @@
 /**最新更新列表*/
 @property (nonatomic, strong) NSArray<HomeTopModel *> * audio;
 @property (nonatomic, strong) HomeTopModel * audioModel;
-
+/**标签列表*/
+@property (nonatomic, strong) NSArray<TagsModel *> * tagModels;
 /**购物车中是否被选择*/
 @property (nonatomic, assign) BOOL isSelect;
+/**是否已下载*/
+@property (nonatomic, assign) BOOL isDownLoad;
+/**是否正在下载*/
+@property (nonatomic, assign) BOOL isDownLoading;
+
+
+- (void)checkForDownLoadList:(NSArray *)arr;
+
 @end

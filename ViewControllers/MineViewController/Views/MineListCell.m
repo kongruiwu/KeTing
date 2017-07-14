@@ -77,6 +77,7 @@
 
 - (void)updateWithListModel:(MineListModel *)model{
     self.descLabel.hidden = model.desc.length > 0 ? NO : YES;
+    self.descLabel.hidden = [model.desc isEqualToString:@"0"] ? YES : NO;
     self.nameLabel.text = model.titleString;
     self.leftImg.image = [UIImage imageNamed:model.imgName];
     self.descLabel.text = model.desc;

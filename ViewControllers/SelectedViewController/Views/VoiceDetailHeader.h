@@ -17,5 +17,9 @@
 @property (nonatomic, strong) UIButton * shopCar;
 @property (nonatomic, strong) UIView * grayView;
 @property (nonatomic, strong) UILabel * nameLabel;
+@property (nonatomic, strong) UILabel * countLabel;
+@property (nonatomic, strong) UIButton * checkSummy;
+
 - (void)updateWithImage:(NSString *)imgurl title:(NSString *)title;
+- (void)updateShopCarCount:(NSString *)count;
 @end

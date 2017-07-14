@@ -13,5 +13,6 @@
 @interface ListenDetailViewController : BaseViewController
 
 @property (nonatomic, strong) NSString * listenID;
+@property (nonatomic, assign) BOOL isFromAnchor;
 
 @end

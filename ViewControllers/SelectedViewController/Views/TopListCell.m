@@ -139,7 +139,8 @@
         make.width.equalTo(@(Anno750(150)));
     }];
     [self.moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(@0);
+        make.top.equalTo(@0);
+        make.bottom.equalTo(@0);
         make.right.equalTo(@(-Anno750(24)));
     }];
     [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {

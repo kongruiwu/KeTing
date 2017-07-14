@@ -13,6 +13,9 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super initWithDictionary:dic];
     if (self) {
+        self.isDownLoad = NO;
+        self.isDownLoading = NO;
+
         self.descString = dic[@"description"];
         NSString * time;
         switch ([self.orderTime intValue]) {
@@ -41,9 +44,20 @@
             NSInteger index = [orderIDs indexOfObject:[NSString stringWithFormat:@"%@",self.orderTime]];
             time = orderNames[index];
         }
+        if (time.length>0) {
+            time = [NSString stringWithFormat:@"/%@",time];
+        }
         self.PRICE = dic[@"price"];
         self.price = [NSString stringWithFormat:@"¥%@",dic[@"price"]];
         self.timePrice = [NSString stringWithFormat:@"¥%.2f%@",[dic[@"price"] floatValue],time];
+        
+        NSArray * tags = dic[@"tags"];
+        NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];
+        for (int i = 0; i<tags.count; i++) {
+            TagsModel * model = [[TagsModel alloc]initWithDictionary:tags[i]];
+            [muarr addObject:model];
+        }
+        self.tagModels = muarr;
         
         id audio = dic[@"audio"];
         if ([audio isKindOfClass:[NSArray class]]) {
@@ -57,9 +71,12 @@
         }else if([audio isKindOfClass:[NSDictionary class]]){
             NSDictionary * dic = (NSDictionary *)audio;
             self.audioModel = [[HomeTopModel alloc]initWithDictionary:dic];
+            self.audioModel.tagModels = muarr;
         }
     }
     return self;
 }
+- (void)checkForDownLoadList:(NSArray *)arr{
 
+}
 @end

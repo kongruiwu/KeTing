@@ -20,5 +20,8 @@
 @property (nonatomic, strong) UILabel * username;
 @property (nonatomic, strong) UILabel * descLabel;
 @property (nonatomic, strong) UIButton * showBtn;
+@property (nonatomic, strong) UILabel * countLabel;
+
 - (void)updateWithAnchorModel:(AnchorModel *)model;
+- (void)updateShopCarCount:(NSString *)count;
 @end

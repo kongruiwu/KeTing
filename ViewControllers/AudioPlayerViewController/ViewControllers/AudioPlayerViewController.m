@@ -125,8 +125,9 @@
     
     self.listBtn = [KTFactory creatPlayButtonWithImage:@"play_list" title:@"列表"];
     self.textBtn = [KTFactory creatPlayButtonWithImage:@"play_draft" title:@"文稿"];
-    self.likeBtn = [KTFactory creatPlayButtonWithImage:@"play_ like" title:@"赞(10)"];
-    self.downLoadBtn = [KTFactory creatPlayButtonWithImage:@"" title:@"下载"];
+    self.likeBtn = [KTFactory creatPlayButtonWithImage:@"playunlike" title:@"赞(10)"];
+    [self.likeBtn setImage:[UIImage imageNamed:@"play_ like"] forState:UIControlStateSelected];
+    self.downLoadBtn = [KTFactory creatPlayButtonWithImage:@"play_download" title:@"下载"];
     self.moreBtn = [KTFactory creatPlayButtonWithImage:@"icon_more" title:@"更多"];
     
     self.playList = [[PlayListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];

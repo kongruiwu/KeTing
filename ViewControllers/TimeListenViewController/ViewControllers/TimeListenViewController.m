@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic, strong) PorgressView * progressView;
 @property (nonatomic, strong) NSTimer * timer;
+@property (nonatomic) BOOL canNext;
 
 @end
 
@@ -117,7 +118,9 @@
         make.width.equalTo(@(Anno750(176)));
     }];
     
+    self.canNext = YES;
     self.progressView = [[PorgressView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
+    [self.progressView.cannceBtn addTarget:self action:@selector(cannceAllDoing) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.progressView];
     
     
@@ -146,16 +149,21 @@
 - (void)request60{
     [self requestListenList:60];
 }
-
+- (void)cannceAllDoing{
+    [self.timer invalidate];
+    self.timer = nil;
+    self.canNext = NO;
+    [self.progressView disMiss];
+}
 - (void)changeProgressViewSlow{
     self.progressView.progressView.progress += 0.001;
 }
 - (void)changeProgressViewQuick{
     float value = [self.timer.userInfo floatValue];
     self.progressView.progressView.progress += value;
-    NSLog(@"%.2f",self.progressView.progressView.progress);
 }
 - (void)requestListenList:(int)num{
+    
     [self.progressView show];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewSlow) userInfo:nil repeats:YES];
     [self.dataArray removeAllObjects];
@@ -170,10 +178,13 @@
         self.timer = nil;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewQuick) userInfo:[NSNumber numberWithFloat:value] repeats:YES];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (!self.canNext) {
+                self.canNext = YES;
+                return ;
+            }
             [self.timer invalidate];
             self.timer = nil;
             [self.progressView disMiss];
-            self.progressView.progressView.progress = 0;
             for (int i = 0; i<list.count; i++) {
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:list[i]];
                 [self.dataArray addObject:model];
@@ -185,7 +196,9 @@
             [self presentViewController:nav animated:YES completion:nil];
         });
     } errorBlock:^(KTError *error) {
-        
+        [self.timer invalidate];
+        self.timer = nil;
+        [self.progressView disMiss];
     }];
 }
 

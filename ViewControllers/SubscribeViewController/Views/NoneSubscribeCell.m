@@ -29,7 +29,7 @@
     return self;
 }
 - (void)creatUI{
-    self.noneImg = [KTFactory creatImageViewWithImage:@"nonSubcribe"];
+    self.noneImg = [KTFactory creatImageViewWithImage:@"empty_page6"];
     self.descLabel = [KTFactory creatLabelWithText:@"尚未订阅，看看我们为你推荐的吧"
                                          fontValue:font750(26)
                                          textColor:KTColor_lightGray
@@ -41,10 +41,8 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     [self.noneImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(@0);
+        make.centerX.equalTo(@0);
         make.top.equalTo(@(Anno750(60)));
-        make.left.equalTo(@0);
-        make.height.equalTo(@(Anno750(138)));
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);

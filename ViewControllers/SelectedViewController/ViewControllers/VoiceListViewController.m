@@ -88,7 +88,6 @@
             if (arr.count == 0) {
                 self.page -= 1;
             }
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
         }
         for (int i = 0; i<arr.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:arr[i]];
@@ -96,7 +95,11 @@
         }
         [self.tabview reloadData];
         [self.refreshHeader endRefreshing];
-        [self.refreshFooter endRefreshing];
+        if (arr.count<10) {
+            [self.refreshFooter endRefreshingWithNoMoreData];
+        }else{
+            [self.refreshFooter endRefreshing];
+        }
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;

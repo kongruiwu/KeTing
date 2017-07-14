@@ -64,7 +64,7 @@
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.right.equalTo(@(-Anno750(24)));
-        make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(30));
+        make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(20));
     }];
     
     [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {

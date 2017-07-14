@@ -10,7 +10,8 @@
 #import "HomeListenModel.h"
 #import "ListenListCell.h"
 #import "ListenDetailViewController.h"
-@interface ListenListViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "ShopCarViewController.h"
+@interface ListenListViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
 @property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic) int page;
@@ -20,14 +21,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavUnAlpha];
+    [self refreshData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"云掌听书" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
-    [self getData];
-    
 }
 - (void)creatUI{
     self.page = 1;
@@ -54,6 +54,7 @@
         cell = [[ListenListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
     [cell updateWithListenModel:self.dataArray[indexPath.row]];
+    cell.delegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -82,7 +83,6 @@
             if (arr.count == 0) {
                 self.page -= 1;
             }
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
         }
         for (int i = 0; i<arr.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:arr[i]];
@@ -90,7 +90,11 @@
         }
         [self.tabview reloadData];
         [self.refreshHeader endRefreshing];
-        [self.refreshFooter endRefreshing];
+        if (arr.count<10) {
+            [self.refreshFooter endRefreshingWithNoMoreData];
+        }else{
+            [self.refreshFooter endRefreshing];
+        }
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
@@ -99,5 +103,29 @@
         [self.refreshFooter endRefreshing];
     }];
 }
-
+#pragma mark - listenlistcell代理 加入购物车 购买 等
+- (void)buyThisBook:(UIButton *)btn{
+    
+}
+- (void)addToShopCar:(UIButton *)btn{
+    UITableViewCell * cell = (UITableViewCell *)[btn superview];
+    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+    HomeListenModel * model = self.dataArray[indexpath.row];
+    NSDictionary * params = @{
+                              @"userId":[UserManager manager].userid,
+                              @"relationId":model.listenId,
+                              @"relationType":@2
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
+        btn.selected = !btn.selected;
+    } errorBlock:^(KTError *error) {
+        
+    }];
+}
+- (void)checkShopCar{
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    ShopCarViewController * vc = [ShopCarViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end

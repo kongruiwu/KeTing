@@ -29,20 +29,20 @@
     return self;
 }
 - (void)creatUI{
-    self.leftImg = [KTFactory creatImageViewWithImage:@""];
-    self.nameLabel = [KTFactory creatLabelWithText:@""
+    self.leftImg = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.nameLabel = [KTFactory creatLabelWithText:@"权利的游戏"
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
                                      textAlignment:NSTextAlignmentLeft];
-    self.timeLabel = [KTFactory creatLabelWithText:@""
+    self.timeLabel = [KTFactory creatLabelWithText:@"十分钟前更新"
                                          fontValue:font750(24)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
-    self.descLabel = [KTFactory creatLabelWithText:@""
+    self.descLabel = [KTFactory creatLabelWithText:@"独角兽与灰天鹅"
                                          fontValue:font750(28)
                                          textColor:KTColor_darkGray
                                      textAlignment:NSTextAlignmentLeft];
-    self.updateIcon = [KTFactory creatLabelWithText:@""
+    self.updateIcon = [KTFactory creatLabelWithText:@"1篇更新"
                                           fontValue:font750(26)
                                           textColor:KTColor_IconOrange
                                       textAlignment:NSTextAlignmentCenter];

@@ -35,8 +35,14 @@
 #define Page_ListenDetail   @"v1/viewListen"
 //主播详情
 #define Page_AnchorDetail   @"v1/viewAnchor"
+//点赞
+#define Page_AddLike        @"v1/supportAdd"
+//取消点赞
+#define Page_DelLike        @"v1/supportDel"
 //精品推荐
-#define Page_Subscribe      @"v1/subscribeRec"
+#define Page_SubscribeRec   @"v1/subscribeRec"
+//我的订阅
+#define Page_Subscribed     @"v1/subscribed"
 //热门排行数据
 #define Page_Hots           @"v1/hots"
 //限时免费
@@ -68,6 +74,10 @@
 #define Page_TopUp          @"v1/inpour"
 //已购
 #define Page_Buys           @"v1/buys"
+//清空购物车
+#define Page_ClearS         @"v1/cartClear"
+//添加到购物车
+#define Page_AddCar         @"v1/cartAdd"
 //购物车
 #define Page_ShopCar        @"v1/cart"
 //收听历史

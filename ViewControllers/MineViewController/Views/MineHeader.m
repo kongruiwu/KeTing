@@ -19,6 +19,10 @@
 }
 - (void)creatUI{
     self.groundImg = [KTFactory creatImageViewWithImage:@"mineground"];
+    [self.groundImg setContentMode:UIViewContentModeScaleAspectFill];
+    [self.groundImg setClipsToBounds:YES];
+    
+    
     self.userIcon = [KTFactory creatImageViewWithImage:@"default_head"];
     self.userIcon.layer.cornerRadius = Anno750(70);
     self.userIcon.layer.masksToBounds = YES;
