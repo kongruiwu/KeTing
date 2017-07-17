@@ -98,4 +98,8 @@
 #define Page_ShopCarCount   @"v1/cartCount"
 //随时听
 #define page_TimeListen     @"v1/searchAlways"
+//搜索热词
+#define Page_SearchHot      @"v1/searchHot"
+//综合搜索
+#define Page_Search         @"v1/search"
 #endif /* API_h */

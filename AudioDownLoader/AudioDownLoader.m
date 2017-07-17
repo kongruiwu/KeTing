@@ -14,8 +14,16 @@
 @property (nonatomic, strong) NSURLSession * session;
 @property (nonatomic, strong) NSURLSessionDownloadTask * downloadTask;
 @property (nonatomic, strong) NSData * resumeData;
+@property (nonatomic, strong) NSFileManager * fileManager;
+
 
 @end
+
+/**
+ 存储 所有队列
+ 
+ 
+ */
 
 
 @implementation AudioDownLoader
@@ -26,27 +34,28 @@
     dispatch_once(&onceToken, ^{
         if (!loader) {
             loader = [[AudioDownLoader alloc]init];
+            loader.fileManager = [NSFileManager defaultManager];
+            loader.downLoadList = [NSMutableArray new];
+            NSURLSessionConfiguration * cfg = [NSURLSessionConfiguration defaultSessionConfiguration]; // 默认配置
+            loader.session = [NSURLSession sessionWithConfiguration:cfg delegate:loader delegateQueue:[NSOperationQueue mainQueue]];
         }
     });
     return loader;
 }
 
-- (void)downLoadAudioWithHomeTopModel:(HomeTopModel *)model{
+- (void)downLoadAudioWithHomeTopModel:(NSArray *)topModels{
     
-    self.currentModel = model;
+    [self.downLoadList addObjectsFromArray:topModels];
     
-    NSURL * url = [NSURL URLWithString:model.audioSource];
+    self.currentModel = [topModels firstObject];
     
-    NSURLSessionConfiguration* cfg = [NSURLSessionConfiguration defaultSessionConfiguration]; // 默认配置
-    
-    self.session = [NSURLSession sessionWithConfiguration:cfg delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    NSURL * url = [NSURL URLWithString:self.currentModel.audioSource];
     
     // 创建任务
     self.downloadTask = [self.session downloadTaskWithURL:url];
     
     // 开始任务
     [self.downloadTask resume];
-    
 }
 //暂停下载
 - (void)cancelDownLoading{
@@ -56,13 +65,46 @@
        // resumeData 暂停后的 尚未下载完的数据
         weakself.resumeData = resumeData;
         weakself.downloadTask = nil;
+        if (![self.fileManager fileExistsAtPath:TemCachesPath]) {
+            [self.fileManager createDirectoryAtPath:TemCachesPath withIntermediateDirectories:YES attributes:nil error:NULL];
+        }
+        NSArray * paths = [weakself.fileManager subpathsAtPath:NSTemporaryDirectory()];
+        for (NSString *filePath in paths)
+        {
+            if ([filePath rangeOfString:@"CFNetworkDownload"].length>0)
+            {
+                NSString * tmpPath = [TemCachesPath stringByAppendingPathComponent:filePath];
+                NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:filePath];
+                [weakself.fileManager copyItemAtPath:path toPath:tmpPath error:nil];
+            }
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:resumeData forKey:@"resumeData"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
 }
 //开始下载
 - (void)resumeDownLoading{
+    NSArray *paths = [self.fileManager subpathsAtPath:TemCachesPath];
+    for (NSString *filePath in paths)
+    {
+        if ([filePath rangeOfString:@"CFNetworkDownload"].length>0)
+        {
+            NSString * temp = [TemCachesPath stringByAppendingPathComponent:filePath];
+            NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:filePath];
+            //反向移动
+            [self.fileManager copyItemAtPath:temp toPath:path error:nil];
+            [self.fileManager removeItemAtPath:TemCachesPath error:nil];
+        }
+    }
+    if (!self.resumeData) {
+        self.resumeData = [[NSUserDefaults standardUserDefaults] objectForKey:@"resumeData"];
+    }
    self.downloadTask = [self.session downloadTaskWithResumeData:self.resumeData];
+    [self.downloadTask resume];
 }
 #pragma mark -- NSURLSessionDownloadDelegate
+
+
 /**
  *  下载完毕会调用
  *
@@ -71,31 +113,19 @@
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location
 {
+    NSLog(@"文件临时地址 %@",location);
     /*
             存储元数据
             获取地址
             数据库 存入            audioid   isDownLoading  url
      */
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *str1 = NSHomeDirectory();
-    NSString * filepath = [NSString stringWithFormat:@"%@/Documents/audio/%@",str1,[NSString stringWithFormat:@"%@.mp3",self.currentModel.audioName]];
-    if (![fileManager fileExistsAtPath:filepath]) {
-        NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-        NSString *directryPath = [path stringByAppendingPathComponent:@"audio"];
-        [fileManager createDirectoryAtPath:directryPath withIntermediateDirectories:YES attributes:nil error:nil];
-        NSString *filePath = [directryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",self.currentModel.audioName]];
-        [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    if (![self.fileManager fileExistsAtPath:HSCachesDirectory]) {
+        [self.fileManager createDirectoryAtPath:HSCachesDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
     }
-    NSLog(@"文件临时地址 %@",location);
     // 下载成功
     // 注意 location是下载后的临时保存路径, 需要将它移动到需要保存的位置
     NSError *saveError;
-    // 创建一个自定义存储路径
-//    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-    NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docPath = [paths lastObject];
-    NSString *savePath = [docPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp3",self.currentModel.audioName]];
-    NSURL *saveURL = [NSURL fileURLWithPath:savePath];
+    NSURL * saveURL =[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3",HSCachesDirectory,self.currentModel.audioName]];
     
     // 文件复制到cache路径中
     [[NSFileManager defaultManager] copyItemAtURL:location toURL:saveURL error:&saveError];
@@ -119,7 +149,7 @@ didFinishDownloadingToURL:(NSURL *)location
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-//    self.pgLabel.text = [NSString stringWithFormat:@"下载进度:%f",(double)totalBytesWritten/totalBytesExpectedToWrite];
+    
     NSLog(@"%@",[NSString stringWithFormat:@"下载进度:%f",(double)totalBytesWritten/totalBytesExpectedToWrite]);
 }
 

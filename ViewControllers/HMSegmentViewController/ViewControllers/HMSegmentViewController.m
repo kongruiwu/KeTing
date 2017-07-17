@@ -17,6 +17,7 @@
 #import "FindViewController.h"
 
 #import "MineViewController.h"
+#import "SearchViewController.h"
 
 @interface HMSegmentViewController ()<UIScrollViewDelegate>
 
@@ -141,7 +142,7 @@
     [self.navigationController pushViewController:[MineViewController new] animated:YES];
 }
 - (void)toSearchViewController{
-    
+    [self.navigationController pushViewController:[SearchViewController new] animated:YES];
 }
 
 @end

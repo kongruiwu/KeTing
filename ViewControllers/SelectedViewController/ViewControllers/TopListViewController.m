@@ -52,8 +52,23 @@
     self.isDownLoad = NO;
     [self creatUI];
     [self refreshData];
+    
+    [self drawRightCanncleBtn];
 }
-
+- (void)drawRightCanncleBtn{
+    UIBarButtonItem * baritm = [[UIBarButtonItem alloc]initWithTitle:@"暂停"
+                                                               style:UIBarButtonItemStylePlain target:self action:@selector(clickRihghtBtn)];
+    UIBarButtonItem * baritm2 = [[UIBarButtonItem alloc]initWithTitle:@"开始"
+                                                               style:UIBarButtonItemStylePlain target:self action:@selector(clickRihghtBtn2)];
+    
+    self.navigationItem.rightBarButtonItems = @[baritm,baritm2];
+}
+- (void)clickRihghtBtn{
+    [[AudioDownLoader loader] cancelDownLoading];
+}
+- (void)clickRihghtBtn2{
+    [[AudioDownLoader loader] resumeDownLoading];
+}
 - (void)creatUI{
     TopHeaderView * topView = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [topView.cateBtn addTarget:self action:@selector(pushToTagListViewController) forControlEvents:UIControlEventTouchUpInside];
