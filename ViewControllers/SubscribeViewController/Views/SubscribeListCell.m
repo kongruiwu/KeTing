@@ -77,14 +77,16 @@
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-Anno750(24)));
         make.left.equalTo(self.timeLabel.mas_left);
+        make.right.equalTo(@(-Anno750(40)));
     }];
     [self.nextIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(@(-Anno750(24)));
         make.centerY.equalTo(@0);
     }];
+    
     [self.updateIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(@0);
-        make.right.equalTo(self.nextIcon.mas_left).offset(Anno750(20));
+        make.right.equalTo(self.nextIcon.mas_left).offset(Anno750(-20));
         make.width.equalTo(@(Anno750(120)));
         make.height.equalTo(@(Anno750(40)));
     }];
@@ -96,4 +98,16 @@
     }];
 }
 
+- (void)updateWithModel:(HomeListenModel *)model{
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"defaultImage"]];
+    self.nameLabel.text = model.name;
+    self.timeLabel.text = [NSString stringWithFormat:@"%@更新",[KTFactory getUpdateTimeStringWithEditTime:model.editTime]];
+    if (model.audio.count >0) {
+        self.updateIcon.hidden = NO;
+        self.updateIcon.text = [NSString stringWithFormat:@"%ld篇更新",model.audio.count];
+    }else{
+        self.updateIcon.hidden = YES;
+    }
+    self.descLabel.text = model.summary;
+}
 @end

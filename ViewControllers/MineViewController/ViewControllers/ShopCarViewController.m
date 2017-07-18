@@ -12,6 +12,7 @@
 #import "HomeListenModel.h"
 #import "ShopCarHander.h"
 #import "ListenDetailViewController.h"
+#import "SetAccoutViewController.h"
 @interface ShopCarViewController ()<UITableViewDelegate,UITableViewDataSource,ShopCarDelegate>
 
 @property (nonatomic, strong)UITableView *tabview;
@@ -44,6 +45,7 @@
     [self.view addSubview:self.tabview];
     self.footer = [[ShopCarFooter alloc]initWithFrame:CGRectMake(0,0,0,0)];
     [self.footer.selectBtn addTarget:self action:@selector(ShopCarSelectAll:) forControlEvents:UIControlEventTouchUpInside];
+    [self.footer.buyBtn addTarget:self action:@selector(buyAllBooks) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.footer];
     [self.footer mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
@@ -149,5 +151,14 @@
     [self.hander selectAtIndex:indexPath.row];
     [self.footer updateWithShopCarHnader:self.hander];
     [self.tabview reloadData];
+}
+#pragma mark - 购买
+- (void)buyAllBooks{
+    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+    vc.isBook = YES;
+    vc.isCart = YES;
+    vc.money = [NSNumber numberWithFloat:self.hander.money];
+    vc.products = self.hander.dataArray;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

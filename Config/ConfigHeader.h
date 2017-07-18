@@ -74,4 +74,10 @@ typedef NS_ENUM(NSInteger,BackImgType){
 // 播放器界面颜色
 #define Audio_gray          UIColorFromRGB(0x52ffff)
 #define Audio_progessWhite  [UIColor colorWithRed:0.88 green:0.87 blue:0.87 alpha:1.00]
+
+
+
+#define     UmengKey            @"556fb9bf67e58e92cf001646"
+#define     JpushKey            @""
+
 #endif /* ConfigHeader_h */

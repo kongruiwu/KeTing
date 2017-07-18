@@ -10,6 +10,14 @@
 #import "TagsModel.h"
 
 @interface HomeTopModel : BaseModel
+
+/**头条Id*/
+@property (nonatomic, strong) NSString * topId;
+/**标签名称*/
+@property (nonatomic, strong) NSString * tagName;
+/**头条名称*/
+@property (nonatomic, strong) NSString * topName;
+
 /**音频Id*/
 @property (nonatomic, strong) NSString * audioId;
 /**唯一标识*/

@@ -193,6 +193,7 @@
             NSArray * datas = self.viewModel.dataArray[0];
             MineListModel * model = datas[0];
             model.desc = [NSString stringWithFormat:@"¥%@",dic[@"accountBalance"]];
+            [UserManager manager].balance = dic[@"accountBalance"];
             NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         }

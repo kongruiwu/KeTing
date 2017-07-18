@@ -63,9 +63,7 @@
 		8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64374A1EE9356D00FA53EF /* PlayTextButton.m */; };
 		8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E171EEA39CF00A11A0F /* CateListViewController.m */; };
 		8B696E1B1EEA3AD500A11A0F /* CateListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E1A1EEA3AD500A11A0F /* CateListTableViewCell.m */; };
-		8B696E1E1EEA3FA000A11A0F /* TopTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E1D1EEA3FA000A11A0F /* TopTagModel.m */; };
 		8B696E211EEA480300A11A0F /* CateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E201EEA480300A11A0F /* CateDetailViewController.m */; };
-		8B696E241EEA4D8800A11A0F /* TagAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E231EEA4D8800A11A0F /* TagAudioModel.m */; };
 		8B696E271EEA6F4E00A11A0F /* TopListDownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E261EEA6F4E00A11A0F /* TopListDownCell.m */; };
 		8B696E2A1EEA7BEB00A11A0F /* TopListBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E291EEA7BEB00A11A0F /* TopListBottomView.m */; };
 		8B7AB4C41F0379F80068CAE7 /* ChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7AB4C31F0379F80068CAE7 /* ChangePwdViewController.m */; };
@@ -101,6 +99,15 @@
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
+		8BC126651F1D9753005CF363 /* downLoaderList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BC126641F1D9753005CF363 /* downLoaderList.plist */; };
+		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
+		8BC1266B1F1DAE1A005CF363 /* SetAccountHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1266A1F1DAE1A005CF363 /* SetAccountHeadCell.m */; };
+		8BC1266E1F1DB094005CF363 /* PayMomentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1266D1F1DB094005CF363 /* PayMomentCell.m */; };
+		8BC126711F1DB3A3005CF363 /* TopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126701F1DB3A3005CF363 /* TopUpCell.m */; };
+		8BC126741F1DDDF4005CF363 /* SubscriListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126731F1DDDF4005CF363 /* SubscriListViewController.m */; };
+		8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126761F1DE40F005CF363 /* CommonInfo.m */; };
+		8BC1267A1F1DF580005CF363 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126791F1DF580005CF363 /* OrderModel.m */; };
+		8BC1267D1F1E0E63005CF363 /* TopTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1267C1F1E0E63005CF363 /* TopTagModel.m */; };
 		8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E141F05F1E200FFACA9 /* TopUpListViewController.m */; };
 		8BE25E181F05F34C00FFACA9 /* TopUpListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E171F05F34C00FFACA9 /* TopUpListCell.m */; };
 		8BE25E1B1F05F5AF00FFACA9 /* MyShopedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E1A1F05F5AF00FFACA9 /* MyShopedViewController.m */; };
@@ -283,12 +290,8 @@
 		8B696E171EEA39CF00A11A0F /* CateListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CateListViewController.m; sourceTree = "<group>"; };
 		8B696E191EEA3AD500A11A0F /* CateListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CateListTableViewCell.h; sourceTree = "<group>"; };
 		8B696E1A1EEA3AD500A11A0F /* CateListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CateListTableViewCell.m; sourceTree = "<group>"; };
-		8B696E1C1EEA3FA000A11A0F /* TopTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopTagModel.h; sourceTree = "<group>"; };
-		8B696E1D1EEA3FA000A11A0F /* TopTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopTagModel.m; sourceTree = "<group>"; };
 		8B696E1F1EEA480300A11A0F /* CateDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CateDetailViewController.h; sourceTree = "<group>"; };
 		8B696E201EEA480300A11A0F /* CateDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CateDetailViewController.m; sourceTree = "<group>"; };
-		8B696E221EEA4D8800A11A0F /* TagAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagAudioModel.h; sourceTree = "<group>"; };
-		8B696E231EEA4D8800A11A0F /* TagAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagAudioModel.m; sourceTree = "<group>"; };
 		8B696E251EEA6F4E00A11A0F /* TopListDownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopListDownCell.h; sourceTree = "<group>"; };
 		8B696E261EEA6F4E00A11A0F /* TopListDownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopListDownCell.m; sourceTree = "<group>"; };
 		8B696E281EEA7BEB00A11A0F /* TopListBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopListBottomView.h; sourceTree = "<group>"; };
@@ -359,6 +362,23 @@
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
 		8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLikeViewController.m; sourceTree = "<group>"; };
+		8BC126641F1D9753005CF363 /* downLoaderList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = downLoaderList.plist; sourceTree = "<group>"; };
+		8BC126661F1DAA9A005CF363 /* SetAccoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetAccoutViewController.h; sourceTree = "<group>"; };
+		8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetAccoutViewController.m; sourceTree = "<group>"; };
+		8BC126691F1DAE1A005CF363 /* SetAccountHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetAccountHeadCell.h; sourceTree = "<group>"; };
+		8BC1266A1F1DAE1A005CF363 /* SetAccountHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetAccountHeadCell.m; sourceTree = "<group>"; };
+		8BC1266C1F1DB094005CF363 /* PayMomentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayMomentCell.h; sourceTree = "<group>"; };
+		8BC1266D1F1DB094005CF363 /* PayMomentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayMomentCell.m; sourceTree = "<group>"; };
+		8BC1266F1F1DB3A3005CF363 /* TopUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopUpCell.h; sourceTree = "<group>"; };
+		8BC126701F1DB3A3005CF363 /* TopUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopUpCell.m; sourceTree = "<group>"; };
+		8BC126721F1DDDF4005CF363 /* SubscriListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriListViewController.h; sourceTree = "<group>"; };
+		8BC126731F1DDDF4005CF363 /* SubscriListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriListViewController.m; sourceTree = "<group>"; };
+		8BC126751F1DE40F005CF363 /* CommonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonInfo.h; sourceTree = "<group>"; };
+		8BC126761F1DE40F005CF363 /* CommonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonInfo.m; sourceTree = "<group>"; };
+		8BC126781F1DF580005CF363 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
+		8BC126791F1DF580005CF363 /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
+		8BC1267B1F1E0E63005CF363 /* TopTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopTagModel.h; sourceTree = "<group>"; };
+		8BC1267C1F1E0E63005CF363 /* TopTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopTagModel.m; sourceTree = "<group>"; };
 		8BE25E131F05F1E200FFACA9 /* TopUpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopUpListViewController.h; sourceTree = "<group>"; };
 		8BE25E141F05F1E200FFACA9 /* TopUpListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopUpListViewController.m; sourceTree = "<group>"; };
 		8BE25E161F05F34C00FFACA9 /* TopUpListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopUpListCell.h; sourceTree = "<group>"; };
@@ -705,6 +725,8 @@
 		8B53EA891EE525BE009EA76D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8BC1267B1F1E0E63005CF363 /* TopTagModel.h */,
+				8BC1267C1F1E0E63005CF363 /* TopTagModel.m */,
 				8B40FE6D1EE69656005F9342 /* HomeViewModel.h */,
 				8B40FE6E1EE69656005F9342 /* HomeViewModel.m */,
 				8B40FE701EE69683005F9342 /* HomeTopModel.h */,
@@ -715,12 +737,10 @@
 				8B40FE741EE69B10005F9342 /* HomeListenModel.m */,
 				8BF692161EE7D422001CECEE /* TopListViewModel.h */,
 				8BF692171EE7D422001CECEE /* TopListViewModel.m */,
-				8B696E1C1EEA3FA000A11A0F /* TopTagModel.h */,
-				8B696E1D1EEA3FA000A11A0F /* TopTagModel.m */,
-				8B696E221EEA4D8800A11A0F /* TagAudioModel.h */,
-				8B696E231EEA4D8800A11A0F /* TagAudioModel.m */,
 				8B4F22971EF0DA69005E1D21 /* AnchorModel.h */,
 				8B4F22981EF0DA69005E1D21 /* AnchorModel.m */,
+				8BC126781F1DF580005CF363 /* OrderModel.h */,
+				8BC126791F1DF580005CF363 /* OrderModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -746,6 +766,8 @@
 				8BF602971EEFB06E00322545 /* ListenDetailViewController.m */,
 				8BF6029C1EEFC37F00322545 /* AnchorDetailViewController.h */,
 				8BF6029D1EEFC37F00322545 /* AnchorDetailViewController.m */,
+				8BC126661F1DAA9A005CF363 /* SetAccoutViewController.h */,
+				8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -791,6 +813,12 @@
 				8BF6029A1EEFB34A00322545 /* ListenAnchorCell.m */,
 				8B4F22911EF0D22C005E1D21 /* AnchorHeader.h */,
 				8B4F22921EF0D22C005E1D21 /* AnchorHeader.m */,
+				8BC126691F1DAE1A005CF363 /* SetAccountHeadCell.h */,
+				8BC1266A1F1DAE1A005CF363 /* SetAccountHeadCell.m */,
+				8BC1266C1F1DB094005CF363 /* PayMomentCell.h */,
+				8BC1266D1F1DB094005CF363 /* PayMomentCell.m */,
+				8BC1266F1F1DB3A3005CF363 /* TopUpCell.h */,
+				8BC126701F1DB3A3005CF363 /* TopUpCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -813,6 +841,8 @@
 				8B7AB4D01F03912F0068CAE7 /* UserInfo.m */,
 				8B7AB4D21F0391F10068CAE7 /* UserManager.h */,
 				8B7AB4D31F0391F10068CAE7 /* UserManager.m */,
+				8BC126751F1DE40F005CF363 /* CommonInfo.h */,
+				8BC126761F1DE40F005CF363 /* CommonInfo.m */,
 			);
 			path = UserManager;
 			sourceTree = "<group>";
@@ -915,6 +945,7 @@
 			children = (
 				8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */,
 				8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */,
+				8BC126641F1D9753005CF363 /* downLoaderList.plist */,
 			);
 			path = AudioDownLoader;
 			sourceTree = "<group>";
@@ -978,6 +1009,8 @@
 			children = (
 				8BF602AE1EEFCE3400322545 /* SubscribeViewController.h */,
 				8BF602AF1EEFCE3400322545 /* SubscribeViewController.m */,
+				8BC126721F1DDDF4005CF363 /* SubscriListViewController.h */,
+				8BC126731F1DDDF4005CF363 /* SubscriListViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1358,6 +1391,7 @@
 				8BF692071EE7A245001CECEE /* toast_bg@2x.png in Resources */,
 				8BF692091EE7A245001CECEE /* toast_icon_bg@2x.png in Resources */,
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,
+				8BC126651F1D9753005CF363 /* downLoaderList.plist in Resources */,
 				8BF84CCB1EE4F6620072637D /* Assets.xcassets in Resources */,
 				8BF692081EE7A245001CECEE /* toast_failure@2x.png in Resources */,
 				8BF6920A1EE7A245001CECEE /* toast_net_failure@2x.png in Resources */,
@@ -1451,9 +1485,11 @@
 				8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */,
 				8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */,
 				8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */,
+				8BC1266E1F1DB094005CF363 /* PayMomentCell.m in Sources */,
 				8B4F22AB1EF130A4005E1D21 /* HotSortViewController.m in Sources */,
 				8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */,
 				8B2D738F1F0B30C600E1BF4B /* SettingListCell.m in Sources */,
+				8BC1267D1F1E0E63005CF363 /* TopTagModel.m in Sources */,
 				8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */,
 				8B40FE751EE69B10005F9342 /* HomeListenModel.m in Sources */,
 				8B3CEECC1F0DC6BE00AE5B81 /* PickerView.m in Sources */,
@@ -1461,6 +1497,7 @@
 				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,
 				8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */,
 				8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */,
+				8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */,
 				8B2D739B1F0B936B00E1BF4B /* AccountSafeViewController.m in Sources */,
 				8BE25E301F06383F00FFACA9 /* HistoryViewController.m in Sources */,
 				8B3CEED51F0E04CC00AE5B81 /* NullView.m in Sources */,
@@ -1476,12 +1513,12 @@
 				8B4F22A81EF11E74005E1D21 /* SubscribeSectionHeader.m in Sources */,
 				8B8743071EEE776800324FA2 /* ListenListViewController.m in Sources */,
 				8B53EA871EE5210A009EA76D /* KTFactory.m in Sources */,
+				8BC126741F1DDDF4005CF363 /* SubscriListViewController.m in Sources */,
 				8BFB09201F0F87C200FA30F0 /* PorgressView.m in Sources */,
 				8B40FE6C1EE69217005F9342 /* Commond.m in Sources */,
 				8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */,
 				8BF84CF71EE4FB820072637D /* BaseModel.m in Sources */,
 				8B7AB4CD1F0385590068CAE7 /* HeaderImage.m in Sources */,
-				8B696E1E1EEA3FA000A11A0F /* TopTagModel.m in Sources */,
 				8B2D73F21F0C7BBA00E1BF4B /* CheckPhoneViewController.m in Sources */,
 				8B8DAF301F1CA3B400BDF1AA /* KTSearchBar.m in Sources */,
 				8B8DAF361F1CAF8F00BDF1AA /* HotWordCell.m in Sources */,
@@ -1495,6 +1532,8 @@
 				8BE25E2D1F06308C00FFACA9 /* ShopCarFooter.m in Sources */,
 				8B696E271EEA6F4E00A11A0F /* TopListDownCell.m in Sources */,
 				8B4F22A21EF11634005E1D21 /* RecommendListCell.m in Sources */,
+				8BC1266B1F1DAE1A005CF363 /* SetAccountHeadCell.m in Sources */,
+				8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */,
 				8BF602B61EEFD59400322545 /* FindListCell.m in Sources */,
 				8B4095F31F0206D000AA22D3 /* LoginViewController.m in Sources */,
 				8B40FE6F1EE69656005F9342 /* HomeViewModel.m in Sources */,
@@ -1538,6 +1577,7 @@
 				8BF6920C1EE7A245001CECEE /* ToastView.m in Sources */,
 				8B2D74041F0CC51200E1BF4B /* OpenUDID.m in Sources */,
 				8BF602951EEF7B1400322545 /* VoiceUpdateListCell.m in Sources */,
+				8BC126711F1DB3A3005CF363 /* TopUpCell.m in Sources */,
 				8B7AB4CA1F0382DE0068CAE7 /* SetUserNameViewController.m in Sources */,
 				8B40FE651EE680DB005F9342 /* NetWorkManager.m in Sources */,
 				8B8742F81EEE600B00324FA2 /* ShareView.m in Sources */,
@@ -1549,6 +1589,7 @@
 				8BF091C51F04F4B4006478E9 /* MoneyViewController.m in Sources */,
 				8B4F22931EF0D22C005E1D21 /* AnchorHeader.m in Sources */,
 				8B7FA6401F0A366300FA01B4 /* DownLoadSubViewController.m in Sources */,
+				8BC1267A1F1DF580005CF363 /* OrderModel.m in Sources */,
 				8BF091CB1F04FB89006478E9 /* MoneyCountCell.m in Sources */,
 				8B3CEECF1F0DE65300AE5B81 /* AcountModel.m in Sources */,
 				8BF692181EE7D422001CECEE /* TopListViewModel.m in Sources */,
@@ -1561,7 +1602,6 @@
 				8B7FA6431F0A400400FA01B4 /* DownLoadListCell.m in Sources */,
 				8B2D740A1F0CD76400E1BF4B /* DataModel.m in Sources */,
 				8B8743041EEE774E00324FA2 /* VoiceDetailViewController.m in Sources */,
-				8B696E241EEA4D8800A11A0F /* TagAudioModel.m in Sources */,
 				8B8F01081F00D8850027AABD /* MineHeader.m in Sources */,
 				8BF6029E1EEFC37F00322545 /* AnchorDetailViewController.m in Sources */,
 			);

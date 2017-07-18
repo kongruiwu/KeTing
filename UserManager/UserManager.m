@@ -57,10 +57,36 @@
     } errorBlock:^(KTError *error) {
         [self userLogout];
     }];
+    
+    if (![UserManager manager].isLogin) {
+        return;
+    }
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_UserAccount complete:^(id result) {
+        NSDictionary * dic = result[@"list"];
+        if (dic[@"accountBalance"]) {
+            self.balance = dic[@"accountBalance"];
+        }
+    } errorBlock:^(KTError *error) {
+        
+    }];
+    
 }
 - (void)getDataModel{
+    //数据字典
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_DataModel complete:^(id result) {
         self.dataModel = [[DataModel alloc]initWithDictionary:result];
+    } errorBlock:^(KTError *error) {
+        
+    }];
+    //用户协议
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_About complete:^(id result) {
+        NSDictionary * dic = (NSDictionary *)result;
+        if (dic[@"serviceWeChat"]) {
+            self.serviceWeChat = dic[@"serviceWeChat"];
+        }
+        if (dic[@"serviceMail"]) {
+            self.serviceMail = dic[@"serviceMail"];
+        }
     } errorBlock:^(KTError *error) {
         
     }];

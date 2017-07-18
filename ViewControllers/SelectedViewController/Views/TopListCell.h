@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
 #import "HomeTopModel.h"
-#import "TagAudioModel.h"
 @protocol TopListCellDelegate <NSObject>
 
 - (void)downLoadAudio:(UIButton *)button;
@@ -40,5 +39,5 @@
 @property (nonatomic, assign) id<TopListCellDelegate> delegate;
 
 - (void)updateWithHomeTopModel:(HomeTopModel *)model;
-- (void)updateWithTagAudioModel:(TagAudioModel *)model;
+- (void)updateWithTagAudioModel:(HomeTopModel *)model;
 @end

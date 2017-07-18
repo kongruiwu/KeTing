@@ -206,7 +206,7 @@
     self.tagLabel.text = tagString;
     self.toolsbar.hidden = !model.showTools;
 }
-- (void)updateWithTagAudioModel:(TagAudioModel *)model{
+- (void)updateWithTagAudioModel:(HomeTopModel *)model{
     self.nameLabel.text = model.audioName;
     self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.playStutas.hidden = YES;

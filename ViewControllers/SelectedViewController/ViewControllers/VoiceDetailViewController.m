@@ -17,6 +17,8 @@
 #import "TopListDownCell.h"
 #import "TopListBottomView.h"
 #import "AudioPlayerViewController.h"
+#import "SetAccoutViewController.h"
+
 @interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate>
 
 @property (nonatomic, strong) UITableView * tabview;
@@ -276,7 +278,11 @@
         }
     }else{
         //订阅
-        
+        SetAccoutViewController * vc = [SetAccoutViewController new];
+        vc.money = self.listenModel.PRICE;
+        vc.products = @[self.listenModel];
+        vc.isBook = NO;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 #pragma mark - 查看简介

@@ -351,12 +351,16 @@
     [self.audioPhoto sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
     [self setNavTitle:model.audioName color: [UIColor whiteColor]];
     NSMutableString * tagString = [NSMutableString new];
-    for (int i = 0; i<[AudioPlayer instance].currentAudio.tagModels.count; i++) {
-        if (i == 0) {
-            [tagString appendString:[NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
-        }else{
-            [tagString appendString:[NSString stringWithFormat:@"  #%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
+    if ([AudioPlayer instance].currentAudio.tagModels>0) {
+        for (int i = 0; i<[AudioPlayer instance].currentAudio.tagModels.count; i++) {
+            if (i == 0) {
+                [tagString appendString:[NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
+            }else{
+                [tagString appendString:[NSString stringWithFormat:@"  #%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
+            }
         }
+    }else{
+        [tagString appendString:[NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagName]];
     }
     self.tagLabel.text = tagString;
     self.currntNum.text = [NSString stringWithFormat:@"正在播放  %d/%ld",[[AudioPlayer instance] currentSortNum],

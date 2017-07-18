@@ -179,8 +179,24 @@
     NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
     
     return confromTimespStr;
-    
 }
+
++ (NSString *)getUpdateTimeStringWithEditTime:(NSNumber *)edittime{
+    long timevalue = time(NULL);
+    long edit = [edittime longLongValue];
+    long time = timevalue - edit;
+    NSString * timeString;
+    if (60 * 60 >time >0) {
+        timeString = [NSString stringWithFormat:@"%d分钟前",(int)time/60];
+    }else if(60 * 60 * 24 >time){
+        timeString = [NSString stringWithFormat:@"%d小时前",(int)time/60/60];
+    }else{
+        timeString = [self timestampSwitchTime:[edittime integerValue]];
+    }
+    return timeString;
+}
+
+
 
 + (NSString *)timestampWithDate:(NSNumber *)time andFormat:(NSString *)format{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+#import "HomeListenModel.h"
 @interface SubscribeListCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView * leftImg;
@@ -17,4 +18,5 @@
 @property (nonatomic, strong) UIImageView * nextIcon;
 @property (nonatomic, strong) UILabel * updateIcon;
 @property (nonatomic, strong) UIView * lineView;
+- (void)updateWithModel:(HomeListenModel *)model;
 @end

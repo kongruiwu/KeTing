@@ -102,4 +102,10 @@
 #define Page_SearchHot      @"v1/searchHot"
 //综合搜索
 #define Page_Search         @"v1/search"
+//关于我们
+#define Page_About          @"v1/about"
+//生成订单
+#define Page_Order          @"v1/order"
+//修改订单状态
+#define Page_PayStatus      @"v1/payStatus"
 #endif /* API_h */

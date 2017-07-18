@@ -24,8 +24,14 @@
 @property (nonatomic, assign) BOOL isLogin;
 /**用户id*/
 @property (nonatomic, strong) NSString * userid;
-
+/**用户余额*/
+@property (nonatomic, strong) NSNumber * balance;
+/**数据词典*/
 @property (nonatomic, strong) DataModel * dataModel;
+/**微信客服账号*/
+@property (nonatomic, strong) NSString * serviceWeChat;
+/**客服邮箱*/
+@property (nonatomic, strong) NSString * serviceMail;
 
 @property (nonatomic, assign) id<UserManagerDelegate> delegate;
 

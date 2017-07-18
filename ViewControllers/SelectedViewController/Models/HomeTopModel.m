@@ -13,13 +13,15 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super initWithDictionary:dic];
     if (self) {
-        NSArray * tags = dic[@"tags"];
-        NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];
-        for (int i = 0; i<tags.count; i++) {
-            TagsModel * model = [[TagsModel alloc]initWithDictionary:tags[i]];
-            [muarr addObject:model];
+        if (dic[@"tags"]) {
+            NSArray * tags = dic[@"tags"];
+            NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];
+            for (int i = 0; i<tags.count; i++) {
+                TagsModel * model = [[TagsModel alloc]initWithDictionary:tags[i]];
+                [muarr addObject:model];
+            }
+            self.tagModels = muarr;
         }
-        self.tagModels = muarr;
         self.showTools = NO;
         self.isSelectDown = NO;
     }

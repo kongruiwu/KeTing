@@ -8,10 +8,12 @@
 
 #import "WKWebViewController.h"
 #import "ShareView.h"
+#import "CommonInfo.h"
+#import "Commond.h"
 @interface WKWebViewController ()<WKNavigationDelegate>
 
 @property (nonatomic, strong) ShareView * shareView;
-
+@property (nonatomic, strong) CommonInfo * common;
 @end
 
 @implementation WKWebViewController
@@ -24,9 +26,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
-    [self setNavTitle:@"文稿" color:KTColor_MainBlack];
+    NSString * title;
+    switch (self.webType) {
+        case PROTOCOLTYPETEXT:
+            title = [AudioPlayer instance].currentAudio.audioName;
+            break;
+        case PROTOCOLTYPEAGREE:
+            title = @"服务协议";
+            break;
+        case PROTOCOLTYPEBALANCE:
+            title = @"余额支付协议";
+            break;
+        case PROTOCOLTYPEPRIVACY:
+            title = @"隐私协议";
+            break;
+        default:
+            break;
+    }
+    [self setNavTitle:title color:KTColor_MainBlack];
     [self creatUI];
-    [self drawRightShareButton];
+    if (self.webType == 0) {
+        [self drawRightShareButton];
+    }
+    [self getCommonInfo];
+    
 }
 - (void)shareButtonClick{
     [self.shareView show];
@@ -34,7 +57,9 @@
 - (void)creatUI{
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64)];
-    [self.webView loadHTMLString:[AudioPlayer instance].currentAudio.audioContent baseURL:nil];
+    if (self.webType == 0) {
+        [self.webView loadHTMLString:[AudioPlayer instance].currentAudio.audioContent baseURL:nil];
+    }
     self.webView.navigationDelegate = self;
     [self.view addSubview:self.webView];
     
@@ -48,5 +73,26 @@
     //修改字体颜色
     [ webView evaluateJavaScript:@"document.getElementsByTagName('body')[0].style.webkitTextFillColor= '#666666'" completionHandler:nil];
     
+}
+- (void)getCommonInfo{
+    //用户协议
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_About complete:^(id result) {
+       self.common = [[CommonInfo alloc]initWithDictionary:result];
+        switch (self.webType) {
+            case PROTOCOLTYPEAGREE:
+                [self.webView loadHTMLString:[Commond getStringFromHTML5String:self.common.agreement].string baseURL:nil];
+                break;
+            case PROTOCOLTYPEBALANCE:
+                [self.webView loadHTMLString:[Commond getStringFromHTML5String:self.common.balancePayAgreement].string baseURL:nil];
+                break;
+            case PROTOCOLTYPEPRIVACY:
+                [self.webView loadHTMLString:[Commond getStringFromHTML5String:self.common.privacy].string baseURL:nil];
+                break;
+            default:
+                break;
+        }
+    } errorBlock:^(KTError *error) {
+        
+    }];
 }
 @end

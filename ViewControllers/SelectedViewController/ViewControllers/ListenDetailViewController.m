@@ -15,6 +15,7 @@
 #import "AnchorDetailViewController.h"
 #import "ShopCarViewController.h"
 #import "AudioPlayerViewController.h"
+#import "SetAccoutViewController.h"
 @interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView * tabview;
@@ -280,7 +281,11 @@
         [self presentViewController:nav animated:YES completion:nil];
     }else{
         //购买
-        
+        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+        vc.isBook = YES;
+        vc.money = self.listenModel.PRICE;
+        vc.products = @[self.listenModel];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

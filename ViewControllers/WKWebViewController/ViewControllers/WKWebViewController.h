@@ -9,8 +9,17 @@
 #import "BaseViewController.h"
 #import <WebKit/WebKit.h>
 
+typedef NS_ENUM(NSInteger, PROTOCOLTYPE){
+    PROTOCOLTYPETEXT    = 0 ,//文稿
+    PROTOCOLTYPEAGREE   = 1 ,//服务协议
+    PROTOCOLTYPEPRIVACY     ,//隐私协议
+    PROTOCOLTYPEBALANCE     ,//余额支付协议
+};
+
+
 @interface WKWebViewController : BaseViewController
 
 @property (nonatomic, strong) WKWebView * webView;
+@property (nonatomic, assign) PROTOCOLTYPE webType;
 
 @end

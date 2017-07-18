@@ -44,6 +44,8 @@
 
 + (NSString *)timestampSwitchTime:(NSInteger)timestamp;
 
++ (NSString *)getUpdateTimeStringWithEditTime:(NSNumber *)edittime;
+
 /**
  format @"YYYY-MM-dd hh:mm:ss"）----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
  */

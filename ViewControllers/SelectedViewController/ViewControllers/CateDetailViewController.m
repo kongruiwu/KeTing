@@ -7,8 +7,10 @@
 //
 
 #import "CateDetailViewController.h"
-#import "TagAudioModel.h"
+#import "HomeTopModel.h"
 #import "TopListCell.h"
+#import "AudioPlayerViewController.h"
+
 @interface CateDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) NSString * tagID;
@@ -56,7 +58,7 @@
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TagAudioModel * model = self.dataArray[indexPath.row];
+    HomeTopModel * model = self.dataArray[indexPath.row];
     CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(646), 9999) font:[UIFont systemFontOfSize:font750(30)]];
     return Anno750(96) + size.height;
 }
@@ -70,6 +72,14 @@
     [cell updateWithTagAudioModel:self.dataArray[indexPath.row]];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+    [AudioPlayer instance].playList = self.dataArray;
+    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)getData{
     NSDictionary * params = @{
                               @"tagId":self.tagID
@@ -77,7 +87,7 @@
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_TagAudio complete:^(id result) {
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
-            TagAudioModel * model = [[TagAudioModel alloc]initWithDictionary:arr[i]];
+            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
             [self.dataArray addObject:model];
         }
         [self.tabview reloadData];

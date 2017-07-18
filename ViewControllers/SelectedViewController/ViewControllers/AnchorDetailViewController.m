@@ -13,6 +13,7 @@
 #import "AnchorModel.h"
 #import "ShareView.h"
 #import "ShopCarViewController.h"
+#import "SetAccoutViewController.h"
 @interface AnchorDetailViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
 
 @property (nonatomic, strong)UITableView * tabview;
@@ -135,7 +136,14 @@
 }
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
-    
+    UITableViewCell * cell = (UITableViewCell *)[btn superview];
+    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+    HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
+    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+    vc.isBook = YES;
+    vc.money = model.PRICE;
+    vc.products = @[model];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)addToShopCar:(UIButton *)btn{
     UITableViewCell * cell = (UITableViewCell *)[btn superview];
