@@ -23,7 +23,8 @@
     NSMutableArray * muarr = [NSMutableArray new];
     NSArray * tops = dic[@"tops"];
     NSMutableArray * topTitles = [NSMutableArray new];
-    for (int i = 0; i<tops.count; i++) {
+    int num = tops.count <= 5 ? (int)tops.count : 5;
+    for (int i = 0; i< num; i++) {
         HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:tops[i]];
         [topTitles addObject:model.audioName];
         [muarr addObject:model];

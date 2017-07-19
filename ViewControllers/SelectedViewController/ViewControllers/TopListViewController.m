@@ -57,26 +57,8 @@
     [self creatUI];
     [self refreshData];
     
-    [self drawRightCanncleBtn];
-    
-    [[SqlManager manager] openDB];
-    [[SqlManager manager] creatTable];
-    
 }
-- (void)drawRightCanncleBtn{
-    UIBarButtonItem * baritm = [[UIBarButtonItem alloc]initWithTitle:@"暂停"
-                                                               style:UIBarButtonItemStylePlain target:self action:@selector(clickRihghtBtn)];
-    UIBarButtonItem * baritm2 = [[UIBarButtonItem alloc]initWithTitle:@"开始"
-                                                               style:UIBarButtonItemStylePlain target:self action:@selector(clickRihghtBtn2)];
-    
-    self.navigationItem.rightBarButtonItems = @[baritm,baritm2];
-}
-- (void)clickRihghtBtn{
-    [[AudioDownLoader loader] cancelDownLoading];
-}
-- (void)clickRihghtBtn2{
-    [[AudioDownLoader loader] resumeDownLoading];
-}
+
 - (void)creatUI{
     TopHeaderView * topView = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [topView.cateBtn addTarget:self action:@selector(pushToTagListViewController) forControlEvents:UIControlEventTouchUpInside];
@@ -172,7 +154,7 @@
         }
         for (int i = 0; i<datas.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
-            model.downStatus = [NSNumber numberWithInt:[[SqlManager manager] checkDownLoadStatus:model.audioId]];
+            [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
             [self.dataArray addObject:model];
         }
         
@@ -267,8 +249,8 @@
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    
-    
+    HomeTopModel * model = self.dataArray[index.row];
+    [[SqlManager manager] updateAudioDownStatus:2 withAudioId:model.audioId];
 }
 #pragma mark - 点击更多按钮
 - (void)moreBtnClick:(UIButton *)button{

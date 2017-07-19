@@ -39,7 +39,7 @@
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
     self.descLabel = [KTFactory creatLabelWithText:@"独角兽与灰天鹅"
-                                         fontValue:font750(28)
+                                         fontValue:font750(26)
                                          textColor:KTColor_darkGray
                                      textAlignment:NSTextAlignmentLeft];
     self.updateIcon = [KTFactory creatLabelWithText:@"1篇更新"

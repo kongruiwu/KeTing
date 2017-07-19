@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SelectedViewController/ViewControllers/TopListViewController.m"
-            timestampString = "522126374.223983"
+            filePath = "ViewControllers/SelectedViewController/Models/HomeViewModel.m"
+            timestampString = "522137476.899299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "-getData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SQLManager/SqlManager.m"
-            timestampString = "522126561.359126"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "-checkDownLoadStatus:"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "-loadDataWithDic:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

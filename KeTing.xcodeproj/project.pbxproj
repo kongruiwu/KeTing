@@ -88,7 +88,6 @@
 		8B8743071EEE776800324FA2 /* ListenListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743061EEE776800324FA2 /* ListenListViewController.m */; };
 		8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743091EEE799400324FA2 /* ListenListCell.m */; };
 		8B8A054C1F1EEA8F00590344 /* SqlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8A054B1F1EEA8F00590344 /* SqlManager.m */; };
-		8B8A054E1F1EEAD700590344 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8A054D1F1EEAD700590344 /* libsqlite3.0.tbd */; };
 		8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */; };
 		8B8DAF301F1CA3B400BDF1AA /* KTSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2F1F1CA3B400BDF1AA /* KTSearchBar.m */; };
 		8B8DAF331F1CAAF800BDF1AA /* SearchListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF321F1CAAF800BDF1AA /* SearchListCell.m */; };
@@ -478,7 +477,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B8A054E1F1EEAD700590344 /* libsqlite3.0.tbd in Frameworks */,
 				8FF782EBA13D47D762986F04 /* libPods-KeTing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

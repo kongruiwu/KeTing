@@ -78,7 +78,7 @@
     }];
 }
 - (void)updateWithTitles:(NSArray *)titls{
-    for (int i = 0; i<titls.count; i++) {
+    for (int i = 0; i< titls.count; i++) {
         UIButton * button = self.topButtons[i];
         button.hidden = NO;
         [button setTitle:[NSString stringWithFormat:@"  %@",titls[i]] forState:UIControlStateNormal];

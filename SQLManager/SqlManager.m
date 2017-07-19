@@ -26,112 +26,92 @@
     NSArray * sandBox = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString * sandBoxPath = sandBox[0];
     NSString * documentPath = [sandBoxPath stringByAppendingPathComponent:@"Keting.sqlite"];
-    int result=sqlite3_open([documentPath UTF8String], &PDO);
-    if (result==SQLITE_OK) {
-        NSLog(@"数据库打开成功");
-        NSLog(@"%@",documentPath);
-        
-    }else{
-        NSLog(@"数据库打开失败");
+    NSLog(@"数据库地址%@",documentPath);
+    // 2.得到数据库
+    self.PDO = [FMDatabase databaseWithPath:documentPath];
+    // 3.打开数据库
+    if ([self.PDO open]) {
+        // 4.创表
+        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS audio (id integer PRIMARY KEY AUTOINCREMENT,topId INTEGER,topName TEXT,audioId INTEGER,anchorId INTEGER,columnId INTEGER,audioName TEXT,summary TEXT,audioContent TEXT,audioSource TEXT,audioSize INTEGER,audioLong INTEGER,thumbnail TEXT,anchorName TEXT,isprase INTEGER,downStatus INTEGER,playLong INTEGER,tagString TEXT);"];
+        if (result) {
+            NSLog(@"成功创表");
+        } else {
+            NSLog(@"创表失败");
+        }
     }
-}
-- (void)creatTable{
-    NSString *sqlStr=@" create table if not exists audio(number integer primary key autoincrement,topId INTEGER,topName TEXT,audioId INTEGER,anchorId INTEGER,columnId INTEGER,audioName TEXT,summary TEXT,audioContent TEXT,audioSource TEXT,audioSize INTEGER,audioLong INTEGER,thumbnail TEXT,anchorName TEXT,isprase INTEGER,downStatus INTEGER,playLong INTEGER,tagString TEXT)";
-    //执行这条sql语句
-    int result= sqlite3_exec (PDO, [sqlStr UTF8String], nil, nil, nil);
     
-    if (result==SQLITE_OK) {
-        NSLog(@"表创建成功");
-    }else{
-        NSLog(@"表创建失败");
-    }
 }
 - (void)insertAudio:(HomeTopModel *)model{
-    NSString *sqlStr=[NSString stringWithFormat:@"insert into audio (topId,topName,audioId,anchorId,columnId,audioName,summary,audioContent,audioSource,audioSize,audioLong,thumbnail,anchorName,isprase,downStatus,playLong,tagString) values ('%ld','%@','%ld','%ld','%ld','%@','%@','%@','%@','%ld','%ld','%@','%@','%ld','%ld','%ld','%@')",[model.topId integerValue],model.topName,[model.audioId integerValue],[model.anchorId integerValue],[model.columnId integerValue],model.audioName,model.summary,model.audioContent,model.audioSource,[model.audioSize longValue],[model.audioLong integerValue],model.thumbnail,model.anchorName,[@(model.isprase) integerValue],[model.downStatus integerValue],[model.playLong integerValue],model.tagString];
+    NSString *sqlStr=[NSString stringWithFormat:@"insert into audio (topId,topName,audioId,anchorId,columnId,audioName,summary,audioContent,audioSource,audioSize,audioLong,thumbnail,anchorName,isprase,downStatus,playLong,tagString) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.topId,model.topName,model.audioId ,model.anchorId ,model.columnId ,model.audioName,model.summary,model.audioContent,model.audioSource,model.audioSize,model.audioLong,model.thumbnail,model.anchorName,@(model.isprase),model.downStatus ,model.playLong,model.tagString];
     
-    int result=sqlite3_exec(PDO, [sqlStr UTF8String], nil, nil, nil);
-    if (result==SQLITE_OK) {
-        NSLog(@"添加音频成功");
-    }else {
-        NSLog(@"添加音频失败");
-    }
-}
-- (int)checkDownLoadStatus:(NSNumber *)audioID{
-    NSString *sqlStr= [NSString stringWithFormat:@"select downStatus from audio where audioId='%ld'",[audioID integerValue]];
-    sqlite3_stmt *stmt=nil;
-    int result = sqlite3_prepare_v2(PDO, [sqlStr UTF8String], -1, &stmt, nil);
-    if (result == SQLITE_OK) {
-        int downStatus = sqlite3_column_int(stmt, 14);
-        NSLog(@"查询成功");
-        return downStatus;
-    }else{
-        NSLog(@"查询失败");
-        NSLog(@"%d",result);
-        return -1;
-    }
+    [self.PDO executeUpdate:sqlStr];
     
 }
-- (void)updateAudioDownStatus:(NSInteger)status withAudioId:(NSNumber *)audioID{
-    NSString *sqlStr= [NSString stringWithFormat:@"update audio set downStatus='%ld' where audioId='%ld'",status,[audioID integerValue]];
-    //执行sql语句
-    int result=sqlite3_exec(PDO, [sqlStr UTF8String], nil, nil, nil);
-    if (result==SQLITE_OK) {
-        NSLog(@"更新成功");
+- (void)fmdbExecSql:(NSString *)sql{
+    if ([self.PDO open]) {
+        if ([self.PDO executeUpdate:sql]) {
+            NSLog(@"%@%@%@",@"fmdb操作表",@"audio",@"成功！");
+        }else{
+            NSLog(@"%@%@%@ lastErrorMessage：%@，lastErrorCode：%d",@"fmdb创建",@"audio",@"失败！",self.PDO.lastErrorMessage,self.PDO.lastErrorCode);
+        }
     }else{
-        NSLog(@"更新失败");
-        NSLog(@"%d",result);
-    }
-}
-- (void)deleteAudioWithID:(NSNumber *)audioID{
-    NSString *sqlStr=[NSString stringWithFormat:@"delete from audio where audioId='%ld'",[audioID integerValue]];
-    int result=sqlite3_exec(PDO, [sqlStr UTF8String], nil, nil, nil);
-    if (result==SQLITE_OK) {
-        NSLog(@"删除成功");
-    }else{
-        NSLog(@"删除失败");
+        NSLog(@"%@",@"fmdb数据库打开失败！");
     }
 }
 
-- (NSMutableArray *)getAllDownLoaderStatus{
-    NSString *sqlStr=@"select * from audio where downStatus=1";
-    sqlite3_stmt *stmt=nil;
-    int result=sqlite3_prepare_v2(PDO, [sqlStr UTF8String], -1, &stmt, nil);
-     NSMutableArray * audios = [NSMutableArray array];
-    if (result==SQLITE_OK) {
-        NSLog(@"查询成功");
-        //开始遍历查询数据库的每一行数据
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            //让跟随指针进行遍历查询,如果没有行,才会停止循环
-            //满足条件,则逐列的读取内容
-//            //第二个参数表示当前这列数据在表的第几列
-//            const unsigned char *name=sqlite3_column_text(stmt, 1);
-//            int age=sqlite3_column_int(stmt, 2);
-//            const unsigned char *hobby=sqlite3_column_text(stmt,3);
-            //把列里的数据再进行类型的转换
-//            NSInteger stuAge=age;
-//            NSString *stuName=[NSString stringWithUTF8String:(const char *)name];
-//            NSString *stuHobby=[NSString stringWithUTF8String:(const char *)hobby];
-//            //给对象赋值,然后把对象放到数组里
-//            Student *stu=[[Student alloc] init];
-//            
-//            
-        }
-        
-        
-        
-    }else{
-        NSLog(@"查询失败");
-        NSLog(@"%d",result);
+- (void)updateAudioDownStatus:(NSInteger)status withAudioId:(NSNumber *)audioID{
+    NSString *sql = [NSString stringWithFormat:@"UPDATE audio set downStatus='%@' WHERE audioId='%@';",@(status),audioID];
+    [self fmdbExecSql:sql];
+}
+- (void)deleteAudioWithID:(NSNumber *)audioID{
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM audio WHERE audioId='%@';",audioID];
+    [self fmdbExecSql:sql];
+}
+
+- (NSNumber *)checkDownStatusWithAudioid:(NSNumber *)audioID{
+    NSString *sqlQuery = [NSString stringWithFormat:@"SELECT * FROM audio WHERE audioId='%@;",audioID];
+    //根据条件查询
+    FMResultSet *resultSet = [self.PDO executeQuery:sqlQuery];
+    
+    if ([resultSet next]) {
+        NSNumber * downStatus = [resultSet objectForColumn:@"downStatus"];
+        return downStatus;
     }
+    return @(1000);
+    
+}
+
+- (NSMutableArray *)getAllDownLoaderStatus{
+    NSString *sqlQuery = [NSString stringWithFormat:@"SELECT * FROM audio;"];
+    //根据条件查询
+    FMResultSet *resultSet = [self.PDO executeQuery:sqlQuery];
+    NSMutableArray * audios = [NSMutableArray new];
+    //遍历结果集合
+    while ([resultSet  next]){
+        HomeTopModel * model = [[HomeTopModel alloc]init];
+        model.topId = [resultSet objectForColumn:@"topId"];
+        model.topName = [resultSet objectForColumn:@"topName"];
+        model.audioId = [resultSet objectForColumn:@"audioId"];
+        model.anchorId = [resultSet objectForColumn:@"anchorId"];
+        model.columnId = [resultSet objectForColumn:@"columnId"];
+        model.audioName = [resultSet objectForColumn:@"audioName"];
+        model.summary = [resultSet objectForColumn:@"summary"];
+        model.audioContent = [resultSet objectForColumn:@"audioContent"];
+        model.audioSource = [resultSet objectForColumn:@"audioSource"];
+        model.audioSize = [resultSet objectForColumn:@"audioSize"];
+        model.audioLong = [resultSet objectForColumn:@"audioLong"];
+        model.thumbnail = [resultSet objectForColumn:@"thumbnail"];
+        model.anchorName = [resultSet objectForColumn:@"anchorName"];
+        model.isprase = (int)[resultSet intForColumn:@"isprase"];
+        model.downStatus = [resultSet objectForColumn:@"downStatus"];
+        model.playLong = [resultSet objectForColumn:@"playLong"];
+        model.tagString = [resultSet objectForColumn:@"tagString"];
+        [audios addObject:model];
+    }
+
     return audios;
 }
 - (void)closeDB{
-    int result=sqlite3_close(PDO);
-    if (result==SQLITE_OK) {
-        NSLog(@"数据库关闭成功");
-        // NSLog(@"%@",documentPath);
-    }else{
-        NSLog(@"数据库关闭失败");
-    }
+
 }
 @end
