@@ -38,6 +38,7 @@
 - (void)userLogout{
     self.isLogin = NO;
     self.info = nil;
+    self.userid = @"0";
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"USERID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -86,6 +87,9 @@
         }
         if (dic[@"serviceMail"]) {
             self.serviceMail = dic[@"serviceMail"];
+        }
+        if (dic[@"logo"]){
+            self.logo = dic[@"logo"];
         }
     } errorBlock:^(KTError *error) {
         

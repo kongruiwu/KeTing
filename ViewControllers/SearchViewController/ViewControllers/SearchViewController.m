@@ -279,7 +279,7 @@
         }
         
         if (listens.count>0) {
-            NSDictionary * dic = @{@"云掌听书":listens};
+            NSDictionary * dic = @{@"听书":listens};
             [self.dataArray addObject:dic];
         }
         if (tops.count>0) {

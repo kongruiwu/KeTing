@@ -73,12 +73,8 @@
 }
 - (void)updateWithHistoryModel:(HomeTopModel *)model{
     self.nameLabel.text = model.audioName;
-    NSMutableString * tagString = [[NSMutableString alloc]init];
-    for (int i = 0; i<model.tagModels.count; i++) {
-        [tagString appendString:[NSString stringWithFormat:@"    %@",model.tagModels[i].tagName]];
-    }
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
-    self.tagLabel.text = [NSString stringWithFormat:@"%@%@",time,tagString];
+    self.tagLabel.text = [NSString stringWithFormat:@"%@  %@",time,model.tagString];
     float value = [model.playLong floatValue]/[model.audioLong floatValue];
     self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }

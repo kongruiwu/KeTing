@@ -43,6 +43,9 @@
     [super viewDidLoad];
     [self creatUI];
 }
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 - (void)creatUI{
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT  ) style:UITableViewStylePlain];
     self.tabview.delegate = self;
@@ -239,6 +242,7 @@
             num += 1;
         }
         self.listenModel.praseNum = @(num);
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:btn.selected ? @"取消成功":@"点赞成功" duration:1.0f];
         [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
         btn.selected = !btn.selected;
     } errorBlock:^(KTError *error) {

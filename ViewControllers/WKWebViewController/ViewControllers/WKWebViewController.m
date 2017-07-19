@@ -40,6 +40,9 @@
         case PROTOCOLTYPEPRIVACY:
             title = @"隐私协议";
             break;
+        case PROTOCOLTYPEELSETEXT:
+            title = self.model.audioName;
+            break;
         default:
             break;
     }
@@ -58,7 +61,9 @@
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64)];
     if (self.webType == 0) {
-        [self.webView loadHTMLString:[AudioPlayer instance].currentAudio.audioContent baseURL:nil];
+        [self.webView loadHTMLString:[Commond getStringFromHTML5String:[AudioPlayer instance].currentAudio.audioContent].string baseURL:nil];
+    }else if(self.webType == PROTOCOLTYPEELSETEXT){
+        [self.webView loadHTMLString:[Commond getStringFromHTML5String:self.model.audioContent].string baseURL:nil];
     }
     self.webView.navigationDelegate = self;
     [self.view addSubview:self.webView];

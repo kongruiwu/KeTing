@@ -79,5 +79,5 @@ typedef NS_ENUM(NSInteger,BackImgType){
 
 #define     UmengKey            @"556fb9bf67e58e92cf001646"
 #define     JpushKey            @""
-
+#define     APPID               @"1223784388"
 #endif /* ConfigHeader_h */

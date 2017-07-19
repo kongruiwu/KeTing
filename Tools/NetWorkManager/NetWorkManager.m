@@ -128,6 +128,9 @@
     NSString * userid = @"0";
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"]) {
         userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
+        if (userid.length ==0) {
+            userid = @"0";
+        }
     }
     [manager.requestSerializer setValue:userid forHTTPHeaderField:@"USERID"];
     [manager.requestSerializer setValue:INCASE_EMPTY([[ADTracking instance] idfaString], [OpenUDID value]) forHTTPHeaderField:@"DEVICECODE"];

@@ -54,7 +54,7 @@
     self.toolsbar = [KTFactory creatImageViewWithImage:@"top_inputbox"];
     self.downLoadBtn = [KTFactory creatButtonWithNormalImage:@"voice_download" selectImage:@""];
     self.textBtn = [KTFactory creatButtonWithNormalImage:@"voice_draft" selectImage:@""];
-    self.likeBtn = [KTFactory creatButtonWithNormalImage:@"voice_like" selectImage:@""];
+    self.likeBtn = [KTFactory creatButtonWithNormalImage:@"voice_like" selectImage:@"listen_liked"];
     self.shareBtn = [KTFactory creatButtonWithNormalImage:@"voice_ share" selectImage:@""];
     
     self.toolsbar.userInteractionEnabled = YES;
@@ -189,21 +189,14 @@
     self.nameLabel.text = model.audioName;
     self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     int playTime = (int)([model.playTime floatValue] / [model.audioLong floatValue] * 100);
-    if (playTime == 0) {
+//    if (playTime == 0) {
         self.playStutas.hidden = YES;
-    }else{
-        self.playStutas.hidden = NO;
-        self.playStutas.text = [NSString stringWithFormat:@"已播放%d%%",playTime];
-    }
-    NSMutableString * tagString = [[NSMutableString alloc]init];
-    for (int i = 0; i<model.tagModels.count; i++) {
-        if (i == 0) {
-            [tagString appendString:[NSString stringWithFormat:@"%@",model.tagModels[i].tagName]];
-        }else{
-            [tagString appendString:[NSString stringWithFormat:@"    %@",model.tagModels[i].tagName]];
-        }
-    }
-    self.tagLabel.text = tagString;
+//    }else{
+//        self.playStutas.hidden = NO;
+//        self.playStutas.text = [NSString stringWithFormat:@"已播放%d%%",playTime];
+//    }
+    self.likeBtn.selected = model.isprase;
+    self.tagLabel.text = model.tagString;
     self.toolsbar.hidden = !model.showTools;
 }
 - (void)updateWithTagAudioModel:(HomeTopModel *)model{
@@ -219,6 +212,7 @@
             [tagString appendString:[NSString stringWithFormat:@"    %@",tags[i]]];
         }
     }
+    self.likeBtn.selected = model.isprase;
     self.tagLabel.text = tagString;
 }
 @end

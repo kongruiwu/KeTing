@@ -13,15 +13,19 @@
 #import "CateListViewController.h"
 #import "TopListDownCell.h"
 #import "TopListBottomView.h"
-
 #import "AudioPlayerViewController.h"
-
 #import "AudioDownLoader.h"
+#import "WKWebViewController.h"
+#import "LoginViewController.h"
+
+//测试
+#import "SqlManager.h"
 
 @interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate>
 
 @property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, assign) int page;
+
 @property (nonatomic, strong) NSMutableArray * dataArray;
 /**是否是下载界面*/
 @property (nonatomic, assign) BOOL isDownLoad;
@@ -54,6 +58,10 @@
     [self refreshData];
     
     [self drawRightCanncleBtn];
+    
+    [[SqlManager manager] openDB];
+    [[SqlManager manager] creatTable];
+    
 }
 - (void)drawRightCanncleBtn{
     UIBarButtonItem * baritm = [[UIBarButtonItem alloc]initWithTitle:@"暂停"
@@ -164,6 +172,7 @@
         }
         for (int i = 0; i<datas.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
+            model.downStatus = [NSNumber numberWithInt:[[SqlManager manager] checkDownLoadStatus:model.audioId]];
             [self.dataArray addObject:model];
         }
         
@@ -210,23 +219,56 @@
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:model];
+//    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:model];
+    [[SqlManager manager] insertAudio:model];
+    
 }
 #pragma mark - 查看音频文档
 - (void)checkAudioText:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.dataArray[index.row];
+    WKWebViewController * vc= [[WKWebViewController alloc]init];
+    vc.model = model;
+    vc.webType = PROTOCOLTYPEELSETEXT;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark - 音频点赞
 - (void)likeAudioClick:(UIButton *)button{
-    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
-    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+        NSIndexPath * index = [self.tabview indexPathForCell:cell];
+        HomeTopModel * model = self.dataArray[index.row];
+        NSDictionary * params = @{
+                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                                  @"relationType":@1,
+                                  @"relationId":model.audioId,
+                                  @"nickName":[UserManager manager].info.NICKNAME
+                                  };
+        NSString * pageUrl = Page_AddLike;
+        if (button.selected) {
+            pageUrl = Page_DelLike;
+        }
+        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+            button.selected = !button.selected;
+            model.isprase = button.selected;
+            [self.tabview reloadData];
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
 }
 #pragma mark - 分享
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    NSLog(@"22222");
+    
+    
 }
 #pragma mark - 点击更多按钮
 - (void)moreBtnClick:(UIButton *)button{

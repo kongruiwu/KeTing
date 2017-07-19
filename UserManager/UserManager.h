@@ -32,7 +32,7 @@
 @property (nonatomic, strong) NSString * serviceWeChat;
 /**客服邮箱*/
 @property (nonatomic, strong) NSString * serviceMail;
-
+@property (nonatomic, strong) NSString * logo;
 @property (nonatomic, assign) id<UserManagerDelegate> delegate;
 
 + (instancetype)manager;

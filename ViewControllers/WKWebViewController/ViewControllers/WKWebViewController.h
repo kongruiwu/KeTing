@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, PROTOCOLTYPE){
     PROTOCOLTYPEAGREE   = 1 ,//服务协议
     PROTOCOLTYPEPRIVACY     ,//隐私协议
     PROTOCOLTYPEBALANCE     ,//余额支付协议
+    PROTOCOLTYPEELSETEXT    ,//其余文稿
 };
 
 
@@ -21,5 +22,6 @@ typedef NS_ENUM(NSInteger, PROTOCOLTYPE){
 
 @property (nonatomic, strong) WKWebView * webView;
 @property (nonatomic, assign) PROTOCOLTYPE webType;
+@property (nonatomic, strong) HomeTopModel * model;
 
 @end

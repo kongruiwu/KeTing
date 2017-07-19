@@ -8,7 +8,6 @@
 
 #import "BaseModel.h"
 #import "TagsModel.h"
-
 @interface HomeTopModel : BaseModel
 
 /**头条Id*/
@@ -19,7 +18,7 @@
 @property (nonatomic, strong) NSString * topName;
 
 /**音频Id*/
-@property (nonatomic, strong) NSString * audioId;
+@property (nonatomic, strong) NSNumber * audioId;
 /**唯一标识*/
 @property (nonatomic, strong) NSString * onlyCode;
 /**主播id*/
@@ -85,4 +84,8 @@
 @property (nonatomic, strong) NSNumber * relationId;
 /**收听时长*/
 @property (nonatomic, strong) NSNumber * playLong;
+/**标签tag*/
+@property (nonatomic, strong) NSString * tagString;
+/**音频存储的本地地址*/
+@property (nonatomic, strong) NSString * localAddress;
 @end

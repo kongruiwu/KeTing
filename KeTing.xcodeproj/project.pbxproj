@@ -87,6 +87,8 @@
 		8B8743041EEE774E00324FA2 /* VoiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743031EEE774E00324FA2 /* VoiceDetailViewController.m */; };
 		8B8743071EEE776800324FA2 /* ListenListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743061EEE776800324FA2 /* ListenListViewController.m */; };
 		8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743091EEE799400324FA2 /* ListenListCell.m */; };
+		8B8A054C1F1EEA8F00590344 /* SqlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8A054B1F1EEA8F00590344 /* SqlManager.m */; };
+		8B8A054E1F1EEAD700590344 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8A054D1F1EEAD700590344 /* libsqlite3.0.tbd */; };
 		8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */; };
 		8B8DAF301F1CA3B400BDF1AA /* KTSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2F1F1CA3B400BDF1AA /* KTSearchBar.m */; };
 		8B8DAF331F1CAAF800BDF1AA /* SearchListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF321F1CAAF800BDF1AA /* SearchListCell.m */; };
@@ -99,7 +101,6 @@
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
-		8BC126651F1D9753005CF363 /* downLoaderList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BC126641F1D9753005CF363 /* downLoaderList.plist */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
 		8BC1266B1F1DAE1A005CF363 /* SetAccountHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1266A1F1DAE1A005CF363 /* SetAccountHeadCell.m */; };
 		8BC1266E1F1DB094005CF363 /* PayMomentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1266D1F1DB094005CF363 /* PayMomentCell.m */; };
@@ -338,6 +339,9 @@
 		8B8743061EEE776800324FA2 /* ListenListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenListViewController.m; sourceTree = "<group>"; };
 		8B8743081EEE799400324FA2 /* ListenListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenListCell.h; sourceTree = "<group>"; };
 		8B8743091EEE799400324FA2 /* ListenListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenListCell.m; sourceTree = "<group>"; };
+		8B8A054A1F1EEA8F00590344 /* SqlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqlManager.h; sourceTree = "<group>"; };
+		8B8A054B1F1EEA8F00590344 /* SqlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SqlManager.m; sourceTree = "<group>"; };
+		8B8A054D1F1EEAD700590344 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		8B8DAF2B1F1C9CB000BDF1AA /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		8B8DAF2E1F1CA3B400BDF1AA /* KTSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSearchBar.h; sourceTree = "<group>"; };
@@ -362,7 +366,6 @@
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
 		8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLikeViewController.m; sourceTree = "<group>"; };
-		8BC126641F1D9753005CF363 /* downLoaderList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = downLoaderList.plist; sourceTree = "<group>"; };
 		8BC126661F1DAA9A005CF363 /* SetAccoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetAccoutViewController.h; sourceTree = "<group>"; };
 		8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetAccoutViewController.m; sourceTree = "<group>"; };
 		8BC126691F1DAE1A005CF363 /* SetAccountHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetAccountHeadCell.h; sourceTree = "<group>"; };
@@ -475,6 +478,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B8A054E1F1EEAD700590344 /* libsqlite3.0.tbd in Frameworks */,
 				8FF782EBA13D47D762986F04 /* libPods-KeTing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +512,7 @@
 		6E91B40787CF65EDDC8A6969 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B8A054D1F1EEAD700590344 /* libsqlite3.0.tbd */,
 				76003AEA8175C7294536DAB5 /* libPods-KeTing.a */,
 			);
 			name = Frameworks;
@@ -890,6 +895,15 @@
 			path = ../ViewControllers/ShareView;
 			sourceTree = "<group>";
 		};
+		8B8A05491F1EEA5600590344 /* SQLManager */ = {
+			isa = PBXGroup;
+			children = (
+				8B8A054A1F1EEA8F00590344 /* SqlManager.h */,
+				8B8A054B1F1EEA8F00590344 /* SqlManager.m */,
+			);
+			path = SQLManager;
+			sourceTree = "<group>";
+		};
 		8B8DAF211F1C950600BDF1AA /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -945,7 +959,6 @@
 			children = (
 				8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */,
 				8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */,
-				8BC126641F1D9753005CF363 /* downLoaderList.plist */,
 			);
 			path = AudioDownLoader;
 			sourceTree = "<group>";
@@ -1140,6 +1153,7 @@
 		8BF84CB21EE4F6620072637D = {
 			isa = PBXGroup;
 			children = (
+				8B8A05491F1EEA5600590344 /* SQLManager */,
 				8BA3DCFA1F1764DB00D5ACB5 /* AudioDownLoader */,
 				8B9B9EE21F137C04004A2283 /* HistoryManager */,
 				8B7AB4CE1F0391110068CAE7 /* UserManager */,
@@ -1391,7 +1405,6 @@
 				8BF692071EE7A245001CECEE /* toast_bg@2x.png in Resources */,
 				8BF692091EE7A245001CECEE /* toast_icon_bg@2x.png in Resources */,
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,
-				8BC126651F1D9753005CF363 /* downLoaderList.plist in Resources */,
 				8BF84CCB1EE4F6620072637D /* Assets.xcassets in Resources */,
 				8BF692081EE7A245001CECEE /* toast_failure@2x.png in Resources */,
 				8BF6920A1EE7A245001CECEE /* toast_net_failure@2x.png in Resources */,
@@ -1479,6 +1492,7 @@
 				8B2D73FE1F0CB06F00E1BF4B /* AboutusViewController.m in Sources */,
 				8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */,
 				8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */,
+				8B8A054C1F1EEA8F00590344 /* SqlManager.m in Sources */,
 				8BFB091D1F0F585C00FA30F0 /* MessageModel.m in Sources */,
 				8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */,
 				8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */,

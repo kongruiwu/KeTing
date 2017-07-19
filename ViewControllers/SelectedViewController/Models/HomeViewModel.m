@@ -18,7 +18,7 @@
     return self;
 }
 - (void)loadDataWithDic:(NSDictionary *)dic{
-    self.titleArray = @[@"财经头条",@"声度",@"云掌听书",@""];
+    self.titleArray = @[@"财经头条",@"声度",@"听书",@""];
     
     NSMutableArray * muarr = [NSMutableArray new];
     NSArray * tops = dic[@"tops"];

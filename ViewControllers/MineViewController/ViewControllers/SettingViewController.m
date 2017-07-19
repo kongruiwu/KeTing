@@ -116,7 +116,15 @@
     if (indexPath.section == 1) {
         title = self.titles[indexPath.row +1];
     }
-    [cell updateWithName:title desc:@""];
+    NSString * desc = @"";
+    BOOL rec = NO;
+    if (indexPath.section == 1) {
+        if (indexPath.row == 3) {
+            desc = [NSString stringWithFormat:@"客服微信：%@",[UserManager manager].serviceWeChat];
+            rec = YES;
+        }
+    }
+    [cell updateWithName:title desc:desc hiddenArrow:rec];
     return cell;
 }
 
@@ -126,7 +134,11 @@
     }else if(indexPath.section == 1){
         if (indexPath.row == 1) {
             [self.shareView show];
-        }else if (indexPath.row == 5) {
+        }else if(indexPath.row == 2){
+            NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", APPID];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+        }
+        else if (indexPath.row == 5) {
             [self.navigationController pushViewController:[AccountSafeViewController new] animated:YES];
         }else if(indexPath.row == 6){
             [self.navigationController pushViewController:[AboutusViewController new] animated:YES];

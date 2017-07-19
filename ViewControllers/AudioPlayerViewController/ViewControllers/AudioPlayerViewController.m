@@ -350,19 +350,7 @@
     HomeTopModel * model = [AudioPlayer instance].currentAudio;
     [self.audioPhoto sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
     [self setNavTitle:model.audioName color: [UIColor whiteColor]];
-    NSMutableString * tagString = [NSMutableString new];
-    if ([AudioPlayer instance].currentAudio.tagModels>0) {
-        for (int i = 0; i<[AudioPlayer instance].currentAudio.tagModels.count; i++) {
-            if (i == 0) {
-                [tagString appendString:[NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
-            }else{
-                [tagString appendString:[NSString stringWithFormat:@"  #%@",[AudioPlayer instance].currentAudio.tagModels[i].tagName]];
-            }
-        }
-    }else{
-        [tagString appendString:[NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagName]];
-    }
-    self.tagLabel.text = tagString;
+    self.tagLabel.text = [AudioPlayer instance].currentAudio.tagString.length == 0 ? @"" : [NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagString];
     self.currntNum.text = [NSString stringWithFormat:@"正在播放  %d/%ld",[[AudioPlayer instance] currentSortNum],
                            [AudioPlayer instance].playList.count];
 }

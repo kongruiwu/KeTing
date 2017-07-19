@@ -41,7 +41,8 @@
         [topButton setImage:[UIImage imageNamed:@"listenSelected"] forState:UIControlStateSelected];
         [topButton setImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
         [topButton setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
-        topButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+        topButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        topButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [topButton addTarget:self action:@selector(playThisAudio:) forControlEvents:UIControlEventTouchUpInside];
         [self.topButtons addObject:topButton];
         [self addSubview:topButton];
@@ -59,6 +60,7 @@
             make.top.equalTo(@((Anno750(25) + Anno750(50) * i)));
             make.left.equalTo(@(Anno750(24)));
             make.height.equalTo(@(Anno750(50)));
+            make.width.equalTo(@(Anno750(520)));
         }];
     }
     

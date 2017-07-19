@@ -26,7 +26,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"云掌听书" color:KTColor_MainBlack];
+    [self setNavTitle:@"听书" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
 }

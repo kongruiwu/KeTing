@@ -8,6 +8,7 @@
 
 #import "AboutusViewController.h"
 #import "SettingListCell.h"
+#import "WKWebViewController.h"
 @interface AboutusViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView * tabview;
@@ -27,7 +28,7 @@
 }
 - (void)creatUI{
     self.titles = @[@"客服微信",@"意见反馈邮箱",@"服务使用协议"];
-    self.descs = @[@"TianCai",@"fankui@123.com.cn",@""];
+    self.descs = @[[UserManager manager].serviceWeChat,[UserManager manager].serviceMail,@""];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -43,16 +44,17 @@
     return 0.01;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(360);
+    return Anno750(500);
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * header = [KTFactory creatViewWithColor:[UIColor whiteColor]];
-    header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(360));
+    header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(500));
     UIView * grayView = [KTFactory creatViewWithColor:KTColor_BackGround];
     grayView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
     [header addSubview:grayView];
     
-    UIImageView * imageView = [KTFactory creatImageViewWithImage:@"my_ logo"];
+    UIImageView * imageView = [KTFactory creatImageViewWithImage:@""];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].logo]];
     [header addSubview:imageView];
     UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"版本号 v%@",[[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"]]
                                           fontValue:font750(24)
@@ -89,6 +91,13 @@
     }
     [cell updateWithName:self.titles[indexPath.row] desc:self.descs[indexPath.row] hiddenArrow:rec];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 2) {
+        WKWebViewController * vc = [[WKWebViewController alloc]init];
+        vc.webType = PROTOCOLTYPEAGREE;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 
