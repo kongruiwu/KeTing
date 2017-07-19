@@ -33,7 +33,12 @@
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
                                      textAlignment:NSTextAlignmentLeft];
-    self.tagLabel = [KTFactory creatLabelWithText:@"已暂停，点击继续下载  3:47  财经  新闻  已播3%"
+    self.downLoadImg = [KTFactory creatImageViewWithImage:@"icon_selected"];
+    self.downStatus = [KTFactory creatLabelWithText:@""
+                                          fontValue:font750(24)
+                                          textColor:KTColor_lightGray
+                                      textAlignment:NSTextAlignmentLeft];
+    self.tagLabel = [KTFactory creatLabelWithText:@"已暂停，点击继续下载  3:47  财经  新闻"
                                         fontValue:font750(24)
                                         textColor:KTColor_lightGray
                                     textAlignment:NSTextAlignmentLeft];
@@ -42,6 +47,8 @@
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
     self.line = [KTFactory creatLineView];
+    [self addSubview:self.downLoadImg];
+    [self addSubview:self.downStatus];
     [self addSubview:self.nameLabel];
     [self addSubview:self.tagLabel];
     [self addSubview:self.playStatus];
@@ -55,9 +62,17 @@
         make.right.equalTo(@(-Anno750(24)));
         make.top.equalTo(@(Anno750(20)));
     }];
-    [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.downLoadImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.bottom.equalTo(@(-Anno750(20)));
+    }];
+    [self.downStatus mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(24)));
+        make.centerY.equalTo(self.downLoadImg.mas_centerY);
+    }];
+    [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.downStatus.mas_right);
+        make.centerY.equalTo(self.downLoadImg.mas_centerY);
     }];
     [self.playStatus mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.tagLabel.mas_right).offset(Anno750(20));
@@ -71,12 +86,19 @@
     }];
     
 }
-- (void)updateWithHistoryModel:(HomeTopModel *)model{
+- (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec{
+    self.downLoadImg.hidden = [model.downStatus intValue] == 2 ? NO :YES;
+    if (!self.downLoadImg.hidden && !rec) {
+        self.downStatus.text = @"    ";
+    }
+    if (rec) {
+        self.downStatus.text = @"已暂停，点击继续下载";
+    }
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
-    self.tagLabel.text = [NSString stringWithFormat:@"%@  %@",time,model.tagString];
-    float value = [model.playLong floatValue]/[model.audioLong floatValue];
-    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
+    self.tagLabel.text = [NSString stringWithFormat:@"  %@  %@",time,model.tagString];
+//    float value = [model.playLong floatValue]/[model.audioLong floatValue];
+//    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }
 
 @end

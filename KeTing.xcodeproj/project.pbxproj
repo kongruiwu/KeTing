@@ -88,6 +88,7 @@
 		8B8743071EEE776800324FA2 /* ListenListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743061EEE776800324FA2 /* ListenListViewController.m */; };
 		8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743091EEE799400324FA2 /* ListenListCell.m */; };
 		8B8A054C1F1EEA8F00590344 /* SqlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8A054B1F1EEA8F00590344 /* SqlManager.m */; };
+		8B8A05511F1F8B0C00590344 /* WaitDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8A05501F1F8B0C00590344 /* WaitDownLoadViewController.m */; };
 		8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */; };
 		8B8DAF301F1CA3B400BDF1AA /* KTSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF2F1F1CA3B400BDF1AA /* KTSearchBar.m */; };
 		8B8DAF331F1CAAF800BDF1AA /* SearchListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF321F1CAAF800BDF1AA /* SearchListCell.m */; };
@@ -341,6 +342,8 @@
 		8B8A054A1F1EEA8F00590344 /* SqlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SqlManager.h; sourceTree = "<group>"; };
 		8B8A054B1F1EEA8F00590344 /* SqlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SqlManager.m; sourceTree = "<group>"; };
 		8B8A054D1F1EEAD700590344 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		8B8A054F1F1F8B0C00590344 /* WaitDownLoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitDownLoadViewController.h; sourceTree = "<group>"; };
+		8B8A05501F1F8B0C00590344 /* WaitDownLoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitDownLoadViewController.m; sourceTree = "<group>"; };
 		8B8DAF2B1F1C9CB000BDF1AA /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		8B8DAF2E1F1CA3B400BDF1AA /* KTSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSearchBar.h; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				8B7FA6391F0A1C2A00FA01B4 /* MyLikeSubViewController.m */,
 				8B7FA63B1F0A2EE500FA01B4 /* DownLoadViewController.h */,
 				8B7FA63C1F0A2EE500FA01B4 /* DownLoadViewController.m */,
+				8B8A054F1F1F8B0C00590344 /* WaitDownLoadViewController.h */,
+				8B8A05501F1F8B0C00590344 /* WaitDownLoadViewController.m */,
 				8B7FA63E1F0A366300FA01B4 /* DownLoadSubViewController.h */,
 				8B7FA63F1F0A366300FA01B4 /* DownLoadSubViewController.m */,
 				8B2D73841F0B224F00E1BF4B /* MessageViewController.h */,
@@ -1507,6 +1512,7 @@
 				8B3CEECC1F0DC6BE00AE5B81 /* PickerView.m in Sources */,
 				8B53EA971EE53CE6009EA76D /* HomeVoiceCell.m in Sources */,
 				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,
+				8B8A05511F1F8B0C00590344 /* WaitDownLoadViewController.m in Sources */,
 				8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */,
 				8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */,
 				8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */,

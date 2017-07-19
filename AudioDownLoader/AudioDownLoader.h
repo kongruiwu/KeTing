@@ -8,8 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "HomeTopModel.h"
+#import "SqlManager.h"
 #define HSCachesDirectory [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"AudioCashe"]
 #define TemCachesPath  [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"Temp"]
+@protocol AudioDownLoadDelegate <NSObject>
+
+
+- (void)audioDownLoadOver;
+
+@end
+
+
 @interface AudioDownLoader : NSObject<NSURLSessionDownloadDelegate>
 /**下载列表*/
 @property (nonatomic, strong) NSMutableArray * downLoadList;
@@ -24,14 +33,9 @@
 
 @property (nonatomic, strong) HomeTopModel * currentModel;
 
+@property (nonatomic, assign) id <AudioDownLoadDelegate> delegate;
 
-/**
-    存储所有选择要下载数据
- -》依次下载数据
- -》下载完成后  存储数据路径 ，修改数据库下载状态，添加下载地址
- -》正在下载状态的  在暂停下载时 修改下载状态
- 
- */
+
 
 + (instancetype)loader;
 /**开始下载*/

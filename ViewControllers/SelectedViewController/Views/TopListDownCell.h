@@ -13,7 +13,6 @@
 
 
 @property (nonatomic, strong) UIButton * selctButton;
-@property (nonatomic, strong) UIImageView * downLoadImg;
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UILabel * timeLabel;
 @property (nonatomic, strong) UILabel * tagLabel;

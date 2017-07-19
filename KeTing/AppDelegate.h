@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "HMSegmentViewController.h"
+
+#import <Reachability.h>
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, strong) HMSegmentViewController * hmvc;
+
+@property (nonatomic, strong) Reachability * hostReach;
+@property (nonatomic, assign) NetworkStatus netStatus;
 @end
 

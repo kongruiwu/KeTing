@@ -117,16 +117,10 @@
     }];
     [self.downLoadImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLabel.mas_left);
-        make.width.equalTo(@(Anno750(26)));
-        make.height.equalTo(@(Anno750(26)));
         make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(20));
     }];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (self.downLoadImg.hidden) {
-            make.left.equalTo(self.nameLabel.mas_left);
-        }else{
-            make.left.equalTo(self.downLoadImg.mas_right).offset(Anno750(20));
-        }
+        make.left.equalTo(self.nameLabel.mas_left);
         make.centerY.equalTo(self.downLoadImg.mas_centerY);
     }];
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,9 +179,7 @@
 
 
 - (void)updateWithHomeTopModel:(HomeTopModel *)model{
-    
     self.nameLabel.text = model.audioName;
-    self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     int playTime = (int)([model.playTime floatValue] / [model.audioLong floatValue] * 100);
 //    if (playTime == 0) {
         self.playStutas.hidden = YES;
@@ -198,21 +190,12 @@
     self.likeBtn.selected = model.isprase;
     self.tagLabel.text = model.tagString;
     self.toolsbar.hidden = !model.showTools;
-}
-- (void)updateWithTagAudioModel:(HomeTopModel *)model{
-    self.nameLabel.text = model.audioName;
-    self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
-    self.playStutas.hidden = YES;
-    NSArray * tags = [model.tagName componentsSeparatedByString:@","];
-    NSMutableString * tagString = [[NSMutableString alloc]init];
-    for (int i = 0; i<tags.count; i++) {
-        if (i == 0) {
-            [tagString appendString:tags[i]];
-        }else{
-            [tagString appendString:[NSString stringWithFormat:@"    %@",tags[i]]];
-        }
+    self.downLoadImg.hidden = [model.downStatus intValue] == 2 ? NO : YES;
+    if (!self.downLoadImg.hidden) {
+        self.timeLabel.text = [NSString stringWithFormat:@"      %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+    }else{
+        self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];;
     }
-    self.likeBtn.selected = model.isprase;
-    self.tagLabel.text = tagString;
 }
+
 @end

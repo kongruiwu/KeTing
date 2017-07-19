@@ -7,7 +7,7 @@
 //
 
 #import "AudioDownLoader.h"
-
+#import "ToastView.h"
 @interface AudioDownLoader()
 
 
@@ -35,7 +35,20 @@
         if (!loader) {
             loader = [[AudioDownLoader alloc]init];
             loader.fileManager = [NSFileManager defaultManager];
+            //先获取本地 正在下载音频 和 未下载音频
+            loader.currentModel = nil;
+            NSMutableArray * loading = [[SqlManager manager] getDownLoadingAudio];
+            if (loading.count>0) {
+                loader.currentModel = loading[0];
+            }
             loader.downLoadList = [NSMutableArray new];
+            NSMutableArray * muarr = [[SqlManager manager] getWaitDownLoadingAudios];
+            if (loader.currentModel) {
+                [muarr addObject:loader.currentModel];
+            }
+            if (muarr.count > 0) {
+                loader.downLoadList = muarr;
+            }
             NSURLSessionConfiguration * cfg = [NSURLSessionConfiguration defaultSessionConfiguration]; // 默认配置
             loader.session = [NSURLSession sessionWithConfiguration:cfg delegate:loader delegateQueue:[NSOperationQueue mainQueue]];
         }
@@ -44,10 +57,18 @@
 }
 
 - (void)downLoadAudioWithHomeTopModel:(NSArray *)topModels{
+    [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"音频已开始下载。。。" duration:1.0f];
+    for (int i = 0; i<topModels.count; i++) {
+         //先将数据存储到数据库  然后在下载完成后修改数据下载状态
+        [[SqlManager manager] insertAudio:topModels[i]];
+    }
     
     [self.downLoadList addObjectsFromArray:topModels];
-    
-    self.currentModel = [topModels firstObject];
+    if (!self.currentModel) {
+        self.currentModel = [self.downLoadList firstObject];
+    }
+    //刚开始下载的音频  刷新数据库中downloadstatus
+    [[SqlManager manager] updateAudioDownStatus:1 withAudioId:self.currentModel.audioId];
     
     NSURL * url = [NSURL URLWithString:self.currentModel.audioSource];
     
@@ -59,7 +80,9 @@
 }
 //暂停下载
 - (void)cancelDownLoading{
-    
+    if (!self.currentModel) {
+        return;
+    }
     __weak typeof(self) weakself = self;
     [self.downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
        // resumeData 暂停后的 尚未下载完的数据
@@ -80,10 +103,19 @@
         }
         [[NSUserDefaults standardUserDefaults] setObject:resumeData forKey:@"resumeData"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
     }];
 }
 //开始下载
 - (void)resumeDownLoading{
+    NSMutableArray * arr = [[SqlManager manager] getDownLoadingAudio];
+    if (arr.count >0) {
+        self.currentModel = arr[0];
+    }
+    if (!self.currentModel) {
+        return;
+    }
     NSArray *paths = [self.fileManager subpathsAtPath:TemCachesPath];
     for (NSString *filePath in paths)
     {
@@ -91,7 +123,6 @@
         {
             NSString * temp = [TemCachesPath stringByAppendingPathComponent:filePath];
             NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:filePath];
-            //反向移动
             [self.fileManager copyItemAtPath:temp toPath:path error:nil];
             [self.fileManager removeItemAtPath:TemCachesPath error:nil];
         }
@@ -99,7 +130,8 @@
     if (!self.resumeData) {
         self.resumeData = [[NSUserDefaults standardUserDefaults] objectForKey:@"resumeData"];
     }
-   self.downloadTask = [self.session downloadTaskWithResumeData:self.resumeData];
+    
+    self.downloadTask = [self.session downloadTaskWithResumeData:self.resumeData];
     [self.downloadTask resume];
 }
 #pragma mark -- NSURLSessionDownloadDelegate
@@ -113,27 +145,37 @@
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location
 {
-    NSLog(@"文件临时地址 %@",location);
     /*
             存储元数据
             获取地址
             数据库 存入            audioid   isDownLoading  url
      */
+    if ([self.delegate respondsToSelector:@selector(audioDownLoadOver)]) {
+        [self.delegate audioDownLoadOver];
+    }
     if (![self.fileManager fileExistsAtPath:HSCachesDirectory]) {
         [self.fileManager createDirectoryAtPath:HSCachesDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
     }
     // 下载成功
     // 注意 location是下载后的临时保存路径, 需要将它移动到需要保存的位置
     NSError *saveError;
-    NSURL * saveURL =[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@.mp3",HSCachesDirectory,self.currentModel.audioName]];
+    NSURL * saveURL =[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",HSCachesDirectory,self.currentModel.audioId]];
     
     // 文件复制到cache路径中
     [[NSFileManager defaultManager] copyItemAtURL:location toURL:saveURL error:&saveError];
-    NSLog(@"文件保存地址:%@",saveURL);
-    if (!saveError) {
-        NSLog(@"保存成功");
-    } else {
-        NSLog(@"error is %@", saveError.localizedDescription);
+    //下载成功之后 修改本地数据库 修改下载状态 与本地地址
+    [[SqlManager manager] updateAudioDownStatus:2 withAudioId:self.currentModel.audioId];
+    [[SqlManager manager] updateAudioLocaltionAddress:[NSString stringWithFormat:@"%@",saveURL] withAudioId:self.currentModel.audioId];
+    //删除已下载的音频，重新开始下一个音频下载
+    [self.downLoadList removeObject:self.currentModel];
+    self.currentModel = nil;
+    if (self.downLoadList.count >0) {
+        self.currentModel = self.downLoadList[0];
+        NSURL * url = [NSURL URLWithString:self.currentModel.audioSource];
+        // 创建任务
+        self.downloadTask = [self.session downloadTaskWithURL:url];
+        // 开始任务
+        [self.downloadTask resume];
     }
 }
 /**

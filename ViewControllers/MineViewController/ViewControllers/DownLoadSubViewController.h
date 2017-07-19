@@ -11,5 +11,4 @@
 @interface DownLoadSubViewController : BaseViewController
 
 
-- (instancetype)initWithDownLoadingStatus:(BOOL)rec;
 @end

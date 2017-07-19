@@ -67,7 +67,7 @@
 
 /**音频主键*/
 @property (nonatomic, strong) NSNumber * downPercent;
-/**下载进度  0  下载中， 下载完成*/
+/**下载进度  0 未下载， 1  下载中， 2 下载完成*/
 @property (nonatomic, strong) NSNumber * downStatus;
 /**下载设备号*/
 @property (nonatomic, strong) NSString * deviceNo;

@@ -7,7 +7,7 @@
 //
 
 #import "AudioPlayer.h"
-
+#import "SqlManager.h"
 @implementation AudioPlayer
 
 + (instancetype)instance{
@@ -28,7 +28,18 @@
 }
 
 - (void)audioPlay:(HomeTopModel *)model{
-    [self.audioPlayer play:model.audioSource];
+    NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    if ([num integerValue] == 2) {
+        NSString * localadd = [[SqlManager manager] checkAudioLocaltionAddressWithAudioid:model.audioId];
+        if (localadd.length>0) {
+            [self.audioPlayer play:localadd];
+        }else{
+            [self.audioPlayer play:model.audioSource];
+        }
+    }else{
+        [self.audioPlayer play:model.audioSource];
+    }
+    
 }
 
 - (void)audioResume{

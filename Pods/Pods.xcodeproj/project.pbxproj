@@ -506,6 +506,7 @@
 /* Begin PBXFileReference section */
 		0040C8987FD94F80178D2BDAB18A5964 /* NSObject+RACPropertySubscribing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+RACPropertySubscribing.h"; path = "ReactiveObjC/NSObject+RACPropertySubscribing.h"; sourceTree = "<group>"; };
 		01476A641B8BAA76F83EE0A16A1DCBAB /* Masonry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Masonry.h; path = Masonry/Masonry.h; sourceTree = "<group>"; };
+		01628D4601D669379A48507DAA8E6345 /* WeiboSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeiboSDK.h; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK.h; sourceTree = "<group>"; };
 		01A8F61D0ACBF50E5DCA7F9BAC05EE59 /* UIRefreshControl+RACCommandSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+RACCommandSupport.h"; path = "ReactiveObjC/UIRefreshControl+RACCommandSupport.h"; sourceTree = "<group>"; };
 		021F19561B0BF0F782400427C12A8210 /* HMSegmentedControl.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HMSegmentedControl.xcconfig; sourceTree = "<group>"; };
 		023867653E84AFDF11245F14ABA9039F /* FMDB.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FMDB.xcconfig; sourceTree = "<group>"; };
@@ -559,8 +560,8 @@
 		21E8213B189BA7C17C7E3200C20B97B8 /* RACDelegateProxy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACDelegateProxy.m; path = ReactiveObjC/RACDelegateProxy.m; sourceTree = "<group>"; };
 		21EB226E1CA6D222FF59EEC45B062B0A /* UIImagePickerController+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImagePickerController+RACSignalSupport.h"; path = "ReactiveObjC/UIImagePickerController+RACSignalSupport.h"; sourceTree = "<group>"; };
 		22E441627D75F76524A12190AC68C1D0 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
+		24CF235F3BF356BF0C757DCCA70DE5D6 /* UMSocialCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMSocialCore.framework; path = UShareSDK/UMSocialSDK/UMSocialCore.framework; sourceTree = "<group>"; };
 		2692E5A9402A975052D1395B7B6A978E /* FMDB-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FMDB-dummy.m"; sourceTree = "<group>"; };
-		26AE1CB346BC1D8279BACB8C280BDC7C /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = UShareSDK/SocialLibraries/QQ/QQSDK/TencentOpenAPI.framework; sourceTree = "<group>"; };
 		26DE5041E36A0750466D42E1E0EDD6E4 /* STKQueueEntry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = STKQueueEntry.h; path = StreamingKit/StreamingKit/STKQueueEntry.h; sourceTree = "<group>"; };
 		27BB9AB3D3C925675E97DADC8FA49374 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
 		281E9339FB4E432905D7EA82220BC354 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
@@ -575,14 +576,13 @@
 		2A95EBBE2867E97980E5E9CEB01DDD66 /* UIDatePicker+RACSignalSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIDatePicker+RACSignalSupport.m"; path = "ReactiveObjC/UIDatePicker+RACSignalSupport.m"; sourceTree = "<group>"; };
 		2B6F63BFC66BDF65228AD7FED4C30F61 /* RACDelegateProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACDelegateProxy.h; path = ReactiveObjC/RACDelegateProxy.h; sourceTree = "<group>"; };
 		2BE9CF2A8322C533E94ED533DF5FF395 /* IQUIScrollView+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIScrollView+Additions.m"; path = "IQKeyboardManager/Categories/IQUIScrollView+Additions.m"; sourceTree = "<group>"; };
+		2BF4162DA31B2471343A527E949CD1E3 /* WeiboSDK+Statistics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "WeiboSDK+Statistics.h"; path = "UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK+Statistics.h"; sourceTree = "<group>"; };
 		2DD23D04DC1216AD4E05F5234B0F0AF9 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = src/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
 		2E01610A9ACFDDF159EF5C61540C5645 /* RACEXTScope.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACEXTScope.h; path = ReactiveObjC/extobjc/RACEXTScope.h; sourceTree = "<group>"; };
-		2F110E0026D7AC0C33910E2A73483F11 /* WeiboSDK+Statistics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "WeiboSDK+Statistics.h"; path = "UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK+Statistics.h"; sourceTree = "<group>"; };
 		3024E0E596168F4B6637E21BC4130F05 /* UISegmentedControl+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UISegmentedControl+RACSignalSupport.h"; path = "ReactiveObjC/UISegmentedControl+RACSignalSupport.h"; sourceTree = "<group>"; };
 		3048EC3127250365E6BCFC0CA5D2FE6D /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		3078FB041F0078DDB341BF1B1C0D189B /* RACStringSequence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACStringSequence.m; path = ReactiveObjC/RACStringSequence.m; sourceTree = "<group>"; };
 		30A7CC81354C1E9D47B84148FB72D96B /* NSString+RACSequenceAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+RACSequenceAdditions.m"; path = "ReactiveObjC/NSString+RACSequenceAdditions.m"; sourceTree = "<group>"; };
-		32453CB03F305CF986A754EE7F7757E6 /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = UShareSDK/SocialLibraries/WeChat/WechatSDK/WXApiObject.h; sourceTree = "<group>"; };
 		333C664CE91DB491FBAEBD4E982CEEF5 /* RACSerialDisposable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACSerialDisposable.m; path = ReactiveObjC/RACSerialDisposable.m; sourceTree = "<group>"; };
 		333FD16B72D4D72E0D004BCBB0957D36 /* MJRefreshConst.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshConst.m; path = MJRefresh/MJRefreshConst.m; sourceTree = "<group>"; };
 		33F09C08569630196B4561B05371C808 /* libMasonry.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libMasonry.a; path = libMasonry.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -605,7 +605,9 @@
 		41C7D6BAB4965123474E04B1D74BFD66 /* SDWebImage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SDWebImage-dummy.m"; sourceTree = "<group>"; };
 		41CF4F167AEA5AA450EBAA1B1C9474BB /* Masonry-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Masonry-prefix.pch"; sourceTree = "<group>"; };
 		41D2458CB7972AE159FA9F8EF87C4217 /* UIAlertView+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+RACSignalSupport.h"; path = "ReactiveObjC/UIAlertView+RACSignalSupport.h"; sourceTree = "<group>"; };
+		4241214DD7892BB1A307A4A595139FF7 /* libUMSocialLog.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libUMSocialLog.a; path = UShareSDK/UMSocialSDKPlugin/libUMSocialLog.a; sourceTree = "<group>"; };
 		4260FEBC426FB06353B40FE920DC1847 /* RACDynamicSequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACDynamicSequence.h; path = ReactiveObjC/RACDynamicSequence.h; sourceTree = "<group>"; };
+		42ADB01989C678F177D233A25F207BA1 /* libWeiboSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeiboSDK.a; path = UShareSDK/SocialLibraries/Sina/SinaSDK/libWeiboSDK.a; sourceTree = "<group>"; };
 		42D97947DD2BB6436FB33F7C133421E5 /* FMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
 		43A5243CE7FB84766293599F2031C29B /* Pods-KeTing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-KeTing.release.xcconfig"; sourceTree = "<group>"; };
 		43C513B82C653844DBFFC2E68F0A9951 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		4DF1ED50688CFCC85A5BAA4C707BD443 /* MASConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASConstraint.h; path = Masonry/MASConstraint.h; sourceTree = "<group>"; };
 		4EBF8FC1BD0050E6096C990FB8A9AD0D /* RACReturnSignal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACReturnSignal.m; path = ReactiveObjC/RACReturnSignal.m; sourceTree = "<group>"; };
 		4F48E61A6B8E498B1892DB9903023A0F /* NSOrderedSet+RACSequenceAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSOrderedSet+RACSequenceAdditions.m"; path = "ReactiveObjC/NSOrderedSet+RACSequenceAdditions.m"; sourceTree = "<group>"; };
+		5014A5E0B6A07E5AEFA38E5982F8F513 /* libSocialWeChat.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialWeChat.a; path = UShareSDK/SocialLibraries/WeChat/libSocialWeChat.a; sourceTree = "<group>"; };
 		50A24FD90DBB999E355052F4ABCFED23 /* NSObject+RACDeallocating.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RACDeallocating.m"; path = "ReactiveObjC/NSObject+RACDeallocating.m"; sourceTree = "<group>"; };
 		5101840DB299CBDC2884ACED7A9E19F9 /* IQToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQToolbar.m; path = IQKeyboardManager/IQToolbar/IQToolbar.m; sourceTree = "<group>"; };
 		5112CAC6A427BB60AD446B99CA41EA2E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -636,7 +639,6 @@
 		5689C8DF897824F04C59DABAA5D883D6 /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
 		56B36F04D0EF17AB3D2D88C892CCCAEE /* Pods-KeTing-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-KeTing-frameworks.sh"; sourceTree = "<group>"; };
 		575A32CBFD56970F678469E6FFF077A3 /* NSMutableArray+STKAudioPlayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+STKAudioPlayer.m"; path = "StreamingKit/StreamingKit/NSMutableArray+STKAudioPlayer.m"; sourceTree = "<group>"; };
-		5782442B90DAD2FD26E627B020A08B39 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialSinaHandler.h; path = UShareSDK/SocialLibraries/Sina/UMSocialSinaHandler.h; sourceTree = "<group>"; };
 		57AB95ECE32799BC60B594E691B0BB82 /* RACScheduler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACScheduler.m; path = ReactiveObjC/RACScheduler.m; sourceTree = "<group>"; };
 		58EDC91DD2EFE62389118A8EF574275C /* SDWebImageCompat.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCompat.h; path = SDWebImage/SDWebImageCompat.h; sourceTree = "<group>"; };
 		59390C73B11F062D62A9AED7A598C0B0 /* NSFileHandle+RACSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSFileHandle+RACSupport.m"; path = "ReactiveObjC/NSFileHandle+RACSupport.m"; sourceTree = "<group>"; };
@@ -650,6 +652,7 @@
 		5C205CCBF4A2ADAD240A96DCBC8BE577 /* RACSerialDisposable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACSerialDisposable.h; path = ReactiveObjC/RACSerialDisposable.h; sourceTree = "<group>"; };
 		5C359F3539799CCCF6546B315A691026 /* RACValueTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACValueTransformer.h; path = ReactiveObjC/RACValueTransformer.h; sourceTree = "<group>"; };
 		5C3F93CEC79EF8AD3FBFC0CA0A6162A0 /* ReactiveObjC-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReactiveObjC-prefix.pch"; sourceTree = "<group>"; };
+		5CF5698EA79690ECECEFE4CEF7B05145 /* UMSocialQQHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialQQHandler.h; path = UShareSDK/SocialLibraries/QQ/UMSocialQQHandler.h; sourceTree = "<group>"; };
 		5D24971643698AFEC2C4E1A03B5A79B7 /* RACEmptySequence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACEmptySequence.m; path = ReactiveObjC/RACEmptySequence.m; sourceTree = "<group>"; };
 		5DBD1FF2CA5DFD068692D2B448EF0F71 /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
 		5DEE37B234859C971D89515B194DCEBE /* NSIndexSet+RACSequenceAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSIndexSet+RACSequenceAdditions.h"; path = "ReactiveObjC/NSIndexSet+RACSequenceAdditions.h"; sourceTree = "<group>"; };
@@ -666,16 +669,12 @@
 		65E5741C64183D456CC4E03323A075C9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		66E226AFD9F53B8FF01C66545F8D93C8 /* MJRefreshConst.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshConst.h; path = MJRefresh/MJRefreshConst.h; sourceTree = "<group>"; };
 		67004D06EB41C65B18AED4CAE1AD887E /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+MJExtension.h"; path = "MJRefresh/UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
-		67500EB226E7A1B57C53C5F2344C83E5 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = UShareSDK/SocialLibraries/QQ/QQSDK/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		6819AAA74B144CC503093C8300D1DE72 /* libSocialSina.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialSina.a; path = UShareSDK/SocialLibraries/Sina/libSocialSina.a; sourceTree = "<group>"; };
 		6833394EC35C3C0653AC35436ACC3BC2 /* RACChannel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACChannel.m; path = ReactiveObjC/RACChannel.m; sourceTree = "<group>"; };
-		68513DD8C5367042E30EC92F06A0D22B /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = UShareSDK/SocialLibraries/WeChat/WechatSDK/WXApi.h; sourceTree = "<group>"; };
 		68D5BDA3C9052792AD2176A8250D288B /* RACMulticastConnection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACMulticastConnection.h; path = ReactiveObjC/RACMulticastConnection.h; sourceTree = "<group>"; };
 		69E74C894A5B937FE798021D17BFC02A /* libIQKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libIQKeyboardManager.a; path = libIQKeyboardManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F1FA4AD621B466FE31DE6449319FB3 /* MASViewConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASViewConstraint.m; path = Masonry/MASViewConstraint.m; sourceTree = "<group>"; };
 		6A04096ED60EE32388F787E468D117EE /* IQTitleBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQTitleBarButtonItem.m; path = IQKeyboardManager/IQToolbar/IQTitleBarButtonItem.m; sourceTree = "<group>"; };
 		6A8BADB89E0DA522C9931030ADE34787 /* RACCommand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACCommand.h; path = ReactiveObjC/RACCommand.h; sourceTree = "<group>"; };
-		6A9177754A5175F6B142FFB75F331787 /* UMSocialSDKPromptResources.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = UMSocialSDKPromptResources.bundle; path = UShareSDK/UMSocialSDK/UMSocialSDKPromptResources.bundle; sourceTree = "<group>"; };
 		6A9E532937749EE534C2CAD66D0402E5 /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
 		6BAFAA4EB71C577D702BB788F7C42F31 /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
 		6C20B34BDECE0AF3A03459B955621A2E /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloaderOperation.h; path = SDWebImage/SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
@@ -718,6 +717,7 @@
 		7DF192AC9A3A650CFAF7D3D68D85F8DF /* FMDatabase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = src/fmdb/FMDatabase.h; sourceTree = "<group>"; };
 		7E0622C56E4B543090DC413DD2A72AFB /* RACSubject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACSubject.h; path = ReactiveObjC/RACSubject.h; sourceTree = "<group>"; };
 		7E9A4CF3E5BBEEF73B3A1A2BC5147808 /* RACTargetQueueScheduler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACTargetQueueScheduler.m; path = ReactiveObjC/RACTargetQueueScheduler.m; sourceTree = "<group>"; };
+		7F445935E729B526C4793C09208DD358 /* libSocialSina.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialSina.a; path = UShareSDK/SocialLibraries/Sina/libSocialSina.a; sourceTree = "<group>"; };
 		803012F551CB5C58C91BCDDB61347AE5 /* NSNotificationCenter+RACSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSNotificationCenter+RACSupport.h"; path = "ReactiveObjC/NSNotificationCenter+RACSupport.h"; sourceTree = "<group>"; };
 		803DAF4F59740B907C9D1139E9B7CA0D /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQKeyboardReturnKeyHandler.m; path = IQKeyboardManager/IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
 		803DFE767E95F243B6F3F694301DCE44 /* NSObject+RACLifting.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RACLifting.m"; path = "ReactiveObjC/NSObject+RACLifting.m"; sourceTree = "<group>"; };
@@ -731,12 +731,12 @@
 		850621756B9C2BFB54EC1757D84CD3D5 /* RACDynamicSignal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACDynamicSignal.h; path = ReactiveObjC/RACDynamicSignal.h; sourceTree = "<group>"; };
 		852DFB844E3F6428A58B82A6FC58540F /* RACBlockTrampoline.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACBlockTrampoline.h; path = ReactiveObjC/RACBlockTrampoline.h; sourceTree = "<group>"; };
 		85448DBF239A18848F669CB21C998E35 /* UIGestureRecognizer+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIGestureRecognizer+RACSignalSupport.h"; path = "ReactiveObjC/UIGestureRecognizer+RACSignalSupport.h"; sourceTree = "<group>"; };
-		85D05E3C17F7C4B0B8EE8E06994403AA /* UMSocialQQHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialQQHandler.h; path = UShareSDK/SocialLibraries/QQ/UMSocialQQHandler.h; sourceTree = "<group>"; };
 		863CAEDAA4F4F41F33A0DF35BD040C1F /* IQPreviousNextView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IQPreviousNextView.m; path = IQKeyboardManager/IQToolbar/IQPreviousNextView.m; sourceTree = "<group>"; };
 		8650484C7B0A8BF35095500CDB27F0EA /* RACScheduler+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RACScheduler+Private.h"; path = "ReactiveObjC/RACScheduler+Private.h"; sourceTree = "<group>"; };
 		86879D0DC409A51897C9E68A0926EADF /* IQUITextFieldView+Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUITextFieldView+Additions.h"; path = "IQKeyboardManager/Categories/IQUITextFieldView+Additions.h"; sourceTree = "<group>"; };
 		86CC0548650D5D89F2C1DB27F09C3C93 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		87B8A2040395F1D76F1A8624E99F1C58 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialWechatHandler.h; path = UShareSDK/SocialLibraries/WeChat/UMSocialWechatHandler.h; sourceTree = "<group>"; };
+		86F3B39F470C65FBEC6AE819F7C9B5D1 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialSinaHandler.h; path = UShareSDK/SocialLibraries/Sina/UMSocialSinaHandler.h; sourceTree = "<group>"; };
+		8756C9D265F0605F13F7FB42F431F8ED /* WeiboSDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK.bundle; sourceTree = "<group>"; };
 		87BCC25F18707411A50806D1C50C83C8 /* RACKVOChannel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACKVOChannel.h; path = ReactiveObjC/RACKVOChannel.h; sourceTree = "<group>"; };
 		8932E91E84EC9EE235361DEA0158B394 /* MJRefreshAutoGifFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoGifFooter.h; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoGifFooter.h; sourceTree = "<group>"; };
 		8936AD6EF871CFA8C82E51B22FA5B659 /* RACSignal+Operations.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "RACSignal+Operations.m"; path = "ReactiveObjC/RACSignal+Operations.m"; sourceTree = "<group>"; };
@@ -788,12 +788,12 @@
 		A266639D127CCC961D3F40301162EA77 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		A2C9C0C19D3B7831DA80D0CEA1FC31CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		A30A21F7BEEEFCEA1C45678D7E87B438 /* ReactiveObjC.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReactiveObjC.xcconfig; sourceTree = "<group>"; };
-		A32C9041E02924C985510CCD5DFE849F /* UMSocialCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMSocialCore.framework; path = UShareSDK/UMSocialSDK/UMSocialCore.framework; sourceTree = "<group>"; };
 		A3355C308E9D16E128C7726A9753D723 /* RACQueueScheduler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACQueueScheduler.m; path = ReactiveObjC/RACQueueScheduler.m; sourceTree = "<group>"; };
 		A34F37254D557F6AF505AB65D59A8416 /* NSEnumerator+RACSequenceAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSEnumerator+RACSequenceAdditions.m"; path = "ReactiveObjC/NSEnumerator+RACSequenceAdditions.m"; sourceTree = "<group>"; };
 		A3E1968E01B7FC5CEAB3499FFAAEC3DA /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
 		A41501F92E0A14DC38BBB22CE4F46BC0 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
 		A46D8CAF602AFE882BCB0C8FDB67FA7A /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCacheOperation.h"; path = "SDWebImage/UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
+		A480C83CC16F346FFDE3206DC4B83CE4 /* libSocialQQ.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialQQ.a; path = UShareSDK/SocialLibraries/QQ/libSocialQQ.a; sourceTree = "<group>"; };
 		A58C195709CA32DAEAAA76C36766C187 /* MJRefresh.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefresh.h; path = MJRefresh/MJRefresh.h; sourceTree = "<group>"; };
 		A5A2EFF3DD29A122DCDCFA2D14AA68F7 /* UITextView+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextView+RACSignalSupport.h"; path = "ReactiveObjC/UITextView+RACSignalSupport.h"; sourceTree = "<group>"; };
 		A637D39FED3C564841A72499715B4670 /* RACArraySequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACArraySequence.h; path = ReactiveObjC/RACArraySequence.h; sourceTree = "<group>"; };
@@ -807,11 +807,10 @@
 		AB296BE2AF780F479692FB422D54136E /* UIControl+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIControl+RACSignalSupport.h"; path = "ReactiveObjC/UIControl+RACSignalSupport.h"; sourceTree = "<group>"; };
 		AB31730BDFAEA091F783156ED278AD9C /* NSOrderedSet+RACSequenceAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSOrderedSet+RACSequenceAdditions.h"; path = "ReactiveObjC/NSOrderedSet+RACSequenceAdditions.h"; sourceTree = "<group>"; };
 		AB90CB68FC3A98C855E6DA04885EF25A /* UIView+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+WebCache.h"; path = "SDWebImage/UIView+WebCache.h"; sourceTree = "<group>"; };
-		ABB2B597FA316BFFEFD4C18F3FD78454 /* WeiboSDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK.bundle; sourceTree = "<group>"; };
 		AC0B0C30495A28935101A665B9237E52 /* UISlider+RACSignalSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UISlider+RACSignalSupport.m"; path = "ReactiveObjC/UISlider+RACSignalSupport.m"; sourceTree = "<group>"; };
-		ADA2BE4058B6E2F10B5C197A8BA7ED59 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = UShareSDK/SocialLibraries/WeChat/WechatSDK/libWeChatSDK.a; sourceTree = "<group>"; };
 		ADAC5BEF0F15C2694AAF5D7B606089E6 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		ADCEA762130E4938E9062C63A9B34082 /* StreamingKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StreamingKit-dummy.m"; sourceTree = "<group>"; };
+		AE3D4C13CA8E5233BBE344A740DF9142 /* UMSocialNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMSocialNetwork.framework; path = UShareSDK/UMSocialSDK/UMSocialNetwork.framework; sourceTree = "<group>"; };
 		B11C067EE03D87F363F769D715BC43EB /* RACDisposable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACDisposable.m; path = ReactiveObjC/RACDisposable.m; sourceTree = "<group>"; };
 		B12D0357048A7CC8FD27B14E9C3E0507 /* MJRefreshGifHeader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshGifHeader.h; path = MJRefresh/Custom/Header/MJRefreshGifHeader.h; sourceTree = "<group>"; };
 		B1B449D16F4553C65D569BF1D93827DA /* MASConstraint+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "MASConstraint+Private.h"; path = "Masonry/MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -838,7 +837,6 @@
 		BBDCC676B0A5F93AD2E12A267CF2E7A9 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASLayoutConstraint.h; path = Masonry/MASLayoutConstraint.h; sourceTree = "<group>"; };
 		BC2E45302C472BD716209B008124C69C /* NSObject+RACDescription.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RACDescription.m"; path = "ReactiveObjC/NSObject+RACDescription.m"; sourceTree = "<group>"; };
 		BCA9B60703C0900EE666A169FA4AE7B3 /* RACEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACEvent.h; path = ReactiveObjC/RACEvent.h; sourceTree = "<group>"; };
-		BD032260E79C25DE2F315A92C98E59AD /* libWeiboSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeiboSDK.a; path = UShareSDK/SocialLibraries/Sina/SinaSDK/libWeiboSDK.a; sourceTree = "<group>"; };
 		BD9266161F35DA8922C15BFC0EE11658 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ViewController+MASAdditions.m"; path = "Masonry/ViewController+MASAdditions.m"; sourceTree = "<group>"; };
 		BEABF25CBB8A65F29108F1281DD91F93 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MJRefresh.m"; path = "MJRefresh/UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		BF169B450BE6805EA1F582C1025636A9 /* UIRefreshControl+RACCommandSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+RACCommandSupport.m"; path = "ReactiveObjC/UIRefreshControl+RACCommandSupport.m"; sourceTree = "<group>"; };
@@ -846,7 +844,6 @@
 		BF665D21E86DF3FF040602140832C850 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshBackFooter.h; path = MJRefresh/Base/MJRefreshBackFooter.h; sourceTree = "<group>"; };
 		C11C3F48B5ADDC80F0E1B511B4F5CCC9 /* NSObject+RACDeallocating.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+RACDeallocating.h"; path = "ReactiveObjC/NSObject+RACDeallocating.h"; sourceTree = "<group>"; };
 		C14E745DADF7A1734B106EE0CEBF19F3 /* FMDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
-		C16C20E095B4971A2C76643B30AEAEC9 /* UMSocialNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMSocialNetwork.framework; path = UShareSDK/UMSocialSDK/UMSocialNetwork.framework; sourceTree = "<group>"; };
 		C183B93AA3A4863A5DF09007EEF7A69B /* STKAutoRecoveringHTTPDataSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = STKAutoRecoveringHTTPDataSource.h; path = StreamingKit/StreamingKit/STKAutoRecoveringHTTPDataSource.h; sourceTree = "<group>"; };
 		C1A7606082B900A64ED78A68845149A5 /* MJRefreshFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshFooter.h; path = MJRefresh/Base/MJRefreshFooter.h; sourceTree = "<group>"; };
 		C1F3BF819FCEDA466B9A3105DDD9AFFD /* HMSegmentedControl-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HMSegmentedControl-dummy.m"; sourceTree = "<group>"; };
@@ -862,23 +859,19 @@
 		C67F3E4FF4CDFD5075A0F50C907D092C /* HMSegmentedControl-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HMSegmentedControl-prefix.pch"; sourceTree = "<group>"; };
 		C6803401DDA416373BC8E501AF8F1E88 /* IQKeyboardManagerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstants.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstants.h; sourceTree = "<group>"; };
 		C6D5F634049009975A5D09FD32BD9470 /* NSFileHandle+RACSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSFileHandle+RACSupport.h"; path = "ReactiveObjC/NSFileHandle+RACSupport.h"; sourceTree = "<group>"; };
-		C71F752BA7C4399BB29B71F682BB4A0B /* libUMSocialLog.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libUMSocialLog.a; path = UShareSDK/UMSocialSDKPlugin/libUMSocialLog.a; sourceTree = "<group>"; };
 		C7CCED8C32BE925CE8A50B45B5B9FAC6 /* STKAudioPlayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = STKAudioPlayer.h; path = StreamingKit/StreamingKit/STKAudioPlayer.h; sourceTree = "<group>"; };
 		C7FE767A3FE42F028176223754BDBB35 /* NSSet+RACSequenceAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSSet+RACSequenceAdditions.h"; path = "ReactiveObjC/NSSet+RACSequenceAdditions.h"; sourceTree = "<group>"; };
 		C817DADD87148420F1EC0A9887AC4A83 /* RACTupleSequence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACTupleSequence.m; path = ReactiveObjC/RACTupleSequence.m; sourceTree = "<group>"; };
 		C82029FC23A03B6D78FD1D9F59D7DD2F /* NSObject+RACSelectorSignal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RACSelectorSignal.m"; path = "ReactiveObjC/NSObject+RACSelectorSignal.m"; sourceTree = "<group>"; };
 		C85BE58D1883EE25B15766339312E7AC /* RACCompoundDisposable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACCompoundDisposable.m; path = ReactiveObjC/RACCompoundDisposable.m; sourceTree = "<group>"; };
 		C88A851B34869315A4DADF68AC3D2F32 /* MJRefreshNormalHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshNormalHeader.m; path = MJRefresh/Custom/Header/MJRefreshNormalHeader.m; sourceTree = "<group>"; };
-		C8D66534687B0EBB78FA09EB19CE90A0 /* WeiboSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WeiboSDK.h; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WeiboSDK.h; sourceTree = "<group>"; };
 		C8ED99A5A4F14ACEE9D893EDBB26EF6B /* UIImage+MultiFormat.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MultiFormat.m"; path = "SDWebImage/UIImage+MultiFormat.m"; sourceTree = "<group>"; };
 		C91C7CBD0CFD67133ACF112CFA7230E4 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MASAdditions.m"; path = "Masonry/NSArray+MASAdditions.m"; sourceTree = "<group>"; };
 		C97B386165D451052DF2787270FEDD89 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloader.h; path = SDWebImage/SDWebImageDownloader.h; sourceTree = "<group>"; };
-		C9C85874DF3498270B84F50639A87A0E /* WBHttpRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WBHttpRequest.h; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WBHttpRequest.h; sourceTree = "<group>"; };
 		CA107E6F013CE3A13AF39360982B5FF2 /* RACEXTRuntimeExtensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACEXTRuntimeExtensions.h; path = ReactiveObjC/extobjc/RACEXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		CA2613953D5911A2453D04824EC27373 /* RACBehaviorSubject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACBehaviorSubject.h; path = ReactiveObjC/RACBehaviorSubject.h; sourceTree = "<group>"; };
 		CA9E1532A86DA21297898E914C6CB587 /* NSString+RACSequenceAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+RACSequenceAdditions.h"; path = "ReactiveObjC/NSString+RACSequenceAdditions.h"; sourceTree = "<group>"; };
 		CAD6E16EDC7264141EB8C793FEBF0FCF /* STKHTTPDataSource.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = STKHTTPDataSource.m; path = StreamingKit/StreamingKit/STKHTTPDataSource.m; sourceTree = "<group>"; };
-		CB0D84EF5D835E1A4585D64D1A45ED4B /* libSocialWeChat.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialWeChat.a; path = UShareSDK/SocialLibraries/WeChat/libSocialWeChat.a; sourceTree = "<group>"; };
 		CB59652B50BF58CED432DE116D18E0BE /* IQKeyboardManager.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardManager.xcconfig; sourceTree = "<group>"; };
 		CCDAD7225C7213E69E57CD1B5F5B1F4D /* RACKVOProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACKVOProxy.h; path = ReactiveObjC/RACKVOProxy.h; sourceTree = "<group>"; };
 		CD088D32470D3570B598E33CA598788D /* UIView+MJExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+MJExtension.m"; path = "MJRefresh/UIView+MJExtension.m"; sourceTree = "<group>"; };
@@ -908,6 +901,7 @@
 		DA18F94254102E64CD0E507DFCC7B5FB /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImagePrefetcher.m; path = SDWebImage/SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		DA99B78F27625115074CB21D4530C2A1 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+WebCacheOperation.m"; path = "SDWebImage/UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		DAF649DC358030CD1DAC5962EDE956F8 /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIView+IQKeyboardToolbar.m"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
+		DAFCC08894F659B15CD0AA8A846711FF /* UMSocialSDKPromptResources.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = UMSocialSDKPromptResources.bundle; path = UShareSDK/UMSocialSDK/UMSocialSDKPromptResources.bundle; sourceTree = "<group>"; };
 		DBACE8A3B5CAA1BFF1D14A67EA040242 /* UIBarButtonItem+RACCommandSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+RACCommandSupport.m"; path = "ReactiveObjC/UIBarButtonItem+RACCommandSupport.m"; sourceTree = "<group>"; };
 		DC02443384D1657A52CC3E150EFDF439 /* MJRefreshAutoStateFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoStateFooter.h; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoStateFooter.h; sourceTree = "<group>"; };
 		DC7A82FEDBC50A87DFBFC72469AFC6C4 /* RACDynamicSignal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACDynamicSignal.m; path = ReactiveObjC/RACDynamicSignal.m; sourceTree = "<group>"; };
@@ -915,13 +909,11 @@
 		DD08696078BBAE2253FB861F9A956757 /* RACQueueScheduler+Subclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RACQueueScheduler+Subclass.h"; path = "ReactiveObjC/RACQueueScheduler+Subclass.h"; sourceTree = "<group>"; };
 		DE82C22260FBC7138923295B206EF8D2 /* RACPassthroughSubscriber.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACPassthroughSubscriber.m; path = ReactiveObjC/RACPassthroughSubscriber.m; sourceTree = "<group>"; };
 		DEDF38433DADA874C31E82125E5D3D36 /* UICollectionReusableView+RACSignalSupport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UICollectionReusableView+RACSignalSupport.h"; path = "ReactiveObjC/UICollectionReusableView+RACSignalSupport.h"; sourceTree = "<group>"; };
-		E068EB9A29E130C942395FC85C2C97E7 /* libSocialQQ.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libSocialQQ.a; path = UShareSDK/SocialLibraries/QQ/libSocialQQ.a; sourceTree = "<group>"; };
 		E327B02DA9BE563EF2A489197D5F1E72 /* View+MASAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASAdditions.h"; path = "Masonry/View+MASAdditions.h"; sourceTree = "<group>"; };
 		E345348A45F20DA8DC830AEE995C879C /* UIView+MJExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+MJExtension.h"; path = "MJRefresh/UIView+MJExtension.h"; sourceTree = "<group>"; };
 		E36E14C65F879EA28718EE974E36988B /* libStreamingKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libStreamingKit.a; path = libStreamingKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E47362842064E00721921469B3F78FB8 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
 		E54F73267808EA1B0B6D8F8D74CCB976 /* NSString+RACKeyPathUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+RACKeyPathUtilities.m"; path = "ReactiveObjC/NSString+RACKeyPathUtilities.m"; sourceTree = "<group>"; };
-		E5F795D35CECB99378DDE4B16504A238 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = UShareSDK/SocialLibraries/WeChat/WechatSDK/WechatAuthSDK.h; sourceTree = "<group>"; };
 		E6E6BB8CBAC06ACBA250FBE40079122A /* RACErrorSignal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACErrorSignal.m; path = ReactiveObjC/RACErrorSignal.m; sourceTree = "<group>"; };
 		E71F518992AB1236BEF386C3018FDBBD /* STKCoreFoundationDataSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = STKCoreFoundationDataSource.h; path = StreamingKit/StreamingKit/STKCoreFoundationDataSource.h; sourceTree = "<group>"; };
 		E79BA53D416CDE12BF896BBECA04C8A8 /* RACSignalProvider.d */ = {isa = PBXFileReference; includeInIndex = 1; name = RACSignalProvider.d; path = ReactiveObjC/RACSignalProvider.d; sourceTree = "<group>"; };
@@ -930,7 +922,6 @@
 		E9DFD63292211BEF591913D403904F8E /* NSObject+RACLifting.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSObject+RACLifting.h"; path = "ReactiveObjC/NSObject+RACLifting.h"; sourceTree = "<group>"; };
 		EA1CFE82EEE28164D1E59D4A2E0932F8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		EA7390D4DFF3EABA5DF72D526522B238 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/UIImageView+WebCache.m"; sourceTree = "<group>"; };
-		EAADB73B9DB37393EBDF5433F6E961C6 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "WBHttpRequest+WeiboToken.h"; path = "UShareSDK/SocialLibraries/Sina/SinaSDK/WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
 		EBC0231F5EA5EB20686E1D2ADAAF5F12 /* STKDataSourceWrapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = STKDataSourceWrapper.m; path = StreamingKit/StreamingKit/STKDataSourceWrapper.m; sourceTree = "<group>"; };
 		EBE4AEE94E9E2AACA84FB53A3A854E97 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoFooter.h; path = MJRefresh/Base/MJRefreshAutoFooter.h; sourceTree = "<group>"; };
 		EBE9455DFB6E31F6C731D79F7F2DE435 /* Pods-KeTing-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-KeTing-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -955,10 +946,13 @@
 		F50EDC9AC5789E610AB3E65FD5991EF6 /* UIGestureRecognizer+RACSignalSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIGestureRecognizer+RACSignalSupport.m"; path = "ReactiveObjC/UIGestureRecognizer+RACSignalSupport.m"; sourceTree = "<group>"; };
 		F522B6054A64B52806ED17CCE8295CE7 /* AFImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFImageDownloader.h; path = "UIKit+AFNetworking/AFImageDownloader.h"; sourceTree = "<group>"; };
 		F59D337B5A71A73612F7DC38F524A985 /* HMSegmentedControl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HMSegmentedControl.h; path = HMSegmentedControl/HMSegmentedControl.h; sourceTree = "<group>"; };
+		F655244E2C631F8583352A43AD49758E /* WBHttpRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WBHttpRequest.h; path = UShareSDK/SocialLibraries/Sina/SinaSDK/WBHttpRequest.h; sourceTree = "<group>"; };
 		F77C2D7E845B991455184E688FA56A80 /* UIImage+GIF.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GIF.m"; path = "SDWebImage/UIImage+GIF.m"; sourceTree = "<group>"; };
+		F7980774C4BDEB74E2E7AFEAE164CD70 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "WBHttpRequest+WeiboToken.h"; path = "UShareSDK/SocialLibraries/Sina/SinaSDK/WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
 		FA8103AE2DCBA6AEAA867069E35C95E0 /* RACPassthroughSubscriber.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACPassthroughSubscriber.h; path = ReactiveObjC/RACPassthroughSubscriber.h; sourceTree = "<group>"; };
 		FAB24FD9E37F94CB1EA96893879228A4 /* MJRefreshAutoNormalFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshAutoNormalFooter.m; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoNormalFooter.m; sourceTree = "<group>"; };
 		FB3079F286659E1349A9B1FE2D0B86F8 /* MJRefreshAutoGifFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshAutoGifFooter.m; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoGifFooter.m; sourceTree = "<group>"; };
+		FC7A40AD629E6FEE7866FCD139DAF442 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UMSocialWechatHandler.h; path = UShareSDK/SocialLibraries/WeChat/UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		FCD9683E49F501DDC8C83A3FEFABEE81 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageContentType.m"; path = "SDWebImage/NSData+ImageContentType.m"; sourceTree = "<group>"; };
 		FCE4F6F9CA91202AEF8B61BBAF7B30FA /* MJRefresh.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = MJRefresh.bundle; path = MJRefresh/MJRefresh.bundle; sourceTree = "<group>"; };
 		FCFAB6CFAAF31DF5ADFB27F6850B6FC7 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
@@ -1081,6 +1075,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02104F148C1A1CE8CFABFAF014CAA025 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A480C83CC16F346FFDE3206DC4B83CE4 /* libSocialQQ.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		04B5CDCB4E1B69D549FC9E62D5A8443A /* standard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1099,25 +1101,13 @@
 			name = standard;
 			sourceTree = "<group>";
 		};
-		0D2C6C1483027895E887978E389A61E2 /* Sina */ = {
+		0B76A385106666910400920B524DDF90 /* ReducedSina */ = {
 			isa = PBXGroup;
 			children = (
-				C9C85874DF3498270B84F50639A87A0E /* WBHttpRequest.h */,
-				EAADB73B9DB37393EBDF5433F6E961C6 /* WBHttpRequest+WeiboToken.h */,
-				C8D66534687B0EBB78FA09EB19CE90A0 /* WeiboSDK.h */,
-				2F110E0026D7AC0C33910E2A73483F11 /* WeiboSDK+Statistics.h */,
-				2290B188E1B194F8D5DFBB89B914EBAC /* Frameworks */,
-				8AF6E29ED168DCAFEB2CB246B6763063 /* Resources */,
+				86F3B39F470C65FBEC6AE819F7C9B5D1 /* UMSocialSinaHandler.h */,
+				AF736714848C66297B53FE30563A21D0 /* Frameworks */,
 			);
-			name = Sina;
-			sourceTree = "<group>";
-		};
-		10A6CB797A5814DCA8C37203990B3F41 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C16C20E095B4971A2C76643B30AEAEC9 /* UMSocialNetwork.framework */,
-			);
-			name = Frameworks;
+			name = ReducedSina;
 			sourceTree = "<group>";
 		};
 		17009CD9157951334738D8E4E5D5857E /* Support Files */ = {
@@ -1166,10 +1156,11 @@
 			name = UIKit;
 			sourceTree = "<group>";
 		};
-		2290B188E1B194F8D5DFBB89B914EBAC /* Frameworks */ = {
+		2278993106223C85A85A1E3FB23377E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BD032260E79C25DE2F315A92C98E59AD /* libWeiboSDK.a */,
+				4241214DD7892BB1A307A4A595139FF7 /* libUMSocialLog.a */,
+				24CF235F3BF356BF0C757DCCA70DE5D6 /* UMSocialCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1394,6 +1385,14 @@
 			path = HMSegmentedControl;
 			sourceTree = "<group>";
 		};
+		2E2D953F234E994F236C21E3A0A40FC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5014A5E0B6A07E5AEFA38E5982F8F513 /* libSocialWeChat.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2F96B79ACDAEC7B47F72961AD276AD44 /* Pods-KeTing */ = {
 			isa = PBXGroup;
 			children = (
@@ -1409,15 +1408,6 @@
 			path = "Target Support Files/Pods-KeTing";
 			sourceTree = "<group>";
 		};
-		30B2C7E4932F8BC333CDCD64B0FEB420 /* ReducedQQ */ = {
-			isa = PBXGroup;
-			children = (
-				85D05E3C17F7C4B0B8EE8E06994403AA /* UMSocialQQHandler.h */,
-				DC71CF49C7311C3C17BF887688A09E7D /* Frameworks */,
-			);
-			name = ReducedQQ;
-			sourceTree = "<group>";
-		};
 		33BE76C65033504FDEC7B0598C355677 /* NSURLSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -1429,24 +1419,12 @@
 			name = NSURLSession;
 			sourceTree = "<group>";
 		};
-		47E776B7964AFC172C9E30633B825AC6 /* Frameworks */ = {
+		51AFC6BB9200D9DE45775DA0636A1695 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				C71F752BA7C4399BB29B71F682BB4A0B /* libUMSocialLog.a */,
-				A32C9041E02924C985510CCD5DFE849F /* UMSocialCore.framework */,
+				7C871058BA3111C89ED5119B8E6BE720 /* Frameworks */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5417A54692710A5D059024E653AF7AD7 /* UMengUShare */ = {
-			isa = PBXGroup;
-			children = (
-				FA065247A4D4C22311AEC1A387B762C7 /* Core */,
-				F0427AFDCEF6E4B4B1239B4089AC02F8 /* Network */,
-				D1DA7EBEB81F319DB4384B1DF5CAE2C7 /* Social */,
-			);
-			name = UMengUShare;
-			path = UMengUShare;
+			name = Network;
 			sourceTree = "<group>";
 		};
 		58AF85B672E8AB4554B8426404648B37 /* Support Files */ = {
@@ -1460,6 +1438,36 @@
 			path = "../Target Support Files/FMDB";
 			sourceTree = "<group>";
 		};
+		5B86360D9F22A530AE6D896EBEC189BD /* Sina */ = {
+			isa = PBXGroup;
+			children = (
+				F655244E2C631F8583352A43AD49758E /* WBHttpRequest.h */,
+				F7980774C4BDEB74E2E7AFEAE164CD70 /* WBHttpRequest+WeiboToken.h */,
+				01628D4601D669379A48507DAA8E6345 /* WeiboSDK.h */,
+				2BF4162DA31B2471343A527E949CD1E3 /* WeiboSDK+Statistics.h */,
+				DC749AD96A1C0A6CC298EC6EC2DB1AC5 /* Frameworks */,
+				91553E7E5698B5B69C543D9026DEDD9F /* Resources */,
+			);
+			name = Sina;
+			sourceTree = "<group>";
+		};
+		60E2F63AD723BA369CBFC2C4E6C4243A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAFCC08894F659B15CD0AA8A846711FF /* UMSocialSDKPromptResources.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		6FBEF6A636DAE88DDBB3607BC381FD0C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2278993106223C85A85A1E3FB23377E4 /* Frameworks */,
+				60E2F63AD723BA369CBFC2C4E6C4243A /* Resources */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
 		7A8DCC716F5C7153F502FB1738F2CC3F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1468,13 +1476,12 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		7BB7D3542E9BB693E1734475C3E80D1C /* QQ */ = {
+		7C871058BA3111C89ED5119B8E6BE720 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BD18F40B5DC98FE1FB81E2A2E70C5F15 /* Frameworks */,
-				FAC2D65478D08520CC0527CAFA0CC8DC /* Resources */,
+				AE3D4C13CA8E5233BBE344A740DF9142 /* UMSocialNetwork.framework */,
 			);
-			name = QQ;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7D056FD24F732AD30EF72DA0518A8AF9 /* Targets Support Files */ = {
@@ -1514,31 +1521,13 @@
 			);
 			sourceTree = "<group>";
 		};
-		7F69984E05660E6BB7766AF0712AC106 /* Frameworks */ = {
+		865E8C20AF753000DAA79D932D241A38 /* ReducedWeChat */ = {
 			isa = PBXGroup;
 			children = (
-				CB0D84EF5D835E1A4585D64D1A45ED4B /* libSocialWeChat.a */,
+				FC7A40AD629E6FEE7866FCD139DAF442 /* UMSocialWechatHandler.h */,
+				2E2D953F234E994F236C21E3A0A40FC9 /* Frameworks */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		805A487934CF9EAD5A9B49A5BE87D318 /* WeChat */ = {
-			isa = PBXGroup;
-			children = (
-				E5F795D35CECB99378DDE4B16504A238 /* WechatAuthSDK.h */,
-				68513DD8C5367042E30EC92F06A0D22B /* WXApi.h */,
-				32453CB03F305CF986A754EE7F7757E6 /* WXApiObject.h */,
-				CB936BCDEA3C009B30ABBB172C944F2D /* Frameworks */,
-			);
-			name = WeChat;
-			sourceTree = "<group>";
-		};
-		8AF6E29ED168DCAFEB2CB246B6763063 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				ABB2B597FA316BFFEFD4C18F3FD78454 /* WeiboSDK.bundle */,
-			);
-			name = Resources;
+			name = ReducedWeChat;
 			sourceTree = "<group>";
 		};
 		8BF7CF9C95D6C31857258E63652B621D /* StreamingKit */ = {
@@ -1568,29 +1557,23 @@
 			path = StreamingKit;
 			sourceTree = "<group>";
 		};
-		8D0DF610AFF6BC5465B88F507350F7AB /* Resources */ = {
+		91553E7E5698B5B69C543D9026DEDD9F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6A9177754A5175F6B142FFB75F331787 /* UMSocialSDKPromptResources.bundle */,
+				8756C9D265F0605F13F7FB42F431F8ED /* WeiboSDK.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		9090A9F985F7DF7BEEB771FFD08CA979 /* Frameworks */ = {
+		93171F143888C037D3A396F2F95D8EDB /* UMengUShare */ = {
 			isa = PBXGroup;
 			children = (
-				6819AAA74B144CC503093C8300D1DE72 /* libSocialSina.a */,
+				6FBEF6A636DAE88DDBB3607BC381FD0C /* Core */,
+				51AFC6BB9200D9DE45775DA0636A1695 /* Network */,
+				C5647B4DB3240E4C52DB57ED42D43288 /* Social */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9DCD9D2971FBF0CDE17490E1B7A0E718 /* ReducedSina */ = {
-			isa = PBXGroup;
-			children = (
-				5782442B90DAD2FD26E627B020A08B39 /* UMSocialSinaHandler.h */,
-				9090A9F985F7DF7BEEB771FFD08CA979 /* Frameworks */,
-			);
-			name = ReducedSina;
+			name = UMengUShare;
+			path = UMengUShare;
 			sourceTree = "<group>";
 		};
 		A4B73F30108C24DF40C20227D8F9365A /* Support Files */ = {
@@ -1675,6 +1658,14 @@
 			path = IQKeyboardManager;
 			sourceTree = "<group>";
 		};
+		AF736714848C66297B53FE30563A21D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F445935E729B526C4793C09208DD358 /* libSocialSina.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B175CDBF5C2E312CC40D666FF3571652 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1684,14 +1675,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MJRefresh";
-			sourceTree = "<group>";
-		};
-		BD18F40B5DC98FE1FB81E2A2E70C5F15 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				26AE1CB346BC1D8279BACB8C280BDC7C /* TencentOpenAPI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BE8C9D1949A54ED1BF532250F0FC79DD /* Pods */ = {
@@ -1707,7 +1690,7 @@
 				25ECC099A0D86090637834DEE9C035B4 /* ReactiveObjC */,
 				DA8681238BACF6E1E1DFB10AAED5EC51 /* SDWebImage */,
 				8BF7CF9C95D6C31857258E63652B621D /* StreamingKit */,
-				5417A54692710A5D059024E653AF7AD7 /* UMengUShare */,
+				93171F143888C037D3A396F2F95D8EDB /* UMengUShare */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1765,6 +1748,17 @@
 			path = "../Target Support Files/SDWebImage";
 			sourceTree = "<group>";
 		};
+		C5647B4DB3240E4C52DB57ED42D43288 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				FC44D616969E57245B54D22B93EF2128 /* ReducedQQ */,
+				0B76A385106666910400920B524DDF90 /* ReducedSina */,
+				865E8C20AF753000DAA79D932D241A38 /* ReducedWeChat */,
+				5B86360D9F22A530AE6D896EBEC189BD /* Sina */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
 		C980E7EA653CBA5B9B8377DD5244752B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1792,36 +1786,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/ReactiveObjC";
-			sourceTree = "<group>";
-		};
-		CB936BCDEA3C009B30ABBB172C944F2D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				ADA2BE4058B6E2F10B5C197A8BA7ED59 /* libWeChatSDK.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D0C94030BEC48C1432845D1D813F4520 /* ReducedWeChat */ = {
-			isa = PBXGroup;
-			children = (
-				87B8A2040395F1D76F1A8624E99F1C58 /* UMSocialWechatHandler.h */,
-				7F69984E05660E6BB7766AF0712AC106 /* Frameworks */,
-			);
-			name = ReducedWeChat;
-			sourceTree = "<group>";
-		};
-		D1DA7EBEB81F319DB4384B1DF5CAE2C7 /* Social */ = {
-			isa = PBXGroup;
-			children = (
-				7BB7D3542E9BB693E1734475C3E80D1C /* QQ */,
-				30B2C7E4932F8BC333CDCD64B0FEB420 /* ReducedQQ */,
-				9DCD9D2971FBF0CDE17490E1B7A0E718 /* ReducedSina */,
-				D0C94030BEC48C1432845D1D813F4520 /* ReducedWeChat */,
-				0D2C6C1483027895E887978E389A61E2 /* Sina */,
-				805A487934CF9EAD5A9B49A5BE87D318 /* WeChat */,
-			);
-			name = Social;
 			sourceTree = "<group>";
 		};
 		D7E6F01B113B49EF5690995F5885C12E /* MJRefresh */ = {
@@ -1905,10 +1869,10 @@
 			path = "../Target Support Files/StreamingKit";
 			sourceTree = "<group>";
 		};
-		DC71CF49C7311C3C17BF887688A09E7D /* Frameworks */ = {
+		DC749AD96A1C0A6CC298EC6EC2DB1AC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E068EB9A29E130C942395FC85C2C97E7 /* libSocialQQ.a */,
+				42ADB01989C678F177D233A25F207BA1 /* libWeiboSDK.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1928,14 +1892,6 @@
 				C980E7EA653CBA5B9B8377DD5244752B /* iOS */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F0427AFDCEF6E4B4B1239B4089AC02F8 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				10A6CB797A5814DCA8C37203990B3F41 /* Frameworks */,
-			);
-			name = Network;
 			sourceTree = "<group>";
 		};
 		F10B8B95371EA83FF380940DFF49B765 /* Support Files */ = {
@@ -1998,23 +1954,6 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		FA065247A4D4C22311AEC1A387B762C7 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				47E776B7964AFC172C9E30633B825AC6 /* Frameworks */,
-				8D0DF610AFF6BC5465B88F507350F7AB /* Resources */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		FAC2D65478D08520CC0527CAFA0CC8DC /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				67500EB226E7A1B57C53C5F2344C83E5 /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		FBF0159E6854948D49D6159811BC626F /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
@@ -2023,6 +1962,15 @@
 			);
 			name = FMDB;
 			path = FMDB;
+			sourceTree = "<group>";
+		};
+		FC44D616969E57245B54D22B93EF2128 /* ReducedQQ */ = {
+			isa = PBXGroup;
+			children = (
+				5CF5698EA79690ECECEFE4CEF7B05145 /* UMSocialQQHandler.h */,
+				02104F148C1A1CE8CFABFAF014CAA025 /* Frameworks */,
+			);
+			name = ReducedQQ;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

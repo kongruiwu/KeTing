@@ -149,7 +149,7 @@
     self.shareTitle = @"可听";
     self.shareDesc = @"欢迎来到可听";
     self.targeturl = @"https://itunes.apple.com/app/id1014233862";
-    self.imageUrl = @"";
+    self.imageUrl = @"http://cdn.upf.123.com.cn/img/lboss/20170718/201707181500375741_720x390.jpg";
     self.image = [UIImage imageNamed:@"logo"];
 }
 - (void)updateShareInfoWithTitle:(NSString *)title desc:(NSString *)desc contentUlr:(NSString *)url imageUrl:(NSString *)imageUrl{
@@ -206,6 +206,7 @@
         messageObject.shareObject = shareImage;
     }
     [[UMSocialManager defaultManager] shareToPlatform:type messageObject:messageObject currentViewController:nil completion:^(id data, NSError *error) {
+        NSLog(@"%@",error);
     }];
     [self disMiss];
     

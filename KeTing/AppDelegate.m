@@ -12,8 +12,11 @@
 #import <UMSocialCore/UMSocialCore.h>
 //测试
 #import <AVFoundation/AVFoundation.h>
+#import "AudioDownLoader.h"
 
 @interface AppDelegate ()
+
+
 
 @end
 
@@ -22,8 +25,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [[SqlManager manager] openDB];
+    
     [self IQKeyBoardSetting];
     [self audioPlayerSetting];
+    [self netNotificationCenterSetting];
+    [self UmengSetting];
     [[UserManager manager] getUserInfo];
     [[UserManager manager] getDataModel];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
@@ -47,13 +54,69 @@
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].shouldShowTextFieldPlaceholder = NO;
 }
+- (void)netNotificationCenterSetting{
+    //开启网络状况的监听
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    self.hostReach = [Reachability reachabilityWithHostName:@"www.baidu.com"] ;
+    //开始监听，会启动一个run loop
+    [self.hostReach startNotifier];
+}
+-(void)reachabilityChanged:(NSNotification *)note
+
+{
+    
+    Reachability *currReach = [note object];
+    
+    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);
+    
+    //对连接改变做出响应处理动作
+    
+    self.netStatus = [currReach currentReachabilityStatus];
+    if (self.netStatus == ReachableViaWiFi) {
+        //开始下载
+        
+    }else{
+        //暂停下载 与暂停播放
+        
+        
+    }
+//    //如果没有连接到网络就弹出提醒实况
+//    
+//    self.isReachable = YES;
+//    
+//    if(status == NotReachable)
+//        
+//    {
+//        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        
+//        [alert show];
+//        
+//        [alert release];
+//        
+//        self.isReachable = NO;
+//        
+//        return;
+//        
+//    }
+//    
+//    if (status==kReachableViaWiFi||status==kReachableViaWWAN) {
+//        
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接正常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        
+//        //        [alert show];
+//        [alert release];
+//        self.isReachable = YES;
+//    }
+}
+
 - (void)UmengSetting{
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:UmengKey];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WxAppID appSecret:WxAppSecret redirectURL:@"keting"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105821097"/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3921700954"  appSecret:@"04b48b094faeb16683c32669824ebdad" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
 
@@ -73,20 +136,25 @@
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
 
-
+//应用进入后台之后 停止下载 已保证下载可以正常进行
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[AudioDownLoader loader] cancelDownLoading];
+    
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+
+    
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    //当进入前台时  且开启自动下载功能时 调用
+    if (self.netStatus == ReachableViaWiFi && [AudioDownLoader loader].autoDownLoad) {
+        [[AudioDownLoader loader] resumeDownLoading];
+    }
 }
 
 

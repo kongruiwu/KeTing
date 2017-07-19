@@ -7,13 +7,12 @@
 //
 
 #import "DownLoadViewController.h"
-#import "TopHeaderView.h"
 #import "DownLoadSubViewController.h"
+#import "WaitDownLoadViewController.h"
 @interface DownLoadViewController ()<UIScrollViewDelegate>
 
 @property (nonatomic, strong) UISegmentedControl * segmentbtn;
 @property (nonatomic, strong) UIScrollView * mainScroll;
-@property (nonatomic, strong) TopHeaderView * header;
 
 @end
 
@@ -45,12 +44,7 @@
     }];
 }
 - (void)creatUI{
-    
-    self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
-    [self.header updateWithImages:@[@"my_ stop",@"my_ delete"] titles:@[@"    全部暂停",@"    全部清空"]];
-    [self.view addSubview:self.header];
-    
-    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH,  UI_HEGIHT - 64 - Anno750(90))];
+    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH,  UI_HEGIHT - 64)];
     self.mainScroll.contentSize = CGSizeMake(2 * UI_WIDTH, UI_HEGIHT -Anno750(90)- 64);
     [self.mainScroll autoresizingMask];
     self.mainScroll.pagingEnabled = YES;
@@ -60,12 +54,12 @@
     self.mainScroll.delegate = self;
     [self.view addSubview:self.mainScroll];
     
-    DownLoadSubViewController * leftvc = [[DownLoadSubViewController alloc]initWithDownLoadingStatus:NO];
-    leftvc.view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64);
+    DownLoadSubViewController * leftvc = [[DownLoadSubViewController alloc]init];
+    leftvc.view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64);
     [self.mainScroll addSubview:leftvc.view];
     [self addChildViewController:leftvc];
-    DownLoadSubViewController * rightvc = [[DownLoadSubViewController alloc]initWithDownLoadingStatus:YES];
-    rightvc.view.frame = CGRectMake(UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64);
+    WaitDownLoadViewController * rightvc = [[WaitDownLoadViewController alloc]init];
+    rightvc.view.frame = CGRectMake(UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT - 64);
     [self.mainScroll addSubview:rightvc.view];
     [self addChildViewController:rightvc];
 }

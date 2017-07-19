@@ -39,5 +39,4 @@
 @property (nonatomic, assign) id<TopListCellDelegate> delegate;
 
 - (void)updateWithHomeTopModel:(HomeTopModel *)model;
-- (void)updateWithTagAudioModel:(HomeTopModel *)model;
 @end

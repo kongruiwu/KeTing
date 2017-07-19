@@ -17,11 +17,11 @@
 #import "AudioDownLoader.h"
 #import "WKWebViewController.h"
 #import "LoginViewController.h"
-
 //测试
 #import "SqlManager.h"
+#import "AppDelegate.h"
 
-@interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate>
+@interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
 @property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, assign) int page;
@@ -30,6 +30,7 @@
 /**是否是下载界面*/
 @property (nonatomic, assign) BOOL isDownLoad;
 @property (nonatomic, strong) TopListBottomView * footView;
+@property (nonatomic, strong) UIButton * downLoadBtn;
 
 @end
 
@@ -56,6 +57,7 @@
     self.isDownLoad = NO;
     [self creatUI];
     [self refreshData];
+    [AudioDownLoader loader].delegate = self;
     
 }
 
@@ -63,6 +65,7 @@
     TopHeaderView * topView = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [topView.cateBtn addTarget:self action:@selector(pushToTagListViewController) forControlEvents:UIControlEventTouchUpInside];
     [topView.downLoadBtn addTarget:self action:@selector(changeDownLoadStatus:) forControlEvents:UIControlEventTouchUpInside];
+    self.downLoadBtn = topView.downLoadBtn;
     [self.view addSubview:topView];
     
     self.dataArray = [NSMutableArray new];
@@ -72,6 +75,7 @@
     [self.view addSubview:self.tabview];
     
     self.footView = [[TopListBottomView alloc]init];
+    [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
     [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,6 +101,19 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.isDownLoad) {
+        
+        HomeTopModel * model = self.dataArray[indexPath.row];
+        if ([model.downStatus intValue]== 2) {
+            static NSString * cellid = @"topListCell";
+            TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (!cell) {
+                cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            }
+            [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+            cell.moreBtn.hidden = YES;
+            return cell;
+        }
+        
         static NSString * cellid = @"TopListDown";
         TopListDownCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
         if (!cell) {
@@ -111,6 +128,7 @@
             cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
         [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+        cell.moreBtn.hidden = NO;
         cell.delegate =self;
         return cell;
     }
@@ -154,7 +172,10 @@
         }
         for (int i = 0; i<datas.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
-            [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([status integerValue] != 1000) {
+                model.downStatus = status;
+            }
             [self.dataArray addObject:model];
         }
         
@@ -201,8 +222,61 @@
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-//    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:model];
-    [[SqlManager manager] insertAudio:model];
+    
+    NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    if ([num integerValue] == 0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已在下载队列中了" duration:1.5];
+        return;
+    }else if([num integerValue] == 1 || [num integerValue] == 2){
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已经下载到本地了" duration:1.5f];
+        return;
+    }
+    
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    [self hiddenToolsBar];
+}
+#pragma mark - 下载所选择音频
+- (void)downAllSelectAudio{
+    NSMutableArray * muarr = [NSMutableArray new];
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        if (model.isSelectDown) {
+            NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([num integerValue] == 1000) {
+                [muarr addObject:model];
+            }
+        }
+    }
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+        [self changeDownLoadStatus:self.downLoadBtn];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+                                                            [self changeDownLoadStatus:self.downLoadBtn];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+   
     
 }
 #pragma mark - 查看音频文档
@@ -213,7 +287,9 @@
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
     vc.webType = PROTOCOLTYPEELSETEXT;
+    [self hiddenToolsBar];
     [self.navigationController pushViewController:vc animated:YES];
+    
 }
 #pragma mark - 音频点赞
 - (void)likeAudioClick:(UIButton *)button{
@@ -244,13 +320,15 @@
             
         }];
     }
+    [self hiddenToolsBar];
 }
 #pragma mark - 分享
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-    [[SqlManager manager] updateAudioDownStatus:2 withAudioId:model.audioId];
+
+    [self hiddenToolsBar];
 }
 #pragma mark - 点击更多按钮
 - (void)moreBtnClick:(UIButton *)button{
@@ -266,6 +344,16 @@
     }
     [self.tabview reloadData];
 }
+
+#pragma mark - 音频下载完成
+- (void)audioDownLoadOver{
+    NSInteger index = [self.dataArray indexOfObject:[AudioDownLoader loader].currentModel];
+    HomeTopModel * model = self.dataArray[index];
+    model.downStatus = @2;
+    [self.tabview reloadData];
+}
+
+#pragma mark - 隐藏toolbar
 - (void)hiddenToolsBar{
     for (int i = 0; i<self.dataArray.count; i++) {
         HomeTopModel * model = self.dataArray[i];

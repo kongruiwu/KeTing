@@ -69,7 +69,7 @@
     if (!cell) {
         cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithTagAudioModel:self.dataArray[indexPath.row]];
+    [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

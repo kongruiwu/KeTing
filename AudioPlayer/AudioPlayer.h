@@ -12,17 +12,6 @@
 #import "HomeTopModel.h"
 
 
-/**
-    变速  暂时不做
-    锁屏界面  通知栏的 不做
-    
- 
-    头条分组 不做
-    检查更新 
-    内购   
- 
- */
-
 @interface AudioPlayer : NSObject<STKAudioPlayerDelegate>
 
 /**播放器*/
