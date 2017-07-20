@@ -21,6 +21,9 @@
 /**当前播放的音频*/
 @property (nonatomic, strong) HomeTopModel * currentAudio;
 
+@property (nonatomic, assign) BOOL showFoot;
+
+
 
 /**player*/
 + (instancetype)instance;
@@ -40,8 +43,8 @@
 - (void)audioPlay:(HomeTopModel *)model;
 /**播放/暂停*/
 - (void)audioResume;
-
-
+/**百分比进度*/
+- (int)audioProgress;
 
 
 

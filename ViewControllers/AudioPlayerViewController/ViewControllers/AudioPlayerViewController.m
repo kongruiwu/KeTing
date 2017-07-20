@@ -12,7 +12,8 @@
 #import "ShareView.h"
 #import "PlayCloseListView.h"
 #import "WKWebViewController.h"
-
+#import "AudioDownLoader.h"
+#import "LoginViewController.h"
 @interface AudioPlayerViewController ()
 /**标签*/
 @property (nonatomic, strong) UILabel * tagLabel;
@@ -76,6 +77,7 @@
     [self setNavTitle:[AudioPlayer instance].currentAudio.audioName color: [UIColor whiteColor]];
     [self creatUI];
     [self playAudio];
+    
 }
 - (void)creatUI{
     
@@ -259,11 +261,14 @@
     [self.listBtn addTarget:self action:@selector(showPlayList) forControlEvents:UIControlEventTouchUpInside];
     [self.textBtn addTarget:self action:@selector(checkAudioText) forControlEvents:UIControlEventTouchUpInside];
     [self.moreBtn addTarget:self action:@selector(showMoreView) forControlEvents:UIControlEventTouchUpInside];
+    [self.downLoadBtn addTarget:self action:@selector(downLoadAudio) forControlEvents:UIControlEventTouchUpInside];
+    [self.likeBtn addTarget:self action:@selector(likeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.timer = [NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
     [self.MoreView.shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
     [self.MoreView.closedButton addTarget:self action:@selector(showCloseList) forControlEvents:UIControlEventTouchUpInside];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
+
 - (void)tick{
     
     int duarTime = [[AudioPlayer instance].audioPlayer duration];
@@ -301,6 +306,11 @@
 - (void)musicPlay:(UIButton *)btn{
     btn.selected = !btn.selected;
     [[AudioPlayer instance] audioResume];
+    if (btn.selected) {
+        [self animationStop];
+    }else{
+        [self animationResume];
+    }
     
 }
 #pragma mark - 后退15秒
@@ -321,19 +331,60 @@
     [[AudioPlayer instance] nextAudio];
     [self updateUI];
 }
-
-
+#pragma mark - 下载歌曲
+- (void)downLoadAudio{
+    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[[AudioPlayer instance].currentAudio]];
+}
+#pragma mark - 点赞
+- (void)likeButtonClick:(UIButton *)button{
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        HomeTopModel * model = [AudioPlayer instance].currentAudio;
+        NSDictionary * params = @{
+                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                                  @"relationType":@1,
+                                  @"relationId":model.audioId,
+                                  @"nickName":[UserManager manager].info.NICKNAME
+                                  };
+        NSString * pageUrl = Page_AddLike;
+        if (button.selected) {
+            pageUrl = Page_DelLike;
+        }
+        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+            button.selected = !button.selected;
+            model.isprase = button.selected;
+            [self.tabview reloadData];
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
+    
+}
 #pragma mark - 滑动进度条改标歌曲进度
 - (void)pressSlider{
     [[AudioPlayer instance] changePlayeAudioTime:self.slider.value];
 }
 - (void)playAudio{
-    self.playBtn.selected = YES;
+    if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStatePlaying) {
+        self.playBtn.selected = YES;
+    }else{
+        self.playBtn.selected = NO ;
+    }
     [self audioImageAnimtion];
-    [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
+    if (self.isFromRoot) {
+//        [[AudioPlayer instance] audioResume];
+//        [[AudioPlayer instance] audioResume];
+    }else{
+        [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
+    }
+    
     [self updateUI];
 }
-/**添加动画*/
+#pragma mark - 添加动画
 - (void)audioImageAnimtion{
     CABasicAnimation* rotationAnimation;
     rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -345,6 +396,25 @@
     rotationAnimation.removedOnCompletion = NO;
     rotationAnimation.fillMode = kCAFillModeForwards;
     [self.audioImg.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+#pragma 暂停动画
+- (void)animationStop
+{
+    CALayer *layer = self.audioImg.layer;
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0;
+    layer.timeOffset = pausedTime;
+}
+#pragma 继续动画
+- (void)animationResume
+{
+    CALayer *layer = self.audioImg.layer;
+    CFTimeInterval pauseTime = [layer timeOffset];
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    CFTimeInterval timeSince = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pauseTime;
+    layer.beginTime = timeSince;
 }
 - (void)updateUI{
     HomeTopModel * model = [AudioPlayer instance].currentAudio;

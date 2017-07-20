@@ -14,7 +14,7 @@
 #import "AcountModel.h"
 @interface MoneyViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 
 @property (nonatomic, strong) AcountModel * acountModel;
 

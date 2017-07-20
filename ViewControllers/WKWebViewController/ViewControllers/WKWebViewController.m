@@ -21,6 +21,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavUnAlpha];
+    
+    CGRect frame = self.webView.frame;
+    self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+    
 }
 
 - (void)viewDidLoad {

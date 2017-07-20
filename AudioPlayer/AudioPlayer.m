@@ -8,6 +8,8 @@
 
 #import "AudioPlayer.h"
 #import "SqlManager.h"
+#import "RootViewController.h"
+#import "HistorySql.h"
 @implementation AudioPlayer
 
 + (instancetype)instance{
@@ -16,6 +18,7 @@
     dispatch_once(&onceToken, ^{
         player = [[AudioPlayer alloc]init];
         [player AudioPlayerReady];
+        player.showFoot = NO;
     });
     return player;
 }
@@ -25,21 +28,51 @@
     self.audioPlayer = [[STKAudioPlayer alloc]init];
     self.audioPlayer.delegate = self;
     self.playList = [NSMutableArray new];
+    
 }
 
 - (void)audioPlay:(HomeTopModel *)model{
-    NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
-    if ([num integerValue] == 2) {
-        NSString * localadd = [[SqlManager manager] checkAudioLocaltionAddressWithAudioid:model.audioId];
-        if (localadd.length>0) {
-            [self.audioPlayer play:localadd];
+    
+    model.playLong = @0;
+    if ([[HistorySql sql] checkAudio:model.audioId]) {
+        [[HistorySql sql] updatePlayLong:model.playLong withAudioID:model.audioId];
+    }else{
+        [[HistorySql sql] insertAudio:model];
+    }
+    //播放音频
+    if (!self.showFoot) {
+        self.showFoot = YES;
+    }
+    if ([model.downStatus integerValue] == 2) {
+        NSString * locatAdd = [[SqlManager manager] checkAudioLocaltionAddressWithAudioid:model.audioId];
+        if (locatAdd.length>0) {
+            STKDataSource * data = [STKAudioPlayer dataSourceFromURL:[NSURL URLWithString:locatAdd]];
+            [self.audioPlayer playDataSource:data];
         }else{
             [self.audioPlayer play:model.audioSource];
         }
     }else{
         [self.audioPlayer play:model.audioSource];
     }
-    
+    self.currentAudio = model;
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.playFoot changePlayStatus];
+}
+- (void)setPlayList:(NSMutableArray *)playList{
+    _playList = playList;
+    for (int i = 0; i<_playList.count; i++) {
+        HomeTopModel * model = _playList[i];
+        NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+        if ([num integerValue] == 1000) {
+            model.downStatus = 0;
+        }else{
+            model.downStatus = num;
+        }
+        if ([num integerValue] == 2) {
+            NSString * localadd = [[SqlManager manager] checkAudioLocaltionAddressWithAudioid:model.audioId];
+            model.localAddress = localadd;
+        }
+    }
 }
 
 - (void)audioResume{
@@ -47,13 +80,25 @@
         [self.audioPlayer resume];
     }else{
         [self.audioPlayer pause];
+        
+        [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
     }
+}
+- (int)audioProgress{
+    int duarTime = [self.audioPlayer duration];
+    int progress = [self.audioPlayer progress];
+    if (progress == 0) {
+        return 0;
+    }
+    int playLong = (int)((progress * 100)/duarTime);
+    return playLong;
 }
 - (int)currentSortNum{
     return (int)[self.playList indexOfObject:self.currentAudio] + 1;
 }
 
 - (void)nextAudio{
+    [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
     int index = [self currentSortNum];
     //若当前为最后一首 则播放列表第一项
     if (index == self.playList.count) {
@@ -64,6 +109,7 @@
     [self audioPlay:self.currentAudio];
 }
 - (void)upwardAudio{
+    [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
     int index = [self currentSortNum];
     //当前为第一首 则播放 列表中最后一项
     if (index == 1) {

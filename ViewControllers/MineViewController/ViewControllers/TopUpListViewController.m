@@ -11,7 +11,7 @@
 #import "TopUpModel.h"
 @interface TopUpListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end

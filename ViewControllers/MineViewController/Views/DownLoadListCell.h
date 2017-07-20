@@ -18,5 +18,9 @@
 @property (nonatomic, strong) UILabel * playStatus;
 @property (nonatomic, strong) UIView * line;
 
+@property (nonatomic, strong) UIButton * selectButton;
+@property (nonatomic, strong) UIView * moveView;
+
 - (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec;
+- (void)showSelectBotton:(BOOL)rec;
 @end

@@ -13,7 +13,7 @@
 #import "VoiceDetailViewController.h"
 @interface SubscriListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end

@@ -12,7 +12,7 @@
 #import "CateDetailViewController.h"
 @interface CateListViewController ()<UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @end
 

@@ -17,7 +17,7 @@
 #import "MyShopedViewController.h"
 @interface SetAccoutViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 
 @end
 

@@ -12,7 +12,7 @@
 #import "ChangePhoneViewController.h"
 #import "ChangeMinepwdViewController.h"
 @interface AccountSafeViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 @end
 

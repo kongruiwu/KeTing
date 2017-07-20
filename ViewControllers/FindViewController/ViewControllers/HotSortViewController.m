@@ -12,7 +12,7 @@
 #import "VoiceDetailViewController.h"
 @interface HotSortViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray<HomeListenModel *> * dataArray;
 @property (nonatomic) int page;
 

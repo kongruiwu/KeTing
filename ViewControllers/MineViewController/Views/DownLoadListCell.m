@@ -29,6 +29,12 @@
     return self;
 }
 - (void)creatUI{
+    self.selectButton = [KTFactory creatButtonWithNormalImage:@"icon_unselect" selectImage:@"icon_select"];
+    self.selectButton.frame = CGRectMake(Anno750(24), (Anno750(120) - Anno750(40))/2, Anno750(40), Anno750(40));
+    self.moveView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
+    self.moveView.frame = CGRectMake(Anno750(64), 0, UI_WIDTH - Anno750(48), Anno750(120));
+    
+    
     self.nameLabel = [KTFactory creatLabelWithText:@"权利的游戏"
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
@@ -47,16 +53,19 @@
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
     self.line = [KTFactory creatLineView];
-    [self addSubview:self.downLoadImg];
-    [self addSubview:self.downStatus];
-    [self addSubview:self.nameLabel];
-    [self addSubview:self.tagLabel];
-    [self addSubview:self.playStatus];
+    [self addSubview:self.selectButton];
+    [self addSubview:self.moveView];
+    [self.moveView addSubview:self.downLoadImg];
+    [self.moveView addSubview:self.downStatus];
+    [self.moveView addSubview:self.nameLabel];
+    [self.moveView addSubview:self.tagLabel];
+    [self.moveView addSubview:self.playStatus];
     [self addSubview:self.line];
     
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.right.equalTo(@(-Anno750(24)));
@@ -96,9 +105,18 @@
     }
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
+    self.selectButton.selected = model.isSelectDown;
     self.tagLabel.text = [NSString stringWithFormat:@"  %@  %@",time,model.tagString];
 //    float value = [model.playLong floatValue]/[model.audioLong floatValue];
 //    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }
-
+- (void)showSelectBotton:(BOOL)rec{
+    if (rec) {
+        self.selectButton.frame = CGRectMake(Anno750(24), (Anno750(120) - Anno750(40))/2, Anno750(40), Anno750(40));
+        self.moveView.frame = CGRectMake(Anno750(64), 0, UI_WIDTH - Anno750(48), Anno750(120));
+    }else{
+        self.selectButton.frame = CGRectMake(0, (Anno750(120) - Anno750(40))/2,0, Anno750(40));
+        self.moveView.frame = CGRectMake(0, 0, UI_WIDTH - Anno750(48), Anno750(120));
+    }
+}
 @end

@@ -10,9 +10,22 @@
 
 @interface BaseViewController ()
 
+@property (nonatomic, assign) BOOL hasReduce;
+
+
 @end
 
 @implementation BaseViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    CGRect fram = self.tabview.frame;
+    if (!_hasReduce && [AudioPlayer instance].showFoot && self.tabview) {
+        _hasReduce = YES;
+        self.tabview.frame = CGRectMake(fram.origin.x, fram.origin.y, fram.size.width, fram.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+    }
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

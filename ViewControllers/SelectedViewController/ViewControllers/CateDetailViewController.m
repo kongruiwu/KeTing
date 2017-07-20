@@ -10,13 +10,17 @@
 #import "HomeTopModel.h"
 #import "TopListCell.h"
 #import "AudioPlayerViewController.h"
-
-@interface CateDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "AppDelegate.h"
+#import "AudioDownLoader.h"
+#import "WKWebViewController.h"
+#import "LoginViewController.h"
+#import "HistorySql.h"
+@interface CateDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate,TopListCellDelegate>
 
 @property (nonatomic, strong) NSString * tagID;
 @property (nonatomic, strong) NSString * name;
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end
@@ -38,6 +42,7 @@
     [self setNavTitle:@"财经头条" color:KTColor_MainBlack];
     [self creatUI];
     [self getData];
+    [AudioDownLoader loader].delegate = self;
 }
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
@@ -70,6 +75,7 @@
         cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
     [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+    cell.delegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -88,6 +94,11 @@
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
+            NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([status integerValue] != 1000) {
+                model.downStatus = status;
+            }
+            model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
             [self.dataArray addObject:model];
         }
         [self.tabview reloadData];
@@ -95,5 +106,151 @@
         
     }];
 }
+
+#pragma mark - 下载音频
+- (void)downLoadAudio:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.dataArray[index.row];
+    
+    NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    if ([num integerValue] == 0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已在下载队列中了" duration:1.5];
+        return;
+    }else if([num integerValue] == 1 || [num integerValue] == 2){
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已经下载到本地了" duration:1.5f];
+        return;
+    }
+    
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    [self hiddenToolsBar];
+}
+#pragma mark - 下载所选择音频
+- (void)downAllSelectAudio{
+    NSMutableArray * muarr = [NSMutableArray new];
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        if (model.isSelectDown) {
+            NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([num integerValue] == 1000) {
+                [muarr addObject:model];
+            }
+        }
+    }
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    
+}
+#pragma mark - 查看音频文档
+- (void)checkAudioText:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.dataArray[index.row];
+    WKWebViewController * vc= [[WKWebViewController alloc]init];
+    vc.model = model;
+    vc.webType = PROTOCOLTYPEELSETEXT;
+    [self hiddenToolsBar];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+#pragma mark - 音频点赞
+- (void)likeAudioClick:(UIButton *)button{
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+        NSIndexPath * index = [self.tabview indexPathForCell:cell];
+        HomeTopModel * model = self.dataArray[index.row];
+        NSDictionary * params = @{
+                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                                  @"relationType":@1,
+                                  @"relationId":model.audioId,
+                                  @"nickName":[UserManager manager].info.NICKNAME
+                                  };
+        NSString * pageUrl = Page_AddLike;
+        if (button.selected) {
+            pageUrl = Page_DelLike;
+        }
+        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+            button.selected = !button.selected;
+            model.isprase = button.selected;
+            [self.tabview reloadData];
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
+    [self hiddenToolsBar];
+}
+#pragma mark - 分享
+- (void)shareBtnClick:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.dataArray[index.row];
+    
+    [self hiddenToolsBar];
+}
+#pragma mark - 点击更多按钮
+- (void)moreBtnClick:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[button superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        if (i == index.row) {
+            model.showTools =!model.showTools;
+        }else{
+            model.showTools = NO;
+        }
+    }
+    [self.tabview reloadData];
+}
+
+#pragma mark - 音频下载完成
+- (void)audioDownLoadOver{
+    if (self) {
+        NSInteger index = [self.dataArray indexOfObject:[AudioDownLoader loader].currentModel];
+        HomeTopModel * model = self.dataArray[index];
+        model.downStatus = @2;
+        [self.tabview reloadData];
+    }
+}
+
+#pragma mark - 隐藏toolbar
+- (void)hiddenToolsBar{
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        model.showTools = NO;
+    }
+    [self.tabview reloadData];
+}
+
 
 @end

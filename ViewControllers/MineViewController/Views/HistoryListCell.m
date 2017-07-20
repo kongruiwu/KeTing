@@ -61,6 +61,7 @@
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.leftImg.mas_right).offset(Anno750(20));
         make.top.equalTo(@(Anno750(45)));
+        make.right.equalTo(@(-Anno750(24)));
     }];
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLabel.mas_left);
@@ -82,8 +83,12 @@
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.tagLabel.text = [NSString stringWithFormat:@"%@  %@",time,model.tagString];
-    float value = [model.playLong floatValue]/[model.audioLong floatValue];
-    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
+    if ([model.playLong integerValue] == 0) {
+        self.playStatus.hidden = YES;
+    }else{
+        self.playStatus.text = [NSString stringWithFormat:@"已播：%@%%",model.playLong];
+    }
+    
 }
 
 @end

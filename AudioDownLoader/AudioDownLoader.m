@@ -55,6 +55,9 @@
     });
     return loader;
 }
+- (void)deleteAudioWithLocalPath:(NSString *)LocalPath{
+    [self.fileManager removeItemAtPath:LocalPath error:nil];
+}
 
 - (void)downLoadAudioWithHomeTopModel:(NSArray *)topModels{
     [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"音频已开始下载。。。" duration:1.0f];
@@ -112,6 +115,13 @@
     NSMutableArray * arr = [[SqlManager manager] getDownLoadingAudio];
     if (arr.count >0) {
         self.currentModel = arr[0];
+    }else{
+        NSMutableArray * arr = [[SqlManager manager] getWaitDownLoadingAudios];
+        if (arr.count == 0) {
+            return;
+        }else{
+            self.currentModel = arr[0];
+        }
     }
     if (!self.currentModel) {
         return;
@@ -156,6 +166,7 @@ didFinishDownloadingToURL:(NSURL *)location
     if (![self.fileManager fileExistsAtPath:HSCachesDirectory]) {
         [self.fileManager createDirectoryAtPath:HSCachesDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
     }
+    
     // 下载成功
     // 注意 location是下载后的临时保存路径, 需要将它移动到需要保存的位置
     NSError *saveError;

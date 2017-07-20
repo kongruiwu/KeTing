@@ -11,8 +11,8 @@
 #import "AudioPlayer.h"
 
 @interface AudioPlayerViewController : BaseViewController
-
-
+//是否从root跳转进来
+@property (nonatomic, assign) BOOL isFromRoot;
 
 
 @end

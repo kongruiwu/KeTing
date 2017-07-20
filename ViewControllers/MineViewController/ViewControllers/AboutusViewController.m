@@ -11,7 +11,7 @@
 #import "WKWebViewController.h"
 @interface AboutusViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 
 @property (nonatomic, strong) NSArray * titles;
 @property (nonatomic, strong) NSArray * descs;

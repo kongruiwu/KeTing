@@ -13,7 +13,7 @@
 #import "PickerView.h"
 @interface UserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 @property (nonatomic, strong) NSArray * descs;
 @property (nonatomic, strong) HeaderImage * headerImg;

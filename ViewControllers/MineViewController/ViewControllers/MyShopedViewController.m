@@ -15,10 +15,21 @@
 @property (nonatomic, strong) UICollectionView * collectView;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) NSMutableArray * dataArray;
+@property (nonatomic) BOOL hasReduce;
 
 @end
 
 @implementation MyShopedViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([AudioPlayer instance].showFoot && _hasReduce) {
+        _hasReduce = YES;
+        CGRect frame = self.collectView.frame;
+        self.collectView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+    }
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

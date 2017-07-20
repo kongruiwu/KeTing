@@ -44,4 +44,7 @@
 - (void)cancelDownLoading;
 /**恢复下载*/
 - (void)resumeDownLoading;
+/**删除数据*/
+- (void)deleteAudioWithLocalPath:(NSString *)LocalPath;
+
 @end

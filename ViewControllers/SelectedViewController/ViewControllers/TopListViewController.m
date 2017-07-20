@@ -20,10 +20,10 @@
 //测试
 #import "SqlManager.h"
 #import "AppDelegate.h"
-
+#import "HistorySql.h"
 @interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, assign) int page;
 
 @property (nonatomic, strong) NSMutableArray * dataArray;
@@ -31,6 +31,7 @@
 @property (nonatomic, assign) BOOL isDownLoad;
 @property (nonatomic, strong) TopListBottomView * footView;
 @property (nonatomic, strong) UIButton * downLoadBtn;
+@property (nonatomic) BOOL hasReduce;
 
 @end
 
@@ -39,6 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavUnAlpha];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -75,15 +77,11 @@
     [self.view addSubview:self.tabview];
     
     self.footView = [[TopListBottomView alloc]init];
+    self.footView.frame = CGRectMake(0, UI_HEGIHT - Anno750(88) - 64, UI_WIDTH, Anno750(88));
     [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
-    [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.right.equalTo(@0);
-        make.bottom.equalTo(@0);
-        make.height.equalTo(@(Anno750(88)));
-    }];
+
     
     self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
@@ -136,10 +134,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTopModel * model = self.dataArray[indexPath.row];
     if (self.isDownLoad) {
+        if ([model.downStatus integerValue] == 0 || [model.downStatus integerValue] == 1) {
+            model.isSelectDown = !model.isSelectDown;
+            [self.footView updateWithArrays:self.dataArray];
+            [self.tabview reloadData];
+        }
         //下载选择
-        model.isSelectDown = !model.isSelectDown;
-        [self.footView updateWithArrays:self.dataArray];
-        [self.tabview reloadData];
     }else{
         [self hiddenToolsBar];
         //进入音乐播放器
@@ -176,6 +176,7 @@
             if ([status integerValue] != 1000) {
                 model.downStatus = status;
             }
+            model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
             [self.dataArray addObject:model];
         }
         
@@ -202,6 +203,11 @@
 #pragma mark - 下载状态更改
 - (void)changeDownLoadStatus:(UIButton *)btn{
     btn.selected = !btn.selected;
+    CGRect frame = self.footView.frame;
+    if (!_hasReduce) {
+        self.footView.frame = CGRectMake(frame.origin.x, frame.origin.y -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+    }
+    _hasReduce = !_hasReduce;
     //隐藏toolsbar
     for (int i = 0; i<self.dataArray.count; i++) {
         HomeTopModel * model = self.dataArray[i];
@@ -210,10 +216,10 @@
     self.isDownLoad = !self.isDownLoad;
     if (self.isDownLoad) {
         self.footView.hidden = NO;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64);
+        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
     }else{
         self.footView.hidden = YES;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64);
+        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
     }
     [self.tabview reloadData];
 }
@@ -347,10 +353,12 @@
 
 #pragma mark - 音频下载完成
 - (void)audioDownLoadOver{
-    NSInteger index = [self.dataArray indexOfObject:[AudioDownLoader loader].currentModel];
-    HomeTopModel * model = self.dataArray[index];
-    model.downStatus = @2;
-    [self.tabview reloadData];
+    if (self) {
+        NSInteger index = [self.dataArray indexOfObject:[AudioDownLoader loader].currentModel];
+        HomeTopModel * model = self.dataArray[index];
+        model.downStatus = @2;
+        [self.tabview reloadData];
+    }
 }
 
 #pragma mark - 隐藏toolbar

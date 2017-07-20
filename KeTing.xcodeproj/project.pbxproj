@@ -97,6 +97,10 @@
 		8B8F01081F00D8850027AABD /* MineHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F01071F00D8850027AABD /* MineHeader.m */; };
 		8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */; };
 		8B9B9EE51F137C16004A2283 /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B9EE41F137C16004A2283 /* HistoryManager.m */; };
+		8BA1F0AF1F2056E200AAD63C /* DownLoadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */; };
+		8BA1F0B21F208C7F00AAD63C /* PlayFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B11F208C7F00AAD63C /* PlayFootView.m */; };
+		8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B41F20987E00AAD63C /* RootViewController.m */; };
+		8BA1F0B81F20DC1600AAD63C /* HistorySql.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B71F20DC1600AAD63C /* HistorySql.m */; };
 		8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */; };
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
@@ -141,7 +145,6 @@
 		8BF6920F1EE7A2AF001CECEE /* TopListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6920E1EE7A2AF001CECEE /* TopListCell.m */; };
 		8BF692121EE7C431001CECEE /* TopHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF692111EE7C431001CECEE /* TopHeaderView.m */; };
 		8BF692151EE7D0E3001CECEE /* TopBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF692141EE7D0E3001CECEE /* TopBottomView.m */; };
-		8BF692181EE7D422001CECEE /* TopListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF692171EE7D422001CECEE /* TopListViewModel.m */; };
 		8BF692221EE7D74C001CECEE /* AudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF692211EE7D74C001CECEE /* AudioPlayerViewController.m */; };
 		8BF84CC01EE4F6620072637D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF84CBF1EE4F6620072637D /* main.m */; };
 		8BF84CC31EE4F6620072637D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF84CC21EE4F6620072637D /* AppDelegate.m */; };
@@ -360,6 +363,14 @@
 		8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		8B9B9EE31F137C16004A2283 /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryManager.h; sourceTree = "<group>"; };
 		8B9B9EE41F137C16004A2283 /* HistoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryManager.m; sourceTree = "<group>"; };
+		8BA1F0AD1F2056E200AAD63C /* DownLoadHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadHeaderView.h; sourceTree = "<group>"; };
+		8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadHeaderView.m; sourceTree = "<group>"; };
+		8BA1F0B01F208C7F00AAD63C /* PlayFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayFootView.h; sourceTree = "<group>"; };
+		8BA1F0B11F208C7F00AAD63C /* PlayFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayFootView.m; sourceTree = "<group>"; };
+		8BA1F0B31F20987E00AAD63C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		8BA1F0B41F20987E00AAD63C /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		8BA1F0B61F20DC1600AAD63C /* HistorySql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistorySql.h; sourceTree = "<group>"; };
+		8BA1F0B71F20DC1600AAD63C /* HistorySql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistorySql.m; sourceTree = "<group>"; };
 		8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDownLoader.h; sourceTree = "<group>"; };
 		8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDownLoader.m; sourceTree = "<group>"; };
 		8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceSectionCell.h; sourceTree = "<group>"; };
@@ -444,8 +455,6 @@
 		8BF692111EE7C431001CECEE /* TopHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopHeaderView.m; sourceTree = "<group>"; };
 		8BF692131EE7D0E3001CECEE /* TopBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopBottomView.h; sourceTree = "<group>"; };
 		8BF692141EE7D0E3001CECEE /* TopBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopBottomView.m; sourceTree = "<group>"; };
-		8BF692161EE7D422001CECEE /* TopListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopListViewModel.h; sourceTree = "<group>"; };
-		8BF692171EE7D422001CECEE /* TopListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopListViewModel.m; sourceTree = "<group>"; };
 		8BF692201EE7D74C001CECEE /* AudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayerViewController.h; sourceTree = "<group>"; };
 		8BF692211EE7D74C001CECEE /* AudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerViewController.m; sourceTree = "<group>"; };
 		8BF84CBB1EE4F6620072637D /* KeTing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeTing.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -677,6 +686,8 @@
 				8B2D740C1F0CE3C100E1BF4B /* DatePickerSelectView.m */,
 				8B3CEECA1F0DC6BE00AE5B81 /* PickerView.h */,
 				8B3CEECB1F0DC6BE00AE5B81 /* PickerView.m */,
+				8BA1F0AD1F2056E200AAD63C /* DownLoadHeaderView.h */,
+				8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -743,8 +754,6 @@
 				8B3CEEE01F0E2F8200AE5B81 /* TagsModel.m */,
 				8B40FE731EE69B10005F9342 /* HomeListenModel.h */,
 				8B40FE741EE69B10005F9342 /* HomeListenModel.m */,
-				8BF692161EE7D422001CECEE /* TopListViewModel.h */,
-				8BF692171EE7D422001CECEE /* TopListViewModel.m */,
 				8B4F22971EF0DA69005E1D21 /* AnchorModel.h */,
 				8B4F22981EF0DA69005E1D21 /* AnchorModel.m */,
 				8BC126781F1DF580005CF363 /* OrderModel.h */,
@@ -903,6 +912,8 @@
 			children = (
 				8B8A054A1F1EEA8F00590344 /* SqlManager.h */,
 				8B8A054B1F1EEA8F00590344 /* SqlManager.m */,
+				8BA1F0B61F20DC1600AAD63C /* HistorySql.h */,
+				8BA1F0B71F20DC1600AAD63C /* HistorySql.m */,
 			);
 			path = SQLManager;
 			sourceTree = "<group>";
@@ -1284,6 +1295,8 @@
 			children = (
 				8BF84D021EE4FF000072637D /* HMSegmentViewController.h */,
 				8BF84D031EE4FF000072637D /* HMSegmentViewController.m */,
+				8BA1F0B31F20987E00AAD63C /* RootViewController.h */,
+				8BA1F0B41F20987E00AAD63C /* RootViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1291,6 +1304,8 @@
 		8BF84D011EE4FEDD0072637D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BA1F0B01F208C7F00AAD63C /* PlayFootView.h */,
+				8BA1F0B11F208C7F00AAD63C /* PlayFootView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1367,6 +1382,11 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = E9ZKTSD9RK;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					8BF84CD31EE4F6620072637D = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1505,6 +1525,7 @@
 				8BC1266E1F1DB094005CF363 /* PayMomentCell.m in Sources */,
 				8B4F22AB1EF130A4005E1D21 /* HotSortViewController.m in Sources */,
 				8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */,
+				8BA1F0B21F208C7F00AAD63C /* PlayFootView.m in Sources */,
 				8B2D738F1F0B30C600E1BF4B /* SettingListCell.m in Sources */,
 				8BC1267D1F1E0E63005CF363 /* TopTagModel.m in Sources */,
 				8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */,
@@ -1545,6 +1566,7 @@
 				8B3CEEDB1F0E271D00AE5B81 /* ShopCarHander.m in Sources */,
 				8BE25E181F05F34C00FFACA9 /* TopUpListCell.m in Sources */,
 				8B4F22A51EF11675005E1D21 /* RecommendView.m in Sources */,
+				8BA1F0B81F20DC1600AAD63C /* HistorySql.m in Sources */,
 				8B2D738C1F0B2EEA00E1BF4B /* SettingViewController.m in Sources */,
 				8B40FE511EE636D2005F9342 /* HomeBottomNewsCell.m in Sources */,
 				8BE25E2D1F06308C00FFACA9 /* ShopCarFooter.m in Sources */,
@@ -1565,6 +1587,7 @@
 				8B2D74071F0CC55000E1BF4B /* iPhoneModel.m in Sources */,
 				8BF602A51EEFC7FC00322545 /* TimeListenViewController.m in Sources */,
 				8B7AB4C71F037C7C0068CAE7 /* RegisterViewController.m in Sources */,
+				8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */,
 				8B696E1B1EEA3AD500A11A0F /* CateListTableViewCell.m in Sources */,
 				8BF84CC01EE4F6620072637D /* main.m in Sources */,
 				8B40FE691EE682F3005F9342 /* KTError.m in Sources */,
@@ -1599,6 +1622,7 @@
 				8B7AB4CA1F0382DE0068CAE7 /* SetUserNameViewController.m in Sources */,
 				8B40FE651EE680DB005F9342 /* NetWorkManager.m in Sources */,
 				8B8742F81EEE600B00324FA2 /* ShareView.m in Sources */,
+				8BA1F0AF1F2056E200AAD63C /* DownLoadHeaderView.m in Sources */,
 				8BF6029B1EEFB34A00322545 /* ListenAnchorCell.m in Sources */,
 				8BF692121EE7C431001CECEE /* TopHeaderView.m in Sources */,
 				8B40FE611EE64AF5005F9342 /* MineListModel.m in Sources */,
@@ -1610,7 +1634,6 @@
 				8BC1267A1F1DF580005CF363 /* OrderModel.m in Sources */,
 				8BF091CB1F04FB89006478E9 /* MoneyCountCell.m in Sources */,
 				8B3CEECF1F0DE65300AE5B81 /* AcountModel.m in Sources */,
-				8BF692181EE7D422001CECEE /* TopListViewModel.m in Sources */,
 				8B2D73921F0B328000E1BF4B /* WI-FISettingCell.m in Sources */,
 				8B2D740D1F0CE3C100E1BF4B /* DatePickerSelectView.m in Sources */,
 				8B2D73861F0B224F00E1BF4B /* MessageViewController.m in Sources */,

@@ -11,7 +11,7 @@
 #import "MessageModel.h"
 @interface MessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 

@@ -13,7 +13,9 @@
 //测试
 #import <AVFoundation/AVFoundation.h>
 #import "AudioDownLoader.h"
-
+#import "RootViewController.h"
+#import "HistorySql.h"
+#import "AudioPlayer.h"
 @interface AppDelegate ()
 
 
@@ -26,18 +28,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [[SqlManager manager] openDB];
+    [[HistorySql sql] openDB];
     
     [self IQKeyBoardSetting];
     [self audioPlayerSetting];
-    [self netNotificationCenterSetting];
     [self UmengSetting];
     [[UserManager manager] getUserInfo];
     [[UserManager manager] getDataModel];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
-    self.hmvc = [[HMSegmentViewController alloc]init];
-    UINavigationController * rootVC = [[UINavigationController alloc]initWithRootViewController:self.hmvc];
-    [self.window setRootViewController:rootVC];
+    RootViewController * vc = [[RootViewController alloc]init];
+    [self.window setRootViewController:vc];
+    
     
     
     
@@ -139,6 +141,7 @@
 //应用进入后台之后 停止下载 已保证下载可以正常进行
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
+    [[HistorySql sql] updatePlayLong:@([[AudioPlayer instance] audioProgress]) withAudioID:[AudioPlayer instance].currentAudio.audioId];
     [[AudioDownLoader loader] cancelDownLoading];
     
 }
@@ -152,6 +155,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     //当进入前台时  且开启自动下载功能时 调用
+
+    [self netNotificationCenterSetting];
     if (self.netStatus == ReachableViaWiFi && [AudioDownLoader loader].autoDownLoad) {
         [[AudioDownLoader loader] resumeDownLoading];
     }

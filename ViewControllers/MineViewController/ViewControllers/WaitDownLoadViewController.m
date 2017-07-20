@@ -9,10 +9,10 @@
 #import "WaitDownLoadViewController.h"
 #import "TopHeaderView.h"
 #import "DownLoadListCell.h"
-#import "SqlManager.h"
+#import "AudioDownLoader.h"
 @interface WaitDownLoadViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) TopHeaderView * header;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @end
@@ -22,7 +22,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
+    [self refreshData];
     [self getData];
+}
+- (void)refreshData{
+    NSInteger index = -1 ;
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        if ([model.audioId longLongValue] == [[AudioDownLoader loader].currentModel.audioId longLongValue]) {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1) {
+        return;
+    }
+    [self.dataArray removeObjectAtIndex:index];
+    [self.tabview reloadData];
+    if (self.dataArray.count == 0) {
+        [self getData];
+    }
 }
 - (void)getData{
     NSMutableArray * muarr = [[SqlManager manager] getWaitDownLoadingAudios];
@@ -42,6 +61,9 @@
 - (void)creatUI{
     self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [self.header updateWithImages:@[@"my_ stop",@"my_ delete"] titles:@[@"    全部暂停",@"    全部清空"]];
+    [self.header.cateBtn addTarget:self action:@selector(pauseAllDownLoad:) forControlEvents:UIControlEventTouchUpInside];
+    [self.header.downLoadBtn addTarget:self action:@selector(clearAllDownLoadList) forControlEvents:UIControlEventTouchUpInside];
+    [self.header.cateBtn setTitle:@"    开始下载" forState:UIControlStateSelected];
     [self.view addSubview:self.header];
     
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64 ) style:UITableViewStyleGrouped];
@@ -67,9 +89,42 @@
     if (!cell) {
         cell = [[DownLoadListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
+    [cell showSelectBotton:NO];
     [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:YES];
     return cell;
 }
-
+//- (void)audioDownLoadOver{
+//    NSInteger index = -1 ;
+//    for (int i = 0; i<self.dataArray.count; i++) {
+//        HomeTopModel * model = self.dataArray[i];
+//        if ([model.audioId longLongValue] == [[AudioDownLoader loader].currentModel.audioId longLongValue]) {
+//            index = i;
+//            break;
+//        }
+//    }
+//    if (index == -1) {
+//        return;
+//    }
+//    [self.dataArray removeObjectAtIndex:index];
+//    [self.tabview reloadData];
+//    if (self.dataArray.count == 0) {
+//        [self getData];
+//    }
+//}
+- (void)pauseAllDownLoad:(UIButton *)button{
+    if (button.selected) {
+        [[AudioDownLoader loader] resumeDownLoading];
+    }else{
+        [[AudioDownLoader loader] cancelDownLoading];
+    }
+    button.selected = !button.selected;
+}
+- (void)clearAllDownLoadList{
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        [[SqlManager manager] deleteAudioWithID:model.audioId];
+    }
+    [self getData];
+}
 
 @end

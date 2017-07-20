@@ -15,7 +15,7 @@
 #import "SetAccoutViewController.h"
 @interface ShopCarViewController ()<UITableViewDelegate,UITableViewDataSource,ShopCarDelegate>
 
-@property (nonatomic, strong)UITableView *tabview;
+//@property (nonatomic, strong) UITableView *tabview;
 @property (nonatomic, strong) ShopCarFooter * footer;
 @property (nonatomic, strong) ShopCarHander * hander;
 
@@ -26,6 +26,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getData];
+    self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
 }
 
 - (void)viewDidLoad {
@@ -43,16 +44,11 @@
     self.tabview.delegate =self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
-    self.footer = [[ShopCarFooter alloc]initWithFrame:CGRectMake(0,0,0,0)];
+    self.footer = [[ShopCarFooter alloc]initWithFrame:CGRectMake(0,UI_HEGIHT - 64 - Anno750(98)  - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98))];
     [self.footer.selectBtn addTarget:self action:@selector(ShopCarSelectAll:) forControlEvents:UIControlEventTouchUpInside];
     [self.footer.buyBtn addTarget:self action:@selector(buyAllBooks) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.footer];
-    [self.footer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.height.equalTo(@(Anno750(98)));
-        make.right.equalTo(@0);
-        make.bottom.equalTo(@0);
-    }];
+  
 }
 - (void)drawRightDeleteBtn{
     UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithTitle:@"清空购物车" style:UIBarButtonItemStylePlain target:self action:@selector(removeAllDatas)];

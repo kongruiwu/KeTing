@@ -13,7 +13,7 @@
 #import "ShopCarViewController.h"
 #import "SetAccoutViewController.h"
 @interface ListenListViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic) int page;
 @end

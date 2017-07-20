@@ -97,13 +97,12 @@
     self.selctButton.selected = model.isSelectDown;
     self.nameLabel.text = model.audioName;
     self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
-    int playTime = (int)([model.playTime floatValue] / [model.audioLong floatValue] * 100);
-//    if (playTime == 0) {
+    if ([model.playLong integerValue] == 0) {
     self.playStutas.hidden = YES;
-//    }else{
-//        self.playStutas.hidden = NO;
-//        self.playStutas.text = [NSString stringWithFormat:@"已播放%d%%",playTime];
-//    }
+    }else{
+        self.playStutas.hidden = NO;
+        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
+    }
     
     self.tagLabel.text = model.tagString;
 }

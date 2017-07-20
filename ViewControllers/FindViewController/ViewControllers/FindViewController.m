@@ -10,7 +10,7 @@
 #import "FindListCell.h"
 #import "HotSortViewController.h"
 @interface FindViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 @property (nonatomic, strong) NSArray * images;
 @end

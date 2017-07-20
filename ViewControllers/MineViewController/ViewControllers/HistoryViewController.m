@@ -11,25 +11,32 @@
 #import "HistoryListCell.h"
 #import "HomeTopModel.h"
 #import "AudioPlayerViewController.h"
+#import "HistorySql.h"
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) TopHeaderView * header;
-@property (nonatomic, strong) UITableView * tabview;
-@property (nonatomic, assign) int page;
+//@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, assign) int page;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end
 
 @implementation HistoryViewController
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"收听历史" color:KTColor_MainBlack];
     [self creatUI];
-    self.page = 1;
-    [self getData];
+    
+    
+    
+//    self.page = 1;
+    
 }
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
@@ -44,10 +51,10 @@
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
     
-    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
-    self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
-    self.tabview.mj_header = self.refreshHeader;
-    self.tabview.mj_footer = self.refreshFooter;
+//    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
+//    self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
+//    self.tabview.mj_header = self.refreshHeader;
+//    self.tabview.mj_footer = self.refreshFooter;
     
 }
 
@@ -65,7 +72,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self deleteHistoryatIndex:indexPath.row];
+        HomeTopModel * model = self.dataArray[indexPath.row];
+        [[HistorySql sql] deleteAudioWithID:model.audioId];
         [self.dataArray removeObjectAtIndex:indexPath.row];
         [self.tabview deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -82,11 +90,11 @@
     return Anno750(160);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(2);
+    return Anno750(30);
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
-    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(2));
+    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
     return view;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -108,74 +116,88 @@
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
-- (void)refreshData{
-    self.page = 1;
-    [self.dataArray removeAllObjects];
-    [self getData];
-}
-- (void)getMoreData{
-    self.page += 1;
-    [self getData];
-}
-
 - (void)getData{
-    NSDictionary * params = @{
-                              @"page":@(self.page),
-                              @"pagesize":@"10"
-                              };
-    [[NetWorkManager manager] GETRequest:params pageUrl:Page_History complete:^(id result) {
-        NSArray * datas = (NSArray *)result;
-        if (self.dataArray.count != 0 && datas.count< 10) {
-            if (datas.count == 0) {
-                self.page -= 1;
-            }
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
-        }
-        for (int i = 0; i<datas.count; i++) {
-            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
-            [self.dataArray addObject:model];
-        }
-        
-        [self.tabview reloadData];
-        [self.refreshHeader endRefreshing];
-        if (datas.count<9) {
-            [self.refreshFooter endRefreshingWithNoMoreData];
-        }else{
-            [self.refreshFooter endRefreshing];
-        }
-        if (self.dataArray.count == 0 && datas.count == 0) {
-            [self showNullViewWithNullViewType:NullTypeNoneListen];
-        }
-    } errorBlock:^(KTError *error) {
-        if (self.page > 1) {
-            self.page -= 1;
-        }
-        [self.refreshHeader endRefreshing];
-        [self.refreshFooter endRefreshing];
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
-    }];
-}
-- (void)deleteHistoryatIndex:(NSInteger)index{
-    HomeTopModel * model = self.dataArray[index];
-    NSDictionary * params = @{
-                              @"idStr":model.audioId
-                              };
-    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_DelHistory complete:^(id result) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除成功" duration:1.0f];
-    } errorBlock:^(KTError *error) {
-
-    }];
-}
-- (void)deleteAllHistory{
-    NSDictionary * params = @{};
-    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_DelHistory complete:^(id result) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除成功" duration:1.0f];
-        [self.dataArray removeAllObjects];
-        [self.tabview reloadData];
+    self.dataArray = [[HistorySql sql] getAllHistoryAudios];
+    if (self.dataArray.count == 0) {
         [self showNullViewWithNullViewType:NullTypeNoneListen];
-    } errorBlock:^(KTError *error) {
-        
-    }];
+    }else{
+        [self.tabview reloadData];
+    }
+}
+
+//- (void)refreshData{
+//    self.page = 1;
+//    [self.dataArray removeAllObjects];
+//    [self getData];
+//}
+//- (void)getMoreData{
+//    self.page += 1;
+//    [self getData];
+//}
+//
+//- (void)getData{
+//    NSDictionary * params = @{
+//                              @"page":@(self.page),
+//                              @"pagesize":@"10"
+//                              };
+//    [[NetWorkManager manager] GETRequest:params pageUrl:Page_History complete:^(id result) {
+//        NSArray * datas = (NSArray *)result;
+//        if (self.dataArray.count != 0 && datas.count< 10) {
+//            if (datas.count == 0) {
+//                self.page -= 1;
+//            }
+//            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
+//        }
+//        for (int i = 0; i<datas.count; i++) {
+//            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
+//            [self.dataArray addObject:model];
+//        }
+//        
+//        [self.tabview reloadData];
+//        [self.refreshHeader endRefreshing];
+//        if (datas.count<9) {
+//            [self.refreshFooter endRefreshingWithNoMoreData];
+//        }else{
+//            [self.refreshFooter endRefreshing];
+//        }
+//        if (self.dataArray.count == 0 && datas.count == 0) {
+//            [self showNullViewWithNullViewType:NullTypeNoneListen];
+//        }
+//    } errorBlock:^(KTError *error) {
+//        if (self.page > 1) {
+//            self.page -= 1;
+//        }
+//        [self.refreshHeader endRefreshing];
+//        [self.refreshFooter endRefreshing];
+//        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
+//    }];
+//}
+//- (void)deleteHistoryatIndex:(NSInteger)index{
+//    HomeTopModel * model = self.dataArray[index];
+//    NSDictionary * params = @{
+//                              @"idStr":model.audioId
+//                              };
+//    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_DelHistory complete:^(id result) {
+//        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除成功" duration:1.0f];
+//    } errorBlock:^(KTError *error) {
+//
+//    }];
+//}
+- (void)deleteAllHistory{
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        [[HistorySql sql] deleteAudioWithID:model.audioId];
+    }
+    [self showNullViewWithNullViewType:NullTypeNoneListen];
+//    NSDictionary * params = @{};
+//    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_DelHistory complete:^(id result) {
+//        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除成功" duration:1.0f];
+//        [self.dataArray removeAllObjects];
+//        [self.tabview reloadData];
+//        [self showNullViewWithNullViewType:NullTypeNoneListen];
+//    } errorBlock:^(KTError *error) {
+//        
+//    }];
 }
 - (void)playAllAudio{
     [AudioPlayer instance].currentAudio = self.dataArray[0];

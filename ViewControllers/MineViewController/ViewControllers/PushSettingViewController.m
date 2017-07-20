@@ -11,7 +11,7 @@
 #import "PushSettingCell.h"
 @interface PushSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 
 @end

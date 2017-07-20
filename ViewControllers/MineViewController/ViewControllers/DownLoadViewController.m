@@ -9,11 +9,13 @@
 #import "DownLoadViewController.h"
 #import "DownLoadSubViewController.h"
 #import "WaitDownLoadViewController.h"
-@interface DownLoadViewController ()<UIScrollViewDelegate>
+#import "AudioDownLoader.h"
+@interface DownLoadViewController ()<UIScrollViewDelegate,AudioDownLoadDelegate>
 
 @property (nonatomic, strong) UISegmentedControl * segmentbtn;
 @property (nonatomic, strong) UIScrollView * mainScroll;
-
+@property (nonatomic, strong) DownLoadSubViewController * leftvc;
+@property (nonatomic, strong) WaitDownLoadViewController * rightvc;
 @end
 
 @implementation DownLoadViewController
@@ -21,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavUnAlpha];
+    [AudioDownLoader loader].delegate = self;
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self drawNavSelectView];
     [self creatUI];
@@ -54,18 +57,30 @@
     self.mainScroll.delegate = self;
     [self.view addSubview:self.mainScroll];
     
-    DownLoadSubViewController * leftvc = [[DownLoadSubViewController alloc]init];
-    leftvc.view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64);
-    [self.mainScroll addSubview:leftvc.view];
-    [self addChildViewController:leftvc];
-    WaitDownLoadViewController * rightvc = [[WaitDownLoadViewController alloc]init];
-    rightvc.view.frame = CGRectMake(UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT - 64);
-    [self.mainScroll addSubview:rightvc.view];
-    [self addChildViewController:rightvc];
+    self.leftvc = [[DownLoadSubViewController alloc]init];
+    self.leftvc.view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64);
+    [self.mainScroll addSubview:self.leftvc.view];
+    [self addChildViewController:self.leftvc];
+    self.rightvc = [[WaitDownLoadViewController alloc]init];
+    self.rightvc.view.frame = CGRectMake(UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT - 64);
+    [self.mainScroll addSubview:self.rightvc.view];
+    [self addChildViewController:self.rightvc];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int index = scrollView.contentOffset.x / UI_WIDTH;
     [self.segmentbtn setSelectedSegmentIndex:index];
+        if (index == 0) {
+            [self.leftvc getData];
+        }else{
+            [self.rightvc getData];
+        }
 }
-
+- (void)audioDownLoadOver{
+    int index = self.mainScroll.contentOffset.x / UI_WIDTH;
+    if (index == 0) {
+        [self.leftvc refreshData];
+    }else{
+        [self.rightvc refreshData];
+    }
+}
 @end

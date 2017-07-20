@@ -90,8 +90,15 @@
     [cell updateWithHomeTopModel:[AudioPlayer instance].playList[indexPath.row]];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    HomeTopModel * model = [AudioPlayer instance].playList[indexPath.row];
+    [[AudioPlayer instance] audioPlay:model];
+    [self disMiss];
+}
+
 - (void)show{
     self.hidden = NO;
+    [self.tabview reloadData];
     [UIView animateWithDuration:0.5 animations:^{
         self.backgroundColor = UIColorFromRGBA(0x000000, 0.5);
         self.showView.frame = CGRectMake(0, Anno750(390), UI_WIDTH, UI_HEGIHT - Anno750(390));

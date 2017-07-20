@@ -102,25 +102,7 @@
     NSMutableArray * audios = [NSMutableArray new];
     //遍历结果集合
     while ([resultSet  next]){
-        HomeTopModel * model = [[HomeTopModel alloc]init];
-        model.topId = [resultSet objectForColumn:@"topId"];
-        model.topName = [resultSet objectForColumn:@"topName"];
-        model.audioId = [resultSet objectForColumn:@"audioId"];
-        model.anchorId = [resultSet objectForColumn:@"anchorId"];
-        model.columnId = [resultSet objectForColumn:@"columnId"];
-        model.audioName = [resultSet objectForColumn:@"audioName"];
-        model.summary = [resultSet objectForColumn:@"summary"];
-        model.audioContent = [resultSet objectForColumn:@"audioContent"];
-        model.audioSource = [resultSet objectForColumn:@"audioSource"];
-        model.audioSize = [resultSet objectForColumn:@"audioSize"];
-        model.audioLong = [resultSet objectForColumn:@"audioLong"];
-        model.thumbnail = [resultSet objectForColumn:@"thumbnail"];
-        model.anchorName = [resultSet objectForColumn:@"anchorName"];
-        model.isprase = (int)[resultSet intForColumn:@"isprase"];
-        model.downStatus = [resultSet objectForColumn:@"downStatus"];
-        model.playLong = [resultSet objectForColumn:@"playLong"];
-        model.tagString = [resultSet objectForColumn:@"tagString"];
-        model.localAddress = [resultSet objectForColumn:@"localAddress"];
+        HomeTopModel * model = [self getModelWithResultset:resultSet];
         [audios addObject:model];
     }
     return audios;
@@ -132,25 +114,7 @@
     NSMutableArray * audios = [NSMutableArray new];
     //遍历结果集合
     while ([resultSet  next]){
-        HomeTopModel * model = [[HomeTopModel alloc]init];
-        model.topId = [resultSet objectForColumn:@"topId"];
-        model.topName = [resultSet objectForColumn:@"topName"];
-        model.audioId = [resultSet objectForColumn:@"audioId"];
-        model.anchorId = [resultSet objectForColumn:@"anchorId"];
-        model.columnId = [resultSet objectForColumn:@"columnId"];
-        model.audioName = [resultSet objectForColumn:@"audioName"];
-        model.summary = [resultSet objectForColumn:@"summary"];
-        model.audioContent = [resultSet objectForColumn:@"audioContent"];
-        model.audioSource = [resultSet objectForColumn:@"audioSource"];
-        model.audioSize = [resultSet objectForColumn:@"audioSize"];
-        model.audioLong = [resultSet objectForColumn:@"audioLong"];
-        model.thumbnail = [resultSet objectForColumn:@"thumbnail"];
-        model.anchorName = [resultSet objectForColumn:@"anchorName"];
-        model.isprase = (int)[resultSet intForColumn:@"isprase"];
-        model.downStatus = [resultSet objectForColumn:@"downStatus"];
-        model.playLong = [resultSet objectForColumn:@"playLong"];
-        model.tagString = [resultSet objectForColumn:@"tagString"];
-        model.localAddress = [resultSet objectForColumn:@"localAddress"];
+        HomeTopModel * model = [self getModelWithResultset:resultSet];
         [audios addObject:model];
     }
     return audios;
@@ -162,29 +126,34 @@
     NSMutableArray * audios = [NSMutableArray new];
     //遍历结果集合
     while ([resultSet  next]){
-        HomeTopModel * model = [[HomeTopModel alloc]init];
-        model.topId = [resultSet objectForColumn:@"topId"];
-        model.topName = [resultSet objectForColumn:@"topName"];
-        model.audioId = [resultSet objectForColumn:@"audioId"];
-        model.anchorId = [resultSet objectForColumn:@"anchorId"];
-        model.columnId = [resultSet objectForColumn:@"columnId"];
-        model.audioName = [resultSet objectForColumn:@"audioName"];
-        model.summary = [resultSet objectForColumn:@"summary"];
-        model.audioContent = [resultSet objectForColumn:@"audioContent"];
-        model.audioSource = [resultSet objectForColumn:@"audioSource"];
-        model.audioSize = [resultSet objectForColumn:@"audioSize"];
-        model.audioLong = [resultSet objectForColumn:@"audioLong"];
-        model.thumbnail = [resultSet objectForColumn:@"thumbnail"];
-        model.anchorName = [resultSet objectForColumn:@"anchorName"];
-        model.isprase = (int)[resultSet intForColumn:@"isprase"];
-        model.downStatus = [resultSet objectForColumn:@"downStatus"];
-        model.playLong = [resultSet objectForColumn:@"playLong"];
-        model.tagString = [resultSet objectForColumn:@"tagString"];
-        model.localAddress = [resultSet objectForColumn:@"localAddress"];
+        HomeTopModel * model = [self getModelWithResultset:resultSet];
         [audios addObject:model];
     }
     return audios;
 }
+- (HomeTopModel *)getModelWithResultset:(FMResultSet *)resultSet{
+    HomeTopModel * model = [[HomeTopModel alloc]init];
+    model.topId = [resultSet objectForColumn:@"topId"];
+    model.topName = [resultSet objectForColumn:@"topName"];
+    model.audioId = [resultSet objectForColumn:@"audioId"];
+    model.anchorId = [resultSet objectForColumn:@"anchorId"];
+    model.columnId = [resultSet objectForColumn:@"columnId"];
+    model.audioName = [resultSet objectForColumn:@"audioName"];
+    model.summary = [resultSet objectForColumn:@"summary"];
+    model.audioContent = [resultSet objectForColumn:@"audioContent"];
+    model.audioSource = [resultSet objectForColumn:@"audioSource"];
+    model.audioSize = [resultSet objectForColumn:@"audioSize"];
+    model.audioLong = [resultSet objectForColumn:@"audioLong"];
+    model.thumbnail = [resultSet objectForColumn:@"thumbnail"];
+    model.anchorName = [resultSet objectForColumn:@"anchorName"];
+    model.isprase = (int)[resultSet intForColumn:@"isprase"];
+    model.downStatus = [resultSet objectForColumn:@"downStatus"];
+    model.playLong = [resultSet objectForColumn:@"playLong"];
+    model.tagString = [resultSet objectForColumn:@"tagString"];
+    model.localAddress = [resultSet objectForColumn:@"localAddress"];
+    return model;
+}
+
 - (void)closeDB{
     
 }

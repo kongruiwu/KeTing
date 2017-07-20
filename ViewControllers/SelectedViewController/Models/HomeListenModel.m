@@ -7,7 +7,8 @@
 //
 
 #import "HomeListenModel.h"
-
+#import "SqlManager.h"
+#import "HistorySql.h"
 @implementation HomeListenModel
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
@@ -65,6 +66,11 @@
             NSMutableArray<HomeTopModel *> * muarr = [NSMutableArray new];
             for (int i = 0; i<arr.count; i++) {
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
+                NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+                if ([status integerValue] != 1000) {
+                    model.downStatus = status;
+                }
+                model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
                 [muarr addObject:model];
             }
             self.audio = muarr;

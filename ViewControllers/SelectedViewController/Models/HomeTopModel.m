@@ -41,7 +41,7 @@
         self.localAddress = @"";
         self.showTools = NO;
         self.isSelectDown = NO;
-        self.downStatus = 0;
+        self.downStatus = @0;
     }
     return self;
 }

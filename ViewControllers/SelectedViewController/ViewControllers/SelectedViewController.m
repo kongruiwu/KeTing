@@ -27,7 +27,7 @@
 
 @interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 
 @property (nonatomic, strong) HomeViewModel * model;
 

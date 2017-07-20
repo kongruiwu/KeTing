@@ -12,7 +12,7 @@
 #import "VoiceDetailViewController.h"
 @interface VoiceListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic) int page;
 @end

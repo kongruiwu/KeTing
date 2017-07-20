@@ -10,5 +10,6 @@
 
 @interface DownLoadSubViewController : BaseViewController
 
-
+- (void)refreshData;
+- (void)getData;
 @end

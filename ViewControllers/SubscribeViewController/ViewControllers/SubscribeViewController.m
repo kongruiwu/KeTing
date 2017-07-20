@@ -20,7 +20,7 @@
 
 @interface SubscribeViewController ()<UITableViewDelegate,UITableViewDataSource,RecommendListDelegate>
 
-@property (nonatomic, strong)UITableView * tabview;
+//@property (nonatomic, strong)UITableView * tabview;
 //推荐数组
 @property (nonatomic, strong) NSMutableArray * recomendArray;
 //订阅数组

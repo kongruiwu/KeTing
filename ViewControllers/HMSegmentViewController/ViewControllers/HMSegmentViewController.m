@@ -26,6 +26,7 @@
 @property (nonatomic, assign) NSInteger indexNum;
 @property (nonatomic, strong) NSMutableArray * viewControllers;
 
+
 @end
 
 @implementation HMSegmentViewController
@@ -118,6 +119,10 @@
     }];
     [self.hmsgControl setSelectedSegmentIndex:self.indexNum];
     self.mainScroll.contentOffset = CGPointMake(self.indexNum * UI_WIDTH, 0);
+    
+    
+    
+    
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int index = scrollView.contentOffset.x / UI_WIDTH;
@@ -132,6 +137,8 @@
         }else if(index == 3){
             vc = [FindViewController new];
         }
+        
+        
         vc.view.frame = CGRectMake(index * UI_WIDTH, 0, UI_WIDTH, UI_HEGIHT);
         [self.mainScroll addSubview:vc.view];
         [self addChildViewController:vc];

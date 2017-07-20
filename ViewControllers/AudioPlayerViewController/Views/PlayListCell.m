@@ -80,16 +80,10 @@
     [self.downLoadImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(15));
-        make.width.equalTo(@(Anno750(26)));
-        make.height.equalTo(@(Anno750(26)));
     }];
     CGSize size = [KTFactory getSize:self.dateLabel.text maxSize:CGSizeMake(UI_WIDTH, 99999) font:[UIFont systemFontOfSize:font750(24)]];
     [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        if (self.downLoadImg.hidden) {
-            make.left.equalTo(@(Anno750(24)));
-        }else{
-            make.left.equalTo(self.downLoadImg.mas_right).offset(Anno750(12));
-        }
+        make.left.equalTo(@(Anno750(24)));
         make.centerY.equalTo(self.downLoadImg.mas_centerY);
         make.width.equalTo(@(size.width+Anno750(10)));
     }];
@@ -112,13 +106,15 @@
 }
 - (void)updateWithHomeTopModel:(HomeTopModel *)model
 {
-    if ([[AudioPlayer instance].currentAudio.onlyCode isEqualToString:model.onlyCode]) {
+    if ([[AudioPlayer instance].currentAudio.audioId integerValue] == [model.audioId integerValue]) {
         self.nameLabel.textColor = KTColor_MainOrange;
     }else{
         self.nameLabel.textColor = KTColor_MainBlack;
     }
+    self.downLoadImg.hidden = [model.downStatus integerValue] == 2 ? NO : YES;
     self.nameLabel.text = model.audioName;
-    self.dateLabel.text = [KTFactory timestampSwitchTime:model.addTime.integerValue];
+    NSString * datastr = [KTFactory timestampSwitchTime:model.addTime.integerValue];
+    self.dateLabel.text = self.downLoadImg.hidden ? datastr : [NSString stringWithFormat:@"      %@",datastr];
     self.timeLabel.text = [NSString stringWithFormat:@"时长%@",[KTFactory getTimeStingWithCurrentTime:model.audioLong.intValue andTotalTime:model.audioLong.intValue]];
     self.sizeLabel.text = [KTFactory getAudioSizeWithdataSize:model.audioSize.longValue];
     self.playStatusLabel.hidden = YES;

@@ -11,7 +11,10 @@
 #import "NetWorkManager.h"
 #import <MJRefresh.h>
 #import "NullView.h"
+
 @interface BaseViewController : UIViewController
+
+@property (nonatomic, strong) UITableView * tabview;
 
 @property (nonatomic, strong) MJRefreshNormalHeader * refreshHeader;
 @property (nonatomic, strong) MJRefreshAutoNormalFooter * refreshFooter;

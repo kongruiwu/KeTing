@@ -15,7 +15,7 @@
 #import "ShareView.h"
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 @property (nonatomic, strong) ShareView * shareView;
 //@property (nonatomic, strong) NSArray * descs;

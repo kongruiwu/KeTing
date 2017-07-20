@@ -22,7 +22,7 @@
 #import "SettingViewController.h"
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource,UserManagerDelegate>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) MineViewModel * viewModel;
 @property (nonatomic, strong) MineHeader * header;
 @property (nonatomic, strong) UIView * clearView;
@@ -102,7 +102,11 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([UserManager manager].isLogin) {
+    if(indexPath.section == 1 && indexPath.row == 2){
+        [self.navigationController pushViewController:[DownLoadViewController new] animated:YES];
+    }else if(indexPath.section == 2 && indexPath.row == 1){
+        [self.navigationController pushViewController:[SettingViewController new] animated:YES];
+    }else if ([UserManager manager].isLogin) {
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
                 [self.navigationController pushViewController:[MoneyViewController new] animated:YES];
@@ -116,16 +120,11 @@
                 [self.navigationController pushViewController:[HistoryViewController new] animated:YES];
             }else if(indexPath.row == 1){
                 [self.navigationController pushViewController:[MyLikeViewController new] animated:YES];
-            }else if(indexPath.row == 2){
-                [self.navigationController pushViewController:[DownLoadViewController new] animated:YES];
             }
-        
         }else if(indexPath.section == 2){
             if (indexPath.row == 0) {
                 [self readMessage];
                 [self.navigationController pushViewController:[MessageViewController new] animated:YES];
-            }else if(indexPath.row == 1){
-                [self.navigationController pushViewController:[SettingViewController new] animated:YES];
             }
         }
     }else{

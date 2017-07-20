@@ -18,10 +18,13 @@
 #import "TopListBottomView.h"
 #import "AudioPlayerViewController.h"
 #import "SetAccoutViewController.h"
+#import "AudioDownLoader.h"
+#import "AppDelegate.h"
+#import "WKWebViewController.h"
+#import "LoginViewController.h"
+@interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
-@interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate>
-
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) ShareView * shareView;
 @property (nonatomic, strong) HomeListenModel * listenModel;
 @property (nonatomic, strong) VoiceDetailHeader * header;
@@ -31,6 +34,8 @@
 @property (nonatomic, assign) BOOL isOpen;
 /**下载状态下的 下载footer*/
 @property (nonatomic, strong) TopListBottomView * footView;
+
+@property (nonatomic, strong) UIButton * buyBtn;
 @end
 
 @implementation VoiceDetailViewController
@@ -40,6 +45,7 @@
     UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.tabview reloadData];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -52,6 +58,7 @@
     [super viewDidLoad];
     [self creatUI];
     [self getData];
+    [AudioDownLoader loader].delegate = self;
 }
 
 - (void)creatUI{
@@ -65,6 +72,7 @@
     self.footView = [[TopListBottomView alloc]init];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
+    [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
         make.right.equalTo(@0);
@@ -104,7 +112,7 @@
     buyBtn.layer.borderColor = KTColor_MainOrange.CGColor;
     buyBtn.layer.borderWidth = 1.0f;
     buyBtn.layer.cornerRadius = 4.0f;
-    
+    self.buyBtn = buyBtn;
     if (self.listenModel.Isbuy) {
         [buyBtn setTitle:@"  批量下载" forState:UIControlStateNormal];
         [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateNormal];
@@ -188,7 +196,7 @@
                 }
                 cell.hidden = !self.isOpen;
             }else{
-                [cell updateWithName:[NSString stringWithFormat:@"已更新%ld条音频",self.listenModel.audio.count] color:KTColor_lightGray font:font750(26)];
+                [cell updateWithName:[NSString stringWithFormat:@"已更新%ld条音频",(unsigned long)self.listenModel.audio.count] color:KTColor_lightGray font:font750(26)];
             }
             return cell;
     }else if(indexPath.row > 1 && indexPath.row < self.listenModel.audio.count + 2){
@@ -205,12 +213,24 @@
     }else{
         
         if (self.isDownLoad) {
+            HomeTopModel * model = self.self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3];
+            if ([model.downStatus intValue]== 2) {
+                static NSString * cellid = @"topListCell";
+                TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                if (!cell) {
+                    cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                }
+                [cell updateWithHomeTopModel:model];
+                cell.moreBtn.hidden = YES;
+                return cell;
+            }
+            
             static NSString * cellid = @"TopListDown";
             TopListDownCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (!cell) {
                 cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
-            [cell updateWithHomeTopModel:self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3]];
+            [cell updateWithHomeTopModel:model];
             return cell;
         }else{
             static NSString * cellid = @"topListCell";
@@ -230,7 +250,9 @@
         HomeTopModel * model = self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3];
         if (self.isDownLoad) {
             //下载选择
-            model.isSelectDown = !model.isSelectDown;
+            if ([model.downStatus integerValue] == 0 || [model.downStatus integerValue] == 1) {
+                model.isSelectDown = !model.isSelectDown;
+            }
             [self.footView updateWithArrays:self.listenModel.audio];
             [self.tabview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }else{
@@ -262,29 +284,39 @@
 }
 #pragma mark - 订阅按钮
 - (void)buyButtonClick:(UIButton *)button{
-    if (self.listenModel.Isbuy) {
-        button.selected = !button.selected;
-        self.isDownLoad = button.selected;
-        NSMutableArray * muarr = [NSMutableArray new];
-        for (int i = 0; i<self.listenModel.audio.count; i++) {
-            NSIndexPath * index = [NSIndexPath indexPathForRow:(self.listenModel.audio.count + 3 + i) inSection:0];
-            [muarr addObject:index];
-        }
-        [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
-        if (self.isDownLoad) {
-            self.footView.hidden = NO;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88));
-        }else{
-            self.footView.hidden = YES;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT);
-        }
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
     }else{
-        //订阅
-        SetAccoutViewController * vc = [SetAccoutViewController new];
-        vc.money = self.listenModel.PRICE;
-        vc.products = @[self.listenModel];
-        vc.isBook = NO;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.listenModel.Isbuy) {
+            
+            CGRect frame = self.footView.frame;
+            self.footView.frame = CGRectMake(frame.origin.x, frame.origin.y -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+            
+            button.selected = !button.selected;
+            self.isDownLoad = button.selected;
+            NSMutableArray * muarr = [NSMutableArray new];
+            for (int i = 0; i<self.listenModel.audio.count; i++) {
+                NSIndexPath * index = [NSIndexPath indexPathForRow:(self.listenModel.audio.count + 3 + i) inSection:0];
+                [muarr addObject:index];
+            }
+            [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
+            if (self.isDownLoad) {
+                self.footView.hidden = NO;
+                self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+            }else{
+                self.footView.hidden = YES;
+                self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+            }
+        }else{
+            //订阅
+            SetAccoutViewController * vc = [SetAccoutViewController new];
+            vc.money = self.listenModel.PRICE;
+            vc.products = @[self.listenModel];
+            vc.isBook = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 #pragma mark - 查看简介
@@ -301,31 +333,160 @@
 }
 #pragma mark - 点赞
 - (void)likeThisBookClick:(UIButton *)btn{
-    NSDictionary * params = @{
-                              //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
-                              @"relationType":@3,
-                              @"relationId":self.listenModel.listenId,
-                              @"nickName":[UserManager manager].info.NICKNAME
-                              };
-    NSString * pageUrl = Page_AddLike;
-    if (btn.selected) {
-        pageUrl = Page_DelLike;
-    }
-    [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
-        
-        int num = [self.listenModel.praseNum intValue];
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        NSDictionary * params = @{
+                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                                  @"relationType":@3,
+                                  @"relationId":self.listenModel.listenId,
+                                  @"nickName":[UserManager manager].info.NICKNAME
+                                  };
+        NSString * pageUrl = Page_AddLike;
         if (btn.selected) {
-            num -= 1;
-        }else{
-            num += 1;
+            pageUrl = Page_DelLike;
         }
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:btn.selected ? @"取消成功":@"点赞成功" duration:1.0f];
-        self.listenModel.praseNum = @(num);
-        [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
-        btn.selected = !btn.selected;
-    } errorBlock:^(KTError *error) {
-        
-    }];
+        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            
+            int num = [self.listenModel.praseNum intValue];
+            if (btn.selected) {
+                num -= 1;
+            }else{
+                num += 1;
+            }
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:btn.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+            self.listenModel.praseNum = @(num);
+            [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
+            btn.selected = !btn.selected;
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
+}
+
+#pragma mark - 下载音频
+- (void)downLoadAudio:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+    
+    NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    if ([num integerValue] == 0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已在下载队列中了" duration:1.5];
+        return;
+    }else if([num integerValue] == 1 || [num integerValue] == 2){
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已经下载到本地了" duration:1.5f];
+        return;
+    }
+    
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    [self hiddenToolsBar];
+}
+#pragma mark - 下载所选择音频
+- (void)downAllSelectAudio{
+    NSMutableArray * muarr = [NSMutableArray new];
+    for (int i = 0; i<self.listenModel.audio.count; i++) {
+        HomeTopModel * model = self.listenModel.audio[i];
+        if (model.isSelectDown) {
+            NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([num integerValue] == 1000) {
+                [muarr addObject:model];
+            }
+        }
+    }
+    AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appdelegete.netStatus == ReachableViaWiFi) {
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+        [self buyButtonClick:self.buyBtn];
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定下载"
+                                                        style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+                                                            [self buyButtonClick:self.buyBtn];
+                                                        }];
+        [alert addAction:cannce];
+        [alert addAction:sure];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    
+}
+#pragma mark - 查看音频文档
+- (void)checkAudioText:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+    WKWebViewController * vc= [[WKWebViewController alloc]init];
+    vc.model = model;
+    vc.webType = PROTOCOLTYPEELSETEXT;
+    [self hiddenToolsBar];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+#pragma mark - 音频点赞
+- (void)likeAudioClick:(UIButton *)button{
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+        NSIndexPath * index = [self.tabview indexPathForCell:cell];
+        HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+        NSDictionary * params = @{
+                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                                  @"relationType":@1,
+                                  @"relationId":model.audioId,
+                                  @"nickName":[UserManager manager].info.NICKNAME
+                                  };
+        NSString * pageUrl = Page_AddLike;
+        if (button.selected) {
+            pageUrl = Page_DelLike;
+        }
+        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+            button.selected = !button.selected;
+            model.isprase = button.selected;
+            [self.tabview reloadData];
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
+    [self hiddenToolsBar];
+}
+#pragma mark - 分享
+- (void)shareBtnClick:(UIButton *)button{
+    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+    
+    [self hiddenToolsBar];
+}
+/**音频下载完成*/
+- (void)audioDownLoadOver{
+    if (self) {
+        NSInteger index = [self.listenModel.audio indexOfObject:[AudioDownLoader loader].currentModel];
+        HomeTopModel * model = self.listenModel.audio[index];
+        model.downStatus = @2;
+        [self.tabview reloadData];
+    }
 }
 #pragma mark - 点击更多按钮
 - (void)moreBtnClick:(UIButton *)button{
@@ -346,6 +507,7 @@
     }
     [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:UITableViewRowAnimationNone];
 }
+#pragma mark - 隐藏工具栏
 - (void)hiddenToolsBar{
     for (int i = 0; i<self.listenModel.audio.count; i++) {
         HomeTopModel * model = self.listenModel.audio[i];

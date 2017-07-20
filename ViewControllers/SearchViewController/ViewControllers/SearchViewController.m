@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) KTSearchBar * searchBar;
 @property (nonatomic, strong) UITextField * textField;
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * hotWords;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 

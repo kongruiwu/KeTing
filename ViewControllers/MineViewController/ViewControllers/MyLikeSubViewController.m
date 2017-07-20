@@ -18,7 +18,7 @@
 
 @interface MyLikeSubViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView * tabview;
+//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end
@@ -39,7 +39,7 @@
     [self.view addSubview:self.tabview];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(2);
+    return Anno750(30);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
@@ -56,7 +56,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
-    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(2));
+    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
     return view;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
