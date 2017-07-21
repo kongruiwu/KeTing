@@ -31,6 +31,7 @@
                                                     textColor:KTColor_darkGray
                                                      textSize:font750(28)];
         moneyBtn.hidden = YES;
+        moneyBtn.tag = 521 + i;
         [moneyBtn setBackgroundImage:[UIImage imageNamed:@"my_money"] forState:UIControlStateNormal];
         [moneyBtn setBackgroundImage:[UIImage imageNamed:@"my_money_pitch on"] forState:UIControlStateSelected];
         [self addSubview:moneyBtn];
@@ -57,6 +58,9 @@
         moneyBtn.selected = NO;
     }
     btn.selected = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sendPrice:)]) {
+        [self.delegate sendPrice:btn.tag - 520];
+    }
 }
 - (void)updateWithAmouts:(NSArray *)amount{
     

@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+
+@protocol SendPriceDelegate <NSObject>
+- (void)sendPrice:(NSInteger )price;
+@end
+
 @interface MoneyCountCell : UITableViewCell
+
+@property (nonatomic, strong) id <SendPriceDelegate > delegate;
 
 @property (nonatomic, strong) NSMutableArray * btnArray;
 

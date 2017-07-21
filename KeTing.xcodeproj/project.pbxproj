@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6232F2CE1F21D86C009DDC37 /* RMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6232F2CD1F21D86C009DDC37 /* RMIAPHelper.m */; };
 		8B2D73861F0B224F00E1BF4B /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D73851F0B224F00E1BF4B /* MessageViewController.m */; };
 		8B2D73891F0B27FC00E1BF4B /* MessageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D73881F0B27FC00E1BF4B /* MessageListCell.m */; };
 		8B2D738C1F0B2EEA00E1BF4B /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D738B1F0B2EEA00E1BF4B /* SettingViewController.m */; };
@@ -180,6 +181,8 @@
 /* Begin PBXFileReference section */
 		0C0724E25D1C93C667822247 /* Pods-KeTing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeTing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KeTing/Pods-KeTing.debug.xcconfig"; sourceTree = "<group>"; };
 		253FDB0D0BE70102602F7464 /* Pods-KeTing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KeTing.release.xcconfig"; path = "Pods/Target Support Files/Pods-KeTing/Pods-KeTing.release.xcconfig"; sourceTree = "<group>"; };
+		6232F2CC1F21D86C009DDC37 /* RMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMIAPHelper.h; sourceTree = "<group>"; };
+		6232F2CD1F21D86C009DDC37 /* RMIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMIAPHelper.m; sourceTree = "<group>"; };
 		76003AEA8175C7294536DAB5 /* libPods-KeTing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KeTing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B2D73841F0B224F00E1BF4B /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		8B2D73851F0B224F00E1BF4B /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
@@ -519,6 +522,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6232F2CB1F21D865009DDC37 /* IAPHelper */ = {
+			isa = PBXGroup;
+			children = (
+				6232F2CC1F21D86C009DDC37 /* RMIAPHelper.h */,
+				6232F2CD1F21D86C009DDC37 /* RMIAPHelper.m */,
+			);
+			path = IAPHelper;
+			sourceTree = "<group>";
+		};
 		6E91B40787CF65EDDC8A6969 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,6 +724,7 @@
 		8B53EA801EE52097009EA76D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				6232F2CB1F21D865009DDC37 /* IAPHelper */,
 				8B8742F51EEE5FFF00324FA2 /* ShareView */,
 				8BF691FD1EE7A245001CECEE /* ToastView */,
 				8B40FE621EE680BA005F9342 /* NetWorkManager */,
@@ -1594,6 +1607,7 @@
 				8BF091C81F04F5F5006478E9 /* MoneyHeaderCell.m in Sources */,
 				8BF602981EEFB06E00322545 /* ListenDetailViewController.m in Sources */,
 				8B8742E71EEE2EC300324FA2 /* PlayListCell.m in Sources */,
+				6232F2CE1F21D86C009DDC37 /* RMIAPHelper.m in Sources */,
 				8BFB09231F0F8B2500FA30F0 /* UAProgressView.m in Sources */,
 				8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */,
 				8B3CEED81F0E10AF00AE5B81 /* TopUpModel.m in Sources */,
