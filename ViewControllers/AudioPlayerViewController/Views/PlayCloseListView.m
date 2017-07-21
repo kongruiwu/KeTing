@@ -8,6 +8,7 @@
 
 #import "PlayCloseListView.h"
 #import "CloseListCell.h"
+#import "AudioPlayer.h"
 @implementation PlayCloseListView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -40,6 +41,31 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return Anno750(108);
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString * str = @"";
+    if (indexPath.row == 0) {
+        [AudioPlayer instance].closeTime = CloseTime30min;
+        str = @"设置成功,将于30分钟关闭";
+    }else if(indexPath.row == 1){
+        [AudioPlayer instance].closeTime = CloseTime60min;
+        str = @"设置成功,将于60分钟关闭";
+    }else if(indexPath.row == 2){
+        [AudioPlayer instance].closeTime = CloseTime90min;
+        str = @"设置成功,将于90分钟关闭";
+    }else if(indexPath.row == 3){
+        [AudioPlayer instance].closeTime = CloseTimeThisAudio;
+        str = @"设置成功,当前音频播放完成后关闭";
+    }else if(indexPath.row ==4){
+        [AudioPlayer instance].closeTime = CloseTimeNone;
+        if ([AudioPlayer instance].closeTime &&[AudioPlayer instance].closeTime != CloseTimeNone) {
+            str = @"设置成功,定时已关闭";
+        }
+    }
+    if (str.length >0) {
+        [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:str duration:2.0f];
+    }
+    [self disMiss];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * cellid = @"colseList";

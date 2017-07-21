@@ -11,6 +11,14 @@
 //音频model
 #import "HomeTopModel.h"
 
+typedef NS_ENUM(NSInteger, CloseTime){
+    CloseTimeNone = 0   ,  //没有倒计时
+    CloseTimeThisAudio  ,  //播放完当前音频
+    CloseTime30min      ,   //30分钟
+    CloseTime60min      ,   //60分钟
+    CloseTime90min          //90分钟
+};
+
 
 @interface AudioPlayer : NSObject<STKAudioPlayerDelegate>
 
@@ -20,10 +28,13 @@
 @property (nonatomic, strong) NSMutableArray * playList;
 /**当前播放的音频*/
 @property (nonatomic, strong) HomeTopModel * currentAudio;
-
+/**是否展示底部播放器*/
 @property (nonatomic, assign) BOOL showFoot;
-
-
+/**自动关闭定时器*/
+@property (nonatomic, strong) NSTimer * timer;
+/**自动关闭时间*/
+@property (nonatomic, assign) CloseTime closeTime;
+@property (nonatomic, assign) int closeMin;
 
 /**player*/
 + (instancetype)instance;

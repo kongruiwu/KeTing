@@ -357,6 +357,9 @@
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
             button.selected = !button.selected;
             model.isprase = button.selected;
+            if (button.selected) {
+//                self.likeBtn setTitle:<#(nullable NSString *)#> forState:<#(UIControlState)#>
+            }
             [self.tabview reloadData];
         } errorBlock:^(KTError *error) {
             

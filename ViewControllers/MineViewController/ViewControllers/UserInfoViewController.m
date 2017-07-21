@@ -68,6 +68,7 @@
     header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(280));
     UIView * groundView = [KTFactory creatViewWithColor:KTColor_BackGround];
     self.headerImg = [[HeaderImage alloc]init];
+    [self.headerImg.clearBtn addTarget:self action:@selector(uploadImage) forControlEvents:UIControlEventTouchUpInside];
     [self.headerImg updateUserIcon];
     [header addSubview:self.headerImg];
     [header addSubview:groundView];
@@ -250,5 +251,7 @@
                    INCASE_EMPTY([UserManager manager].info.TYP_NAME, @"点击设置")];
     [self.tabview reloadData];
 }
-
+- (void)uploadImage{
+    
+}
 @end
