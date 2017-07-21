@@ -38,7 +38,8 @@
 - (void)userLogout{
     self.isLogin = NO;
     self.info = nil;
-    self.userid = @"0";
+    self.userid = @"";
+    self.balance = @0;
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"USERID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

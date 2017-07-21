@@ -9,7 +9,7 @@
 #import "SetUserNameViewController.h"
 #import "HeaderImage.h"
 #import <ReactiveObjC.h>
-@interface SetUserNameViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface SetUserNameViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate,UserManagerDelegate>
 
 @property (nonatomic, strong)HeaderImage * userIcon;
 
@@ -66,7 +66,7 @@
         make.top.equalTo(self.nameT.mas_bottom).offset(Anno750(18));
     }];
     self.chageBtn= [KTFactory creatButtonWithTitle:@"保存"
-                                    backGroundColor:KTColor_MainOrangeAlpha
+                                    backGroundColor:KTColor_IconOrange
                                           textColor:KTColor_MainBlack
                                            textSize:font750(32)];
     [self.view addSubview:self.chageBtn];
@@ -91,10 +91,14 @@
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeName complete:^(id result) {
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改成功" duration:2.0f];
         [UserManager manager].info.NICKNAME = self.nameT.text;
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [UserManager manager].delegate = self;
+        [[UserManager manager] getUserInfo];
     } errorBlock:^(KTError *error) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
+}
+- (void)getUserInfoSucess{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)uploadUserIcon{
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];

@@ -89,7 +89,7 @@
     }];
     
     self.overBtn = [KTFactory creatButtonWithTitle:@"完成"
-                                   backGroundColor:KTColor_MainOrangeAlpha
+                                   backGroundColor:KTColor_IconOrange
                                          textColor:KTColor_MainBlack
                                           textSize:font750(32)];
     [self.view addSubview:self.overBtn];
@@ -125,6 +125,7 @@
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Register complete:^(id result) {
         [[UserManager manager] userLoginWithInfoDic:result];
+        [UserManager manager].userid = [UserManager manager].info.USERID;
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
         [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
     } errorBlock:^(KTError *error) {

@@ -124,7 +124,7 @@
     [forgetPwd addTarget:self action:@selector(forgetPassword) forControlEvents:UIControlEventTouchUpInside];
     
     self.loginBtn = [KTFactory creatButtonWithTitle:@"登录"
-                                    backGroundColor:KTColor_MainOrangeAlpha
+                                    backGroundColor:KTColor_IconOrange
                                           textColor:KTColor_MainBlack
                                            textSize:font750(32)];
     [self.view addSubview:self.loginBtn];

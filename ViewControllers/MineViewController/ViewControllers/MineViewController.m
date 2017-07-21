@@ -147,6 +147,11 @@
 /**奇怪么？为啥这里还有个请求？  问问那个sb陶兴国吧*/
 - (void)getMessageCount{
     if (![UserManager manager].isLogin) {
+        NSArray * datas = self.viewModel.dataArray[2];
+        MineListModel * model = datas[0];
+        model.desc = @"0";
+        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:2];
+        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_MessageCount complete:^(id result) {
@@ -183,6 +188,11 @@
 }
 - (void)getUserBalance{
     if (![UserManager manager].isLogin) {
+        NSArray * datas = self.viewModel.dataArray[0];
+        MineListModel * model = datas[0];
+        model.desc = @"0";
+        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
     NSDictionary * params = @{};
@@ -202,6 +212,11 @@
 }
 - (void)getShopCarCount{
     if (![UserManager manager].isLogin) {
+        NSArray * datas = self.viewModel.dataArray[0];
+        MineListModel * model = datas[2];
+        model.desc = @"0";
+        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:2 inSection:0];
+        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
     

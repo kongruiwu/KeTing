@@ -198,9 +198,12 @@
             }
             
         } errorBlock:^(KTError *error) {
-            
+            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
     } errorBlock:^(KTError *error) {
+        [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     
     

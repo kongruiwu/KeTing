@@ -114,7 +114,7 @@
         [self.view bringSubviewToFront:self.pickerView];
         self.isEdu = YES;
         if ([UserManager manager].info.EDU_ID && [[UserManager manager].info.EDU_ID integerValue] != 0) {
-            NSInteger index = [[UserManager manager].dataModel.eduIds indexOfObject:[UserManager manager].info.EDU_ID];
+            NSInteger index = [[UserManager manager].dataModel.eduIds indexOfObject:[NSString stringWithFormat:@"%@",[UserManager manager].info.EDU_ID]];
             [self.pickerView.picker selectRow:index inComponent:0 animated:NO];
         }
         self.pickerView.pickerDatas = [UserManager manager].dataModel.eduNames;

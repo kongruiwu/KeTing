@@ -83,7 +83,7 @@
 /**学历*/
 @property (nonatomic, strong) NSString * EDU_NAME;
 /**学历编号*/
-@property (nonatomic, strong) NSString * EDU_ID;
+@property (nonatomic, strong) NSNumber * EDU_ID;
 @property (nonatomic, strong) NSString * Twon;
 /**生日*/
 @property (nonatomic, strong) NSString * Birthday;
