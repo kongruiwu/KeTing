@@ -12,6 +12,7 @@
 #import "ListenDetailViewController.h"
 #import "ShopCarViewController.h"
 #import "SetAccoutViewController.h"
+#import "LoginViewController.h"
 @interface ListenListViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
@@ -106,32 +107,42 @@
 }
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
-    
-    UITableViewCell * cell = (UITableViewCell *)[btn superview];
-    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
-    HomeListenModel * model = self.dataArray[indexpath.row];
-    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
-    vc.isBook = YES;
-    vc.money = model.PRICE;
-    vc.products = @[model];
-    [self.navigationController pushViewController:vc animated:YES];
-
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        UITableViewCell * cell = (UITableViewCell *)[btn superview];
+        NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+        HomeListenModel * model = self.dataArray[indexpath.row];
+        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+        vc.isBook = YES;
+        vc.money = model.PRICE;
+        vc.products = @[model];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (void)addToShopCar:(UIButton *)btn{
-    UITableViewCell * cell = (UITableViewCell *)[btn superview];
-    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
-    HomeListenModel * model = self.dataArray[indexpath.row];
-    NSDictionary * params = @{
-                              @"userId":[UserManager manager].userid,
-                              @"relationId":model.listenId,
-                              @"relationType":@2
-                              };
-    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
-        btn.selected = !btn.selected;
-    } errorBlock:^(KTError *error) {
-        
-    }];
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        UITableViewCell * cell = (UITableViewCell *)[btn superview];
+        NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+        HomeListenModel * model = self.dataArray[indexpath.row];
+        NSDictionary * params = @{
+                                  @"userId":[UserManager manager].userid,
+                                  @"relationId":model.listenId,
+                                  @"relationType":@2
+                                  };
+        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
+            btn.selected = !btn.selected;
+        } errorBlock:^(KTError *error) {
+            
+        }];
+    }
 }
 - (void)checkShopCar{
     [self.navigationController setNavigationBarHidden:NO animated:NO];

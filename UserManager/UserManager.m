@@ -33,6 +33,7 @@
 
 - (void)userLoginWithInfoDic:(NSDictionary *)info{
     self.info = [[UserInfo alloc]initWithDictionary:info];
+    self.userid = self.info.USERID;
     self.isLogin =YES;
 }
 - (void)userLogout{
@@ -45,7 +46,8 @@
 }
 
 - (void)getUserInfo{
-    if (self.userid.length == 0) {
+    NSString * userid = [NSString stringWithFormat:@"%@",self.userid];
+    if (userid.length == 0) {
         return;
     }
     NSDictionary * params =  @{

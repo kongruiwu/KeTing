@@ -10,6 +10,6 @@
 
 @interface VoiceDetailViewController : BaseViewController
 
-@property (nonatomic, strong) NSString * voiceID;
+@property (nonatomic, strong) NSNumber * voiceID;
 
 @end

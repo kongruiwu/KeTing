@@ -84,11 +84,11 @@
     }];
     [self.iconLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel.mas_left);
-        make.bottom.equalTo(self.leftImage.mas_bottom);
+        make.bottom.equalTo(self.leftImage.mas_bottom).offset(Anno750(4));
     }];
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.iconLabel.mas_right);
-        make.centerY.equalTo(self.iconLabel.mas_centerY);
+        make.bottom.equalTo(self.iconLabel.mas_bottom).offset(Anno750(2));
     }];
     [self.topLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));

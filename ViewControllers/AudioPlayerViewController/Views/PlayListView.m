@@ -32,7 +32,7 @@
     
     UIView * headView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
     headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(100));
-    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld首）",[AudioPlayer instance].playList.count]
+    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld）",[AudioPlayer instance].playList.count]
                                           fontValue:font750(32)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];

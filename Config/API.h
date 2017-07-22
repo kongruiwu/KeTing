@@ -108,4 +108,6 @@
 #define Page_Order          @"v1/order"
 //修改订单状态
 #define Page_PayStatus      @"v1/payStatus"
+//音频详情
+#define Page_AudioDetail    @"v1/viewAudio"
 #endif /* API_h */

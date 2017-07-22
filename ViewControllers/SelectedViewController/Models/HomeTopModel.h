@@ -65,6 +65,8 @@
 /**是否显示toolsbar*/
 @property (nonatomic, assign) BOOL showTools;
 
+/**点赞数*/
+@property (nonatomic, strong) NSNumber * praseNum;
 /**音频主键*/
 @property (nonatomic, strong) NSNumber * downPercent;
 /**下载进度  0 未下载， 1  下载中， 2 下载完成*/
@@ -78,7 +80,7 @@
 /**是否删除*/
 @property (nonatomic, assign) BOOL isDel;
 
-/**关联听书、声度、头条类型*/
+/**关联听书、声度、头条类型 关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)*/
 @property (nonatomic, strong) NSNumber * relationType;
 /**关联听书、声度、头条id*/
 @property (nonatomic, strong) NSNumber * relationId;

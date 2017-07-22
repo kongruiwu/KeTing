@@ -66,6 +66,8 @@
             NSMutableArray<HomeTopModel *> * muarr = [NSMutableArray new];
             for (int i = 0; i<arr.count; i++) {
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
+                model.relationType = self.catId;
+                model.relationId = self.listenId;
                 NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
                 if ([status integerValue] != 1000) {
                     model.downStatus = status;
@@ -77,8 +79,19 @@
         }else if([audio isKindOfClass:[NSDictionary class]]){
             NSDictionary * dic = (NSDictionary *)audio;
             self.audioModel = [[HomeTopModel alloc]initWithDictionary:dic];
+            self.audioModel.relationId = self.catId;
+            self.audioModel.relationType = self.listenId;
             self.audioModel.tagModels = muarr;
         }
+        
+        self.isDownLoad = NO;
+        if (self.audioModel) {
+            NSNumber * downStatu = [[SqlManager manager] checkDownStatusWithAudioid:self.audioModel.audioId];
+            if ([downStatu integerValue] == 2) {
+                self.isDownLoad = YES;
+            }
+        }
+        
     }
     return self;
 }

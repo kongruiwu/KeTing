@@ -17,7 +17,8 @@
 #import "AudioPlayerViewController.h"
 #import "SetAccoutViewController.h"
 #import "LoginViewController.h"
-@interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import "AudioDownLoader.h"
+@interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) ShareView * shareView;
@@ -204,7 +205,7 @@
     }
 }
 - (void)getData{
-    NSString * listenid ;
+    NSNumber * listenid ;
     if (self.listenModel) {
         listenid = self.listenModel.listenId;
     }else{
@@ -272,7 +273,12 @@
         //已购买
         if (self.listenModel.Isbuy) {
             if (!self.listenModel.isDownLoad) {//下载该书籍
-                
+#warning 这里需要判断网络状态
+                [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[self.listenModel.audioModel]];
+                [AudioDownLoader loader].delegate = self;
+
+            }else{
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
             }
         }else{
             if (!self.listenModel.iscart) {//添加至购物车
@@ -285,10 +291,13 @@
                     [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
                     [btn setImage:[UIImage imageNamed:@"Listen-Shoped"] forState:UIControlStateNormal];
                     int count = [self.header.countLabel.text intValue] + 1;
+                    self.listenModel.iscart = YES;
                     [self.header updateShopCarCount:[NSString stringWithFormat:@"%d",count]];
                 } errorBlock:^(KTError *error) {
                     
                 }];
+            }else{
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
             }
         }
     }
@@ -317,7 +326,17 @@
         }
     }
 }
-
+#pragma mark - 下载完成
+- (void)audioDownLoadOver{
+    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频下载完成" duration:1.0f];
+    self.listenModel.isDownLoad = YES;
+    [self.shopBtn setImage:[UIImage imageNamed:@"listen_downed"] forState:UIControlStateNormal];
+    [self.shopBtn setTitle:@"下载" forState:UIControlStateNormal];
+}
+#pragma mark - 下载进度
+- (void)showProgress:(NSString *)progress{
+    [self.shopBtn setTitle:[NSString stringWithFormat:@"  %@",progress] forState:UIControlStateNormal];
+}
 
 //设置头部拉伸效果
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{

@@ -77,27 +77,25 @@
         make.height.equalTo(@0.5);
     }];
 }
-- (void)updateWithTitles:(NSArray *)titls{
-    for (int i = 0; i< titls.count; i++) {
+- (void)updateWithHomeTopModels:(NSArray *)models{
+    for (int i = 0; i< models.count; i++) {
+        HomeTopModel * model = models[i];
         UIButton * button = self.topButtons[i];
         button.hidden = NO;
-        [button setTitle:[NSString stringWithFormat:@"  %@",titls[i]] forState:UIControlStateNormal];
+        if ([model.audioId isEqual:[AudioPlayer instance].currentAudio.audioId]) {
+            button.selected = YES;
+        }else{
+            button.selected = NO;
+        }
+        [button setTitle:[NSString stringWithFormat:@"  %@",model.audioName] forState:UIControlStateNormal];
     }
 }
 - (void)playThisAudio:(UIButton *)btn{
-    for (int i = 0; i<self.topButtons.count; i++) {
-        UIButton * button = self.topButtons[i];
-        button.selected = i == btn.tag;
-    }
     if ([self.delegate respondsToSelector:@selector(PlayAudioAtIndex:)]) {
         [self.delegate PlayAudioAtIndex:btn.tag];
     }
 }
 - (void)playThisList{
-    for (int i = 0; i<self.topButtons.count; i++) {
-        UIButton * button = self.topButtons[i];
-        button.selected = i == 0;
-    }
     if ([self.delegate respondsToSelector:@selector(PlayTopList)]) {
         [self.delegate PlayTopList];
     }

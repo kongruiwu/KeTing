@@ -25,7 +25,7 @@
 #import "AudioPlayerViewController.h"
 
 
-@interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate>
+@interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate,AudioPlayerDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
 
@@ -35,12 +35,18 @@
 
 @implementation SelectedViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self AudioPlayerPlayStatusReady];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
     [self getData];
 }
 - (void)creatUI{
+    [AudioPlayer instance].delegate = self;
     
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
@@ -60,7 +66,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
         case 0:
-            return self.model.topTitles.count >= 4 ? Anno750(50) * self.model.topTitles.count + Anno750(50): Anno750(210) ;
+            return self.model.tops.count >= 4 ? Anno750(50) * self.model.tops.count + Anno750(50): Anno750(210) ;
         case 1:
             return Anno750(190);
         case 2:
@@ -104,7 +110,7 @@
         if (!cell) {
             cell = [[HomeFinancialCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
-        [cell updateWithTitles:self.model.topTitles];
+        [cell updateWithHomeTopModels:self.model.tops];
         cell.delegate = self;
         return cell;
     } else if(indexPath.section == 1){
@@ -198,4 +204,9 @@
             break;
     }
 }
+- (void)AudioPlayerPlayStatusReady{
+    [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
 @end

@@ -10,13 +10,13 @@
 #import "HomeTopModel.h"
 @interface HomeListenModel : BaseModel
 /**书籍Id*/
-@property (nonatomic, strong) NSString * listenId;
+@property (nonatomic, strong) NSNumber * listenId;
 /**书籍名称*/
 @property (nonatomic, strong) NSString * name;
 /**主播Id*/
 @property (nonatomic, strong) NSString * anchorId;
 /**分类Id 1头条 2听书 3声度*/
-@property (nonatomic, strong) NSString * catId;
+@property (nonatomic, strong) NSNumber * catId;
 /**简介*/
 @property (nonatomic, strong) NSString * summary;
 /**缩略图*/

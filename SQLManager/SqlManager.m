@@ -32,7 +32,7 @@
     // 3.打开数据库
     if ([self.PDO open]) {
         // 4.创表
-        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS audio (id integer PRIMARY KEY AUTOINCREMENT,topId INTEGER,topName TEXT,audioId INTEGER,anchorId INTEGER,columnId INTEGER,audioName TEXT,summary TEXT,audioContent TEXT,audioSource TEXT,audioSize INTEGER,audioLong INTEGER,thumbnail TEXT,anchorName TEXT,isprase INTEGER,downStatus INTEGER,playLong INTEGER,tagString TEXT,localAddress TEXT);"];
+        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS audio (id integer PRIMARY KEY AUTOINCREMENT,topId INTEGER,topName TEXT,audioId INTEGER,anchorId INTEGER,columnId INTEGER,audioName TEXT,summary TEXT,audioContent TEXT,audioSource TEXT,audioSize INTEGER,audioLong INTEGER,thumbnail TEXT,anchorName TEXT,isprase INTEGER,downStatus INTEGER,playLong INTEGER,tagString TEXT,localAddress TEXT,relationType INTEGER,relationId INTEGER,praseNum INTEGER);"];
         if (result) {
             NSLog(@"成功创表");
         } else {
@@ -42,7 +42,7 @@
     
 }
 - (void)insertAudio:(HomeTopModel *)model{
-    NSString *sqlStr=[NSString stringWithFormat:@"insert into audio (topId,topName,audioId,anchorId,columnId,audioName,summary,audioContent,audioSource,audioSize,audioLong,thumbnail,anchorName,isprase,downStatus,playLong,tagString,localAddress) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.topId,model.topName,model.audioId ,model.anchorId ,model.columnId ,model.audioName,model.summary,model.audioContent,model.audioSource,model.audioSize,model.audioLong,model.thumbnail,model.anchorName,@(model.isprase),model.downStatus ,model.playLong,model.tagString,model.localAddress];
+    NSString *sqlStr=[NSString stringWithFormat:@"insert into audio (topId,topName,audioId,anchorId,columnId,audioName,summary,audioContent,audioSource,audioSize,audioLong,thumbnail,anchorName,isprase,downStatus,playLong,tagString,localAddress,relationType,relationId,praseNum) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.topId,model.topName,model.audioId ,model.anchorId ,model.columnId ,model.audioName,model.summary,model.audioContent,model.audioSource,model.audioSize,model.audioLong,model.thumbnail,model.anchorName,@(model.isprase),model.downStatus ,model.playLong,model.tagString,model.localAddress,model.relationType,model.relationId,model.praseNum];
     
     [self.PDO executeUpdate:sqlStr];
     
@@ -151,6 +151,9 @@
     model.playLong = [resultSet objectForColumn:@"playLong"];
     model.tagString = [resultSet objectForColumn:@"tagString"];
     model.localAddress = [resultSet objectForColumn:@"localAddress"];
+    model.relationId = [resultSet objectForColumn:@"relationId"];
+    model.relationType = [resultSet objectForColumn:@"relationType"];
+    model.praseNum = [resultSet objectForColumn:@"praseNum"];
     return model;
 }
 

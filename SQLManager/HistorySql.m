@@ -30,7 +30,7 @@
     // 3.打开数据库
     if ([self.PDO open]) {
         // 4.创表
-        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS play (id integer PRIMARY KEY AUTOINCREMENT,audioId INTEGER,audioSource TEXT,audioName TEXT,playLong INTEGER,audioSize INTEGER,tagString TEXT,isprase INTEGER,audioContent TEXT,thumbnail TEXT,audioLong INTEGER);"];
+        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS play (id integer PRIMARY KEY AUTOINCREMENT,audioId INTEGER,audioSource TEXT,audioName TEXT,playLong INTEGER,audioSize INTEGER,tagString TEXT,isprase INTEGER,audioContent TEXT,thumbnail TEXT,audioLong INTEGER,relationType INTEGER,relationId INTEGER,praseNum INTEGER);"];
         if (result) {
             NSLog(@"成功创表");
         } else {
@@ -39,7 +39,7 @@
     }
 }
 - (void)insertAudio:(HomeTopModel *)model{
-    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong];
+    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong,relationType,relationId,praseNum) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong,model.relationType,model.relationId,model.praseNum];
     
     [self.PDO executeUpdate:sqlStr];
     
@@ -110,6 +110,9 @@
     model.audioContent = [result objectForColumn:@"audioContent"];
     model.thumbnail = [result objectForColumn:@"thumbnail"];
     model.audioLong = [result objectForColumn:@"audioLong"];
+    model.relationId = [result objectForColumn:@"relationId"];
+    model.relationType = [result objectForColumn:@"relationType"];
+    model.praseNum = [result objectForColumn:@"praseNum"];
     return model;
 }
 @end

@@ -69,6 +69,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavAlpha];
+    [self getAudioDetail];
 }
 
 - (void)viewDidLoad {
@@ -279,6 +280,30 @@
     
     self.slider.value = progress;
 }
+#pragma mark - 获取音频详情
+- (void)getAudioDetail{
+    HomeTopModel * model = [AudioPlayer instance].currentAudio;
+    if (!model.audioId || !model.relationType || !model.relationId) {
+        return;
+    }
+    NSInteger index = [[AudioPlayer instance].playList indexOfObject:model];
+    NSDictionary * params = @{
+                              @"audioId":model.audioId,
+                              @"relationType":model.relationType,
+                              @"relationId":model.relationId
+                              };
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_AudioDetail complete:^(id result) {
+        HomeTopModel * newmodel = [[HomeTopModel alloc]initWithDictionary:result];
+        [[AudioPlayer instance].playList replaceObjectAtIndex:index withObject:newmodel];
+        [AudioPlayer instance].currentAudio = newmodel;
+        [self updateUI];
+    } errorBlock:^(KTError *error) {
+        
+    }];
+    
+}
+
+
 #pragma mark - 弹出播放列表
 - (void)showPlayList{
     [self.playList show];
@@ -324,12 +349,12 @@
 #pragma mark - 上一曲
 - (void)upwardAudio{
     [[AudioPlayer instance] upwardAudio];
-    [self updateUI];
+    [self getAudioDetail];
 }
 #pragma mark - 下一曲
 - (void)nextAudioClick{
     [[AudioPlayer instance] nextAudio];
-    [self updateUI];
+    [self getAudioDetail];
 }
 #pragma mark - 下载歌曲
 - (void)downLoadAudio{
@@ -345,8 +370,8 @@
         HomeTopModel * model = [AudioPlayer instance].currentAudio;
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
-                                  @"relationType":@1,
-                                  @"relationId":model.audioId,
+                                  @"relationType":model.relationType,
+                                  @"relationId":model.relationId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
         NSString * pageUrl = Page_AddLike;
@@ -358,7 +383,11 @@
             button.selected = !button.selected;
             model.isprase = button.selected;
             if (button.selected) {
-//                self.likeBtn setTitle:<#(nullable NSString *)#> forState:<#(UIControlState)#>
+                [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%d)",[model.praseNum intValue] + 1] forState:UIControlStateNormal];
+                [AudioPlayer instance].currentAudio.praseNum = @([[AudioPlayer instance].currentAudio.praseNum intValue] + 1);
+            }else{
+                [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%d)",[model.praseNum intValue] - 1] forState:UIControlStateNormal];
+                [AudioPlayer instance].currentAudio.praseNum = @([[AudioPlayer instance].currentAudio.praseNum intValue] - 1);
             }
             [self.tabview reloadData];
         } errorBlock:^(KTError *error) {
@@ -421,11 +450,13 @@
 }
 - (void)updateUI{
     HomeTopModel * model = [AudioPlayer instance].currentAudio;
+    self.likeBtn.selected = model.isprase;
+    [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%@)",model.praseNum] forState:UIControlStateNormal];
     [self.audioPhoto sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
     [self setNavTitle:model.audioName color: [UIColor whiteColor]];
     self.tagLabel.text = [AudioPlayer instance].currentAudio.tagString.length == 0 ? @"" : [NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagString];
     self.currntNum.text = [NSString stringWithFormat:@"正在播放  %d/%ld",[[AudioPlayer instance] currentSortNum],
-                           [AudioPlayer instance].playList.count];
+                           (unsigned long)[AudioPlayer instance].playList.count];
 }
 ////暂停动画
 //- (void)pauseAnimation {

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+
 @protocol HomeFinancialDelegate <NSObject>
 
 - (void)PlayAudioAtIndex:(NSInteger)index;
@@ -23,5 +24,5 @@
 @property (nonatomic, strong) NSMutableArray * topButtons;
 @property (nonatomic, assign) id<HomeFinancialDelegate> delegate;
 
-- (void)updateWithTitles:(NSArray *)titls;
+- (void)updateWithHomeTopModels:(NSArray *)models;
 @end

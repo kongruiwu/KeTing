@@ -13,8 +13,12 @@
 #define TemCachesPath  [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"Temp"]
 @protocol AudioDownLoadDelegate <NSObject>
 
+@optional
+- (void)showProgress:(NSString *)progress;
 
+@required
 - (void)audioDownLoadOver;
+
 
 @end
 

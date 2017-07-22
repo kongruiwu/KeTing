@@ -7,7 +7,7 @@
 //
 
 #import "BaseModel.h"
-/**见过这么垃圾的  服务端？？*/
+
 @interface UserInfo : BaseModel
 /**用户id*/
 @property (nonatomic, strong) NSString * USERID;

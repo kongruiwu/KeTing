@@ -219,7 +219,7 @@
     NSString * key = self.isEdu ? @"edu_id":@"typ_id";
     NSString * value = self.isEdu ? [UserManager manager].dataModel.eduIds[index] : [UserManager manager].dataModel.typIds[index];
     NSString * key1 = self.isEdu ? @"typ_id":@"edu_id";
-    NSString * value2 = self.isEdu ? [UserManager manager].info.TYP_ID : [UserManager manager].info.EDU_ID;
+    NSString * value2 = self.isEdu ? [UserManager manager].info.TYP_ID : [NSString stringWithFormat:@"%@",[UserManager manager].info.EDU_ID];
     NSDictionary * params = @{
                               @"nickName":[UserManager manager].info.NICKNAME,
                               @"sex":@([UserManager manager].info.Sex),
@@ -229,7 +229,7 @@
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeInfo complete:^(id result) {
         if (self.isEdu) {
-            [UserManager manager].info.EDU_ID = value;
+            [UserManager manager].info.EDU_ID = @([value integerValue]);
             [UserManager manager].info.EDU_NAME = [UserManager manager].dataModel.eduNames[index];
         }else{
             [UserManager manager].info.TYP_ID = value;

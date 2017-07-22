@@ -19,7 +19,7 @@
 
 /**头条*/
 @property (nonatomic, strong) NSArray * tops;
-@property (nonatomic, strong) NSArray * topTitles;
+
 /**听书*/
 @property (nonatomic, strong) NSArray * listen;
 /**声度*/

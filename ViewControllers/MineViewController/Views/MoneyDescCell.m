@@ -24,7 +24,7 @@
 }
 - (void)creatUI{
     self.topline = [KTFactory creatLineView];
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:@"1.购买后的商品，在安卓系统和苹果系统均可使用\n2.通过微信、支付宝充值后的余额仅限安卓系统使用，不与其他平台互通"];
+    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:@"1.购买后的商品，在苹果系统和非苹果系统均可使用\n2.通过iOS内购平台充值后的余额仅限苹果系统使用，不与其他平台互通"];
     NSMutableParagraphStyle *paraStyle02 = [[NSMutableParagraphStyle alloc] init];
     paraStyle02.lineHeightMultiple = 1.3;
     [attstr addAttribute:NSParagraphStyleAttributeName value:paraStyle02 range:NSMakeRange(0, attstr.length)];

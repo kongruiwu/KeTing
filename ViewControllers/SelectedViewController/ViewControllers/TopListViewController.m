@@ -225,16 +225,17 @@
 }
 #pragma mark - 下载音频
 - (void)downLoadAudio:(UIButton *)button{
+    [self hiddenToolsBar];
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
     
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
     if ([num integerValue] == 0) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已在下载队列中了" duration:1.5];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.5];
         return;
     }else if([num integerValue] == 1 || [num integerValue] == 2){
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已经下载到本地了" duration:1.5f];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.5f];
         return;
     }
     
@@ -252,7 +253,6 @@
         [alert addAction:sure];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    [self hiddenToolsBar];
 }
 #pragma mark - 下载所选择音频
 - (void)downAllSelectAudio{

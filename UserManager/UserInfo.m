@@ -37,7 +37,7 @@
             NSInteger index = [eduIds indexOfObject:[NSString stringWithFormat:@"%@",self.EDU_ID]];
             self.EDU_NAME = index > eduNames.count ? @"":eduNames[index];
         }else{
-            self.EDU_ID = @"0";
+            self.EDU_ID = @0;
         }
         if (self.TYP_ID && [self.TYP_ID integerValue] > 0) {
             NSInteger index = [typIds indexOfObject:[NSString stringWithFormat:@"%@",self.TYP_ID]];

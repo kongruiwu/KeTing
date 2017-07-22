@@ -108,6 +108,11 @@
     }else{
         self.updateIcon.hidden = YES;
     }
-    self.descLabel.text = model.summary;
+    if (model.audio.count>0) {
+        self.descLabel.text = model.audio[0].audioName;
+    }else{
+        self.descLabel.text = @"";
+    }
+    
 }
 @end

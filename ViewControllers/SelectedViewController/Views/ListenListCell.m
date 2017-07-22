@@ -56,7 +56,8 @@
     self.buybtn = [KTFactory creatButtonWithTitle:@"购买"
                                   backGroundColor:[UIColor clearColor]
                                         textColor:KTColor_MainOrange
-                                         textSize:font750(30)];
+                                         textSize:font750(24)];
+    [self.buybtn setTitle:@"已购买" forState:UIControlStateSelected];
     self.buybtn.layer.borderColor = KTColor_MainOrange.CGColor;
     self.buybtn.layer.borderWidth = 1.0f;
     self.buybtn.layer.cornerRadius = 2.0f;
@@ -135,7 +136,9 @@
     self.descLabel.text = model.summary;
     self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:model.audioLong.intValue andTotalTime:model.audioLong.intValue]];
     
-    self.shopCar.hidden = self.buybtn.hidden = model.Isbuy || model.isFree || [model.promotionType integerValue] == 2? YES: NO;
+    self.shopCar.hidden = model.Isbuy || model.isFree || [model.promotionType integerValue] == 2? YES: NO;
+    self.buybtn.hidden = model.isFree || [model.promotionType integerValue] == 2? YES: NO;
+    self.buybtn.selected = model.Isbuy;
     self.priceLabel.hidden =  model.isFree? YES:NO;
     self.saleStatus.hidden = !self.shopCar.hidden;
     if (model.isFree) {
@@ -166,8 +169,12 @@
     }
 }
 - (void)buyBtnClick:(UIButton *)btn{
-    if ([self.delegate respondsToSelector:@selector(buyThisBook:)]) {
-        [self.delegate buyThisBook:btn];
+    if (btn.selected) {
+        [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"已购买过该书籍" duration:1.0f];
+    }else{
+        if ([self.delegate respondsToSelector:@selector(buyThisBook:)]) {
+            [self.delegate buyThisBook:btn];
+        }
     }
 }
 

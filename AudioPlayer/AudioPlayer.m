@@ -57,6 +57,11 @@
     self.currentAudio = model;
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     [tbc.playFoot changePlayStatus];
+    
+    //通知首页刷新头条播放状态
+    if ([self.delegate respondsToSelector:@selector(AudioPlayerPlayStatusReady)]) {
+        [self.delegate AudioPlayerPlayStatusReady];
+    }
 }
 - (void)setPlayList:(NSMutableArray *)playList{
     _playList = playList;

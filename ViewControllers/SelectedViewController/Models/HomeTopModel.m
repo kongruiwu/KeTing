@@ -42,6 +42,12 @@
         self.showTools = NO;
         self.isSelectDown = NO;
         self.downStatus = @0;
+        if (!self.relationId) {
+            self.relationId = self.audioId;
+        }
+        if (!self.relationType) {
+            self.relationType = @1;
+        }
     }
     return self;
 }

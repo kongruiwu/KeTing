@@ -25,8 +25,11 @@
 @interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
+
 @property (nonatomic, strong) ShareView * shareView;
+
 @property (nonatomic, strong) HomeListenModel * listenModel;
+
 @property (nonatomic, strong) VoiceDetailHeader * header;
 /**是否是下载界面*/
 @property (nonatomic, assign) BOOL isDownLoad;
@@ -180,7 +183,11 @@
             cell = [[VoiceSummaryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
         if (self.isOpen) {
-            [cell updateWithDescString:self.listenModel.descString count:self.listenModel.orderNum];
+            BOOL rec = YES;
+            if (![UserManager manager].isLogin || !self.listenModel.Isbuy) {
+                rec =NO;
+            }
+            [cell updateWithDescString:self.listenModel.descString count:self.listenModel.orderNum hasBuy:rec];
         }
         cell.hidden = !self.isOpen;
         return cell;
@@ -192,7 +199,7 @@
             }
             if (indexPath.row == 1) {
                 if (self.isOpen) {
-                    [cell updateWithName:@"最近更新" color:KTColor_MainBlack font:font750(32)];
+                    [cell updateWithName:@"最新更新" color:KTColor_MainBlack font:font750(32)];
                 }
                 cell.hidden = !self.isOpen;
             }else{
@@ -368,16 +375,17 @@
 
 #pragma mark - 下载音频
 - (void)downLoadAudio:(UIButton *)button{
+    [self hiddenToolsBar];
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
     
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
     if ([num integerValue] == 0) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已在下载队列中了" duration:1.5];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.5];
         return;
     }else if([num integerValue] == 1 || [num integerValue] == 2){
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频已经下载到本地了" duration:1.5f];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.5f];
         return;
     }
     
@@ -395,7 +403,6 @@
         [alert addAction:sure];
         [self presentViewController:alert animated:YES completion:nil];
     }
-    [self hiddenToolsBar];
 }
 #pragma mark - 下载所选择音频
 - (void)downAllSelectAudio{

@@ -22,18 +22,15 @@
     
     NSMutableArray * muarr = [NSMutableArray new];
     NSArray * tops = dic[@"tops"];
-    NSMutableArray * topTitles = [NSMutableArray new];
     int num = tops.count <= 5 ? (int)tops.count : 5;
     for (int i = 0; i< num; i++) {
         if ([tops[i] isKindOfClass:[NSNull class]]) {
             break;
         }
         HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:tops[i]];
-        [topTitles addObject:model.audioName];
         [muarr addObject:model];
     }
     self.tops = [NSArray arrayWithArray:muarr];
-    self.topTitles = topTitles;
     
     [muarr removeAllObjects];
     NSArray * voices = dic[@"voice"];

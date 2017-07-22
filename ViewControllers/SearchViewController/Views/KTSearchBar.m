@@ -26,7 +26,7 @@
     self.searchTf.textColor = KTColor_MainBlack;
     self.searchTf.font = [UIFont systemFontOfSize:Anno750(28)];
     self.searchTf.leftViewMode = UITextFieldViewModeAlways;
-    self.searchTf.rightViewMode = UITextFieldViewModeUnlessEditing;
+    self.searchTf.rightViewMode = UITextFieldViewModeWhileEditing;
     
     UIView * view = [KTFactory creatViewWithColor:[UIColor clearColor]];
     view.frame = CGRectMake(0, 0, Anno750(70), Anno750(65));
@@ -39,7 +39,8 @@
     }];
     self.searchTf.leftView = view;
     
-    UIButton * cannceBtn = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
+    UIButton * cannceBtn = [KTFactory creatButtonWithNormalImage:@"search_delete" selectImage:@""];
+    cannceBtn.frame = CGRectMake(0, 0, Anno750(65), Anno750(65));
     [cannceBtn addTarget:self action:@selector(clearTextFieldText) forControlEvents:UIControlEventTouchUpInside];
     self.searchTf.rightView = cannceBtn;
     

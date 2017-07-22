@@ -18,7 +18,11 @@ typedef NS_ENUM(NSInteger, CloseTime){
     CloseTime60min      ,   //60分钟
     CloseTime90min          //90分钟
 };
+@protocol AudioPlayerDelegate <NSObject>
 
+- (void)AudioPlayerPlayStatusReady;
+
+@end
 
 @interface AudioPlayer : NSObject<STKAudioPlayerDelegate>
 
@@ -34,6 +38,9 @@ typedef NS_ENUM(NSInteger, CloseTime){
 @property (nonatomic, strong) NSTimer * timer;
 /**自动关闭时间*/
 @property (nonatomic, assign) CloseTime closeTime;
+
+@property (nonatomic, assign) id<AudioPlayerDelegate> delegate;
+
 @property (nonatomic, assign) int closeMin;
 
 /**player*/

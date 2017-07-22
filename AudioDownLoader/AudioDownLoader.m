@@ -60,7 +60,7 @@
 }
 
 - (void)downLoadAudioWithHomeTopModel:(NSArray *)topModels{
-    [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"音频已开始下载。。。" duration:1.0f];
+    [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.0f];
     for (int i = 0; i<topModels.count; i++) {
          //先将数据存储到数据库  然后在下载完成后修改数据下载状态
         [[SqlManager manager] insertAudio:topModels[i]];
@@ -204,6 +204,11 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
     
     NSLog(@"%@",[NSString stringWithFormat:@"下载进度:%f",(double)totalBytesWritten/totalBytesExpectedToWrite]);
+    double value = (double)totalBytesWritten/totalBytesExpectedToWrite;
+    int num = (int)(value * 100);
+    if ([self.delegate respondsToSelector:@selector(showProgress:)]) {
+        [self.delegate showProgress:[NSString stringWithFormat:@"%d%%",num]];
+    }
 }
 
 /**

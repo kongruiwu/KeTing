@@ -29,7 +29,7 @@
     if (self.isHot) {
         [self setNavTitle:@"热门排行" color:KTColor_MainBlack];
     }else{
-        [self setNavTitle:@"限时免费" color:KTColor_MainBlack];
+        [self setNavTitle:@"限免" color:KTColor_MainBlack];
     }
     
     [self creatUI];

@@ -69,7 +69,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
     view.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT);
-    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"%@的音频(%ld)",self.anchor.name,self.anchor.listenVolice.count]
+    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"他的音频(%ld)",self.anchor.listenVolice.count]
                                           fontValue:font750(30)
                                           textColor:KTColor_lightGray
                                       textAlignment:NSTextAlignmentLeft];
