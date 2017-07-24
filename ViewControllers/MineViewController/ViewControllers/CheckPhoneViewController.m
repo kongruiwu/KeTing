@@ -146,13 +146,18 @@
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
         NSDictionary * dic = @{};
         [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ChangePhone complete:^(id result) {
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
-            for (int i = 0; i<self.navigationController.viewControllers.count; i++) {
-                UIViewController * vc = self.navigationController.viewControllers[i];
-                if ([vc isKindOfClass:[AccountSafeViewController class]]) {
-                    [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
-                    break;
+            NSDictionary * dic = (NSDictionary *)result;
+            if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+                for (int i = 0; i<self.navigationController.viewControllers.count; i++) {
+                    UIViewController * vc = self.navigationController.viewControllers[i];
+                    if ([vc isKindOfClass:[AccountSafeViewController class]]) {
+                        [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+                        break;
+                    }
                 }
+            }else{
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
             }
         } errorBlock:^(KTError *error) {
             
@@ -175,7 +180,7 @@
         }
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
     } errorBlock:^(KTError *error) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码发送失败，请稍后再试" duration:1.0f];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
         self.getCode.enabled = YES;
     }];
 }
@@ -189,7 +194,8 @@
     }else{
         self.time -- ;
         NSString * timestr = [NSString stringWithFormat:@"%d",self.time];
-        [self.getCode setTitle:timestr forState:UIControlStateNormal];
+        NSString * str = [NSString stringWithFormat:@"获取验证码(%@)",timestr];
+        [self.getCode setTitle:str forState:UIControlStateNormal];
     }
 }
 @end

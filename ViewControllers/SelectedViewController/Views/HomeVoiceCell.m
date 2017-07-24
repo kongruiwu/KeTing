@@ -110,6 +110,7 @@
     self.titleLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.hidden = model.isFree;
+    self.iconLabel.hidden = NO;
     if (model.isFree) {
         self.iconLabel.text = @"免费  ";
     }else{
@@ -119,8 +120,9 @@
             self.iconLabel.text = @"限免  ";
             self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
         }else{
+            self.iconLabel.text = @"";
             self.iconLabel.hidden = YES;
-            self.priceLabel.text = model.price;
+            self.priceLabel.text = model.timePrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }
@@ -131,6 +133,7 @@
     self.titleLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.hidden = model.isFree;
+    self.iconLabel.hidden = NO;
     if (model.isFree) {
         self.iconLabel.text = @"免费  ";
     }else{
@@ -140,8 +143,9 @@
             self.iconLabel.text = @"限免  ";
             self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
         }else{
+            self.iconLabel.text = @"";
             self.iconLabel.hidden = YES;
-            self.priceLabel.text = model.price;
+            self.priceLabel.text = model.timePrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }

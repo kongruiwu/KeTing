@@ -100,7 +100,8 @@
 + (NSAttributedString *)setFreePriceString:(NSString *)price{
     NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:price];
     [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_lightGray range:NSMakeRange(0, price.length)];
-    [attstr addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, price.length)];
+    [attstr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName:@(0)} range:NSMakeRange(0, price.length)];
+    
     return attstr;
 }
 /**

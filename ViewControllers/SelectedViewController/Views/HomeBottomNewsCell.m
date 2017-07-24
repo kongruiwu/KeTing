@@ -78,7 +78,7 @@
     }];
     [self.iconLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel.mas_left);
-        make.bottom.equalTo(self.leftImage.mas_bottom);
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(5));
         make.width.equalTo(@(Anno750(70)));
         make.height.equalTo(@(Anno750(30)));
     }];
@@ -108,7 +108,7 @@
             self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
         }else{
             self.iconLabel.hidden = YES;
-            self.priceLabel.text = model.price;
+            self.priceLabel.text = model.timePrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }

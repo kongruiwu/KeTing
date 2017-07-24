@@ -39,6 +39,7 @@
     return UIStatusBarStyleLightContent;
 }
 - (void)creatUI{
+    self.time = 60;
     UIButton * backBtn = [KTFactory creatButtonWithNormalImage:@"login_close" selectImage:nil];
     [backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
@@ -173,7 +174,11 @@
 }
 - (void)bindSignal{
     RAC(self.getCode,enabled) = [RACSignal combineLatest:@[self.phoneTF.rac_textSignal] reduce:^(NSString * phone){
-        return [NSNumber numberWithBool:phone.length>=11];
+        if (self.time == 60) {
+            return [NSNumber numberWithBool:phone.length>=11];
+        }else{
+            return @0;
+        }
     }];
     [RACObserve(self.getCode, enabled) subscribeNext:^(id  _Nullable x) {
         self.getCode.layer.borderColor = [x boolValue] ? KTColor_MainOrange.CGColor : KTColor_lightGray.CGColor;
@@ -197,41 +202,49 @@
                               @"code":self.codeTF.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
-        ChangePwdViewController * vc = [ChangePwdViewController new];
-        vc.phoneNum = self.phoneTF.text;
-        [self.navigationController pushViewController:vc animated:YES];
+        NSDictionary * dic = (NSDictionary *)result;
+        if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+            ChangePwdViewController * vc = [ChangePwdViewController new];
+            vc.phoneNum = self.phoneTF.text;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
+        }
     } errorBlock:^(KTError *error) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }
 #pragma mark - 获取验证码
 - (void)getCodeRequest{
+    self.getCode.enabled = NO;
     NSDictionary * params = @{
                               @"mobile":self.phoneTF.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_SendCode complete:^(id result) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码已发至您的手机，请查收" duration:1.0f];
-        self.time = 60;
-        [self.getCode setTitle:@"获取验证码(60)" forState:UIControlStateNormal];
-        self.getCode.enabled = NO;
+        if (self.timer) {
+            [self.timer invalidate];
+            self.timer = nil;
+        }
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
     } errorBlock:^(KTError *error) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
+        self.getCode.enabled = YES;
     }];
 }
 - (void)changeButttonTime{
     if (self.time == 1) {
+        [self.timer invalidate];
+        self.timer = nil;
         self.time = 60;
         self.getCode.enabled = YES;
         [self.getCode setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [self.timer invalidate];
-        self.timer = nil;
     }else{
         self.time -- ;
-        NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"倒计时(%d)",self.time]];
         NSString * timestr = [NSString stringWithFormat:@"%d",self.time];
-        [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_MainOrange range:NSMakeRange(4, timestr.length)];
-        [self.getCode setAttributedTitle:attstr forState:UIControlStateDisabled];
+        NSString * str = [NSString stringWithFormat:@"获取验证码(%@)",timestr];
+        [self.getCode setTitle:str forState:UIControlStateNormal];
     }
 }
 //查看使用协议

@@ -175,7 +175,7 @@
     NSDictionary * params = @{
                              @"messageIdStr":self.viewModel.msgStr
                               };
-    [[NetWorkManager manager] GETRequest:params pageUrl:Page_MessageStatus complete:^(id result) {
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_MessageStatus complete:^(id result) {
         
     } errorBlock:^(KTError *error) {
         NSLog(@"%@",error.message);
