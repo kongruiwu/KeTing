@@ -20,7 +20,7 @@
 - (void)creatUI{
     self.backgroundColor = [UIColor whiteColor];
     self.topLine = [KTFactory creatLineView];
-    self.leftLabel = [KTFactory creatLabelWithText:@"已选择0条"
+    self.leftLabel = [KTFactory creatLabelWithText:@"已选择0条,共0.00M"
                                          fontValue:font750(28)
                                          textColor:KTColor_darkGray
                                      textAlignment:NSTextAlignmentLeft];

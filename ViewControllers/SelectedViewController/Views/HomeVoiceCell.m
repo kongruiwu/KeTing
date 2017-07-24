@@ -126,7 +126,7 @@
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }
-    self.updateTime.text = [NSString stringWithFormat:@"更新于%@",[KTFactory timestampSwitchTime:model.editTime.integerValue]];
+    self.updateTime.text =  [NSString stringWithFormat:@"%@更新",[KTFactory getUpdateTimeStringWithEditTime:model.editTime]];
 }
 - (void)updateWithVoiceModel:(HomeListenModel *)model andSortNum:(NSInteger)num{
     [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
@@ -149,7 +149,7 @@
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }
-    self.updateTime.text = [NSString stringWithFormat:@"更新于%@",[KTFactory timestampSwitchTime:model.editTime.integerValue]];
+    self.updateTime.text = [NSString stringWithFormat:@"%@更新",[KTFactory getUpdateTimeStringWithEditTime:model.editTime]];
     switch (num) {
         case 0:
         {

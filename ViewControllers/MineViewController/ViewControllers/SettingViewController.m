@@ -123,6 +123,9 @@
         if (indexPath.row == 3) {
             desc = [NSString stringWithFormat:@"客服微信：%@",[UserManager manager].serviceWeChat];
             rec = YES;
+        }else if(indexPath.row == 4){
+            CGFloat folderSize =[[SDImageCache sharedImageCache] getSize]/1024.0/1024.0;
+            desc = [NSString stringWithFormat:@"%.2fM",folderSize];
         }
     }
     [cell updateWithName:title desc:desc hiddenArrow:rec];
@@ -138,8 +141,19 @@
         }else if(indexPath.row == 2){
             NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", APPID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
-        }
-        else if (indexPath.row == 5) {
+        }else if(indexPath.row == 4){
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确定清除缓存" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [[SDImageCache sharedImageCache] clearMemory];
+                SettingListCell * cell = [self.tabview cellForRowAtIndexPath:indexPath];
+                cell.descLabel.text = @"0K";
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已清除缓存" duration:1.0f];
+            }];
+            [alert addAction:action];
+            [alert addAction:sure];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else if (indexPath.row == 5) {
             if ([UserManager manager].isLogin) {
                 [self.navigationController pushViewController:[AccountSafeViewController new] animated:YES];
             }else{
