@@ -13,6 +13,7 @@
 #import "AccountSafeViewController.h"
 #import "AboutusViewController.h"
 #import "ShareView.h"
+#import "LoginViewController.h"
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -139,7 +140,12 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
         }
         else if (indexPath.row == 5) {
-            [self.navigationController pushViewController:[AccountSafeViewController new] animated:YES];
+            if ([UserManager manager].isLogin) {
+                [self.navigationController pushViewController:[AccountSafeViewController new] animated:YES];
+            }else{
+                UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
+                [self presentViewController:nav animated:YES completion:nil];
+            }
         }else if(indexPath.row == 6){
             [self.navigationController pushViewController:[AboutusViewController new] animated:YES];
         }

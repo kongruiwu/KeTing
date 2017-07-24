@@ -27,8 +27,8 @@
     [self creatUI];
 }
 - (void)creatUI{
-    self.titles = @[@"手机",@"微信",@"QQ",@"微博",@"密码设置"];
-    
+//    self.titles = @[@"手机",@"微信",@"QQ",@"微博",@"密码设置"];
+    self.titles = @[@"手机",@"密码设置"];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -58,15 +58,28 @@
     if (!cell) {
         cell = [[SettingListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithName:self.titles[indexPath.row] desc:@""];
+    if (indexPath.row == 0) {
+        if ([UserManager manager].info.MOBILE && [UserManager manager].info.MOBILE.length>0) {
+            NSMutableString * phoneNumber = [NSMutableString stringWithFormat:@"%@",[UserManager manager].info.MOBILE];
+            [phoneNumber replaceCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+            [cell updateWithName:self.titles[indexPath.row] desc:phoneNumber];
+        }else{
+            [cell updateWithName:self.titles[indexPath.row] desc:@"未绑定"];
+        }
+    }else{
+        [cell updateWithName:self.titles[indexPath.row] desc:@""];
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        [self.navigationController pushViewController:[ChangePhoneViewController new] animated:YES];
-//        [self.navigationController pushViewController:[CheckPhoneViewController new] animated:YES];
-    }else if(indexPath.row == 4){
+        if ([UserManager manager].info.MOBILE && [UserManager manager].info.MOBILE.length>0) {
+            [self.navigationController pushViewController:[ChangePhoneViewController new] animated:YES];
+        }else{
+            [self.navigationController pushViewController:[CheckPhoneViewController new] animated:YES];
+        }
+    }else if(indexPath.row == 1){
         [self.navigationController pushViewController:[ChangeMinepwdViewController new] animated:YES];
     }
 }

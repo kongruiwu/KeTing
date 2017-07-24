@@ -44,7 +44,7 @@
 }
 - (void)creatUI{
     self.backType = SelectorBackTypeDismiss;
-    UIButton * backBtn = [KTFactory creatButtonWithNormalImage:@"back_white" selectImage:nil];
+    UIButton * backBtn = [KTFactory creatButtonWithNormalImage:@"login_close" selectImage:nil];
     [backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {

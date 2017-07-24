@@ -7,7 +7,7 @@
 //
 
 #import "ChangePhoneViewController.h"
-
+#import "CheckPhoneViewController.h"
 @interface ChangePhoneViewController ()
 
 @end
@@ -34,7 +34,9 @@
         make.centerX.equalTo(@0);
         make.top.equalTo(view.mas_bottom).offset(Anno750(80));
     }];
-    UILabel * title = [KTFactory creatLabelWithText:@"您当前的手机号码为182****4191"
+    NSMutableString * phoneNumber = [NSMutableString stringWithFormat:@"%@",[UserManager manager].info.MOBILE];
+    [phoneNumber replaceCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+    UILabel * title = [KTFactory creatLabelWithText:phoneNumber
                                           fontValue:font750(28)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];
@@ -56,6 +58,7 @@
                                            backGroundColor:[UIColor clearColor]
                                                  textColor:KTColor_MainOrange
                                                   textSize:font750(32)];
+    [changeBtn addTarget:self action:@selector(pushToChangePhoneViewController) forControlEvents:UIControlEventTouchUpInside];
     changeBtn.layer.borderColor = KTColor_MainOrange.CGColor;
     changeBtn.layer.borderWidth = 0.5;
     changeBtn.layer.cornerRadius = 4.0f;
@@ -68,7 +71,9 @@
     }];
     
 }
-
+- (void)pushToChangePhoneViewController{
+    [self.navigationController pushViewController:[CheckPhoneViewController new] animated:YES];
+}
 
 
 @end

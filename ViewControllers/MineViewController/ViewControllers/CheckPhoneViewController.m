@@ -8,6 +8,7 @@
 
 #import "CheckPhoneViewController.h"
 #import <ReactiveObjC.h>
+#import "AccountSafeViewController.h"
 @interface CheckPhoneViewController ()
 @property (nonatomic, strong) UITextField * phoneTF;
 @property (nonatomic, strong) UIButton * getCode;
@@ -29,6 +30,7 @@
     [self bindSignal];
 }
 - (void)creatUI{
+    self.time = 60;
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
@@ -63,10 +65,10 @@
     self.getCode = [KTFactory creatButtonWithTitle:@"获取验证码"
                                    backGroundColor:[UIColor clearColor]
                                          textColor:KTColor_MainOrange
-                                          textSize:font750(28)];
+                                          textSize:font750(24)];
     [self.getCode setTitleColor:KTColor_lightGray forState:UIControlStateDisabled];
     [self.getCode addTarget:self action:@selector(getCodeRequest) forControlEvents:UIControlEventTouchUpInside];
-    self.getCode.frame = CGRectMake(0, 0, Anno750(170), Anno750(50));
+    self.getCode.frame = CGRectMake(0, 0, Anno750(190), Anno750(50));
     self.getCode.layer.borderWidth = 1.0f;
     self.getCode.layer.cornerRadius = 2.0f;
     self.phoneTF.rightView = self.getCode;
@@ -99,8 +101,8 @@
     }];
 
     self.nextBtn = [KTFactory creatButtonWithTitle:@"保存"
-                                   backGroundColor:KTColor_MainOrangeAlpha
-                                         textColor:KTColor_MainBlack
+                                   backGroundColor:KTColor_IconOrange
+                                         textColor:KTColor_darkGray
                                           textSize:font750(32)];
     [self.view addSubview:self.nextBtn];
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,7 +116,11 @@
 
 - (void)bindSignal{
     RAC(self.getCode,enabled) = [RACSignal combineLatest:@[self.phoneTF.rac_textSignal] reduce:^(NSString * phone){
-        return [NSNumber numberWithBool:phone.length>=11];
+        if (self.time == 60) {
+            return [NSNumber numberWithBool:phone.length>=11];
+        }else{
+            return @0;
+        }
     }];
     [RACObserve(self.getCode, enabled) subscribeNext:^(id  _Nullable x) {
         self.getCode.layer.borderColor = [x boolValue] ? KTColor_MainOrange.CGColor : KTColor_lightGray.CGColor;
@@ -128,7 +134,7 @@
         }
     }];
     [RACObserve(self.nextBtn, enabled) subscribeNext:^(id  _Nullable x) {
-        self.nextBtn.backgroundColor = [x boolValue]?KTColor_MainOrange:KTColor_MainOrangeAlpha;
+        self.nextBtn.backgroundColor = [x boolValue]?KTColor_MainOrange:UIColorFromRGBA(0xcfaa5b, 0.5);
     }];
 }
 #pragma mark - 验证验证码
@@ -138,38 +144,52 @@
                               @"code":self.codeTF.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
-        [self doBack];
+        NSDictionary * dic = @{};
+        [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ChangePhone complete:^(id result) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+            for (int i = 0; i<self.navigationController.viewControllers.count; i++) {
+                UIViewController * vc = self.navigationController.viewControllers[i];
+                if ([vc isKindOfClass:[AccountSafeViewController class]]) {
+                    [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
+                    break;
+                }
+            }
+        } errorBlock:^(KTError *error) {
+            
+        }];
     } errorBlock:^(KTError *error) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
     }];
 }
 #pragma mark - 获取验证码
 - (void)getCodeRequest{
+    self.getCode.enabled = NO;
     NSDictionary * params = @{
                               @"mobile":self.phoneTF.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_SendCode complete:^(id result) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码已发至您的手机，请查收" duration:1.0f];
-        self.time = 60;
-        self.getCode.enabled = NO;
+        if (self.timer) {
+            [self.timer invalidate];
+            self.timer = nil;
+        }
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
     } errorBlock:^(KTError *error) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码发送失败，请稍后再试" duration:1.0f];
+        self.getCode.enabled = YES;
     }];
 }
 - (void)changeButttonTime{
     if (self.time == 1) {
+        [self.timer invalidate];
+        self.timer = nil;
         self.time = 60;
         self.getCode.enabled = YES;
         [self.getCode setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [self.timer invalidate];
-        self.timer = nil;
     }else{
         self.time -- ;
-        NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"获取验证码(%d)",self.time]];
         NSString * timestr = [NSString stringWithFormat:@"%d",self.time];
-        [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_MainOrange range:NSMakeRange(4, timestr.length)];
-        [self.getCode setAttributedTitle:attstr forState:UIControlStateDisabled];
+        [self.getCode setTitle:timestr forState:UIControlStateNormal];
     }
 }
 @end

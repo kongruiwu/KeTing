@@ -110,4 +110,8 @@
 #define Page_PayStatus      @"v1/payStatus"
 //音频详情
 #define Page_AudioDetail    @"v1/viewAudio"
+//修改密码
+#define Page_ChangePwd      @"v1/modPass"
+//修改手机号
+#define Page_ChangePhone    @"v1/modPhone"
 #endif /* API_h */

@@ -30,7 +30,7 @@
     self.nameLabel.numberOfLines = 2;
     self.line = [KTFactory creatLineView];
     self.nextBtn = [KTFactory creatButtonWithNormalImage:@"home_next" selectImage:@""];
-    self.playBtn = [KTFactory creatButtonWithNormalImage:@"bottomplay" selectImage:@""];
+    self.playBtn = [KTFactory creatButtonWithNormalImage:@"bottomplay" selectImage:@"play_stop"];
     self.listBtn = [KTFactory creatButtonWithNormalImage:@"home_ ist" selectImage:@""];
     self.progressView = [[UIProgressView alloc]init];
     self.progressView.trackTintColor = [UIColor whiteColor];

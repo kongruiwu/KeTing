@@ -39,6 +39,10 @@
     self.pwdT = [KTFactory creattextfildWithPlaceHloder:@"新密码" placeColor:KTColor_lightGray];
     self.checkT = [KTFactory creattextfildWithPlaceHloder:@"确认密码" placeColor:
                    KTColor_lightGray];
+    self.oldPwdT.secureTextEntry = YES;
+    self.pwdT.secureTextEntry = YES;
+    self.checkT.secureTextEntry = YES;
+    
     UIView * topline = [KTFactory creatLineView];
     UIView * centerline = [KTFactory creatLineView];
     UIView * bottomline = [KTFactory creatLineView];
@@ -91,6 +95,7 @@
                                          textColor:KTColor_MainOrange
                                           textSize:font750(30)];
     [self.overBtn setTitleColor:KTColor_lightGray forState:UIControlStateDisabled];
+    [self.overBtn addTarget:self action:@selector(changePasswordRequest) forControlEvents:UIControlEventTouchUpInside];
     self.overBtn.layer.borderWidth = 1.0f;
     self.overBtn.layer.borderColor = KTColor_lightGray.CGColor;
     self.overBtn.layer.cornerRadius = 4.0f;
@@ -113,6 +118,23 @@
     [RACObserve(self.overBtn, enabled) subscribeNext:^(id  _Nullable x) {
         UIColor * color = [x boolValue]?KTColor_MainOrange:KTColor_lightGray;
         self.overBtn.layer.borderColor = color.CGColor;
+    }];
+}
+- (void)changePasswordRequest{
+    if (![self.pwdT.text isEqualToString:self.checkT.text]) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"两次密码不一致" duration:1.0f];
+        return;
+    }
+    NSDictionary * params = @{
+                              @"originPassword":self.oldPwdT.text,
+                              @"newPassWord":self.pwdT.text,
+                              @"confirmPassWord":self.checkT.text
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangePwd complete:^(id result) {
+        [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"密码修改成功" duration:1.0f];
+        [self doBack];
+    } errorBlock:^(KTError *error) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }
 @end

@@ -34,6 +34,7 @@
     return UIStatusBarStyleLightContent;
 }
 - (void)creatUI{
+    self.time = 0;
     UIView * navView = [KTFactory creatViewWithColor:[UIColor clearColor]];
     navView.frame = CGRectMake(0, 20, UI_WIDTH, Anno750(88));
     [self.view addSubview:navView];
@@ -93,10 +94,10 @@
     self.getCode = [KTFactory creatButtonWithTitle:@"获取验证码"
                                    backGroundColor:[UIColor clearColor]
                                          textColor:KTColor_MainOrange
-                                          textSize:font750(28)];
+                                          textSize:font750(24)];
     [self.getCode setTitleColor:KTColor_lightGray forState:UIControlStateDisabled];
     [self.getCode addTarget:self action:@selector(getCodeRequest) forControlEvents:UIControlEventTouchUpInside];
-    self.getCode.frame = CGRectMake(0, 0, Anno750(170), Anno750(50));
+    self.getCode.frame = CGRectMake(0, 0, Anno750(190), Anno750(50));
     self.getCode.layer.borderWidth = 1.0f;
     self.getCode.layer.cornerRadius = 2.0f;
     self.phoneTF.rightView = self.getCode;
@@ -184,7 +185,6 @@
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_SendCode complete:^(id result) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码已发至您的手机，请查收" duration:1.0f];
         self.time = 60;
-        
         [self.getCode setTitle:@"倒计时(60)" forState:UIControlStateNormal];
         self.getCode.enabled = NO;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
