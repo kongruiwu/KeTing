@@ -29,6 +29,7 @@
     return self;
 }
 - (void)creatUI{
+    self.backgroundColor = KTColor_BackGround;
     self.whiteView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
     self.whiteView.layer.cornerRadius = 3.0f;
     self.moneyLabel = [KTFactory creatLabelWithText:@"¥  199.00"

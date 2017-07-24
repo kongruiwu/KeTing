@@ -33,41 +33,34 @@
 - (void)creatUI{
     self.leftImg = [KTFactory creatImageViewWithImage:@"close_balance"];
     self.nameLabel = [KTFactory creatLabelWithText:@"余额支付"
-                                         fontValue:font750(28)
+                                         fontValue:font750(30)
                                          textColor:KTColor_MainBlack
-                                     textAlignment:NSTextAlignmentLeft];
+                                     textAlignment:NSTextAlignmentCenter];
     self.descLabel = [KTFactory creatLabelWithText:@"剩余余额¥ 0.00"
                                          fontValue:font750(24)
                                          textColor:KTColor_lightGray
-                                     textAlignment:NSTextAlignmentLeft];
-    self.selectBtn = [KTFactory creatButtonWithNormalImage:@"icon_unselect" selectImage:@"icon_select"];
-    self.selectBtn.selected = YES;
+                                     textAlignment:NSTextAlignmentCenter];
     self.line = [KTFactory creatLineView];
     
     [self addSubview:self.leftImg];
     [self addSubview:self.nameLabel];
     [self addSubview:self.descLabel];
-    [self addSubview:self.selectBtn];
     [self addSubview:self.line];
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
     
     [self.leftImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(Anno750(24)));
-        make.centerY.equalTo(@0);
+        make.top.equalTo(@(Anno750(60)));
+        make.centerX.equalTo(@0);
     }];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(Anno750(95)));
-        make.top.equalTo(@(Anno750(20)));
+        make.centerX.equalTo(@0);
+        make.top.equalTo(self.leftImg.mas_bottom).offset(Anno750(20));
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.nameLabel.mas_left);
-        make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(5));
-    }];
-    [self.selectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(@(Anno750(-24)));
-        make.centerY.equalTo(@0);
+        make.centerX.equalTo(@0);
+        make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(10));
     }];
     [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
@@ -77,7 +70,7 @@
     }];
 }
 - (void)updateUserBlance{
-    NSString * moneyStr = [NSString stringWithFormat:@"剩余余额 ¥ %@",[UserManager manager].balance];
+    NSString * moneyStr = [NSString stringWithFormat:@"剩余余额 ¥ %.2f",[[UserManager manager].balance floatValue]];
     NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:moneyStr];
     [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_IconOrange range:NSMakeRange(4, moneyStr.length - 4)];
     self.descLabel.attributedText = attstr;

@@ -13,7 +13,6 @@
 @property (nonatomic, strong) UIImageView * leftImg;
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UILabel * descLabel;
-@property (nonatomic, strong) UIButton * selectBtn;
 @property (nonatomic, strong) UIView * line;
 
 - (void)updateUserBlance;

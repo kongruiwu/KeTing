@@ -32,8 +32,15 @@
                                           fontValue:font750(26)
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
+    
+    self.iconLabel = [KTFactory creatLabelWithText:@"限免"
+                                         fontValue:font750(24)
+                                         textColor:KTColor_IconOrange
+                                     textAlignment:NSTextAlignmentCenter];
+    
     self.coverBtn = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
     [self addSubview:self.topImg];
+    [self addSubview:self.iconLabel];
     [self addSubview:self.nameLabel];
     [self addSubview:self.descLabel];
     [self addSubview:self.priceLabel];
@@ -56,8 +63,12 @@
         make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(10));
         make.right.equalTo(@0);
     }];
-    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.iconLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(10));
+    }];
+    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.iconLabel.mas_right);
         make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(10));
     }];
     [self.coverBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -68,7 +79,28 @@
     [self.topImg sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
     self.nameLabel.text = model.name;
     self.descLabel.text = model.summary;
-    self.priceLabel.text = model.timePrice;
+    self.iconLabel.hidden = NO;
+    if (model.isFree) {
+        self.iconLabel.text = @"免费  ";
+        [KTFactory setLabel:self.iconLabel BorderColor:[UIColor clearColor] with:0 cornerRadius:0];
+    }else{
+        //限免
+        if ([model.promotionType intValue] == 2) {
+            self.iconLabel.hidden = NO;
+            self.iconLabel.text = @"限免  ";
+            [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
+        }else{
+            self.iconLabel.hidden = [model.promotionType integerValue] == 1 ? NO : YES;
+            self.iconLabel.text = [model.promotionType integerValue] == 1 ? @"特惠  ":@"";
+            if ([model.promotionType integerValue] == 1) {
+                [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            }
+            self.priceLabel.text = model.timePrice;
+            self.priceLabel.textColor = KTColor_MainOrange;
+        }
+    }
+    
 }
 
 

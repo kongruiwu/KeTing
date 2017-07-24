@@ -61,6 +61,8 @@
 @property (nonatomic, strong) ShareView * shareView;
 /**关机列表页*/
 @property (nonatomic, strong) PlayCloseListView * closeList;
+/**标题栏*/
+@property (nonatomic, strong) UILabel * titleLabel;
 @end
 
 @implementation AudioPlayerViewController
@@ -75,7 +77,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeWhite];
-    [self setNavTitle:[AudioPlayer instance].currentAudio.audioName color: [UIColor whiteColor]];
     [self creatUI];
     [self playAudio];
     
@@ -88,6 +89,12 @@
     bgImgView.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT);
     bgImgView.userInteractionEnabled  = YES;
     [self.view addSubview:bgImgView];
+    
+    self.titleLabel = [KTFactory creatLabelWithText:@""
+                                           fontValue:font750(34)
+                                           textColor:[UIColor whiteColor]
+                                       textAlignment:NSTextAlignmentCenter];
+    self.titleLabel.numberOfLines = 0;
     
     self.tagLabel = [KTFactory creatLabelWithText:@""
                                         fontValue:font750(24)
@@ -137,6 +144,7 @@
     self.MoreView = [[PlayerMoreView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
     self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
     self.closeList = [[PlayCloseListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
+    [bgImgView addSubview:self.titleLabel];
     [bgImgView addSubview:self.tagLabel];
     [bgImgView addSubview:self.audioImg];
     [bgImgView addSubview:self.currntNum];
@@ -159,13 +167,19 @@
     [bgImgView addSubview:self.shareView];
     [bgImgView addSubview:self.closeList];
     
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(100)));
+        make.right.equalTo(@(Anno750(-100)));
+        make.top.equalTo(@(Anno750(20) + 20));
+    }];
+    
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(@(Anno750(10) + 64));
+        make.top.equalTo(@(Anno750(30) + 64));
     }];
     [self.audioImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.tagLabel.mas_bottom).offset(Anno750(56));
+        make.top.equalTo(self.tagLabel.mas_bottom).offset(Anno750(36));
         make.width.equalTo(@(Anno750(552)));
         make.height.equalTo(@(Anno750(552)));
     }];
@@ -453,7 +467,7 @@
     self.likeBtn.selected = model.isprase;
     [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%@)",model.praseNum] forState:UIControlStateNormal];
     [self.audioPhoto sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
-    [self setNavTitle:model.audioName color: [UIColor whiteColor]];
+    self.titleLabel.text = model.audioName;
     self.tagLabel.text = [AudioPlayer instance].currentAudio.tagString.length == 0 ? @"" : [NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagString];
     self.currntNum.text = [NSString stringWithFormat:@"正在播放  %d/%ld",[[AudioPlayer instance] currentSortNum],
                            (unsigned long)[AudioPlayer instance].playList.count];

@@ -103,11 +103,15 @@
         //限免
         if ([model.promotionType intValue] == 2) {
             self.iconLabel.hidden = NO;
-            self.iconLabel.text = @"限免";
+            self.iconLabel.text = @"限免  ";
             [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
             self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
         }else{
-            self.iconLabel.hidden = YES;
+            self.iconLabel.hidden = [model.promotionType integerValue] == 1 ? NO : YES;
+            self.iconLabel.text = [model.promotionType integerValue] == 1 ? @"特惠  ":@"";
+            if ([model.promotionType integerValue] == 1) {
+                [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            }
             self.priceLabel.text = model.timePrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }

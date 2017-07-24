@@ -45,6 +45,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self getData];
     UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -60,7 +61,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
-    [self getData];
+    
     [AudioDownLoader loader].delegate = self;
 }
 
@@ -183,9 +184,9 @@
             cell = [[VoiceSummaryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
         if (self.isOpen) {
-            BOOL rec = YES;
-            if (![UserManager manager].isLogin || !self.listenModel.Isbuy) {
-                rec =NO;
+            BOOL rec = NO;
+            if (self.listenModel.Isbuy || self.listenModel.isFree || [self.listenModel.promotionType integerValue] == 2) {
+                rec = YES;
             }
             [cell updateWithDescString:self.listenModel.descString count:self.listenModel.orderNum hasBuy:rec];
         }

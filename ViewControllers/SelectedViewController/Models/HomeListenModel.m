@@ -48,9 +48,17 @@
         if (time.length>0) {
             time = [NSString stringWithFormat:@"/%@",time];
         }
+        
         self.PRICE = dic[@"price"];
+        if ([self.promotionType integerValue] == 1) {
+            self.PRICE = dic[@"selfPrice"];
+        }
         self.price = [NSString stringWithFormat:@"¥%.2f",[self.PRICE floatValue]];
-        self.timePrice = [NSString stringWithFormat:@"¥%.2f%@",[dic[@"price"] floatValue],time];
+        if ([self.promotionType integerValue] == 0) {
+            self.timePrice = [NSString stringWithFormat:@"%@%@",self.price,time];
+        }else{
+            self.timePrice = [NSString stringWithFormat:@"  %@%@",self.price,time];
+        }
         
         NSArray * tags = dic[@"tags"];
         NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];
@@ -68,6 +76,9 @@
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
                 model.relationType = self.catId;
                 model.relationId = self.listenId;
+                if ((!model.tagName || model.tagName.length == 0)&& self.tagModels.count >0) {
+                    model.tagName = self.tagModels[0].tagName;
+                }
                 NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
                 if ([status integerValue] != 1000) {
                     model.downStatus = status;
@@ -82,6 +93,9 @@
             self.audioModel.relationId = self.catId;
             self.audioModel.relationType = self.listenId;
             self.audioModel.tagModels = muarr;
+            if ((!self.audioModel.tagName || self.audioModel.tagName.length == 0)&& self.tagModels.count >0) {
+                self.audioModel.tagName = self.tagModels[0].tagName;
+            }
         }
         
         self.isDownLoad = NO;

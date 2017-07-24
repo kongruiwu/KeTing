@@ -59,7 +59,7 @@
     [protobtn addTarget:self action:@selector(pushTpprotoViewController) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton * sureBuy = [KTFactory creatButtonWithTitle:@"确认购买"
+    UIButton * sureBuy = [KTFactory creatButtonWithTitle:@"确认支付"
                                          backGroundColor:[UIColor clearColor]
                                                textColor:KTColor_MainOrange
                                                 textSize:font750(30)];
@@ -91,30 +91,23 @@
     return section == 0 ? 1:(rec ? 1:2) ;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return indexPath.section == 0 ? Anno750(250) : Anno750(110);
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        return Anno750(120);
+    }
+    return indexPath.section == 0 ? Anno750(250) : Anno750(330);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return section == 0 ? Anno750(35): Anno750(90);
+    return Anno750(35);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView * headView = [KTFactory creatViewWithColor:KTColor_BackGround];
-    headView.frame = CGRectMake(0, 0, UI_WIDTH, section == 0 ? Anno750(35): Anno750(90));
-    if (section != 0) {
-        UILabel * label = [KTFactory creatLabelWithText:@"选择支付方式"
-                                              fontValue:font750(30)
-                                              textColor:KTColor_darkGray
-                                          textAlignment:NSTextAlignmentLeft];
-        [headView addSubview:label];
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@(Anno750(24)));
-            make.centerY.equalTo(@0);
-        }];
-    }
-    return headView;
+    UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
+    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(35));
+    return view;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         static NSString * cellid = @"SetAccountHeadCell";

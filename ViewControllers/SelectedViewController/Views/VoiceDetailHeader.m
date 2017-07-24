@@ -37,12 +37,8 @@
                                           textColor:[UIColor whiteColor]
                                       textAlignment:NSTextAlignmentCenter];
     
-    self.checkSummy = [KTFactory creatButtonWithTitle:@"查看简介"
-                                      backGroundColor:[UIColor clearColor]
-                                            textColor:[UIColor whiteColor]
-                                             textSize:font750(28)];
+    self.checkSummy = [KTFactory creatButtonWithNormalImage:@"voice_drop-down" selectImage:@"voice_pack up"];
     self.checkSummy.hidden = YES;
-    [self.checkSummy setTitle:@"隐藏简介" forState:UIControlStateSelected];
     
     self.countLabel.backgroundColor = KTColor_IconOrange;
     self.countLabel.layer.masksToBounds = YES;
@@ -106,7 +102,8 @@
         make.width.equalTo(@(Anno750(30)));
     }];
     [self.checkSummy mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(@(-Anno750(24)));
+        make.right.equalTo(@0);
+        make.width.equalTo(@(Anno750(100)));
         make.centerY.equalTo(self.grayView.mas_centerY);
         make.height.equalTo(@(Anno750(60)));
     }];

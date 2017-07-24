@@ -134,25 +134,29 @@
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
     self.nameLabel.text = model.name;
     self.descLabel.text = model.summary;
-    self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:model.audioLong.intValue andTotalTime:model.audioLong.intValue]];
+    self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",model.audioLong];
     
     self.shopCar.hidden = model.Isbuy || model.isFree || [model.promotionType integerValue] == 2? YES: NO;
     self.buybtn.hidden = model.isFree || [model.promotionType integerValue] == 2? YES: NO;
     self.buybtn.selected = model.Isbuy;
     self.priceLabel.hidden =  model.isFree? YES:NO;
-    self.saleStatus.hidden = !self.shopCar.hidden;
     if (model.isFree) {
-        self.saleStatus.text = @"免费  ";
+        self.saleStatus.text = @"免费";
+        [KTFactory setLabel:self.saleStatus BorderColor:[UIColor clearColor] with:0 cornerRadius:0];
     }else{
         //限免
         if ([model.promotionType intValue] == 2) {
             self.saleStatus.text = @"限免  ";
-            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.price];
+            [KTFactory setLabel:self.saleStatus BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
 
         }else{
-            self.priceLabel.text = model.price;
+            self.priceLabel.text = model.timePrice;
             self.priceLabel.textColor = KTColor_MainOrange;
-            self.saleStatus.text = @"";
+            self.saleStatus.text = [model.promotionType integerValue] == 1 ? @"特惠  " :@"";
+            if ([model.promotionType integerValue] == 1) {
+                [KTFactory setLabel:self.saleStatus BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
+            }
         }
     }
     self.shopCar.selected = model.iscart;

@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSString * releaseStatus;
 /**是否免费 1免费0收费*/
 @property (nonatomic, assign) BOOL isFree;
-/**促销类型 0无1自定义价格2限免*/
+/**促销类型 0无 1自定义价格 2限免*/
 @property (nonatomic, strong) NSString * promotionType;
 /**下载量*/
 @property (nonatomic, strong) NSString * orderNum;

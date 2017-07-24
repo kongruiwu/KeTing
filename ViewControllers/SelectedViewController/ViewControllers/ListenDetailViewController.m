@@ -271,7 +271,7 @@
         [self presentViewController:nvc animated:YES completion:nil];
     }else{
         //已购买
-        if (self.listenModel.Isbuy) {
+        if ([btn.titleLabel.text containsString:@"下载"]) {
             if (!self.listenModel.isDownLoad) {//下载该书籍
 #warning 这里需要判断网络状态
                 [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[self.listenModel.audioModel]];
@@ -281,7 +281,7 @@
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
             }
         }else{
-            if (!self.listenModel.iscart) {//添加至购物车
+            if ([btn.titleLabel.text containsString:@"购物车"]) {//添加至购物车
                 NSDictionary * params = @{
                                           @"userId":[UserManager manager].userid,
                                           @"relationId":self.listenID,

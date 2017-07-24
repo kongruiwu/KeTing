@@ -17,6 +17,7 @@
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic) int page;
+@property (nonatomic, strong) UILabel * countLabel;
 @end
 
 @implementation ListenListViewController
@@ -30,6 +31,7 @@
     [self setNavTitle:@"听书" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
+    [self drawRightShopCar];
 }
 - (void)creatUI{
     self.page = 1;
@@ -42,6 +44,32 @@
     self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
     self.tabview.mj_header = self.refreshHeader;
     self.tabview.mj_footer = self.refreshFooter;
+}
+- (void)drawRightShopCar{    
+    UIButton * button = [KTFactory creatButtonWithNormalImage:@"shopcar" selectImage:nil];
+    button.frame = CGRectMake(0, 0, Anno750(64), Anno750(64));
+    self.countLabel = [KTFactory creatLabelWithText:@"0"
+                                          fontValue:font750(20)
+                                          textColor:[UIColor whiteColor]
+                                      textAlignment:NSTextAlignmentCenter];
+    self.countLabel.backgroundColor = KTColor_IconOrange;
+    self.countLabel.layer.masksToBounds = YES;
+    self.countLabel.layer.cornerRadius = Anno750(15);
+    self.countLabel.hidden = YES;
+    [button addSubview:self.countLabel];
+    [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(button.mas_centerX).offset(Anno750(5));
+        make.bottom.equalTo(button.mas_centerY).offset(Anno750(-5));
+        make.height.equalTo(@(Anno750(30)));
+        make.width.equalTo(@(Anno750(30)));
+    }];
+    [button addTarget:self action:@selector(checkShopCar) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+- (void)updateCountLabel:(NSString *)count{
+    self.countLabel.text = count;
+    self.countLabel.hidden = [count intValue]>0 ? NO:YES;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
@@ -104,6 +132,13 @@
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
     }];
+    
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
+        NSString * count = [NSString stringWithFormat:@"%@",result];
+        [self updateCountLabel:count];
+    } errorBlock:^(KTError *error) {
+        
+    }];
 }
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
@@ -139,14 +174,22 @@
         [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
             btn.selected = !btn.selected;
+            int count = [self.countLabel.text intValue] + 1;
+            [self updateCountLabel:[NSString stringWithFormat:@"%d",count]];
         } errorBlock:^(KTError *error) {
             
         }];
     }
 }
 - (void)checkShopCar{
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    ShopCarViewController * vc = [ShopCarViewController new];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (![UserManager manager].isLogin) {
+        LoginViewController * vc = [LoginViewController new];
+        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }else{
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        ShopCarViewController * vc = [ShopCarViewController new];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 @end

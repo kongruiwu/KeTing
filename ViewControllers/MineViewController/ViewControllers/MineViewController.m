@@ -196,8 +196,8 @@
         if (dic[@"accountBalance"]) {
             NSArray * datas = self.viewModel.dataArray[0];
             MineListModel * model = datas[0];
-            model.desc = [NSString stringWithFormat:@"¥%@",dic[@"accountBalance"]];
             [UserManager manager].balance = dic[@"accountBalance"];
+            model.desc = [NSString stringWithFormat:@"¥%.2f",[[UserManager manager].balance floatValue]];
             NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         }

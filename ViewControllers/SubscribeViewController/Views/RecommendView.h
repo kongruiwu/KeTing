@@ -16,5 +16,6 @@
 @property (nonatomic, strong) UILabel * descLabel;
 @property (nonatomic, strong) UILabel * priceLabel;
 @property (nonatomic, strong) UIButton * coverBtn;
+@property (nonatomic, strong) UILabel * iconLabel;
 - (void)updateWithHomeListenModel:(HomeListenModel *)model;
 @end
