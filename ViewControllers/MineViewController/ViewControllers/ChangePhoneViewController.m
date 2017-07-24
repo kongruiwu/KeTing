@@ -36,7 +36,7 @@
     }];
     NSMutableString * phoneNumber = [NSMutableString stringWithFormat:@"%@",[UserManager manager].info.MOBILE];
     [phoneNumber replaceCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
-    UILabel * title = [KTFactory creatLabelWithText:phoneNumber
+    UILabel * title = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"您当前的手机号码为%@",phoneNumber]
                                           fontValue:font750(28)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];

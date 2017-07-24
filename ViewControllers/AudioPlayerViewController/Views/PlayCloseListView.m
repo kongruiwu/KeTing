@@ -57,9 +57,9 @@
         [AudioPlayer instance].closeTime = CloseTimeThisAudio;
         str = @"设置成功,当前音频播放完成后关闭";
     }else if(indexPath.row ==4){
-        [AudioPlayer instance].closeTime = CloseTimeNone;
         if ([AudioPlayer instance].closeTime &&[AudioPlayer instance].closeTime != CloseTimeNone) {
             str = @"设置成功,定时已关闭";
+            [AudioPlayer instance].closeTime = CloseTimeNone;
         }
     }
     if (str.length >0) {

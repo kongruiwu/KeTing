@@ -19,10 +19,16 @@
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
 @property (nonatomic, strong) ShareView * shareView;
+@property (nonatomic, strong) UIButton * logoutBtn;
 //@property (nonatomic, strong) NSArray * descs;
 @end
 
 @implementation SettingViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tabview reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,6 +61,9 @@
     return 2;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 0;
+    }
     if (indexPath.section == 1 && indexPath.row == 0) {
         return Anno750(140);
     }else{
@@ -62,6 +71,9 @@
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0.01;
+    }
     return Anno750(30);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -71,6 +83,9 @@
     return 0.01;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (![UserManager manager].isLogin) {
+        return nil;
+    }
     if (section == 1) {
         UIView * footer = [KTFactory creatViewWithColor:[UIColor clearColor]];
         footer.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(130));
@@ -81,6 +96,7 @@
         button.layer.borderColor = KTColor_MainOrange.CGColor;
         button.layer.borderWidth = 1.0f;
         button.layer.cornerRadius = 4.0f;
+        self.logoutBtn = button;
         [footer addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@(Anno750(24)));
@@ -112,6 +128,9 @@
     SettingListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
         cell = [[SettingListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+    }
+    if (indexPath.section == 0) {
+        cell.hidden = YES;
     }
     NSString * title = self.titles[0];
     if (indexPath.section == 1) {

@@ -76,12 +76,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self drawBackButtonWithType:BackImgTypeWhite];
     [self creatUI];
     [self playAudio];
     
 }
 - (void)creatUI{
+    //voice_drop-down
+    UIImage * image = [[UIImage imageNamed:@"voice_drop-down"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(doBack)];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    
     
     self.backType = SelectorBackTypeDismiss;
     

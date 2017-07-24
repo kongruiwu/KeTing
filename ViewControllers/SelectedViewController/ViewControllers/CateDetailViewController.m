@@ -140,6 +140,7 @@
 }
 #pragma mark - 下载所选择音频
 - (void)downAllSelectAudio{
+    
     NSMutableArray * muarr = [NSMutableArray new];
     for (int i = 0; i<self.dataArray.count; i++) {
         HomeTopModel * model = self.dataArray[i];
@@ -149,6 +150,10 @@
                 [muarr addObject:model];
             }
         }
+    }
+    if (muarr.count ==0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请选择您要下载的音频" duration:1.0f];
+        return;
     }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdelegete.netStatus == ReachableViaWiFi) {

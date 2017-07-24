@@ -82,5 +82,5 @@ typedef NS_ENUM(NSInteger,BackImgType){
 #define     WxAppID             @"wx6c606ab1645ec900"
 #define     WxAppSecret         @"01f9546287a51655a34fc114fe6d524b"
 #define     JpushKey            @""
-#define     APPID               @"1223784388"
+#define     APPID               @"1261272564"
 #endif /* ConfigHeader_h */

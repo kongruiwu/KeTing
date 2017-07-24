@@ -32,12 +32,12 @@
     
     UIView * headView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
     headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(100));
-    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld）",[AudioPlayer instance].playList.count]
+    self.titleLabel = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld）",[AudioPlayer instance].playList.count]
                                           fontValue:font750(32)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];
-    [headView addSubview:label];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+    [headView addSubview:self.titleLabel];
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.centerY.equalTo(@0);
     }];
@@ -98,6 +98,7 @@
 
 - (void)show{
     self.hidden = NO;
+    self.titleLabel.text = [NSString stringWithFormat:@"播放列表（%ld）",[AudioPlayer instance].playList.count];
     [self.tabview reloadData];
     [UIView animateWithDuration:0.5 animations:^{
         self.backgroundColor = UIColorFromRGBA(0x000000, 0.5);

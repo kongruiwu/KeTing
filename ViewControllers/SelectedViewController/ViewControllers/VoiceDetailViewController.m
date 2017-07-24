@@ -76,13 +76,8 @@
     self.footView = [[TopListBottomView alloc]init];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
+    self.footView.frame = CGRectMake(0, UI_HEGIHT - Anno750(88) - 64, UI_WIDTH, Anno750(88));
     [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
-    [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.right.equalTo(@0);
-        make.bottom.equalTo(@0);
-        make.height.equalTo(@(Anno750(88)));
-    }];
     
     self.header  = [[VoiceDetailHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(485))];
     [self.header.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
@@ -300,7 +295,8 @@
         if (self.listenModel.Isbuy) {
             
             CGRect frame = self.footView.frame;
-            self.footView.frame = CGRectMake(frame.origin.x, frame.origin.y -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+            
+            self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
             
             button.selected = !button.selected;
             self.isDownLoad = button.selected;

@@ -205,7 +205,7 @@
     btn.selected = !btn.selected;
     CGRect frame = self.footView.frame;
     if (!_hasReduce) {
-        self.footView.frame = CGRectMake(frame.origin.x, frame.origin.y -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
     }
     _hasReduce = !_hasReduce;
     //隐藏toolsbar
@@ -265,6 +265,10 @@
                 [muarr addObject:model];
             }
         }
+    }
+    if (muarr.count ==0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请选择您要下载的音频" duration:1.0f];
+        return;
     }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdelegete.netStatus == ReachableViaWiFi) {

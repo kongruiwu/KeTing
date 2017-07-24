@@ -12,6 +12,7 @@
 @interface PlayListView : UIView<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIView * showView;
 @property (nonatomic, strong) UITableView * tabview;
+@property (nonatomic, strong) UILabel * titleLabel;
 
 - (void)show;
 - (void)disMiss;

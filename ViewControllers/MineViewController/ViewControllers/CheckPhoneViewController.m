@@ -101,9 +101,12 @@
     }];
 
     self.nextBtn = [KTFactory creatButtonWithTitle:@"保存"
-                                   backGroundColor:KTColor_IconOrange
-                                         textColor:KTColor_darkGray
+                                   backGroundColor:[UIColor clearColor]
+                                         textColor:KTColor_MainOrange
                                           textSize:font750(32)];
+    self.nextBtn.layer.borderColor = KTColor_MainOrange.CGColor;
+    self.nextBtn.layer.borderWidth = 1.0f;
+    self.nextBtn.layer.cornerRadius = 2.0f;
     [self.view addSubview:self.nextBtn];
     [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.phoneTF.mas_left);
@@ -134,7 +137,8 @@
         }
     }];
     [RACObserve(self.nextBtn, enabled) subscribeNext:^(id  _Nullable x) {
-        self.nextBtn.backgroundColor = [x boolValue]?KTColor_MainOrange:UIColorFromRGBA(0xcfaa5b, 0.5);
+        [self.nextBtn setTitleColor:[x boolValue]?KTColor_MainOrange:KTColor_lightGray forState:UIControlStateNormal];
+        self.nextBtn.layer.borderColor = ([x boolValue]?KTColor_MainOrange:KTColor_lightGray).CGColor;
     }];
 }
 #pragma mark - 验证验证码

@@ -78,7 +78,7 @@
     }];
     [self.iconLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel.mas_left);
-        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(5));
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(20));
         make.width.equalTo(@(Anno750(70)));
         make.height.equalTo(@(Anno750(30)));
     }];

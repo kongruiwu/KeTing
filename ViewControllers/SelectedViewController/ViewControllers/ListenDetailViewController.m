@@ -265,23 +265,23 @@
 }
 #pragma mark - 详情购物车按钮点击
 - (void)addThisBookShopCar:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        //已购买
-        if ([btn.titleLabel.text containsString:@"下载"]) {
-            if (!self.listenModel.isDownLoad) {//下载该书籍
+    //已购买
+    if ([btn.titleLabel.text containsString:@"下载"]) {
+        if (!self.listenModel.isDownLoad) {//下载该书籍
 #warning 这里需要判断网络状态
-                [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[self.listenModel.audioModel]];
-                [AudioDownLoader loader].delegate = self;
-
-            }else{
-                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
-            }
+            [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[self.listenModel.audioModel]];
+            [AudioDownLoader loader].delegate = self;
+            
         }else{
-            if ([btn.titleLabel.text containsString:@"购物车"]) {//添加至购物车
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
+        }
+    }else if ([btn.titleLabel.text containsString:@"购物车"]) {//添加至购物车
+        if (![UserManager manager].isLogin) {
+            LoginViewController * vc = [LoginViewController new];
+            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+            [self presentViewController:nvc animated:YES completion:nil];
+        }else{
+            if (self.listenModel.iscart) {
                 NSDictionary * params = @{
                                           @"userId":[UserManager manager].userid,
                                           @"relationId":self.listenID,
@@ -304,18 +304,18 @@
 }
 #pragma mark - 购买
 - (void)buyThisBookRequest:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
+    if (btn.selected) {
+        //进入播放器
+        [AudioPlayer instance].currentAudio = self.listenModel.audioModel;
+        [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.listenModel.audioModel];
+        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+        [self presentViewController:nav animated:YES completion:nil];
     }else{
-        if (btn.selected) {
-            //进入播放器
-            [AudioPlayer instance].currentAudio = self.listenModel.audioModel;
-            [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.listenModel.audioModel];
-            AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-            [self presentViewController:nav animated:YES completion:nil];
+        if (![UserManager manager].isLogin) {
+            LoginViewController * vc = [LoginViewController new];
+            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+            [self presentViewController:nvc animated:YES completion:nil];
         }else{
             //购买
             SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];

@@ -56,15 +56,10 @@
     
     self.footView = [[TopListBottomView alloc]init];
     [self.footView.downLoadBtn setTitle:@"删除" forState:UIControlStateNormal];
+    self.footView.frame = CGRectMake(0, UI_HEGIHT - Anno750(88), UI_WIDTH, Anno750(88));
     [self.footView.downLoadBtn addTarget:self action:@selector(deleteAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
-    [self.footView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.right.equalTo(@0);
-        make.bottom.equalTo(@0);
-        make.height.equalTo(@(Anno750(88)));
-    }];
     
     
     UIView * header = [KTFactory creatViewWithColor:KTColor_BackGround];
@@ -131,6 +126,8 @@
 //}
 - (void)changeDeleteStatus{
     self.isDelete = !self.isDelete;
+    CGRect frame = self.footView.frame;
+    self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
     if (self.isDelete) {
         self.footView.hidden = NO;
         self.tabview.frame = CGRectMake(0,0, UI_WIDTH, UI_HEGIHT - Anno750(88) - 64);
@@ -141,6 +138,20 @@
     [self.tabview reloadData];
 }
 - (void)deleteAllSelectAudio{
+    
+    NSInteger num = 0;
+    for (int i = 0; i<self.dataArray.count; i++) {
+        HomeTopModel * model = self.dataArray[i];
+        if (model.isSelectDown) {
+            num += 1;
+            break;
+        }
+    }
+    
+    if (num ==0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请选择你要删除的文件" duration:1.0f];
+        return;
+    }
     [self changeDeleteStatus];
     [self.headerView statusButtonClick:self.headerView.statusButton];
     for (HomeTopModel * model in self.dataArray) {
