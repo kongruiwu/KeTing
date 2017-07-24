@@ -156,7 +156,7 @@
         }
     }];
     [RACObserve(self.nextBtn, enabled) subscribeNext:^(id  _Nullable x) {
-        self.nextBtn.backgroundColor = [x boolValue]?KTColor_MainOrange:KTColor_MainOrangeAlpha;
+        self.nextBtn.backgroundColor = [x boolValue]?KTColor_IconOrange:KTColor_MainOrangeAlpha;
     }];
 }
 

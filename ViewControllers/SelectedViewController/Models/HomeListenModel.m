@@ -49,7 +49,7 @@
             time = [NSString stringWithFormat:@"/%@",time];
         }
         self.PRICE = dic[@"price"];
-        self.price = [NSString stringWithFormat:@"¥%@",dic[@"price"]];
+        self.price = [NSString stringWithFormat:@"¥%.2f",[self.PRICE floatValue]];
         self.timePrice = [NSString stringWithFormat:@"¥%.2f%@",[dic[@"price"] floatValue],time];
         
         NSArray * tags = dic[@"tags"];

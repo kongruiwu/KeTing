@@ -67,9 +67,9 @@
 }
 - (void)updateWithModel:(TopUpModel *)model isTopUp:(BOOL)rec{
     self.namelabel.text = model.goodName;
-    self.moneyLabel.textColor = rec? KTColor_MainOrange : [UIColor redColor];
+    self.moneyLabel.textColor = KTColor_MainOrange;
     NSString * reduce = rec? @"+ ":@"- ";
-    self.moneyLabel.text = [NSString stringWithFormat:@"%@%@",reduce,model.payAmount];
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@%.2f",reduce,[model.payAmount floatValue]];
     self.timeLabel.text = [KTFactory timestampWithDate:model.payTime andFormat:@"YYYY-MM-dd HH:mm:ss"];
 }
 @end

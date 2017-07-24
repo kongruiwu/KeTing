@@ -103,6 +103,11 @@
 		8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B41F20987E00AAD63C /* RootViewController.m */; };
 		8BA1F0B81F20DC1600AAD63C /* HistorySql.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B71F20DC1600AAD63C /* HistorySql.m */; };
 		8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */; };
+		8BB516591F24A40C00C29643 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516581F24A40C00C29643 /* GTMBase64.m */; };
+		8BB516631F24A81E00C29643 /* CropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5165D1F24A81E00C29643 /* CropViewController.m */; };
+		8BB516641F24A81E00C29643 /* CropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB5165E1F24A81E00C29643 /* CropViewController.xib */; };
+		8BB516651F24A81E00C29643 /* FilterGridVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516601F24A81E00C29643 /* FilterGridVIew.m */; };
+		8BB516661F24A81E00C29643 /* UIImage+ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */; };
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
@@ -376,6 +381,16 @@
 		8BA1F0B71F20DC1600AAD63C /* HistorySql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistorySql.m; sourceTree = "<group>"; };
 		8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDownLoader.h; sourceTree = "<group>"; };
 		8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDownLoader.m; sourceTree = "<group>"; };
+		8BB516571F24A40C00C29643 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		8BB516581F24A40C00C29643 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		8BB5165A1F24A52900C29643 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		8BB5165C1F24A81E00C29643 /* CropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropViewController.h; sourceTree = "<group>"; };
+		8BB5165D1F24A81E00C29643 /* CropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropViewController.m; sourceTree = "<group>"; };
+		8BB5165E1F24A81E00C29643 /* CropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CropViewController.xib; sourceTree = "<group>"; };
+		8BB5165F1F24A81E00C29643 /* FilterGridVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterGridVIew.h; sourceTree = "<group>"; };
+		8BB516601F24A81E00C29643 /* FilterGridVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterGridVIew.m; sourceTree = "<group>"; };
+		8BB516611F24A81E00C29643 /* UIImage+ImageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageFilter.h"; sourceTree = "<group>"; };
+		8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageFilter.m"; sourceTree = "<group>"; };
 		8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceSectionCell.h; sourceTree = "<group>"; };
 		8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceSectionCell.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
@@ -586,6 +601,7 @@
 		8B40FE521EE63D1B005F9342 /* MineViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8BB5165B1F24A81E00C29643 /* FDCropIMgView */,
 				8B40FE531EE63D1B005F9342 /* Models */,
 				8B40FE541EE63D1B005F9342 /* ViewControllers */,
 				8B40FE551EE63D1B005F9342 /* Views */,
@@ -707,6 +723,9 @@
 		8B40FE621EE680BA005F9342 /* NetWorkManager */ = {
 			isa = PBXGroup;
 			children = (
+				8BB5165A1F24A52900C29643 /* GTMDefines.h */,
+				8BB516571F24A40C00C29643 /* GTMBase64.h */,
+				8BB516581F24A40C00C29643 /* GTMBase64.m */,
 				8B2D74051F0CC55000E1BF4B /* iPhoneModel.h */,
 				8B2D74061F0CC55000E1BF4B /* iPhoneModel.m */,
 				8B2D73FF1F0CC51200E1BF4B /* ADTracking.h */,
@@ -988,6 +1007,20 @@
 				8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */,
 			);
 			path = AudioDownLoader;
+			sourceTree = "<group>";
+		};
+		8BB5165B1F24A81E00C29643 /* FDCropIMgView */ = {
+			isa = PBXGroup;
+			children = (
+				8BB5165C1F24A81E00C29643 /* CropViewController.h */,
+				8BB5165D1F24A81E00C29643 /* CropViewController.m */,
+				8BB5165E1F24A81E00C29643 /* CropViewController.xib */,
+				8BB5165F1F24A81E00C29643 /* FilterGridVIew.h */,
+				8BB516601F24A81E00C29643 /* FilterGridVIew.m */,
+				8BB516611F24A81E00C29643 /* UIImage+ImageFilter.h */,
+				8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */,
+			);
+			path = FDCropIMgView;
 			sourceTree = "<group>";
 		};
 		8BF6029F1EEFC7EC00322545 /* TimeListenViewController */ = {
@@ -1441,6 +1474,7 @@
 				8BF692071EE7A245001CECEE /* toast_bg@2x.png in Resources */,
 				8BF692091EE7A245001CECEE /* toast_icon_bg@2x.png in Resources */,
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,
+				8BB516641F24A81E00C29643 /* CropViewController.xib in Resources */,
 				8BF84CCB1EE4F6620072637D /* Assets.xcassets in Resources */,
 				8BF692081EE7A245001CECEE /* toast_failure@2x.png in Resources */,
 				8BF6920A1EE7A245001CECEE /* toast_net_failure@2x.png in Resources */,
@@ -1553,9 +1587,11 @@
 				8B2D739B1F0B936B00E1BF4B /* AccountSafeViewController.m in Sources */,
 				8BE25E301F06383F00FFACA9 /* HistoryViewController.m in Sources */,
 				8B3CEED51F0E04CC00AE5B81 /* NullView.m in Sources */,
+				8BB516631F24A81E00C29643 /* CropViewController.m in Sources */,
 				8B2D74031F0CC51200E1BF4B /* ADTracking.m in Sources */,
 				8BF84CC31EE4F6620072637D /* AppDelegate.m in Sources */,
 				8B2D73951F0B83F500E1BF4B /* PushSettingViewController.m in Sources */,
+				8BB516661F24A81E00C29643 /* UIImage+ImageFilter.m in Sources */,
 				8B696E211EEA480300A11A0F /* CateDetailViewController.m in Sources */,
 				8B4F229C1EF10FD8005E1D21 /* NoneSubscribeCell.m in Sources */,
 				8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */,
@@ -1605,6 +1641,7 @@
 				8BF84CC01EE4F6620072637D /* main.m in Sources */,
 				8B40FE691EE682F3005F9342 /* KTError.m in Sources */,
 				8BF091C81F04F5F5006478E9 /* MoneyHeaderCell.m in Sources */,
+				8BB516651F24A81E00C29643 /* FilterGridVIew.m in Sources */,
 				8BF602981EEFB06E00322545 /* ListenDetailViewController.m in Sources */,
 				8B8742E71EEE2EC300324FA2 /* PlayListCell.m in Sources */,
 				6232F2CE1F21D86C009DDC37 /* RMIAPHelper.m in Sources */,
@@ -1631,6 +1668,7 @@
 				8B8743011EEE6F7900324FA2 /* VoiceListViewController.m in Sources */,
 				8BF6920C1EE7A245001CECEE /* ToastView.m in Sources */,
 				8B2D74041F0CC51200E1BF4B /* OpenUDID.m in Sources */,
+				8BB516591F24A40C00C29643 /* GTMBase64.m in Sources */,
 				8BF602951EEF7B1400322545 /* VoiceUpdateListCell.m in Sources */,
 				8BC126711F1DB3A3005CF363 /* TopUpCell.m in Sources */,
 				8B7AB4CA1F0382DE0068CAE7 /* SetUserNameViewController.m in Sources */,

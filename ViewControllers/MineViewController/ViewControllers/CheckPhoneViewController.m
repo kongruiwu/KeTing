@@ -151,7 +151,6 @@
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_SendCode complete:^(id result) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码已发至您的手机，请查收" duration:1.0f];
         self.time = 60;
-        [self.getCode setTitle:@"倒计时(60)" forState:UIControlStateNormal];
         self.getCode.enabled = NO;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
     } errorBlock:^(KTError *error) {
@@ -167,7 +166,7 @@
         self.timer = nil;
     }else{
         self.time -- ;
-        NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"倒计时(%d)",self.time]];
+        NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"获取验证码(%d)",self.time]];
         NSString * timestr = [NSString stringWithFormat:@"%d",self.time];
         [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_MainOrange range:NSMakeRange(4, timestr.length)];
         [self.getCode setAttributedTitle:attstr forState:UIControlStateDisabled];

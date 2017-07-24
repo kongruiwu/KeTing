@@ -131,9 +131,6 @@
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
         [self presentViewController:nav animated:YES completion:nil];
     }
-
-    
-    
 }
 
 - (void)userInfoClick{
@@ -144,7 +141,6 @@
         [self presentViewController:nav animated:YES completion:nil];
     }
 }
-/**奇怪么？为啥这里还有个请求？  问问那个sb陶兴国吧*/
 - (void)getMessageCount{
     if (![UserManager manager].isLogin) {
         NSArray * datas = self.viewModel.dataArray[2];
@@ -169,7 +165,6 @@
         
     }];
 }
-//又一个傻逼操作
 - (void)readMessage{
     if (![UserManager manager].isLogin) {
         return;
@@ -183,7 +178,7 @@
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_MessageStatus complete:^(id result) {
         
     } errorBlock:^(KTError *error) {
-        
+        NSLog(@"%@",error.message);
     }];
 }
 - (void)getUserBalance{

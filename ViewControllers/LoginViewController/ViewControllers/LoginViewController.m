@@ -176,10 +176,17 @@
             return @0;
         }
     }];
-    [RACObserve(self.loginBtn, enabled) subscribeNext:^(id  _Nullable x) {
-        self.loginBtn.backgroundColor =  [x boolValue]?KTColor_MainOrange:KTColor_MainOrangeAlpha;
-    }];
     
+    [RACObserve(self.loginBtn, enabled) subscribeNext:^(id  _Nullable x) {
+        self.loginBtn.backgroundColor =  [x boolValue]?KTColor_IconOrange:KTColor_MainOrangeAlpha;
+    }];
+    [self.phoneTF.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
+        if (x.length >= 11) {
+            if (![Commond isMobileNumber:x]) {
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"您输入的手机号格式不正确" duration:1.0f];
+            }
+        }
+    }];
 }
 
 - (void)forgetPassword{

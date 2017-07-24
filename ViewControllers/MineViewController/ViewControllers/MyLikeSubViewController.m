@@ -78,6 +78,8 @@
             cell = [[ListenListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
         [cell updateWithListenModel:self.dataArray[indexPath.row]];
+        cell.shopCar.hidden = YES;
+        cell.buybtn.hidden = YES;
         return cell;
     }else{
         static NSString * cellid = @"HomeVoiceCell";
@@ -85,6 +87,7 @@
         if (!cell) {
             cell = [[HomeVoiceCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
+        cell.updateTime.hidden = NO;
         [cell updateWithVoiceModel:self.dataArray[indexPath.row]];
         return cell;
     }

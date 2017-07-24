@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSNumber * orderNo;
 @property (nonatomic, strong) NSString * orderPrice;
 @property (nonatomic, strong) NSNumber * orderType;
-@property (nonatomic, strong) NSString * payAmount;
+@property (nonatomic, strong) NSNumber * payAmount;
 @property (nonatomic, strong) NSNumber * payMethod;
 @property (nonatomic, strong) NSNumber * payStatus;
 @property (nonatomic, strong) NSNumber * payTime;

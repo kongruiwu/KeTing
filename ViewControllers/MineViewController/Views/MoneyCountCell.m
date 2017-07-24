@@ -30,6 +30,9 @@
                                               backGroundColor:[UIColor clearColor]
                                                     textColor:KTColor_darkGray
                                                      textSize:font750(28)];
+        if (i == 0) {
+            moneyBtn.selected = YES;
+        }
         moneyBtn.hidden = YES;
         moneyBtn.tag = 521 + i;
         [moneyBtn setBackgroundImage:[UIImage imageNamed:@"my_money"] forState:UIControlStateNormal];
@@ -67,7 +70,7 @@
     for (int i = 0; i<amount.count; i++) {
         UIButton * btn = self.btnArray[i];
         btn.hidden = NO;
-        [btn setTitle:[NSString stringWithFormat:@"%@",amount[i]] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"%@元",amount[i]] forState:UIControlStateNormal];
     }
 }
 @end

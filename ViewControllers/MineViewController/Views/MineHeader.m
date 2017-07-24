@@ -33,16 +33,16 @@
     self.clearButton = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
     self.timeLabel = [self creatBottomLabel:@"收听时间"];
     self.bookLabel = [self creatBottomLabel:@"收听书籍"];
-    self.dayLabel = [self creatBottomLabel:@"连续登陆"];
-    self.timeValue = [KTFactory creatLabelWithText:@"--小时--分"
+    self.dayLabel = [self creatBottomLabel:@"连续登录"];
+    self.timeValue = [KTFactory creatLabelWithText:@"-"
                                          fontValue:font750(24)
                                          textColor:[UIColor colorWithRed:0.69 green:0.58 blue:0.38 alpha:1.00]
                                      textAlignment:NSTextAlignmentCenter];
-    self.bookCount = [KTFactory creatLabelWithText:@"-本"
+    self.bookCount = [KTFactory creatLabelWithText:@"-"
                                          fontValue:font750(24)
                                          textColor:[UIColor colorWithRed:0.00 green:0.63 blue:0.66 alpha:1.00]
                                      textAlignment:NSTextAlignmentCenter];
-    self.dayTime = [KTFactory creatLabelWithText:@"-天"
+    self.dayTime = [KTFactory creatLabelWithText:@"-"
                                        fontValue:font750(24)
                                        textColor:[UIColor colorWithRed:0.41 green:0.59 blue:0.84 alpha:1.00]
                                    textAlignment:NSTextAlignmentCenter];
@@ -168,9 +168,9 @@
         self.timeValue.font = [UIFont systemFontOfSize:font750(24)];
         self.bookCount.font = [UIFont systemFontOfSize:font750(24)];
         self.dayTime.font = [UIFont systemFontOfSize:font750(24)];
-        self.timeValue.text = @"--小时--分";
-        self.bookCount.text = @"-本";
-        self.dayTime.text = @"-天";
+        self.timeValue.text = @"-";
+        self.bookCount.text = @"-";
+        self.dayTime.text = @"-";
     }
 }
 @end

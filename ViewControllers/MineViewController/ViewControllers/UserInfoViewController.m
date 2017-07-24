@@ -11,7 +11,9 @@
 #import "HeaderImage.h"
 #import "DatePickerSelectView.h"
 #import "PickerView.h"
-@interface UserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate>
+#import "GTMBase64.h"
+#import "CropViewController.h"
+@interface UserInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
@@ -68,7 +70,7 @@
     header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(280));
     UIView * groundView = [KTFactory creatViewWithColor:KTColor_BackGround];
     self.headerImg = [[HeaderImage alloc]init];
-    [self.headerImg.clearBtn addTarget:self action:@selector(uploadImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.headerImg.clearBtn addTarget:self action:@selector(uploadUserIcon) forControlEvents:UIControlEventTouchUpInside];
     [self.headerImg updateUserIcon];
     [header addSubview:self.headerImg];
     [header addSubview:groundView];
@@ -134,7 +136,12 @@
 - (void)setUserNickName{
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"修改昵称" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self setUserNickNameRequest:alert.textFields[0].text];
+        if (10>=alert.textFields[0].text.length>0) {
+            [self setUserNickNameRequest:alert.textFields[0].text];
+        }else{
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"昵称长度为10字以内" duration:1.0f];
+        }
+        
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
        textField.placeholder = @"请输入新的昵称";
@@ -251,7 +258,84 @@
                    INCASE_EMPTY([UserManager manager].info.TYP_NAME, @"点击设置")];
     [self.tabview reloadData];
 }
-- (void)uploadImage{
-    
+- (void)uploadUserIcon{
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction * cammer = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.allowsEditing=NO;
+        picker.title = @"照片";
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }];
+    UIAlertAction * photo = [UIAlertAction actionWithTitle:@"从相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.allowsEditing=NO;
+        picker.title = @"照片";
+        picker.sourceType = sourceType;
+        [self presentViewController:picker animated:YES completion:NULL];
+    }];
+    UIAlertAction *cannce = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];
+    [alert addAction:cammer];
+    [alert addAction:photo];
+    [alert addAction:cannce];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary<NSString *,id> *)editingInfo
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+        CropViewController * cropVC = [[CropViewController alloc] initWithNibName:@"CropViewController" bundle:nil];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:cropVC];
+        cropVC.IMg = [self  imageCrop:image];
+        __weak UserInfoViewController * blockSelf = self;
+        cropVC.cropIMGBlock = ^(UIImage * img){
+            //    上传图片的数据请求
+            blockSelf.headerImg.userIcon.image = img;
+            [blockSelf uploadImagerequest:img];
+        };
+        [self presentViewController:nav animated:YES completion:nil];
+        
+        
+        
+    }];
+}
+- (void)uploadImagerequest:(UIImage *)image{
+    NSData *data = [KTFactory dealWithAvatarImage:image];
+    //判断图片是不是png格式的文件
+    NSString *mimeType = nil;
+    if (UIImagePNGRepresentation(image)) {
+        mimeType = @"image/png";
+    }else {
+        mimeType = @"image/jpeg";
+    }
+    NSString * datastr = [NSString stringWithFormat:@"data:%@;base64,%@",mimeType,[GTMBase64 stringByEncodingData:data]];
+    NSDictionary * params = @{
+                              @"icon":datastr
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_UserAvater complete:^(id result) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"头像上传成功" duration:1.0f];
+    } errorBlock:^(KTError *error) {
+        NSLog(@"%@",error.message);
+    }];
+}
+-(UIImage *) imageCrop:(UIImage *)sourceImage
+{
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    BOOL ISWho = width>height;
+    CGFloat targetWidth = ISWho? width*UI_WIDTH/height:UI_WIDTH;
+    CGFloat targetHeight =  ISWho?UI_WIDTH: UI_WIDTH*height/width;
+    UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
+    [sourceImage drawInRect:CGRectMake(0,0,targetWidth,  targetHeight)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 @end

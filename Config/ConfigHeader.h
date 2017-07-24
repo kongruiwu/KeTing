@@ -55,9 +55,10 @@ typedef NS_ENUM(NSInteger,BackImgType){
 //字体主色调  橙色
 #define KTColor_MainOrange  UIColorFromRGB(0xcfaa5b)
 
-#define KTColor_MainOrangeAlpha UIColorFromRGBA(0xcfaa5b,0.3)
+#define KTColor_MainOrangeAlpha [UIColor colorWithRed:0.98 green:0.57 blue:0.01 alpha:0.3]
 //标签橙色
-#define KTColor_IconOrange  [UIColor colorWithRed:1.00 green:0.60 blue:0.22 alpha:1.00]
+#define KTColor_IconOrange  [UIColor colorWithRed:0.98 green:0.57 blue:0.01 alpha:1.00]
+
 //字体主色调  黑色
 #define KTColor_MainBlack   UIColorFromRGB(0x333333)
 //字体浅灰色

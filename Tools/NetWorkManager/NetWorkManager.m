@@ -50,7 +50,7 @@
                 err.message = dic[@"msg"];
                 errorBlock(err);
 #ifdef DEBUG
-                [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
+//                [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
 #endif
             }else{
                 complete(dic[@"data"]);
@@ -62,7 +62,7 @@
             err.message = error.description;
             errorBlock(err);
 #ifdef DEBUG
-            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
+//            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
 #endif
         }];
     }else{
@@ -75,7 +75,7 @@
                 err.message = dic[@"msg"];
                 errorBlock(err);
 #ifdef DEBUG
-                [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
+//                [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
 #endif
             }else{
                 complete(dic[@"data"]);
@@ -87,7 +87,7 @@
             err.message = error.description;
             errorBlock(err);
 #ifdef DEBUG
-            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
+//            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
 #endif
         }];
     }

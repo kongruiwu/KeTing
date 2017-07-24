@@ -9,6 +9,8 @@
 #import "SetUserNameViewController.h"
 #import "HeaderImage.h"
 #import <ReactiveObjC.h>
+#import "GTMBase64.h"
+#import "CropViewController.h"
 @interface SetUserNameViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate,UserManagerDelegate>
 
 @property (nonatomic, strong)HeaderImage * userIcon;
@@ -79,7 +81,7 @@
     [self.chageBtn addTarget:self action:@selector(changeUserName) forControlEvents:UIControlEventTouchUpInside];
     
     [self.nameT.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
-        self.chageBtn.backgroundColor = x.length>=1 ? KTColor_MainOrange :KTColor_MainOrangeAlpha;
+        self.chageBtn.backgroundColor = x.length>=1 ? KTColor_IconOrange :KTColor_MainOrangeAlpha;
     }];
     
 }
@@ -131,15 +133,53 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary<NSString *,id> *)editingInfo
 {
     [self dismissViewControllerAnimated:NO completion:^{
-        self.userIcon.userIcon.image = image;
-//        NSData *data = [KTFactory dealWithAvatarImage:image];
-//        [[NetWorkManager manager] uploadImage:image];
-//        NSString * string = [NSString stringWith]
-//        NSDictionary * params = @{
-//                                  
-//                                  };
-//        [NetWorkManager manager] POSTRequest:<#(NSDictionary *)#> pageUrl:<#(NSString *)#> complete:<#^(id result)complete#> errorBlock:<#^(KTError *error)errorBlock#>
+        
+        CropViewController * cropVC = [[CropViewController alloc] initWithNibName:@"CropViewController" bundle:nil];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:cropVC];
+        cropVC.IMg = [self  imageCrop:image];
+        __weak SetUserNameViewController * blockSelf = self;
+        cropVC.cropIMGBlock = ^(UIImage * img){
+            //    上传图片的数据请求
+            blockSelf.userIcon.userIcon.image = img;
+            [blockSelf uploadImagerequest:img];
+        };
+        [self presentViewController:nav animated:YES completion:nil];
+        
+        
+        
     }];
 }
-
+- (void)uploadImagerequest:(UIImage *)image{
+    NSData *data = [KTFactory dealWithAvatarImage:image];
+    //判断图片是不是png格式的文件
+    NSString *mimeType = nil;
+    if (UIImagePNGRepresentation(image)) {
+        mimeType = @"image/png";
+    }else {
+        mimeType = @"image/jpeg";
+    }
+    NSString * datastr = [NSString stringWithFormat:@"data:%@;base64,%@",mimeType,[GTMBase64 stringByEncodingData:data]];
+    NSDictionary * params = @{
+                              @"icon":datastr
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_UserAvater complete:^(id result) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"头像上传成功" duration:1.0f];
+    } errorBlock:^(KTError *error) {
+        NSLog(@"%@",error.message);
+    }];
+}
+-(UIImage *) imageCrop:(UIImage *)sourceImage
+{
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    BOOL ISWho = width>height;
+    CGFloat targetWidth = ISWho? width*UI_WIDTH/height:UI_WIDTH;
+    CGFloat targetHeight =  ISWho?UI_WIDTH: UI_WIDTH*height/width;
+    UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
+    [sourceImage drawInRect:CGRectMake(0,0,targetWidth,  targetHeight)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 @end
