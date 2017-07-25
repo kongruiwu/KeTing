@@ -39,4 +39,5 @@
 @property (nonatomic, assign) id<TopListCellDelegate> delegate;
 
 - (void)updateWithHomeTopModel:(HomeTopModel *)model;
+- (void)updateTimeWithAddTime:(HomeTopModel *)model;
 @end

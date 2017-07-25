@@ -20,4 +20,5 @@
 
 @property (nonatomic, strong) UIView * bottomLine;
 - (void)updateWithHomeTopModel:(HomeTopModel *)model;
+- (void)updateTimeWithAddTime:(HomeTopModel *)model;
 @end

@@ -110,6 +110,7 @@
 		8BB516651F24A81E00C29643 /* FilterGridVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516601F24A81E00C29643 /* FilterGridVIew.m */; };
 		8BB516661F24A81E00C29643 /* UIImage+ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */; };
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
+		8BBACBEA1F277A27002A8D79 /* ShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBE91F277A27002A8D79 /* ShareModel.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
@@ -395,6 +396,8 @@
 		8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageFilter.m"; sourceTree = "<group>"; };
 		8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceSectionCell.h; sourceTree = "<group>"; };
 		8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceSectionCell.m; sourceTree = "<group>"; };
+		8BBACBE81F277A27002A8D79 /* ShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareModel.h; sourceTree = "<group>"; };
+		8BBACBE91F277A27002A8D79 /* ShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareModel.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -947,6 +950,8 @@
 			children = (
 				8B8742F61EEE600B00324FA2 /* ShareView.h */,
 				8B8742F71EEE600B00324FA2 /* ShareView.m */,
+				8BBACBE81F277A27002A8D79 /* ShareModel.h */,
+				8BBACBE91F277A27002A8D79 /* ShareModel.m */,
 			);
 			name = ShareView;
 			path = ../ViewControllers/ShareView;
@@ -1557,6 +1562,7 @@
 				8B40FE721EE69683005F9342 /* HomeTopModel.m in Sources */,
 				8BE25E271F06258600FFACA9 /* ShopCarViewController.m in Sources */,
 				8BE25E1B1F05F5AF00FFACA9 /* MyShopedViewController.m in Sources */,
+				8BBACBEA1F277A27002A8D79 /* ShareModel.m in Sources */,
 				8B2D73F51F0C82D000E1BF4B /* ChangePhoneViewController.m in Sources */,
 				8B40FE5E1EE64994005F9342 /* MineViewModel.m in Sources */,
 				8B8742FB1EEE646800324FA2 /* PlayCloseListView.m in Sources */,

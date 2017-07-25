@@ -96,15 +96,21 @@
     
     self.selctButton.selected = model.isSelectDown;
     self.nameLabel.text = model.audioName;
-    self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
+    self.timeLabel.text = [NSString stringWithFormat:@"时长 %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
     if ([model.playLong integerValue] == 0) {
     self.playStutas.hidden = YES;
     }else{
         self.playStutas.hidden = NO;
         self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
     }
-    
     self.tagLabel.text = model.tagString;
+}
+- (void)updateTimeWithAddTime:(HomeTopModel *)model{
+    NSString * addTime = [KTFactory timestampSwitchTime:[model.addTime integerValue]];
+    NSString * time = [NSString stringWithFormat:@"时长 %@  %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]],[KTFactory getAudioSizeWithdataSize:[model.audioSize longLongValue]]];
+    self.timeLabel.text = [NSString stringWithFormat:@"%@  %@",addTime,time];
+    self.tagLabel.hidden = YES;
+    
 }
 
 @end

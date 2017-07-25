@@ -190,11 +190,22 @@
     self.tagLabel.text = model.tagString;
     self.toolsbar.hidden = !model.showTools;
     self.downLoadImg.hidden = [model.downStatus intValue] == 2 ? NO : YES;
+    NSString * time = [NSString stringWithFormat:@"时长 %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
     if (!self.downLoadImg.hidden) {
-        self.timeLabel.text = [NSString stringWithFormat:@"      %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+        self.timeLabel.text = [NSString stringWithFormat:@"      %@",time];
     }else{
-        self.timeLabel.text = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];;
+        self.timeLabel.text = time;
     }
+}
+- (void)updateTimeWithAddTime:(HomeTopModel *)model{
+    NSString * addTime = [KTFactory timestampSwitchTime:[model.addTime integerValue]];
+    NSString * time = [NSString stringWithFormat:@"时长 %@  %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]],[KTFactory getAudioSizeWithdataSize:[model.audioSize longLongValue]]];
+    if (!self.downLoadImg.hidden) {
+        self.timeLabel.text = [NSString stringWithFormat:@"      %@  %@",addTime,time];
+    }else{
+        self.timeLabel.text = [NSString stringWithFormat:@"%@  %@",addTime,time];
+    }
+    self.tagLabel.hidden = YES;
 }
 
 @end

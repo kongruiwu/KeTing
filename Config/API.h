@@ -114,4 +114,12 @@
 #define Page_ChangePwd      @"v1/modPass"
 //修改手机号
 #define Page_ChangePhone    @"v1/modPhone"
+//声度分享
+#define Page_ShareVoice     @"shareVoice/voiceId/"
+//听书分享
+#define Page_ShareListen    @"shareListen/listenId/"
+//讲述人分享
+#define Page_ShareAnchor    @"shareAnchor/anchorId/"
+//音频分享
+#define Page_ShareAudio     @"shareAudio/audioId/"
 #endif /* API_h */

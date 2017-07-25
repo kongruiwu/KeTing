@@ -146,10 +146,13 @@
     return headView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.listenModel.isFree || self.listenModel.Isbuy || [self.listenModel.promotionType integerValue] == 2) {
+        return self.isOpen ? Anno750(120) : 0;
+    }
     return Anno750(120);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.isOpen ? (self.listenModel.audio.count + 1) : ( 2 + self.listenModel.audio.count > 3 ? 3 : self.listenModel.audio.count);
+    return self.isOpen ? (self.listenModel.audio.count + 1) : ( 2 + (self.listenModel.audio.count > 3 ? 3 : self.listenModel.audio.count));
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.isOpen) {
@@ -219,6 +222,7 @@
                         cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                     }
                     [cell updateWithHomeTopModel:model];
+                    [cell updateTimeWithAddTime:model];
                     cell.moreBtn.hidden = YES;
                     return cell;
                 }
@@ -229,6 +233,7 @@
                     cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
                 [cell updateWithHomeTopModel:model];
+                [cell updateTimeWithAddTime:model];
                 return cell;
             }else{
                 static NSString * cellid = @"topListCell";
@@ -236,7 +241,8 @@
                 if (!cell) {
                     cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
-                [cell updateWithHomeTopModel:self.self.listenModel.audio[indexPath.row - 1]];
+                [cell updateWithHomeTopModel:self.listenModel.audio[indexPath.row - 1]];
+                [cell updateTimeWithAddTime:self.listenModel.audio[indexPath.row - 1]];
                 cell.delegate =self;
                 return cell;
             }
@@ -290,8 +296,17 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
+    
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = [NSString stringWithFormat:@"可听声度：%@",self.listenModel.name];
+    model.shareDesc = self.listenModel.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.listenModel.thumb]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@",Base_Url,Page_ShareVoice,self.listenModel.listenId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];
+    
 }
 #pragma mark - 订阅按钮 / 批量下载
 - (void)buyButtonClick:(UIButton *)button{
@@ -412,6 +427,10 @@
             }
         }
     }
+    if (muarr.count == 0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请选择你要下载的音频" duration:1.0f];
+        return;
+    }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdelegete.netStatus == ReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
@@ -480,10 +499,15 @@
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.listenModel.audio[index.row - 1];
-    
-    
+    HomeTopModel * Audio = self.listenModel.audio[index.row - 1];
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = Audio.audioName;
+    model.shareDesc = Audio.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,Audio.relationType,Audio.relationId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];
     [self hiddenToolsBar];
 }

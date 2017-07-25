@@ -186,7 +186,14 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = self.listenModel.name;
+    model.shareDesc = self.listenModel.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.listenModel.thumb]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@",Base_Url,Page_ShareListen,self.listenModel.listenId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];
 }
 

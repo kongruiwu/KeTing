@@ -337,6 +337,7 @@
 #pragma mark - 查看文档
 - (void)checkAudioText{
     WKWebViewController * webVC = [[WKWebViewController alloc]init];
+    webVC.model = self.newmodel ? self.newmodel : [AudioPlayer instance].currentAudio;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 #pragma mark - 弹出更多列表
@@ -346,6 +347,14 @@
 #pragma mark - 弹出分享列表
 - (void)showShareView{
     [self.MoreView disMiss];
+    HomeTopModel * Audio = self.newmodel ? self.newmodel : [AudioPlayer instance].currentAudio;
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = Audio.audioName;
+    model.shareDesc = Audio.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,Audio.audioId];
+    [self.shareView updateWithShareModel:model];
     [self.shareView show];
 }
 #pragma mark - 弹出关闭列表

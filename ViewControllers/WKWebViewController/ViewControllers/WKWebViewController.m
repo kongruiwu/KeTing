@@ -65,10 +65,18 @@
     
 }
 - (void)shareButtonClick{
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = self.model.audioName;
+    model.shareDesc = self.model.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.model.thumbnail]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,self.model.audioId,@1,self.model.audioId];
     if (self.isFromNav) {
         RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+        [tbc.shareView updateWithShareModel:model];
         [tbc.shareView show];
     }else{
+        [self.shareView updateWithShareModel:model];
         [self.shareView show];
     }
     

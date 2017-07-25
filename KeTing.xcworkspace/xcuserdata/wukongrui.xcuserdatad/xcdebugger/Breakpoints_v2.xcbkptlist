@@ -26,7 +26,7 @@
                   moduleName = "KeTing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SelectedViewController/ViewControllers/SetAccoutViewController.m"
-                  timestampString = "522678570.979761"
+                  timestampString = "522683704.043833"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
@@ -41,7 +41,7 @@
                   moduleName = "KeTing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SelectedViewController/ViewControllers/SetAccoutViewController.m"
-                  timestampString = "522678570.982103"
+                  timestampString = "522683704.04583"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
@@ -112,70 +112,6 @@
             startingLineNumber = "134"
             endingLineNumber = "134"
             landmarkName = "-setUserPassword"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SelectedViewController/ViewControllers/VoiceDetailViewController.m"
-            timestampString = "522677216.494112"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
-            landmarkName = "-buyButtonClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SelectedViewController/ViewControllers/VoiceDetailViewController.m"
-            timestampString = "522677216.494112"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
-            landmarkName = "-buyButtonClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SelectedViewController/ViewControllers/VoiceDetailViewController.m"
-            timestampString = "522677566.882535"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
-            landmarkName = "-downLoadAudio:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SelectedViewController/ViewControllers/VoiceDetailViewController.m"
-            timestampString = "522677566.882535"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "438"
-            endingLineNumber = "438"
-            landmarkName = "-checkAudioText:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -146,11 +146,18 @@
 }
 
 - (void)setFristValue{
-    self.shareTitle = @"可听";
-    self.shareDesc = @"欢迎来到可听";
-    self.targeturl = @"https://itunes.apple.com/app/id1014233862";
-    self.imageUrl = @"http://cdn.upf.123.com.cn/img/lboss/20170718/201707181500375741_720x390.jpg";
+    self.shareTitle = @"说者有心，听着有意，我正在收听“可听”，推荐给你。";
+    self.shareDesc = @"你的财经小秘书，帮你轻松了解财经知识。";
+    self.targeturl = [NSString stringWithFormat:@"https://itunes.apple.com/app/id%@",APPID];
+    self.imageUrl = @"";
     self.image = [UIImage imageNamed:@"logo"];
+}
+- (void)updateWithShareModel:(ShareModel *)model{
+    self.shareTitle = model.shareTitle;
+    self.shareDesc = model.shareDesc;
+    self.targeturl = model.targeturl;
+    self.imageUrl = model.imageUrl;
+    self.image = model.image;
 }
 - (void)updateShareInfoWithTitle:(NSString *)title desc:(NSString *)desc contentUlr:(NSString *)url imageUrl:(NSString *)imageUrl{
     if (title.length>0) {

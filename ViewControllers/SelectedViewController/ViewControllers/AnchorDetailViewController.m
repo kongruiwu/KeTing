@@ -115,7 +115,14 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = [NSString stringWithFormat:@"我在听%@讲述的音频，推荐给你。",self.anchor.name];
+    model.shareDesc = self.anchor.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.anchor.face]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@",Base_Url,Page_ShareAnchor,self.anchor.anchorId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];
 }
 #pragma mark - 查看购物车

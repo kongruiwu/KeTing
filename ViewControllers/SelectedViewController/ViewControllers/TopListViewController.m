@@ -345,10 +345,15 @@
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.dataArray[index.row];
-    
-    
+    HomeTopModel * Audio = self.dataArray[index.row];
+    ShareModel * model = [[ShareModel alloc]init];
+    model.shareTitle = Audio.audioName;
+    model.shareDesc = Audio.summary;
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
+    model.image = image;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,Audio.audioId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];
     [self hiddenToolsBar];
 }

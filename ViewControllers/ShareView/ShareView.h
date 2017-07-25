@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
 #import <UMSocialCore/UMSocialCore.h>
+#import "ShareModel.h"
 @interface shareButton : UIButton
 
 @end
@@ -35,6 +36,7 @@
 @property (nonatomic, strong) UIButton * disBtn;
 @property (nonatomic, strong) UIButton * cannceBtn;
 
+
 /**是否有导航栏， 有则需要计算动画高度*/
 @property (nonatomic, assign) BOOL hasNav;
 
@@ -42,4 +44,5 @@
 - (void)disMiss;
 - (instancetype)initWithFrame:(CGRect)frame hasNav:(BOOL)rec;
 - (void)updateShareInfoWithTitle:(NSString *)title desc:(NSString *)desc contentUlr:(NSString *)url imageUrl:(NSString *)imageUrl;
+- (void)updateWithShareModel:(ShareModel *)model;
 @end
