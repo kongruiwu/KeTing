@@ -161,6 +161,13 @@
 - (void)changeProgressViewQuick{
     float value = [self.timer.userInfo floatValue];
     self.TimeprogressView.progressView.progress += value;
+    int inValue = (int)(self.TimeprogressView.progressView.progress * 100);
+    float pro = 1.00/(float)self.dataArray.count;
+    int inPro = (int)(pro * 100);
+    int num = inValue/inPro;
+    self.TimeprogressView.countLabel.text = [NSString stringWithFormat:@"%d",num];
+    
+    
 }
 - (void)requestListenList:(int)num{
     
@@ -174,6 +181,10 @@
     [[NetWorkManager manager] GETRequest:params pageUrl:page_TimeListen complete:^(id result) {
         float value = (1.0 - self.TimeprogressView.progressView.progress)/(2/0.05);
         NSArray * list = result[@"list"];
+        for (int i = 0; i<list.count; i++) {
+            HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:list[i]];
+            [self.dataArray addObject:model];
+        }
         [self.timer invalidate];
         self.timer = nil;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewQuick) userInfo:[NSNumber numberWithFloat:value] repeats:YES];
@@ -185,10 +196,7 @@
             [self.timer invalidate];
             self.timer = nil;
             [self.TimeprogressView disMiss];
-            for (int i = 0; i<list.count; i++) {
-                HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:list[i]];
-                [self.dataArray addObject:model];
-            }
+            
             [AudioPlayer instance].currentAudio = self.dataArray[0];
             [AudioPlayer instance].playList = self.dataArray;
             AudioPlayerViewController * audioVC = [AudioPlayerViewController new];

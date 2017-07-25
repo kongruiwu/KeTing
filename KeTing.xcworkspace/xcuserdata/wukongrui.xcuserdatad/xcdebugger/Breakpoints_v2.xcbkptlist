@@ -26,12 +26,12 @@
                   moduleName = "KeTing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SelectedViewController/ViewControllers/SetAccoutViewController.m"
-                  timestampString = "522685164.651652"
+                  timestampString = "522694007.530402"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
                   endingLineNumber = "178"
-                  offsetFromSymbolStart = "560">
+                  offsetFromSymbolStart = "530">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -41,12 +41,12 @@
                   moduleName = "KeTing"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SelectedViewController/ViewControllers/SetAccoutViewController.m"
-                  timestampString = "522685164.65312"
+                  timestampString = "522694007.532115"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
                   endingLineNumber = "178"
-                  offsetFromSymbolStart = "24">
+                  offsetFromSymbolStart = "19">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -113,99 +113,6 @@
             endingLineNumber = "134"
             landmarkName = "-setUserPassword"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-            timestampString = "522685223.969282"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
-            landmarkName = "-searchRequest:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[SearchViewController searchRequest:]"
-                  moduleName = "KeTing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-                  timestampString = "522685164.680901"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "512">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[SearchViewController searchRequest:]_block_invoke"
-                  moduleName = "KeTing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-                  timestampString = "522685164.682251"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "2128">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.235"
-                  moduleName = "KeTing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-                  timestampString = "522685164.684092"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.236"
-                  moduleName = "KeTing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-                  timestampString = "522685164.685667"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "36">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__38-[SearchViewController searchRequest:]_block_invoke.238"
-                  moduleName = "KeTing"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wukongrui/Desktop/KeTing/ViewControllers/SearchViewController/ViewControllers/SearchViewController.m"
-                  timestampString = "522685164.686979"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

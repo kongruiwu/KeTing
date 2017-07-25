@@ -526,6 +526,10 @@
 - (void)playAudioNeedUpdate:(HomeTopModel *)model{
     [self updateUIWithModel:model];
     [self getAudioDetail];
+    if (!self.playBtn.selected) {
+        self.playBtn.selected = !self.playBtn.selected;
+        [self animationResume];
+    }
 }
 
 @end

@@ -112,6 +112,7 @@
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BBACBEA1F277A27002A8D79 /* ShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBE91F277A27002A8D79 /* ShareModel.m */; };
 		8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBED1F27889F002A8D79 /* FristViewController.m */; };
+		8BBACBF11F2796DE002A8D79 /* SearchSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
@@ -401,6 +402,8 @@
 		8BBACBE91F277A27002A8D79 /* ShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareModel.m; sourceTree = "<group>"; };
 		8BBACBEC1F27889F002A8D79 /* FristViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FristViewController.h; sourceTree = "<group>"; };
 		8BBACBED1F27889F002A8D79 /* FristViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FristViewController.m; sourceTree = "<group>"; };
+		8BBACBEF1F2796DE002A8D79 /* SearchSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSubViewController.h; sourceTree = "<group>"; };
+		8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSubViewController.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -995,6 +998,8 @@
 			children = (
 				8B8DAF2B1F1C9CB000BDF1AA /* SearchViewController.h */,
 				8B8DAF2C1F1C9CB000BDF1AA /* SearchViewController.m */,
+				8BBACBEF1F2796DE002A8D79 /* SearchSubViewController.h */,
+				8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1611,6 +1616,7 @@
 				8BE25E301F06383F00FFACA9 /* HistoryViewController.m in Sources */,
 				8B3CEED51F0E04CC00AE5B81 /* NullView.m in Sources */,
 				8BB516631F24A81E00C29643 /* CropViewController.m in Sources */,
+				8BBACBF11F2796DE002A8D79 /* SearchSubViewController.m in Sources */,
 				8B2D74031F0CC51200E1BF4B /* ADTracking.m in Sources */,
 				8BF84CC31EE4F6620072637D /* AppDelegate.m in Sources */,
 				8B2D73951F0B83F500E1BF4B /* PushSettingViewController.m in Sources */,

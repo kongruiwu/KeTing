@@ -19,6 +19,11 @@
 @property (nonatomic, strong) UIButton * cannceBtn;
 @property (nonatomic, strong) UIView * lineView;
 
+@property (nonatomic, strong) UILabel * desc1;
+@property (nonatomic, strong) UILabel * countLabel;
+@property (nonatomic, strong) UILabel * desc2;
+
+
 - (void)show;
 - (void)disMiss;
 

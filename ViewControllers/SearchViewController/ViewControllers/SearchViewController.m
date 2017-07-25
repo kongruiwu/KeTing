@@ -12,6 +12,11 @@
 #import "HotWordModel.h"
 #import "HotWordCell.h"
 #import "HomeListenModel.h"
+#import "SearchSubViewController.h"
+#import "AudioPlayerViewController.h"
+#import "VoiceDetailViewController.h"
+#import "ListenDetailViewController.h"
+
 @interface SearchViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HotWordCellDelegate>
 
 @property (nonatomic, strong) KTSearchBar * searchBar;
@@ -54,14 +59,23 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.textField.text.length > 0) {
-        return 10;
+        NSDictionary * dic = self.dataArray[section];
+        NSArray * arr = dic.allValues;
+        int num = 0;
+        if (arr.count>0) {
+            NSArray * values = arr[0];
+            num = (int)values.count;
+        }
+        //限制最多条数
+        if (num > 5) {
+            num = 5;
+        }
+        return num;
     }else{
         return 1;
     }
 }
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self.textField resignFirstResponder];
-}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.textField.text.length > 0) {
         return Anno750(70);
@@ -110,7 +124,9 @@
         UIView * header = [KTFactory creatViewWithColor:[UIColor whiteColor]];
         header.frame = CGRectMake(0, 0, UI_WIDTH,section == 0 ? Anno750(100) : Anno750(80));
         UIView * groundView = [KTFactory creatViewWithColor:KTColor_BackGround];
-        UILabel * label = [KTFactory creatLabelWithText:@"财经头条"
+        NSDictionary * dic = self.dataArray[section];
+        NSArray * arr = dic.allKeys;
+        UILabel * label = [KTFactory creatLabelWithText:arr.count>0 ? arr[0] : @""
                                               fontValue:font750(26)
                                               textColor:KTColor_MainOrange
                                           textAlignment:NSTextAlignmentLeft];
@@ -164,15 +180,26 @@
     footer.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(70));
     
     UIView * line = [KTFactory creatLineView];
-    UILabel * label = [KTFactory creatLabelWithText:@"共计23个结果"
+    NSDictionary * dic = self.dataArray[section];
+    NSArray * arr = dic.allValues;
+    int num = 0;
+    if (arr.count>0) {
+        NSArray * values = arr[0];
+        num = (int)values.count;
+    }
+    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"共计%d个结果",num]
                                           fontValue:font750(24)
                                           textColor:KTColor_darkGray
                                       textAlignment:NSTextAlignmentLeft];
     UIImageView * arrow = [KTFactory creatArrowImage];
+    UIButton * clearBtn = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
+    clearBtn.tag = section + 100;
+    [clearBtn addTarget:self action:@selector(sectionHasSelect:) forControlEvents:UIControlEventTouchUpInside];
     
     [footer addSubview:line];
     [footer addSubview:label];
     [footer addSubview:arrow];
+    [footer addSubview:clearBtn];
     
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
@@ -187,6 +214,9 @@
     [arrow mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(@0);
         make.right.equalTo(@(-Anno750(24)));
+    }];
+    [clearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
     }];
     
     return footer;
@@ -214,7 +244,20 @@
         if (!cell) {
             cell = [[SearchListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
-        
+        if (self.dataArray.count > 0) {
+            NSDictionary * dic = self.dataArray[indexPath.section];
+            NSArray * keys = dic.allKeys;
+            NSString * key = keys[0];
+            if ([key isEqualToString:@"财经头条"]) {
+                NSArray * values = dic[key];
+                HomeTopModel * model = values[indexPath.row];
+                cell.nameLabel.text = model.audioName;
+            }else{
+                NSArray * values = dic[key];
+                HomeListenModel * model = values[indexPath.row];
+                cell.nameLabel.text = model.name;
+            }
+        }
         return cell;
     }
 }
@@ -253,7 +296,7 @@
     [self searchRequest:searchText];
 }
 - (void)searchRequest:(NSString *)text{
-//    self.textField resignFirstResponder
+    [self.textField resignFirstResponder];
     [self showLoadingCantTouchAndClear];
     self.dataArray = [NSMutableArray new];
     NSDictionary * params = @{
@@ -308,5 +351,34 @@
         [self showNullViewWithNullViewType:NullTypeNoneSerach];
     }];
 }
-
+- (void)sectionHasSelect:(UIButton *)btn{
+    SearchSubViewController * vc = [SearchSubViewController new];
+    NSInteger tag = btn.tag - 100;
+    NSDictionary * dic = self.dataArray[tag];
+    vc.dataDic = dic;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary * dic = self.dataArray[indexPath.section];
+    NSArray * keys = dic.allKeys;
+    NSString * key = keys[0];
+    NSArray * arr = dic[key];
+    if ([key isEqualToString:@"财经头条"]) {
+        [AudioPlayer instance].currentAudio = arr[indexPath.row];
+        [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:arr];
+        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+        [self presentViewController:nav animated:YES completion:nil];
+    }else if([key isEqualToString:@"听书"]){
+        ListenDetailViewController * vc = [ListenDetailViewController new];
+        HomeListenModel * model = arr[indexPath.row];
+        vc.listenID = model.listenId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        HomeListenModel * model = arr[indexPath.row];
+        VoiceDetailViewController * vc = [VoiceDetailViewController new];
+        vc.voiceID = model.listenId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
 @end

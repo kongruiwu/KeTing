@@ -38,12 +38,29 @@
     
     self.cannceBtn = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
     
+    self.desc1 = [KTFactory creatLabelWithText:@"正在为你精选"
+                                     fontValue:font750(28)
+                                     textColor:KTColor_darkGray
+                                 textAlignment:NSTextAlignmentCenter];
+    self.countLabel = [KTFactory creatLabelWithText:@"0"
+                                          fontValue:font750(40)
+                                          textColor:KTColor_MainOrange
+                                      textAlignment:NSTextAlignmentCenter];
+    self.desc2 = [KTFactory creatLabelWithText:@"条音频"
+                                     fontValue:font750(28)
+                                     textColor:KTColor_darkGray
+                                 textAlignment:NSTextAlignmentCenter];
+    
+    
     [self addSubview:self.showView];
     [self.showView addSubview:self.imageView];
     [self.imageView addSubview:self.progressView];
     [self.showView addSubview:self.lineView];
     [self.showView addSubview:self.cannceImg];
     [self addSubview:self.cannceBtn];
+    [self.imageView addSubview:self.desc1];
+    [self.imageView addSubview:self.desc2];
+    [self.imageView addSubview:self.countLabel];
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -80,6 +97,19 @@
         make.centerX.equalTo(@0);
     }];
 
+    [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.centerY.equalTo(@0);
+    }];
+    
+    [self.desc1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.bottom.equalTo(self.countLabel.mas_top).offset(-Anno750(10));
+    }];
+    [self.desc2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.top.equalTo(self.countLabel.mas_bottom).offset(Anno750(10));
+    }];
 }
 
 - (void)show{
@@ -97,6 +127,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.hidden = YES;
         self.progressView.progress = 0;
+        self.countLabel.text = @"0";
     });
 }
 
