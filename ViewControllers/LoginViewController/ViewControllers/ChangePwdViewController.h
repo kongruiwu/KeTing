@@ -11,5 +11,7 @@
 @interface ChangePwdViewController : BaseViewController
 
 @property (nonatomic, strong) NSString * phoneNum;
+/**是否是修改密码*/
+@property (nonatomic, assign) BOOL isChange;
 
 @end

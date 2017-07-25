@@ -63,10 +63,10 @@
         make.top.equalTo(self.nameLabel.mas_bottom).offset(Anno750(28));
     }];
 }
-- (void)updateWithDescString:(NSString *)string count:(NSString *)count hasBuy:(BOOL)rec{
+- (void)updateWithDescString:(NSString *)string count:(NSString *)count isBook:(BOOL)rec{
     self.descLabel.attributedText = [KTFactory changeHtmlString:string withFont:font750(28)];
-    self.countLabel.text = [NSString stringWithFormat:@"%@人订阅",count];
-    if (rec) {
+    self.countLabel.text = [NSString stringWithFormat:@"%d人订阅",[count intValue] + 99];
+    if (!rec) {
         self.nameLabel.text = @"专栏简介";
     }else{
         self.nameLabel.text = @"书籍简介";
@@ -75,6 +75,7 @@
 - (void)updateWithDescString:(NSString *)string time:(NSNumber *)time{
     self.descLabel.attributedText = [KTFactory changeHtmlString:string withFont:font750(28)];
     self.countLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:time.intValue andTotalTime:time.intValue]];
+    self.nameLabel.text = @"书籍简介";
 }
 
 @end

@@ -15,7 +15,7 @@
 #import "AudioDownLoader.h"
 #import "LoginViewController.h"
 #import "HistorySql.h"
-@interface AudioPlayerViewController ()<AudioPlayerDelegate,AudioDownLoadDelegate>
+@interface AudioPlayerViewController ()<AudioPlayerDelegate,AudioDownLoadDelegate,PlayListDelegate>
 /**标签*/
 @property (nonatomic, strong) UILabel * tagLabel;
 /**封面图*/
@@ -155,6 +155,7 @@
     self.moreBtn = [KTFactory creatPlayButtonWithImage:@"icon_more" title:@"更多"];
     
     self.playList = [[PlayListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
+    self.playList.delegate = self;
     self.MoreView = [[PlayerMoreView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
     self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
     self.closeList = [[PlayCloseListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
@@ -328,7 +329,6 @@
     }];
     
 }
-
 
 #pragma mark - 弹出播放列表
 - (void)showPlayList{
@@ -513,6 +513,10 @@
     NSNumber * downStatus = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
     self.downLoadBtn.selected = [downStatus intValue] == 2 ? YES : NO;
     
+}
+- (void)playAudioNeedUpdate:(HomeTopModel *)model{
+    [self updateUIWithModel:model];
+    [self getAudioDetail];
 }
 
 @end

@@ -93,6 +93,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTopModel * model = [AudioPlayer instance].playList[indexPath.row];
     [[AudioPlayer instance] audioPlay:model];
+    if ([self.delegate respondsToSelector:@selector(playAudioNeedUpdate:)]) {
+        [self.delegate playAudioNeedUpdate:model];
+    }
     [self disMiss];
 }
 

@@ -10,6 +10,7 @@
 #import <ReactiveObjC.h>
 #import "SetUserNameViewController.h"
 @interface ChangePwdViewController ()
+//<UserManagerDelegate>
 
 @property (nonatomic, strong) UITextField * pwdT;
 @property (nonatomic, strong) UITextField * checkT;
@@ -18,6 +19,11 @@
 @end
 
 @implementation ChangePwdViewController
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+//    [UserManager manager].delegate = nil;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -126,15 +132,25 @@
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Register complete:^(id result) {
         [self dismissLoadingView];
-        [[UserManager manager] userLoginWithInfoDic:result];
-        [UserManager manager].userid = [UserManager manager].info.USERID;
-        [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
-        [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
+        if (self.isChange) {
+            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+//            [UserManager manager].delegate = self;
+//            [[UserManager manager] getUserInfo];
+        }else{
+            [[UserManager manager] userLoginWithInfoDic:result];
+            [UserManager manager].userid = [UserManager manager].info.USERID;
+            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
+            [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
+        }
+        
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }
 
-
+//- (void)getUserInfoSucess{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 @end

@@ -177,9 +177,9 @@
         [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
             ChangePwdViewController * vc = [ChangePwdViewController new];
             vc.phoneNum = self.phoneTF.text;
+            vc.isChange = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else{
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];

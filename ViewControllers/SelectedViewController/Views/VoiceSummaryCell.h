@@ -14,6 +14,6 @@
 //订阅状态
 @property (nonatomic, strong) UILabel * countLabel;
 @property (nonatomic, strong) UILabel * descLabel;
-- (void)updateWithDescString:(NSString *)string count:(NSString *)count hasBuy:(BOOL)rec;
+- (void)updateWithDescString:(NSString *)string count:(NSString *)count isBook:(BOOL)rec;
 - (void)updateWithDescString:(NSString *)string time:(NSNumber *)time;
 @end

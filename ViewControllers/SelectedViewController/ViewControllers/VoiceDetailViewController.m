@@ -65,7 +65,7 @@
 
 - (void)creatUI{
     self.isDownLoad = NO;
-    self.isOpen = YES;
+    self.isOpen = NO;
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -108,17 +108,20 @@
     buyBtn.layer.borderWidth = 1.0f;
     buyBtn.layer.cornerRadius = 4.0f;
     self.buyBtn = buyBtn;
-    if (self.listenModel.Isbuy) {
+    if (self.isOpen) {
         [buyBtn setTitle:@"  批量下载" forState:UIControlStateNormal];
         [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateNormal];
         [buyBtn setImage:[UIImage imageNamed:@"finance_download"] forState:UIControlStateNormal];
+        [buyBtn setTitle:@"  取消下载" forState:UIControlStateSelected];
+        [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
+        [buyBtn setImage:[UIImage imageNamed:@"finance_ close"] forState:UIControlStateSelected];
+    }else{
+        [buyBtn setTitle:[NSString stringWithFormat:@"订阅：%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00] forState:UIControlStateNormal];
     }
-    [buyBtn setTitle:@"  取消下载" forState:UIControlStateSelected];
-    [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
-    [buyBtn setImage:[UIImage imageNamed:@"finance_ close"] forState:UIControlStateSelected];
     
     
-    buyBtn.backgroundColor = self.listenModel.Isbuy ? [UIColor clearColor] : KTColor_MainOrange;
+    
+    buyBtn.backgroundColor = self.isOpen ? [UIColor clearColor] : KTColor_MainOrange;
     [buyBtn addTarget:self action:@selector(buyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [headView addSubview:likeBtn];
@@ -146,107 +149,105 @@
     return Anno750(120);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.listenModel.Isbuy ? 1 + 2 *(self.listenModel.audio.count + 1) : self.listenModel.audio.count + 2;
+    return self.isOpen ? (self.listenModel.audio.count + 1) : ( 2 + self.listenModel.audio.count > 3 ? 3 : self.listenModel.audio.count);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        if (!self.isOpen) {
-            return 0;
+    if (self.isOpen) {
+        if (indexPath.row == 0) {
+            return Anno750(80);
         }
-        CGSize size = [KTFactory getSize:[KTFactory changeHtmlString:self.listenModel.descString withFont:font750(28)] maxSize:CGSizeMake(font750(702), 99999)];
-        return Anno750(80)+ size.height;
-    }else if(indexPath.row == 1 || indexPath.row == self.listenModel.audio.count + 2){
-        return (indexPath.row == 1 && self.isOpen) || (indexPath.row == self.listenModel.audio.count + 2) ? Anno750(80) : 0;
-    }else if(indexPath.row > 1 && indexPath.row < self.listenModel.audio.count + 2){
-        return self.isOpen ? Anno750(175) : 0;
-    }else{
-        int index =(int)(indexPath.row - self.listenModel.audio.count - 3);
+        int index =(int)(indexPath.row - 1);
         HomeTopModel * model = self.listenModel.audio[index];
         CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(646), 9999) font:[UIFont systemFontOfSize:font750(30)]];
         return Anno750(96) + size.height;
+    }else{
+        if (indexPath.row == 0) {
+            CGSize size = [KTFactory getSize:[KTFactory changeHtmlString:self.listenModel.descString withFont:font750(28)] maxSize:CGSizeMake(font750(702), 99999)];
+            return Anno750(80)+ size.height;
+        }else if (indexPath.row == 1) {
+            return Anno750(80);
+        }else{
+            return Anno750(175);
+        }
     }
-    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        static NSString * cellid = @"summaryCell";
-        VoiceSummaryCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-        if (!cell) {
-            cell = [[VoiceSummaryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-        }
-        if (self.isOpen) {
-            BOOL rec = NO;
-            if (self.listenModel.Isbuy || self.listenModel.isFree || [self.listenModel.promotionType integerValue] == 2) {
-                rec = YES;
+    
+    if (!self.isOpen) {
+        if (indexPath.row == 0) {
+            static NSString * cellid = @"summaryCell";
+            VoiceSummaryCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (!cell) {
+                cell = [[VoiceSummaryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
-            [cell updateWithDescString:self.listenModel.descString count:self.listenModel.orderNum hasBuy:rec];
-        }
-        cell.hidden = !self.isOpen;
-        return cell;
-    }else if(indexPath.row == 1 || indexPath.row == self.listenModel.audio.count + 2){
+            [cell updateWithDescString:self.listenModel.descString count:self.listenModel.orderNum isBook:NO];
+            return cell;
+        }else if(indexPath.row == 1){
             static NSString * cellid = @"sectionCell";
             VoiceSectionCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (!cell) {
                 cell = [[VoiceSectionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
-            if (indexPath.row == 1) {
-                if (self.isOpen) {
-                    [cell updateWithName:@"最新更新" color:KTColor_MainBlack font:font750(32)];
-                }
-                cell.hidden = !self.isOpen;
-            }else{
-                [cell updateWithName:[NSString stringWithFormat:@"已更新%ld条音频",(unsigned long)self.listenModel.audio.count] color:KTColor_lightGray font:font750(26)];
-            }
+
+            [cell updateWithName:@"最新更新" color:KTColor_MainBlack font:font750(32)];
             return cell;
-    }else if(indexPath.row > 1 && indexPath.row < self.listenModel.audio.count + 2){
-        static NSString * cellid = @"updateCell";
-        VoiceUpdateListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-        if (!cell) {
-            cell = [[VoiceUpdateListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-        }
-        if (self.isOpen) {
+        }else{
+            static NSString * cellid = @"updateCell";
+            VoiceUpdateListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (!cell) {
+                cell = [[VoiceUpdateListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            }
             [cell updateWithHomeListenModel:self.listenModel.audio[indexPath.row - 2]];
+            return cell;
         }
-        cell.hidden = !self.isOpen;
-        return cell;
     }else{
-        
-        if (self.isDownLoad) {
-            HomeTopModel * model = self.self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3];
-            if ([model.downStatus intValue]== 2) {
+        if (indexPath.row == 0) {
+            static NSString * cellid = @"sectionCell";
+            VoiceSectionCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            if (!cell) {
+                cell = [[VoiceSectionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            }
+            [cell updateWithName:[NSString stringWithFormat:@"已更新%ld条音频",(unsigned long)self.listenModel.audio.count] color:KTColor_lightGray font:font750(26)];
+            return cell;
+        }else{
+            if (self.isDownLoad) {
+                HomeTopModel * model = self.self.listenModel.audio[indexPath.row - 1];
+                if ([model.downStatus intValue]== 2) {
+                    static NSString * cellid = @"topListCell";
+                    TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (!cell) {
+                        cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                    }
+                    [cell updateWithHomeTopModel:model];
+                    cell.moreBtn.hidden = YES;
+                    return cell;
+                }
+                
+                static NSString * cellid = @"TopListDown";
+                TopListDownCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                if (!cell) {
+                    cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                }
+                [cell updateWithHomeTopModel:model];
+                return cell;
+            }else{
                 static NSString * cellid = @"topListCell";
                 TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
                 if (!cell) {
                     cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
-                [cell updateWithHomeTopModel:model];
-                cell.moreBtn.hidden = YES;
+                [cell updateWithHomeTopModel:self.self.listenModel.audio[indexPath.row - 1]];
+                cell.delegate =self;
                 return cell;
             }
-            
-            static NSString * cellid = @"TopListDown";
-            TopListDownCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (!cell) {
-                cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-            }
-            [cell updateWithHomeTopModel:model];
-            return cell;
-        }else{
-            static NSString * cellid = @"topListCell";
-            TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (!cell) {
-                cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-            }
-            [cell updateWithHomeTopModel:self.self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3]];
-            cell.delegate =self;
-            return cell;
         }
         
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > self.listenModel.audio.count + 2) {
-        HomeTopModel * model = self.listenModel.audio[indexPath.row - self.listenModel.audio.count - 3];
+
+    if (self.isOpen) {
+        HomeTopModel * model = self.listenModel.audio[indexPath.row - 1];
         if (self.isDownLoad) {
             //下载选择
             if ([model.downStatus integerValue] == 0 || [model.downStatus integerValue] == 1) {
@@ -272,8 +273,15 @@
         [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.listenModel = [[HomeListenModel alloc]initWithDictionary:dic];
+        if (self.listenModel.isFree || self.listenModel.Isbuy || [self.listenModel.promotionType integerValue] == 2) {
+            self.header.checkSummy.hidden = NO;
+            self.isOpen = YES;
+        }else{
+            self.header.checkSummy.hidden = YES;
+            self.isOpen = NO;
+        }
         [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
-        self.isOpen = self.header.checkSummy.hidden = !self.listenModel.Isbuy;
+        
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
@@ -285,24 +293,21 @@
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     [tbc.shareView show];
 }
-#pragma mark - 订阅按钮
+#pragma mark - 订阅按钮 / 批量下载
 - (void)buyButtonClick:(UIButton *)button{
     if (![UserManager manager].isLogin) {
         LoginViewController * vc = [LoginViewController new];
         UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
         [self presentViewController:nvc animated:YES completion:nil];
     }else{
-        if (self.listenModel.Isbuy) {
-            
+        if (self.isOpen) {
             CGRect frame = self.footView.frame;
-            
             self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
-            
             button.selected = !button.selected;
             self.isDownLoad = button.selected;
             NSMutableArray * muarr = [NSMutableArray new];
             for (int i = 0; i<self.listenModel.audio.count; i++) {
-                NSIndexPath * index = [NSIndexPath indexPathForRow:(self.listenModel.audio.count + 3 + i) inSection:0];
+                NSIndexPath * index = [NSIndexPath indexPathForRow:(i+1) inSection:0];
                 [muarr addObject:index];
             }
             [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
@@ -325,14 +330,10 @@
 }
 #pragma mark - 查看简介
 - (void)checkVoiceSummy:(UIButton *)button{
+    
+    self.isOpen = !self.isOpen;
     button.selected = !button.selected;
-    self.isOpen = button.selected;
-    NSMutableArray * muarr = [[NSMutableArray alloc]init];
-    for (int i = 0; i<self.listenModel.audio.count + 3;i++ ) {
-        NSIndexPath * index = [NSIndexPath indexPathForRow:i inSection:0];
-        [muarr addObject:index];
-    }
-    [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isOpen ? UITableViewRowAnimationTop :UITableViewRowAnimationBottom)];
+    [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
 }
 #pragma mark - 点赞
@@ -372,12 +373,11 @@
 
 #pragma mark - 下载音频
 - (void)downLoadAudio:(UIButton *)button{
-    [self hiddenToolsBar];
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
-    
+    HomeTopModel * model = self.listenModel.audio[index.row - 1];
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    [self hiddenToolsBar];
     if ([num integerValue] == 0) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.5];
         return;
@@ -385,7 +385,6 @@
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.5f];
         return;
     }
-    
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if (appdelegete.netStatus == ReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
@@ -436,7 +435,7 @@
 - (void)checkAudioText:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+    HomeTopModel * model = self.listenModel.audio[index.row - 1];
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
     vc.isFromNav = YES;
@@ -454,7 +453,7 @@
     }else{
         UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
         NSIndexPath * index = [self.tabview indexPathForCell:cell];
-        HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+        HomeTopModel * model = self.listenModel.audio[index.row - 1];
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":model.relationType,
@@ -481,8 +480,11 @@
 - (void)shareBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
+    HomeTopModel * model = self.listenModel.audio[index.row - 1];
     
+    
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
     [self hiddenToolsBar];
 }
 /**音频下载完成*/
@@ -500,7 +502,7 @@
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     for (int i = 0; i<self.listenModel.audio.count; i++) {
         HomeTopModel * model = self.listenModel.audio[i];
-        if (i == index.row - self.listenModel.audio.count - 3) {
+        if (i == index.row - 1) {
             model.showTools =!model.showTools;
         }else{
             model.showTools = NO;
@@ -508,7 +510,7 @@
     }
     NSMutableArray * muarr = [NSMutableArray new];
     for (int i = 0; i<self.listenModel.audio.count; i++) {
-        NSIndexPath * index = [NSIndexPath indexPathForRow:(self.listenModel.audio.count + 3 + i) inSection:0];
+        NSIndexPath * index = [NSIndexPath indexPathForRow:( i + 1) inSection:0];
         [muarr addObject:index];
     }
     [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:UITableViewRowAnimationNone];
@@ -521,7 +523,7 @@
     }
     NSMutableArray * muarr = [NSMutableArray new];
     for (int i = 0; i<self.listenModel.audio.count; i++) {
-        NSIndexPath * index = [NSIndexPath indexPathForRow:(self.listenModel.audio.count + 3 + i) inSection:0];
+        NSIndexPath * index = [NSIndexPath indexPathForRow:(1 + i) inSection:0];
         [muarr addObject:index];
     }
     [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:UITableViewRowAnimationNone];

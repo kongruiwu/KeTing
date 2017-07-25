@@ -15,6 +15,7 @@
 #import "WKWebViewController.h"
 #import "LoginViewController.h"
 #import "HistorySql.h"
+#import "RootViewController.h"
 @interface CateDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate,TopListCellDelegate>
 
 @property (nonatomic, strong) NSString * tagID;
@@ -120,12 +121,11 @@
 
 #pragma mark - 下载音频
 - (void)downLoadAudio:(UIButton *)button{
-    [self hiddenToolsBar];
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-    
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    [self hiddenToolsBar];
     if ([num integerValue] == 0) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.5];
         return;
@@ -236,6 +236,8 @@
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
     
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
     [self hiddenToolsBar];
 }
 #pragma mark - 点击更多按钮

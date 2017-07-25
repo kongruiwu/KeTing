@@ -21,6 +21,7 @@
 #import "SqlManager.h"
 #import "AppDelegate.h"
 #import "HistorySql.h"
+#import "RootViewController.h"
 @interface TopListViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -149,7 +150,7 @@
         [AudioPlayer instance].currentAudio = model;
         [AudioPlayer instance].playList = self.dataArray;
         AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:audioVC];
         [self presentViewController:nav animated:YES completion:nil];
     }
 }
@@ -163,6 +164,7 @@
     [self getData];
 }
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     NSString * pageUrl = [NSString stringWithFormat:@"%@/pagesize/10/page/%d",page_TopList,self.page];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:pageUrl complete:^(id result) {
         
@@ -190,10 +192,12 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
         }
+        [self dismissLoadingView];
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
@@ -228,12 +232,12 @@
 }
 #pragma mark - 下载音频
 - (void)downLoadAudio:(UIButton *)button{
-    [self hiddenToolsBar];
+    
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-    
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    [self hiddenToolsBar];
     if ([num integerValue] == 0) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.5];
         return;
@@ -342,7 +346,10 @@
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
-
+    
+    
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
     [self hiddenToolsBar];
 }
 #pragma mark - 点击更多按钮
