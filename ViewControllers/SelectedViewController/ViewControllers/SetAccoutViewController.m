@@ -208,6 +208,7 @@
 }
 - (void)pushTpprotoViewController{
     WKWebViewController * vc = [WKWebViewController new];
+    vc.isFromNav = YES;
     vc.webType = PROTOCOLTYPEBALANCE;
     [self.navigationController pushViewController:vc animated:YES];
 }

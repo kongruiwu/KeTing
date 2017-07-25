@@ -181,6 +181,7 @@
 }
 - (void)getListData{
     [self showLoadingCantClear:YES];
+    [self.listArray removeAllObjects];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribed complete:^(id result) {
         [self dismissLoadingView];
         if (result[@"list"] && [result[@"list"] isKindOfClass:[NSArray class]]) {

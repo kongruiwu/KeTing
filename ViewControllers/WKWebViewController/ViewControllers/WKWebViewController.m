@@ -10,6 +10,7 @@
 #import "ShareView.h"
 #import "CommonInfo.h"
 #import "Commond.h"
+#import "RootViewController.h"
 @interface WKWebViewController ()<WKNavigationDelegate>
 
 @property (nonatomic, strong) ShareView * shareView;
@@ -23,7 +24,12 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self setNavUnAlpha];
     CGRect frame = self.webView.frame;
-    self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+    if (self.isFromNav) {
+        self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+    }else{
+        self.webView.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT- 64);
+    }
+    
     
 }
 
@@ -59,7 +65,13 @@
     
 }
 - (void)shareButtonClick{
-    [self.shareView show];
+    if (self.isFromNav) {
+        RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+        [tbc.shareView show];
+    }else{
+        [self.shareView show];
+    }
+    
 }
 - (void)creatUI{
     
@@ -71,9 +83,11 @@
     }
     self.webView.navigationDelegate = self;
     [self.view addSubview:self.webView];
+    if (!self.isFromNav) {
+        self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) hasNav:YES];
+        [self.view addSubview:self.shareView];
+    }
     
-    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) hasNav:YES];
-    [self.view addSubview:self.shareView];
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     //修改字体大小 300%

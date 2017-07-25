@@ -118,9 +118,14 @@
             [self.delegate playNextAudio:YES isOver:rec];
         }
     }else{
-        if ([self.delegate respondsToSelector:@selector(playNextAudio: isOver:)]) {
-            [self.delegate playNextAudio:NO isOver:rec];
+        if (rec) {
+            if ([self.delegate respondsToSelector:@selector(playNextAudio: isOver:)]) {
+                [self.delegate playNextAudio:NO isOver:rec];
+            }
+        }else{
+            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"已经是最后一首了" duration:1.0f];
         }
+        
     }
 }
 - (void)upwardAudio{
@@ -247,7 +252,7 @@
             //用户操作  进行的动作 上一曲 下一曲
             break;
         case STKAudioPlayerStopReasonEof:
-            [self nextAudio];
+            [self nextAudioIsOver:YES];
             break;
         case STKAudioPlayerStopReasonUserAction:
             NSLog(@"111");

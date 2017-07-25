@@ -8,7 +8,6 @@
 
 #import "VoiceDetailViewController.h"
 #import "VoiceDetailHeader.h"
-#import "ShareView.h"
 #import "VoiceSummaryCell.h"
 #import "VoiceUpdateListCell.h"
 #import "HomeListenModel.h"
@@ -22,11 +21,10 @@
 #import "AppDelegate.h"
 #import "WKWebViewController.h"
 #import "LoginViewController.h"
+#import "RootViewController.h"
 @interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
-
-@property (nonatomic, strong) ShareView * shareView;
 
 @property (nonatomic, strong) HomeListenModel * listenModel;
 
@@ -85,8 +83,6 @@
     [self.header.checkSummy addTarget:self action:@selector(checkVoiceSummy:) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.header;
     
-    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
-    [self.view addSubview:self.shareView];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -286,7 +282,8 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
-    [self.shareView show];
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
 }
 #pragma mark - 订阅按钮
 - (void)buyButtonClick:(UIButton *)button{
@@ -442,6 +439,7 @@
     HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
+    vc.isFromNav = YES;
     vc.webType = PROTOCOLTYPEELSETEXT;
     [self hiddenToolsBar];
     [self.navigationController pushViewController:vc animated:YES];

@@ -23,5 +23,6 @@ typedef NS_ENUM(NSInteger, PROTOCOLTYPE){
 @property (nonatomic, strong) WKWebView * webView;
 @property (nonatomic, assign) PROTOCOLTYPE webType;
 @property (nonatomic, strong) HomeTopModel * model;
-
+//是否是从root上进来
+@property (nonatomic, assign) BOOL isFromNav;
 @end

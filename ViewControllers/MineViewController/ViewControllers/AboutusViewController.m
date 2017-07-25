@@ -95,6 +95,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 2) {
         WKWebViewController * vc = [[WKWebViewController alloc]init];
+        vc.isFromNav = YES;
         vc.webType = PROTOCOLTYPEAGREE;
         [self.navigationController pushViewController:vc animated:YES];
     }

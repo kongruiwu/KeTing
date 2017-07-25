@@ -392,10 +392,8 @@
         [self getAudioDetail];
     }else{
         if (rec) {
-            self.playBtn.selected = NO;
-            [self animationStop];
-        }else{
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已经是最后一首了" duration:1.0f];
+            [self musicPlay:self.playBtn];
+            [[AudioPlayer instance].audioPlayer stop];
         }
     }
 }

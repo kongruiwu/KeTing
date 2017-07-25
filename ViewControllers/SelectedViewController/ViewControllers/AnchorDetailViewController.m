@@ -11,16 +11,15 @@
 #import "ListenListCell.h"
 #import "AnchorHeader.h"
 #import "AnchorModel.h"
-#import "ShareView.h"
 #import "ShopCarViewController.h"
 #import "SetAccoutViewController.h"
 #import "LoginViewController.h"
+#import "RootViewController.h"
 @interface AnchorDetailViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
 
 //@property (nonatomic, strong)UITableView * tabview;
 @property (nonatomic, strong) AnchorHeader * anchorHeader;
 @property (nonatomic, strong) AnchorModel * anchor;
-@property (nonatomic, strong) ShareView * shareView;
 @property (nonatomic) int page;
 @end
 
@@ -46,9 +45,6 @@
     self.tabview.delegate =self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
-    
-    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
-    [self.view addSubview:self.shareView];
     
     self.anchorHeader = [[AnchorHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(440))];
     [self.anchorHeader.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
@@ -119,7 +115,8 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
-    [self.shareView show];
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
 }
 #pragma mark - 查看购物车
 - (void)goShopCar{

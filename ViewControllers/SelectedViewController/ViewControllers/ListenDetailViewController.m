@@ -8,7 +8,6 @@
 
 #import "ListenDetailViewController.h"
 #import "VoiceDetailHeader.h"
-#import "ShareView.h"
 #import "VoiceSummaryCell.h"
 #import "VoiceUpdateListCell.h"
 #import "ListenAnchorCell.h"
@@ -18,10 +17,10 @@
 #import "SetAccoutViewController.h"
 #import "LoginViewController.h"
 #import "AudioDownLoader.h"
+#import "RootViewController.h"
 @interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
-@property (nonatomic, strong) ShareView * shareView;
 @property (nonatomic, strong) VoiceDetailHeader * header;
 @property (nonatomic, strong) HomeListenModel * listenModel;
 
@@ -68,8 +67,6 @@
     [self.header.shopCar addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.header;
     
-    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
-    [self.view addSubview:self.shareView];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
@@ -189,7 +186,8 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
-    [self.shareView show];
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.shareView show];
 }
 
 #pragma mark - 查看购物车
@@ -291,7 +289,7 @@
             UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
             [self presentViewController:nvc animated:YES completion:nil];
         }else{
-            if (self.listenModel.iscart) {
+            if (!self.listenModel.iscart) {
                 NSDictionary * params = @{
                                           @"userId":[UserManager manager].userid,
                                           @"relationId":self.listenID,

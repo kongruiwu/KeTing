@@ -299,6 +299,7 @@
     HomeTopModel * model = self.dataArray[index.row];
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
+    vc.isFromNav = YES;
     vc.webType = PROTOCOLTYPEELSETEXT;
     [self hiddenToolsBar];
     [self.navigationController pushViewController:vc animated:YES];

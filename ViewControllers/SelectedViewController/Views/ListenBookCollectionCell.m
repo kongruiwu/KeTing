@@ -77,8 +77,10 @@
     self.nameLabel.text = model.name;
     if (model.isFree) {
         self.iconLabel.text = @"免费";
+        self.priceLabel.hidden = YES;
         [KTFactory setLabel:self.iconLabel BorderColor:[UIColor clearColor] with:0 cornerRadius:0];
     }else{
+        self.priceLabel.hidden = NO;
         //限免
         if ([model.promotionType intValue] == 2) {
             self.iconLabel.hidden = NO;

@@ -43,6 +43,9 @@
     self.listView = [[PlayListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
     [self.view addSubview:self.listView];
     
+    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
+    [self.view addSubview:self.shareView];
+    
 }
 - (void)pushToAudioPlayViewController{
     AudioPlayerViewController * vc = [AudioPlayerViewController new];

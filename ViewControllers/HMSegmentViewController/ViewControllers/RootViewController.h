@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayFootView.h"
+#import "ShareView.h"
 
 @interface RootViewController : UITabBarController
 
 @property (nonatomic, strong) PlayFootView * playFoot;
 
+@property (nonatomic, strong) ShareView * shareView;
 
 @end

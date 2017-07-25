@@ -12,13 +12,12 @@
 #import "PushSettingViewController.h"
 #import "AccountSafeViewController.h"
 #import "AboutusViewController.h"
-#import "ShareView.h"
 #import "LoginViewController.h"
+#import "RootViewController.h"
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
-@property (nonatomic, strong) ShareView * shareView;
 @property (nonatomic, strong) UIButton * logoutBtn;
 //@property (nonatomic, strong) NSArray * descs;
 @end
@@ -47,8 +46,6 @@
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
 
-    self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:YES];
-    [self.view addSubview:self.shareView];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 1) {
@@ -156,7 +153,8 @@
         [self.navigationController pushViewController:[PushSettingViewController new] animated:YES];
     }else if(indexPath.section == 1){
         if (indexPath.row == 1) {
-            [self.shareView show];
+            RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+            [tbc.shareView show];
         }else if(indexPath.row == 2){
             NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", APPID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
