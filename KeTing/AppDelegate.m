@@ -16,7 +16,7 @@
 #import "RootViewController.h"
 #import "HistorySql.h"
 #import "AudioPlayer.h"
-
+#import "FristViewController.h"
 @interface AppDelegate ()
 
 
@@ -38,8 +38,12 @@
     [[UserManager manager] getDataModel];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
-    RootViewController * vc = [[RootViewController alloc]init];
-    [self.window setRootViewController:vc];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Frist"]) {
+        [self.window setRootViewController:[FristViewController new]];
+    }else{
+        [self.window setRootViewController:[RootViewController new]];
+    }
+
 
     
     return YES;

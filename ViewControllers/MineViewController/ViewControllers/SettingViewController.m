@@ -154,6 +154,7 @@
     }else if(indexPath.section == 1){
         if (indexPath.row == 1) {
             RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+            [tbc.shareView setFristValue];
             [tbc.shareView show];
         }else if(indexPath.row == 2){
             NSString *urlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@&pageNumber=0&sortOrdering=2&mt=8", APPID];
@@ -162,9 +163,9 @@
             UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确定清除缓存" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction * action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
             UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [[SDImageCache sharedImageCache] clearMemory];
+                [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
                 SettingListCell * cell = [self.tabview cellForRowAtIndexPath:indexPath];
-                cell.descLabel.text = @"0K";
+                cell.descLabel.text = @"0.00M";
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已清除缓存" duration:1.0f];
             }];
             [alert addAction:action];

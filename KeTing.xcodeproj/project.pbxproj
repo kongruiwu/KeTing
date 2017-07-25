@@ -111,6 +111,7 @@
 		8BB516661F24A81E00C29643 /* UIImage+ImageFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516621F24A81E00C29643 /* UIImage+ImageFilter.m */; };
 		8BB90B461F14C761004B29A8 /* VoiceSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */; };
 		8BBACBEA1F277A27002A8D79 /* ShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBE91F277A27002A8D79 /* ShareModel.m */; };
+		8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBED1F27889F002A8D79 /* FristViewController.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
@@ -398,6 +399,8 @@
 		8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceSectionCell.m; sourceTree = "<group>"; };
 		8BBACBE81F277A27002A8D79 /* ShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareModel.h; sourceTree = "<group>"; };
 		8BBACBE91F277A27002A8D79 /* ShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareModel.m; sourceTree = "<group>"; };
+		8BBACBEC1F27889F002A8D79 /* FristViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FristViewController.h; sourceTree = "<group>"; };
+		8BBACBED1F27889F002A8D79 /* FristViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FristViewController.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -1032,6 +1035,15 @@
 			path = FDCropIMgView;
 			sourceTree = "<group>";
 		};
+		8BBACBEB1F27889F002A8D79 /* FristViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8BBACBEC1F27889F002A8D79 /* FristViewController.h */,
+				8BBACBED1F27889F002A8D79 /* FristViewController.m */,
+			);
+			path = FristViewController;
+			sourceTree = "<group>";
+		};
 		8BF6029F1EEFC7EC00322545 /* TimeListenViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1313,6 +1325,7 @@
 		8BF84CFD1EE4FEA70072637D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8BBACBEB1F27889F002A8D79 /* FristViewController */,
 				8B8DAF211F1C950600BDF1AA /* SearchViewController */,
 				8B4095ED1F0206BE00AA22D3 /* LoginViewController */,
 				8BF602AA1EEFCE2300322545 /* FindViewController */,
@@ -1586,6 +1599,7 @@
 				8BC1267D1F1E0E63005CF363 /* TopTagModel.m in Sources */,
 				8B8DAF2D1F1C9CB000BDF1AA /* SearchViewController.m in Sources */,
 				8B40FE751EE69B10005F9342 /* HomeListenModel.m in Sources */,
+				8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */,
 				8B3CEECC1F0DC6BE00AE5B81 /* PickerView.m in Sources */,
 				8B53EA971EE53CE6009EA76D /* HomeVoiceCell.m in Sources */,
 				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,

@@ -109,6 +109,7 @@
     NSString * addTime = [KTFactory timestampSwitchTime:[model.addTime integerValue]];
     NSString * time = [NSString stringWithFormat:@"时长 %@  %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]],[KTFactory getAudioSizeWithdataSize:[model.audioSize longLongValue]]];
     self.timeLabel.text = [NSString stringWithFormat:@"%@  %@",addTime,time];
+    self.tagLabel.text = @"";
     self.tagLabel.hidden = YES;
     
 }

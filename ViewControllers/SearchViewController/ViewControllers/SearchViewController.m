@@ -195,7 +195,7 @@
     if (self.textField.text.length == 0) {
         return 1;
     }
-    return 5;
+    return self.dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.textField.text.length == 0) {
@@ -253,6 +253,7 @@
     [self searchRequest:searchText];
 }
 - (void)searchRequest:(NSString *)text{
+//    self.textField resignFirstResponder
     [self showLoadingCantTouchAndClear];
     self.dataArray = [NSMutableArray new];
     NSDictionary * params = @{
@@ -264,8 +265,8 @@
         NSMutableArray * listens = [NSMutableArray new];
         NSMutableArray * tops = [NSMutableArray new];
         NSMutableArray * voices = [NSMutableArray new];
-        
-        NSDictionary * dic = (NSDictionary *)result;
+        NSDictionary * dic = result[@"list"];
+    
         NSArray * listen = dic[@"listen"];
         NSArray * top = dic[@"top"];
         NSArray * voice = dic[@"voice"];

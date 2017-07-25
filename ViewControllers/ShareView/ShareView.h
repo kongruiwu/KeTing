@@ -45,4 +45,5 @@
 - (instancetype)initWithFrame:(CGRect)frame hasNav:(BOOL)rec;
 - (void)updateShareInfoWithTitle:(NSString *)title desc:(NSString *)desc contentUlr:(NSString *)url imageUrl:(NSString *)imageUrl;
 - (void)updateWithShareModel:(ShareModel *)model;
+- (void)setFristValue;
 @end

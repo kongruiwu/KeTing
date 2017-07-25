@@ -205,6 +205,7 @@
     }else{
         self.timeLabel.text = [NSString stringWithFormat:@"%@  %@",addTime,time];
     }
+    self.tagLabel.text = @"";
     self.tagLabel.hidden = YES;
 }
 
