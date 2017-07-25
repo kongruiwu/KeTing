@@ -60,12 +60,14 @@
 }
 
 - (void)getData{
+    [self showLoadingCantClear:YES];
     self.dataArray = [NSMutableArray new];
     NSString * page = self.isTopUp ? Page_TopUp:Page_TakeUp;
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:page complete:^(id result) {
+        [self dismissLoadingView];
         NSArray * arr = result[@"list"];
         if (arr.count == 0) {
             [self showNullViewWithNullViewType:NullTypeNoneTopUp];
@@ -79,6 +81,7 @@
         }
         
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [self showNullViewWithNullViewType:0];
     }];
 }

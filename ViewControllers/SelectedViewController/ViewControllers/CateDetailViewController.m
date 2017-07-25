@@ -36,13 +36,22 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [AudioDownLoader loader].delegate = nil;
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [AudioDownLoader loader].delegate = self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"财经头条" color:KTColor_MainBlack];
     [self creatUI];
     [self getData];
-    [AudioDownLoader loader].delegate = self;
+    
 }
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
@@ -87,10 +96,12 @@
 }
 
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"tagId":self.tagID
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_TagAudio complete:^(id result) {
+        [self dismissLoadingView];
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
@@ -103,7 +114,7 @@
         }
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 
@@ -198,19 +209,22 @@
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":@1,
                                   @"relationId":model.audioId,
+                                  @"keyId":model.audioId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
         NSString * pageUrl = Page_AddLike;
         if (button.selected) {
             pageUrl = Page_DelLike;
         }
+        [self showLoadingCantClear:YES];
         [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
             button.selected = !button.selected;
             model.isprase = button.selected;
             [self.tabview reloadData];
         } errorBlock:^(KTError *error) {
-            
+            [self dismissLoadingView];
         }];
     }
     [self hiddenToolsBar];

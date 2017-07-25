@@ -117,12 +117,14 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     self.dataArray = [[HistorySql sql] getAllHistoryAudios];
     if (self.dataArray.count == 0) {
         [self showNullViewWithNullViewType:NullTypeNoneListen];
     }else{
         [self.tabview reloadData];
     }
+    [self dismissLoadingView];
 }
 
 //- (void)refreshData{

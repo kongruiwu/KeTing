@@ -11,7 +11,7 @@
 #import "NetWorkManager.h"
 #import <MJRefresh.h>
 #import "NullView.h"
-
+#import "LoadingView.h"
 @interface BaseViewController : UIViewController
 
 @property (nonatomic, strong) UITableView * tabview;
@@ -20,6 +20,8 @@
 @property (nonatomic, strong) MJRefreshAutoNormalFooter * refreshFooter;
 @property (nonatomic) SelectorBackType backType;
 @property (nonatomic, strong) NullView * nullView;
+
+@property (nonatomic, strong) LoadingView * progressView;
 
 - (void)setNavTitle:(NSString *)title color:(UIColor *)color;
 - (void)drawBackButton;
@@ -36,4 +38,11 @@
 - (void)hiddenNullView;
 //登陆使用
 - (void)creatBackGroundImg;
+
+- (void)showLoadingCantTouchAndClear;
+- (void)showLoadingCantClear:(BOOL)rec;
+- (void)showLoadingCantTouchAndGround;
+- (void)dismissLoadingView;
+
+
 @end

@@ -24,7 +24,7 @@
 //播放器
 #import "AudioPlayerViewController.h"
 
-
+#import <MBProgressHUD.h>
 @interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate,AudioPlayerDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -38,20 +38,25 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self AudioPlayerPlayStatusReady];
+    [AudioPlayer instance].delegate = self;
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [AudioPlayer instance].delegate = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
     [self getData];
 }
 - (void)creatUI{
-    [AudioPlayer instance].delegate = self;
+    
     
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
+    
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.model.titleArray.count;
@@ -174,12 +179,14 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_home complete:^(id result) {
+        [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.model = [[HomeViewModel alloc]initWithDictionary:dic];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 

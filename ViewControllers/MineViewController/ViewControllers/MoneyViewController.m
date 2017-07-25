@@ -144,12 +144,14 @@
 }
 - (void)getData{
     NSDictionary * params = @{};
+    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
+        [self dismissLoadingView];
         NSDictionary * dic = result[@"list"];
         self.acountModel = [[AcountModel alloc]initWithDictionary:dic];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
      
@@ -161,6 +163,7 @@
 
 #pragma makr- 立即充值    按钮点击事件
 - (void)recharge{
+    [self showLoadingCantTouchAndClear];
      RMIAPHelper *storeShared = [RMIAPHelper sharedInstance];
      storeShared.delegate = self;
      [storeShared setup];  //开始交易监听
@@ -191,6 +194,7 @@
 
 #pragma mark - RMIAPHelperdelegate
 -(void)requestProduct:(RMIAPHelper*)sender start:(SKProductsRequest*)request{
+    
      //    NSLog(@"start---------1发送交易请求------------");
      //    [SVProgressHUD showWithStatus:@"发送交易请求,获取产品信息" maskType:SVProgressHUDMaskTypeBlack];
  
@@ -202,6 +206,7 @@
 - (void)paymentRequest:(RMIAPHelper*)sender start:(SKPayment*)payment{
      //    NSLog(@"startpayment----------3发送支付请求--------");
      //    [SVProgressHUD dismiss];
+    [self dismissLoadingView];
 }
 
 - (void)paymentRequest:(RMIAPHelper*)sender purchased:(SKPaymentTransaction*)transaction money:(NSString *)rechargeMoney {

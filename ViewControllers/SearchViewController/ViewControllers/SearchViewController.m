@@ -222,8 +222,10 @@
     self.hotWords = [NSMutableArray new];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_SearchHot complete:^(id result) {
         NSDictionary * dic = (NSDictionary *)result;
-        if (dic[@"high"]) {
+        if (dic[@"high"] && ![dic[@"high"] isKindOfClass:[NSNull class]]) {
             self.textField.placeholder = dic[@"high"];
+        }else{
+            self.textField.placeholder = @"";
         }
         NSArray * arr = dic[@"hot"];
         for (int i = 0; i<arr.count; i++) {
@@ -251,12 +253,14 @@
     [self searchRequest:searchText];
 }
 - (void)searchRequest:(NSString *)text{
+    [self showLoadingCantTouchAndClear];
     self.dataArray = [NSMutableArray new];
     NSDictionary * params = @{
                               @"search":text,
                               @"searchType":@1
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_Search complete:^(id result) {
+        [self dismissLoadingView];
         NSMutableArray * listens = [NSMutableArray new];
         NSMutableArray * tops = [NSMutableArray new];
         NSMutableArray * voices = [NSMutableArray new];
@@ -299,6 +303,7 @@
         }
         
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [self showNullViewWithNullViewType:NullTypeNoneSerach];
     }];
 }

@@ -19,11 +19,17 @@
 @end
 
 @implementation DownLoadViewController
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [AudioDownLoader loader].delegate = nil;
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [AudioDownLoader loader].delegate = self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavUnAlpha];
-    [AudioDownLoader loader].delegate = self;
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self drawNavSelectView];
     [self creatUI];

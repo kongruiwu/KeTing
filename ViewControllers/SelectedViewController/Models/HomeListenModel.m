@@ -74,8 +74,8 @@
             NSMutableArray<HomeTopModel *> * muarr = [NSMutableArray new];
             for (int i = 0; i<arr.count; i++) {
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:arr[i]];
-                model.relationType = self.catId;
                 model.relationId = self.listenId;
+                model.relationType = self.catId;
                 if ((!model.tagName || model.tagName.length == 0)&& self.tagModels.count >0) {
                     model.tagName = self.tagModels[0].tagName;
                 }
@@ -90,8 +90,8 @@
         }else if([audio isKindOfClass:[NSDictionary class]]){
             NSDictionary * dic = (NSDictionary *)audio;
             self.audioModel = [[HomeTopModel alloc]initWithDictionary:dic];
-            self.audioModel.relationId = self.catId;
-            self.audioModel.relationType = self.listenId;
+            self.audioModel.relationId = self.listenId;
+            self.audioModel.relationType = self.catId;
             self.audioModel.tagModels = muarr;
             if ((!self.audioModel.tagName || self.audioModel.tagName.length == 0)&& self.tagModels.count >0) {
                 self.audioModel.tagName = self.tagModels[0].tagName;

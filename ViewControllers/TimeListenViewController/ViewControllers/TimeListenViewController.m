@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UIButton * fourBtn;
 @property (nonatomic, strong) UIButton * hourBtn;
 @property (nonatomic, strong) NSMutableArray * dataArray;
-@property (nonatomic, strong) PorgressView * progressView;
+@property (nonatomic, strong) PorgressView * TimeprogressView;
 @property (nonatomic, strong) NSTimer * timer;
 @property (nonatomic) BOOL canNext;
 
@@ -119,9 +119,9 @@
     }];
     
     self.canNext = YES;
-    self.progressView = [[PorgressView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
-    [self.progressView.cannceBtn addTarget:self action:@selector(cannceAllDoing) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.progressView];
+    self.TimeprogressView = [[PorgressView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
+    [self.TimeprogressView.cannceBtn addTarget:self action:@selector(cannceAllDoing) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.TimeprogressView];
     
     
 }
@@ -153,18 +153,18 @@
     [self.timer invalidate];
     self.timer = nil;
     self.canNext = NO;
-    [self.progressView disMiss];
+    [self.TimeprogressView disMiss];
 }
 - (void)changeProgressViewSlow{
-    self.progressView.progressView.progress += 0.001;
+    self.TimeprogressView.progressView.progress += 0.001;
 }
 - (void)changeProgressViewQuick{
     float value = [self.timer.userInfo floatValue];
-    self.progressView.progressView.progress += value;
+    self.TimeprogressView.progressView.progress += value;
 }
 - (void)requestListenList:(int)num{
     
-    [self.progressView show];
+    [self.TimeprogressView show];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewSlow) userInfo:nil repeats:YES];
     [self.dataArray removeAllObjects];
     NSDictionary * params = @{
@@ -172,7 +172,7 @@
                               @"longTime":@(num)
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:page_TimeListen complete:^(id result) {
-        float value = (1.0 - self.progressView.progressView.progress)/(2/0.05);
+        float value = (1.0 - self.TimeprogressView.progressView.progress)/(2/0.05);
         NSArray * list = result[@"list"];
         [self.timer invalidate];
         self.timer = nil;
@@ -184,7 +184,7 @@
             }
             [self.timer invalidate];
             self.timer = nil;
-            [self.progressView disMiss];
+            [self.TimeprogressView disMiss];
             for (int i = 0; i<list.count; i++) {
                 HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:list[i]];
                 [self.dataArray addObject:model];
@@ -198,7 +198,7 @@
     } errorBlock:^(KTError *error) {
         [self.timer invalidate];
         self.timer = nil;
-        [self.progressView disMiss];
+        [self.TimeprogressView disMiss];
     }];
 }
 

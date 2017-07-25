@@ -85,9 +85,10 @@
         [self.audioPlayer resume];
     }else{
         [self.audioPlayer pause];
-        
         [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
     }
+    RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    [tbc.playFoot changePlayStatus];
 }
 - (int)audioProgress{
     int duarTime = [self.audioPlayer duration];
@@ -101,28 +102,45 @@
 - (int)currentSortNum{
     return (int)[self.playList indexOfObject:self.currentAudio] + 1;
 }
-
 - (void)nextAudio{
-    [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
+    [self nextAudioIsOver:NO];
+}
+- (void)nextAudioIsOver:(BOOL)rec{
     int index = [self currentSortNum];
     //若当前为最后一首 则播放列表第一项
-    if (index == self.playList.count) {
-        self.currentAudio = [self.playList firstObject];
-    }else{
+    if (index != self.playList.count) {
+        if (self.audioPlayer.progress >0 ) {
+            [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
+        }
         self.currentAudio = self.playList[index];
+        [self audioPlay:self.currentAudio];
+        if ([self.delegate respondsToSelector:@selector(playNextAudio: isOver:)]) {
+            [self.delegate playNextAudio:YES isOver:rec];
+        }
+    }else{
+        if ([self.delegate respondsToSelector:@selector(playNextAudio: isOver:)]) {
+            [self.delegate playNextAudio:NO isOver:rec];
+        }
     }
-    [self audioPlay:self.currentAudio];
 }
 - (void)upwardAudio{
-    [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
     int index = [self currentSortNum];
     //当前为第一首 则播放 列表中最后一项
-    if (index == 1) {
-        self.currentAudio =[self.playList lastObject];
-    }else{
+    if (index != 1) {
+        if (self.audioPlayer.progress >0 ) {
+            [[HistorySql sql] updatePlayLong:@([self audioProgress]) withAudioID:self.currentAudio.audioId];
+        }
         self.currentAudio =self.playList[index - 2];
+        [self audioPlay:self.currentAudio];
+        if ([self.delegate respondsToSelector:@selector(playUpAudio:)]) {
+            [self.delegate playUpAudio:YES];
+        }
+    }else{
+        if ([self.delegate respondsToSelector:@selector(playUpAudio:)]) {
+            [self.delegate playUpAudio:NO];
+        }
     }
-    [self audioPlay:self.currentAudio];
+    
 }
 - (void)backSongTime{
     int current = self.audioPlayer.progress;
@@ -208,26 +226,49 @@
 // 引发的意外和可能发生的不可恢复的错误，极少概率会调用。  就是此歌曲不能加载，或者url是不可用的
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
 {
-    
+    [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"糟糕，音频发生错了" duration:1.0f];
+    [self nextAudio];
 }
 //当一个项目开始播放调用
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
 {
-//    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"歌曲开始了" duration:1.0f];
+
 }
 // 一般是歌曲快结束提前5秒调用
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
 {
-//    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"歌曲快结束了 还有 5秒钟" duration:1.0f];
+    [[HistorySql sql] updatePlayLong:@(100) withAudioID:self.currentAudio.audioId];
 }
 //当一个项目完成后，就调用
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
 {
+    switch (stopReason) {
+        case STKAudioPlayerStopReasonNone:
+            //用户操作  进行的动作 上一曲 下一曲
+            break;
+        case STKAudioPlayerStopReasonEof:
+            [self nextAudio];
+            break;
+        case STKAudioPlayerStopReasonUserAction:
+            NSLog(@"111");
+            break;
+        case STKAudioPlayerStopReasonPendingNext:
+            NSLog(@"111");
+            break;
+        case STKAudioPlayerStopReasonDisposed:
+            NSLog(@"111");
+            break;
+        case STKAudioPlayerStopReasonError:
+            NSLog(@"111");
+            break;
+        default:
+            break;
+    }
     if (self.closeTime == CloseTimeThisAudio) {
         [self.audioPlayer stop];
     }
-//    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"歌曲结束了" duration:1.0f];
 }
+
 
 
 @end

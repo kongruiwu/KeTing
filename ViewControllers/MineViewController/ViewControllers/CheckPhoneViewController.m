@@ -147,9 +147,11 @@
                               @"mobile":self.phoneTF.text,
                               @"code":self.codeTF.text
                               };
+    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
         NSDictionary * dic = @{};
         [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ChangePhone complete:^(id result) {
+            [self dismissLoadingView];
             NSDictionary * dic = (NSDictionary *)result;
             if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
@@ -164,19 +166,22 @@
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
             }
         } errorBlock:^(KTError *error) {
-            
+            [self dismissLoadingView];
         }];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
     }];
 }
 #pragma mark - 获取验证码
 - (void)getCodeRequest{
+    [self showLoadingCantTouchAndClear];
     self.getCode.enabled = NO;
     NSDictionary * params = @{
                               @"mobile":self.phoneTF.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_SendCode complete:^(id result) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码已发至您的手机，请查收" duration:1.0f];
         if (self.timer) {
             [self.timer invalidate];
@@ -184,6 +189,7 @@
         }
         self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(changeButttonTime) userInfo:nil repeats:YES];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
         self.getCode.enabled = YES;
     }];

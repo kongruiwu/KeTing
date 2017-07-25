@@ -99,14 +99,15 @@
 }
 
 - (void)getData{
-
+    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:[NSString stringWithFormat:@"%@/%@",Page_AnchorDetail,self.anchorID] complete:^(id result) {
+        [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.anchor = [[AnchorModel alloc]initWithDictionary:dic];
         [self.anchorHeader updateWithAnchorModel:self.anchor];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
@@ -172,12 +173,15 @@
                                   @"relationId":model.listenId,
                                   @"relationType":@2
                                   };
+        [self showLoadingCantTouchAndClear];
         [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
             int count = [self.anchorHeader.countLabel.text intValue] + 1;
             [self.anchorHeader updateShopCarCount:[NSString stringWithFormat:@"%d",count]];
             btn.selected = !btn.selected;
         } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
             
         }];
     }

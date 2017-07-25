@@ -98,6 +98,7 @@ static RMIAPHelper*    _instance = NULL;
         SKPayment* payment = [SKPayment paymentWithProduct:product];
         [_paymentQueue addPayment:payment];
         [self.delegate paymentRequest:self start:payment];
+    
     }
 }
 

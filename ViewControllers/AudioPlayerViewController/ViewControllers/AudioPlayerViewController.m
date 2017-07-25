@@ -14,7 +14,8 @@
 #import "WKWebViewController.h"
 #import "AudioDownLoader.h"
 #import "LoginViewController.h"
-@interface AudioPlayerViewController ()
+#import "HistorySql.h"
+@interface AudioPlayerViewController ()<AudioPlayerDelegate,AudioDownLoadDelegate>
 /**标签*/
 @property (nonatomic, strong) UILabel * tagLabel;
 /**封面图*/
@@ -63,6 +64,9 @@
 @property (nonatomic, strong) PlayCloseListView * closeList;
 /**标题栏*/
 @property (nonatomic, strong) UILabel * titleLabel;
+
+/**获取详情后的model*/
+@property (nonatomic, strong) HomeTopModel * newmodel;
 @end
 
 @implementation AudioPlayerViewController
@@ -70,23 +74,27 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [AudioPlayer instance].delegate = self;
+    [AudioDownLoader loader].delegate = self;
     [self setNavAlpha];
     [self getAudioDetail];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [AudioPlayer instance].delegate = nil;
+    [AudioDownLoader loader].delegate = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
+    [self audioImageAnimtion];
     [self playAudio];
-    
 }
 - (void)creatUI{
-    //voice_drop-down
     UIImage * image = [[UIImage imageNamed:@"voice_drop-down"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(doBack)];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
-    
     
     self.backType = SelectorBackTypeDismiss;
     
@@ -143,6 +151,7 @@
     self.likeBtn = [KTFactory creatPlayButtonWithImage:@"playunlike" title:@"赞(10)"];
     [self.likeBtn setImage:[UIImage imageNamed:@"play_ like"] forState:UIControlStateSelected];
     self.downLoadBtn = [KTFactory creatPlayButtonWithImage:@"play_download" title:@"下载"];
+    [self.downLoadBtn setImage:[UIImage imageNamed:@"play_downover"] forState:UIControlStateSelected];
     self.moreBtn = [KTFactory creatPlayButtonWithImage:@"icon_more" title:@"更多"];
     
     self.playList = [[PlayListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
@@ -281,7 +290,7 @@
     [self.listBtn addTarget:self action:@selector(showPlayList) forControlEvents:UIControlEventTouchUpInside];
     [self.textBtn addTarget:self action:@selector(checkAudioText) forControlEvents:UIControlEventTouchUpInside];
     [self.moreBtn addTarget:self action:@selector(showMoreView) forControlEvents:UIControlEventTouchUpInside];
-    [self.downLoadBtn addTarget:self action:@selector(downLoadAudio) forControlEvents:UIControlEventTouchUpInside];
+    [self.downLoadBtn addTarget:self action:@selector(downLoadAudio:) forControlEvents:UIControlEventTouchUpInside];
     [self.likeBtn addTarget:self action:@selector(likeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.timer = [NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
     [self.MoreView.shareButton addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
@@ -305,17 +314,15 @@
     if (!model.audioId || !model.relationType || !model.relationId) {
         return;
     }
-    NSInteger index = [[AudioPlayer instance].playList indexOfObject:model];
     NSDictionary * params = @{
                               @"audioId":model.audioId,
                               @"relationType":model.relationType,
                               @"relationId":model.relationId
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_AudioDetail complete:^(id result) {
-        HomeTopModel * newmodel = [[HomeTopModel alloc]initWithDictionary:result];
-        [[AudioPlayer instance].playList replaceObjectAtIndex:index withObject:newmodel];
-        [AudioPlayer instance].currentAudio = newmodel;
-        [self updateUI];
+        self.newmodel = [[HomeTopModel alloc]initWithDictionary:result];
+        [[HistorySql sql] updateAudioWithModel:self.newmodel];
+        [self updateUIWithModel:self.newmodel];
     } errorBlock:^(KTError *error) {
         
     }];
@@ -348,14 +355,13 @@
 }
 #pragma mark - 音频播放
 - (void)musicPlay:(UIButton *)btn{
-    btn.selected = !btn.selected;
     [[AudioPlayer instance] audioResume];
     if (btn.selected) {
         [self animationStop];
     }else{
         [self animationResume];
     }
-    
+    btn.selected = !btn.selected;
 }
 #pragma mark - 后退15秒
 - (void)reduceMusicTime{
@@ -368,16 +374,45 @@
 #pragma mark - 上一曲
 - (void)upwardAudio{
     [[AudioPlayer instance] upwardAudio];
-    [self getAudioDetail];
 }
+- (void)playUpAudio:(BOOL)canPlay{
+    if (canPlay) {
+        [self getAudioDetail];
+    }else{
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已经是第一首了" duration:1.0f];
+    }
+}
+
 #pragma mark - 下一曲
 - (void)nextAudioClick{
     [[AudioPlayer instance] nextAudio];
-    [self getAudioDetail];
+}
+- (void)playNextAudio:(BOOL)canPlay isOver:(BOOL)rec{
+    if (canPlay) {
+        [self getAudioDetail];
+    }else{
+        if (rec) {
+            self.playBtn.selected = NO;
+            [self animationStop];
+        }else{
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"已经是最后一首了" duration:1.0f];
+        }
+    }
 }
 #pragma mark - 下载歌曲
-- (void)downLoadAudio{
-    [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[[AudioPlayer instance].currentAudio]];
+- (void)downLoadAudio:(UIButton *)btn{
+    if (btn.selected) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
+    }else{
+        HomeTopModel * model = self.newmodel ? self.newmodel : [AudioPlayer instance].currentAudio;
+        [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
+    }
+    
+}
+#pragma mark - 下载完成
+- (void)audioDownLoadOver{
+    self.downLoadBtn.selected = YES;
+    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"音频下载完成" duration:1.0f];
 }
 #pragma mark - 点赞
 - (void)likeButtonClick:(UIButton *)button{
@@ -391,26 +426,29 @@
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":model.relationType,
                                   @"relationId":model.relationId,
+                                  @"keyId":model.audioId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
         NSString * pageUrl = Page_AddLike;
         if (button.selected) {
             pageUrl = Page_DelLike;
         }
+        [self showLoadingCantClear:YES];
         [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:button.selected ? @"取消成功":@"点赞成功" duration:1.0f];
-            button.selected = !button.selected;
+            HomeTopModel * model = self.newmodel ? self.newmodel : [AudioPlayer instance].currentAudio;
             model.isprase = button.selected;
             if (button.selected) {
-                [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%d)",[model.praseNum intValue] + 1] forState:UIControlStateNormal];
-                [AudioPlayer instance].currentAudio.praseNum = @([[AudioPlayer instance].currentAudio.praseNum intValue] + 1);
+                model.praseNum = @([model.praseNum intValue] - 1);
             }else{
-                [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%d)",[model.praseNum intValue] - 1] forState:UIControlStateNormal];
-                [AudioPlayer instance].currentAudio.praseNum = @([[AudioPlayer instance].currentAudio.praseNum intValue] - 1);
+                model.praseNum = @([model.praseNum intValue] + 1);
             }
-            [self.tabview reloadData];
-        } errorBlock:^(KTError *error) {
+            [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%@)",model.praseNum] forState:UIControlStateNormal];
+            button.selected = !button.selected;
             
+        } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
         }];
     }
     
@@ -420,20 +458,18 @@
     [[AudioPlayer instance] changePlayeAudioTime:self.slider.value];
 }
 - (void)playAudio{
-    if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStatePlaying) {
+    if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
         self.playBtn.selected = YES;
+        [self animationResume];
     }else{
         self.playBtn.selected = NO ;
+        [self animationStop];
     }
-    [self audioImageAnimtion];
-    if (self.isFromRoot) {
-//        [[AudioPlayer instance] audioResume];
-//        [[AudioPlayer instance] audioResume];
-    }else{
+    if (!self.isFromRoot) {
         [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
     }
     
-    [self updateUI];
+    [self updateUIWithModel:[AudioPlayer instance].currentAudio];
 }
 #pragma mark - 添加动画
 - (void)audioImageAnimtion{
@@ -467,8 +503,8 @@
     CFTimeInterval timeSince = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pauseTime;
     layer.beginTime = timeSince;
 }
-- (void)updateUI{
-    HomeTopModel * model = [AudioPlayer instance].currentAudio;
+#pragma mark - 刷新方法
+- (void)updateUIWithModel:(HomeTopModel *)model{
     self.likeBtn.selected = model.isprase;
     [self.likeBtn setTitle:[NSString stringWithFormat:@"赞(%@)",model.praseNum] forState:UIControlStateNormal];
     [self.audioPhoto sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
@@ -476,36 +512,9 @@
     self.tagLabel.text = [AudioPlayer instance].currentAudio.tagString.length == 0 ? @"" : [NSString stringWithFormat:@"#%@",[AudioPlayer instance].currentAudio.tagString];
     self.currntNum.text = [NSString stringWithFormat:@"正在播放  %d/%ld",[[AudioPlayer instance] currentSortNum],
                            (unsigned long)[AudioPlayer instance].playList.count];
+    NSNumber * downStatus = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+    self.downLoadBtn.selected = [downStatus intValue] == 2 ? YES : NO;
+    
 }
-////暂停动画
-//- (void)pauseAnimation {
-//    
-//    //（0-5）
-//    //开始时间：0
-//    //    myView.layer.beginTime
-//    //1.取出当前时间，转成动画暂停的时间
-//    CFTimeInterval pauseTime = [self.audioImg.layer convertTime:CACurrentMediaTime() fromLayer:nil];
-//    
-//    //2.设置动画的时间偏移量，指定时间偏移量的目的是让动画定格在该时间点的位置
-//    self.audioImg.layer.timeOffset = pauseTime;
-//    
-//    //3.将动画的运行速度设置为0， 默认的运行速度是1.0
-//    self.audioImg.layer.speed = 0;
-//}
-//
-////恢复动画
-//- (void)resumeAnimation {
-//    
-//    //1.将动画的时间偏移量作为暂停的时间点
-//    CFTimeInterval pauseTime = self.audioImg.layer.timeOffset;
-//    
-//    //2.计算出开始时间
-//    CFTimeInterval begin = CACurrentMediaTime() - pauseTime;
-//    
-//    [self.audioImg.layer setTimeOffset:0];
-//    [self.audioImg.layer setBeginTime:begin];
-//    
-//    self.audioImg.layer.speed = 1;
-//}
-//
+
 @end

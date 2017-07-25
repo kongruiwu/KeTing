@@ -50,10 +50,12 @@
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.tabview reloadData];
+    [AudioDownLoader loader].delegate = self;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [AudioDownLoader loader].delegate = self;
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
@@ -61,8 +63,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
-    
-    [AudioDownLoader loader].delegate = self;
 }
 
 - (void)creatUI{
@@ -271,13 +271,16 @@
     
 }
 - (void)getData{
+    [self showLoadingCantTouchAndGround];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:[NSString stringWithFormat:@"%@/%@",Page_VoiceDetail,self.voiceID] complete:^(id result) {
+        [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.listenModel = [[HomeListenModel alloc]initWithDictionary:dic];
         [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
         self.isOpen = self.header.checkSummy.hidden = !self.listenModel.Isbuy;
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:2.0f];
     }];
 }
@@ -456,8 +459,9 @@
         HomeTopModel * model = self.listenModel.audio[index.row - self.listenModel.audio.count - 3];
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
-                                  @"relationType":@1,
-                                  @"relationId":model.audioId,
+                                  @"relationType":model.relationType,
+                                  @"relationId":model.relationId,
+                                  @"keyId":model.audioId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
         NSString * pageUrl = Page_AddLike;

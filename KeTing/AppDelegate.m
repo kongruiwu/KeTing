@@ -16,6 +16,7 @@
 #import "RootViewController.h"
 #import "HistorySql.h"
 #import "AudioPlayer.h"
+
 @interface AppDelegate ()
 
 
@@ -39,12 +40,11 @@
     [self.window makeKeyAndVisible];
     RootViewController * vc = [[RootViewController alloc]init];
     [self.window setRootViewController:vc];
-    
-    
-    
+
     
     return YES;
 }
+
 - (void)audioPlayerSetting{
     //1 初始化苹果播放器，用到一些播放模式。
     NSError * error ;

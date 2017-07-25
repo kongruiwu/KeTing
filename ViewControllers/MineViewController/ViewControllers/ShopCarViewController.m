@@ -91,11 +91,13 @@
 }
 
 - (void)getData{
+    [self showLoadingCantClear:YES];
     [self.hander.dataArray removeAllObjects];
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_ShopCar complete:^(id result) {
+        [self dismissLoadingView];
         [self hiddenNullView];
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
@@ -109,21 +111,22 @@
             [self showNullViewWithNullViewType:NullTypeNoneShopCar];
         }
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 - (void)removeAllDatas{
-    
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要清空购物车么？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSDictionary * params = @{
                                   @"userId":[UserManager manager].userid
                                   };
+        [self showLoadingCantClear:YES];
         [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ClearS complete:^(id result) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"购物车清空成功" duration:1.0f];
             [self showNullViewWithNullViewType:NullTypeNoneShopCar];
         } errorBlock:^(KTError *error) {
-            
+            [self dismissLoadingView];
         }];
     }];
     UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];

@@ -22,6 +22,15 @@
 
 @implementation SetUserNameViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [UserManager manager].delegate = self;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [UserManager manager].delegate = nil;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatBackGroundImg];
@@ -86,16 +95,18 @@
     
 }
 - (void)changeUserName{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"userid":[UserManager manager].info.USERID,
                               @"nickName":self.nameT.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeName complete:^(id result) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改成功" duration:2.0f];
         [UserManager manager].info.NICKNAME = self.nameT.text;
-        [UserManager manager].delegate = self;
         [[UserManager manager] getUserInfo];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }
@@ -150,6 +161,7 @@
     }];
 }
 - (void)uploadImagerequest:(UIImage *)image{
+    [self showLoadingCantClear:YES];
     NSData *data = [KTFactory dealWithAvatarImage:image];
     //判断图片是不是png格式的文件
     NSString *mimeType = nil;
@@ -163,8 +175,10 @@
                               @"icon":datastr
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_UserAvater complete:^(id result) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"头像上传成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         NSLog(@"%@",error.message);
     }];
 }

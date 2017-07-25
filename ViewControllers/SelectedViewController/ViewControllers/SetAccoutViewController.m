@@ -144,6 +144,7 @@
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"账户余额不足，请先充值" duration:1.5f];
         return;
     }
+    [self showLoadingCantTouchAndClear];
     NSMutableArray * arr = [[NSMutableArray alloc]init];
     for (int i = 0; i<self.products.count; i++) {
         HomeListenModel * model = self.products[i];
@@ -175,6 +176,7 @@
                                        @"payStatus":@1
                                        };
         [[NetWorkManager manager] POSTRequest:orderParams pageUrl:Page_PayStatus complete:^(id result) {
+            [self dismissLoadingView];
             NSDictionary * dic = (NSDictionary *)result;
             if ([dic[@"payStatus"] integerValue] == 1) {
                 if (self.isBook) {
@@ -191,10 +193,12 @@
             }
             
         } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
             [self.navigationController popViewControllerAnimated:YES];
         }];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
         [self.navigationController popViewControllerAnimated:YES];
     }];

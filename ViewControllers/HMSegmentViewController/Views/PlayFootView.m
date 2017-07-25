@@ -123,7 +123,7 @@
 }
 
 - (void)changePlayStatus{
-    if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStatePlaying) {
+    if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
         self.playBtn.selected = YES;
     }else{
         self.playBtn.selected = NO ;

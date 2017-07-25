@@ -54,5 +54,6 @@
     self.voiceStockSecret = model;
     
 }
+
 @end
 

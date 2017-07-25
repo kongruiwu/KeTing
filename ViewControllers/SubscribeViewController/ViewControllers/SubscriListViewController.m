@@ -77,7 +77,9 @@
 
 
 - (void)getListData{
+    [self showLoadingCantClear:YES];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribed complete:^(id result) {
+        [self dismissLoadingView];
         if (result[@"list"] && [result[@"list"] isKindOfClass:[NSArray class]]) {
             [self hiddenNullView];
             NSArray * array = result[@"list"];
@@ -91,6 +93,7 @@
             [self showNullViewWithNullViewType:NullTypeNoneAudio];
         }
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [self showNullViewWithNullViewType:NullTypeNoneAudio];
     }];
 }

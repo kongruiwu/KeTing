@@ -40,7 +40,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavUnAlpha];
-    
+    [AudioDownLoader loader].delegate = self;
+
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -49,7 +50,9 @@
         HomeTopModel * model = self.dataArray[i];
         model.showTools = NO;
     }
+    [AudioDownLoader loader].delegate = nil;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,7 +62,7 @@
     self.isDownLoad = NO;
     [self creatUI];
     [self refreshData];
-    [AudioDownLoader loader].delegate = self;
+    
     
 }
 
@@ -315,6 +318,7 @@
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":@1,
                                   @"relationId":model.audioId,
+                                  @"keyId":model.audioId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
         NSString * pageUrl = Page_AddLike;

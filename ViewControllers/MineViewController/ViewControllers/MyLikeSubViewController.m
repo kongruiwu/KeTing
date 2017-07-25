@@ -114,12 +114,14 @@
 }
 
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * pamrams = @{
                                @"userId":[UserManager manager].userid,
                                @"logType":@0,
                                @"relationType":@(self.subType + 1),
                                };
     [[NetWorkManager manager] GETRequest:pamrams pageUrl:Page_Liked complete:^(id result) {
+        [self dismissLoadingView];
         NSArray * arr = (NSArray *)result;
         if (arr.count == 0) {
             [self showNullViewWithNullViewType:NullTypeNoneLike];
@@ -137,7 +139,7 @@
             [self.tabview reloadData];
         }
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 

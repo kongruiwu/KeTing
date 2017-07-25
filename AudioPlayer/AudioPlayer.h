@@ -20,7 +20,10 @@ typedef NS_ENUM(NSInteger, CloseTime){
 };
 @protocol AudioPlayerDelegate <NSObject>
 
+@optional
 - (void)AudioPlayerPlayStatusReady;
+- (void)playNextAudio:(BOOL)canPlay isOver:(BOOL)rec;
+- (void)playUpAudio:(BOOL)canPlay;
 
 @end
 
@@ -40,8 +43,9 @@ typedef NS_ENUM(NSInteger, CloseTime){
 @property (nonatomic, assign) CloseTime closeTime;
 
 @property (nonatomic, assign) id<AudioPlayerDelegate> delegate;
-
+/**自动关闭时间*/
 @property (nonatomic, assign) int closeMin;
+
 
 /**player*/
 + (instancetype)instance;

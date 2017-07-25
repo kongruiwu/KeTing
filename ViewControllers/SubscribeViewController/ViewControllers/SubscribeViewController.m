@@ -180,7 +180,9 @@
     }];
 }
 - (void)getListData{
+    [self showLoadingCantClear:YES];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribed complete:^(id result) {
+        [self dismissLoadingView];
         if (result[@"list"] && [result[@"list"] isKindOfClass:[NSArray class]]) {
             NSArray * array = result[@"list"];
             for (int i = 0; i< array.count; i++) {
@@ -195,7 +197,7 @@
             [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 

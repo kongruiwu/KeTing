@@ -167,6 +167,7 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)setGenerRequestWithSex:(NSNumber *)sex{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"nickName":[UserManager manager].info.NICKNAME,
                               @"sex":sex,
@@ -175,14 +176,16 @@
                               @"edu_id":[UserManager manager].info.EDU_ID
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeInfo complete:^(id result) {
+        [self dismissLoadingView];
         [UserManager manager].info.Sex = [sex boolValue];
         [self reloadView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 - (void)setUserNickNameRequest:(NSString *)nickName{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"nickName":nickName,
                               @"sex":@([UserManager manager].info.Sex),
@@ -191,15 +194,16 @@
                               @"edu_id":[UserManager manager].info.EDU_ID
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeInfo complete:^(id result) {
+        [self dismissLoadingView];
         [UserManager manager].info.NICKNAME = nickName;
         [self reloadView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 - (void)setBirthdayReuqest{
-    
+    [self showLoadingCantTouchAndClear];
     NSDate* date = self.dateView.datePicker.date;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy/MM/dd"];
@@ -212,16 +216,18 @@
                               @"birthday":dateString
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeInfo complete:^(id result) {
+        [self dismissLoadingView];
         [self.dateView disMiss];
         [self.dateView.datePicker setDate:date];
         [UserManager manager].info.Birthday = dateString;
         [self reloadView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 - (void)setEduRequest{
+    [self showLoadingCantTouchAndClear];
     NSInteger index = [self.pickerView.picker selectedRowInComponent:0];
     NSString * key = self.isEdu ? @"edu_id":@"typ_id";
     NSString * value = self.isEdu ? [UserManager manager].dataModel.eduIds[index] : [UserManager manager].dataModel.typIds[index];
@@ -235,6 +241,7 @@
                               key1:value2
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangeInfo complete:^(id result) {
+        [self dismissLoadingView];
         if (self.isEdu) {
             [UserManager manager].info.EDU_ID = @([value integerValue]);
             [UserManager manager].info.EDU_NAME = [UserManager manager].dataModel.eduNames[index];
@@ -246,7 +253,7 @@
         [self reloadView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 
@@ -306,6 +313,7 @@
     }];
 }
 - (void)uploadImagerequest:(UIImage *)image{
+    [self showLoadingCantTouchAndClear];
     NSData *data = [KTFactory dealWithAvatarImage:image];
     //判断图片是不是png格式的文件
     NSString *mimeType = nil;
@@ -319,8 +327,10 @@
                               @"icon":datastr
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_UserAvater complete:^(id result) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"头像上传成功" duration:1.0f];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         NSLog(@"%@",error.message);
     }];
 }

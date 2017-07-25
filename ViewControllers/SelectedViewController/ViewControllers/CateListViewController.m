@@ -88,7 +88,9 @@
     return cell;
 }
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_TopTags complete:^(id result) {
+        [self dismissLoadingView];
         NSArray * datas = (NSArray *)result;
         for (int i = 0; i<datas.count; i++) {
             TopTagModel * model = [[TopTagModel alloc]initWithDictionary:datas[i]];
@@ -97,7 +99,7 @@
         }
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
-        
+        [self dismissLoadingView];
     }];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

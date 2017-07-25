@@ -193,6 +193,8 @@
     [self.navigationController pushViewController:[ForgotPwdViewController new] animated:YES];
 }
 - (void)userLogin{
+    [self.view endEditing:YES];
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"Mobile":self.phoneTF.text,
                               @"Pword":self.pwdTextF.text
@@ -203,13 +205,16 @@
                                    @"userid":[UserManager manager].userid
                                    };
         [[NetWorkManager manager] GETRequest:params1 pageUrl:Page_UserInfo complete:^(id result) {
+            [self dismissLoadingView];
             [[UserManager manager] userLoginWithInfoDic:result];
             [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"登录成功" duration:2.0f];
             [self doBack];
         } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请求超时" duration:1.0f];
         }];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }

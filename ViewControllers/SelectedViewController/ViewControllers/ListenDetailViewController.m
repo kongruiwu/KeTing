@@ -38,8 +38,15 @@
     UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [AudioDownLoader loader].delegate = self;
     [self getData];
 }
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [AudioDownLoader loader].delegate = nil;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -211,12 +218,15 @@
     }else{
         listenid = self.listenID;
     }
+    [self showLoadingCantTouchAndGround];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:[NSString stringWithFormat:@"%@/%@",Page_ListenDetail,listenid] complete:^(id result) {
+        [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.listenModel = [[HomeListenModel alloc]initWithDictionary:dic];
         [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:2.0f];
     }];
     
@@ -246,8 +256,9 @@
         if (btn.selected) {
             pageUrl = Page_DelLike;
         }
+        [self showLoadingCantClear:YES];
         [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
-            
+            [self dismissLoadingView];
             int num = [self.listenModel.praseNum intValue];
             if (btn.selected) {
                 num -= 1;
@@ -259,7 +270,7 @@
             [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
             btn.selected = !btn.selected;
         } errorBlock:^(KTError *error) {
-            
+            [self dismissLoadingView];
         }];
     }
 }
@@ -270,7 +281,6 @@
         if (!self.listenModel.isDownLoad) {//下载该书籍
 #warning 这里需要判断网络状态
             [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[self.listenModel.audioModel]];
-            [AudioDownLoader loader].delegate = self;
             
         }else{
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];

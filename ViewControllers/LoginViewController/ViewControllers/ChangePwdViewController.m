@@ -119,16 +119,19 @@
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"两次密码输入不一致，请重新输入" duration:1.0f];
         return;
     }
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"mobileEmail":self.phoneNum,
                               @"password":self.pwdT.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Register complete:^(id result) {
+        [self dismissLoadingView];
         [[UserManager manager] userLoginWithInfoDic:result];
         [UserManager manager].userid = [UserManager manager].info.USERID;
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
         [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }

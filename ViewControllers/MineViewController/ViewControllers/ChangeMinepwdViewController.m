@@ -125,15 +125,18 @@
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"两次密码不一致" duration:1.0f];
         return;
     }
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"originPassword":self.oldPwdT.text,
                               @"newPassWord":self.pwdT.text,
                               @"confirmPassWord":self.checkT.text
                               };
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ChangePwd complete:^(id result) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"密码修改成功" duration:1.0f];
         [self doBack];
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }

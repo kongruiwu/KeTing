@@ -13,4 +13,6 @@ pod 'UMengUShare/Social/ReducedWeChat'
 pod ‘UMengUShare/Social/ReducedQQ'
 pod ‘UMengUShare/Social/Sina'
 pod 'FMDB'
+pod 'FLAnimatedImage', '~> 1.0'
+pod 'MBProgressHUD'
 end

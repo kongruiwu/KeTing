@@ -60,6 +60,8 @@
 		8B53EA9A1EE550BD009EA76D /* HomeFinancialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EA991EE550BD009EA76D /* HomeFinancialCell.m */; };
 		8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EA9F1EE55AD7009EA76D /* HomeCollectionCell.m */; };
 		8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EAA21EE55CAF009EA76D /* ListenBookCollectionCell.m */; };
+		8B5916BD1F26D5B5008841E2 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5916BC1F26D5B5008841E2 /* LoadingView.m */; };
+		8B5916BF1F26D74B008841E2 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B5916BE1F26D74B008841E2 /* loading.gif */; };
 		8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6437431EE8D36700FA53EF /* AudioPlayer.m */; };
 		8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64374A1EE9356D00FA53EF /* PlayTextButton.m */; };
 		8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E171EEA39CF00A11A0F /* CateListViewController.m */; };
@@ -97,7 +99,6 @@
 		8B8DAF391F1CB33E00BDF1AA /* HotWordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF381F1CB33E00BDF1AA /* HotWordModel.m */; };
 		8B8F01081F00D8850027AABD /* MineHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F01071F00D8850027AABD /* MineHeader.m */; };
 		8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */; };
-		8B9B9EE51F137C16004A2283 /* HistoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B9EE41F137C16004A2283 /* HistoryManager.m */; };
 		8BA1F0AF1F2056E200AAD63C /* DownLoadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */; };
 		8BA1F0B21F208C7F00AAD63C /* PlayFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B11F208C7F00AAD63C /* PlayFootView.m */; };
 		8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B41F20987E00AAD63C /* RootViewController.m */; };
@@ -294,6 +295,9 @@
 		8B53EA9F1EE55AD7009EA76D /* HomeCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeCollectionCell.m; sourceTree = "<group>"; };
 		8B53EAA11EE55CAF009EA76D /* ListenBookCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenBookCollectionCell.h; sourceTree = "<group>"; };
 		8B53EAA21EE55CAF009EA76D /* ListenBookCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenBookCollectionCell.m; sourceTree = "<group>"; };
+		8B5916BB1F26D5B5008841E2 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
+		8B5916BC1F26D5B5008841E2 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
+		8B5916BE1F26D74B008841E2 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		8B6437421EE8D36700FA53EF /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		8B6437431EE8D36700FA53EF /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		8B6437491EE9356D00FA53EF /* PlayTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTextButton.h; sourceTree = "<group>"; };
@@ -369,8 +373,6 @@
 		8B8F01071F00D8850027AABD /* MineHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeader.m; sourceTree = "<group>"; };
 		8B8F01091F00EB9B0027AABD /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
-		8B9B9EE31F137C16004A2283 /* HistoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryManager.h; sourceTree = "<group>"; };
-		8B9B9EE41F137C16004A2283 /* HistoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryManager.m; sourceTree = "<group>"; };
 		8BA1F0AD1F2056E200AAD63C /* DownLoadHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadHeaderView.h; sourceTree = "<group>"; };
 		8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadHeaderView.m; sourceTree = "<group>"; };
 		8BA1F0B01F208C7F00AAD63C /* PlayFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayFootView.h; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 		8B53EA801EE52097009EA76D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8B5916BA1F26D21C008841E2 /* LoadingProgress */,
 				6232F2CB1F21D865009DDC37 /* IAPHelper */,
 				8B8742F51EEE5FFF00324FA2 /* ShareView */,
 				8BF691FD1EE7A245001CECEE /* ToastView */,
@@ -872,6 +875,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		8B5916BA1F26D21C008841E2 /* LoadingProgress */ = {
+			isa = PBXGroup;
+			children = (
+				8B5916BE1F26D74B008841E2 /* loading.gif */,
+				8B5916BB1F26D5B5008841E2 /* LoadingView.h */,
+				8B5916BC1F26D5B5008841E2 /* LoadingView.m */,
+			);
+			path = LoadingProgress;
+			sourceTree = "<group>";
+		};
 		8B6437411EE8D35D00FA53EF /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -989,15 +1002,6 @@
 				8B8DAF351F1CAF8F00BDF1AA /* HotWordCell.m */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8B9B9EE21F137C04004A2283 /* HistoryManager */ = {
-			isa = PBXGroup;
-			children = (
-				8B9B9EE31F137C16004A2283 /* HistoryManager.h */,
-				8B9B9EE41F137C16004A2283 /* HistoryManager.m */,
-			);
-			path = HistoryManager;
 			sourceTree = "<group>";
 		};
 		8BA3DCFA1F1764DB00D5ACB5 /* AudioDownLoader */ = {
@@ -1215,7 +1219,6 @@
 			children = (
 				8B8A05491F1EEA5600590344 /* SQLManager */,
 				8BA3DCFA1F1764DB00D5ACB5 /* AudioDownLoader */,
-				8B9B9EE21F137C04004A2283 /* HistoryManager */,
 				8B7AB4CE1F0391110068CAE7 /* UserManager */,
 				8B6437411EE8D35D00FA53EF /* AudioPlayer */,
 				8B53EA801EE52097009EA76D /* Tools */,
@@ -1476,6 +1479,7 @@
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,
 				8BB516641F24A81E00C29643 /* CropViewController.xib in Resources */,
 				8BF84CCB1EE4F6620072637D /* Assets.xcassets in Resources */,
+				8B5916BF1F26D74B008841E2 /* loading.gif in Resources */,
 				8BF692081EE7A245001CECEE /* toast_failure@2x.png in Resources */,
 				8BF6920A1EE7A245001CECEE /* toast_net_failure@2x.png in Resources */,
 			);
@@ -1558,7 +1562,6 @@
 				8B8742FB1EEE646800324FA2 /* PlayCloseListView.m in Sources */,
 				8B53EA9A1EE550BD009EA76D /* HomeFinancialCell.m in Sources */,
 				8B4F22991EF0DA69005E1D21 /* AnchorModel.m in Sources */,
-				8B9B9EE51F137C16004A2283 /* HistoryManager.m in Sources */,
 				8B2D73FE1F0CB06F00E1BF4B /* AboutusViewController.m in Sources */,
 				8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */,
 				8B87430A1EEE799400324FA2 /* ListenListCell.m in Sources */,
@@ -1603,6 +1606,7 @@
 				8B53EA871EE5210A009EA76D /* KTFactory.m in Sources */,
 				8BC126741F1DDDF4005CF363 /* SubscriListViewController.m in Sources */,
 				8BFB09201F0F87C200FA30F0 /* PorgressView.m in Sources */,
+				8B5916BD1F26D5B5008841E2 /* LoadingView.m in Sources */,
 				8B40FE6C1EE69217005F9342 /* Commond.m in Sources */,
 				8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */,
 				8BF84CF71EE4FB820072637D /* BaseModel.m in Sources */,

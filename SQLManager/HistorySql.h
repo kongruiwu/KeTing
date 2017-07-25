@@ -22,4 +22,5 @@
 - (BOOL)checkAudio:(NSNumber *)audioID;
 - (NSMutableArray *)getAllHistoryAudios;
 - (void)deleteAudioWithID:(NSNumber *)audioID;
+- (void)updateAudioWithModel:(HomeTopModel *)model;
 @end

@@ -171,13 +171,15 @@
                                   @"relationId":model.listenId,
                                   @"relationType":@2
                                   };
+        [self showLoadingCantTouchAndClear];
         [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+            [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
             btn.selected = !btn.selected;
             int count = [self.countLabel.text intValue] + 1;
             [self updateCountLabel:[NSString stringWithFormat:@"%d",count]];
         } errorBlock:^(KTError *error) {
-            
+            [self dismissLoadingView];
         }];
     }
 }

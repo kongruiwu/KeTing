@@ -89,7 +89,10 @@
     }
     return audios;
 }
-
+- (void)updateAudioWithModel:(HomeTopModel *)model{
+    [self deleteAudioWithID:model.audioId];
+    [self insertAudio:model];
+}
 - (void)deleteAudioWithID:(NSNumber *)audioID{
     NSString *sql = [NSString stringWithFormat:@"DELETE FROM play WHERE audioId='%@';",audioID];
     [self fmdbExecSql:sql];
