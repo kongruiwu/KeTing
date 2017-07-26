@@ -43,7 +43,7 @@
         self.isSelectDown = NO;
         self.downStatus = @0;
         if (!self.relationId) {
-            self.relationId = self.audioId;
+            self.relationId = self.topId;
         }
         if (!self.relationType) {
             self.relationType = @1;

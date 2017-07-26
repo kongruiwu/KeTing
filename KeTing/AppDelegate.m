@@ -132,8 +132,9 @@
 
 //应用进入后台之后 停止下载 已保证下载可以正常进行
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    
-    [[HistorySql sql] updatePlayLong:@([[AudioPlayer instance] audioProgress]) withAudioID:[AudioPlayer instance].currentAudio.audioId];
+    if ([AudioPlayer instance].currentAudio) {
+        [[HistorySql sql] updatePlayLong:@([[AudioPlayer instance] audioProgress]) withAudioID:[AudioPlayer instance].currentAudio.audioId];
+    }
     [[AudioDownLoader loader] cancelDownLoading];
     
 }

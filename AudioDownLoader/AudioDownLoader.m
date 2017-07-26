@@ -73,7 +73,19 @@
          //先将数据存储到数据库  然后在下载完成后修改数据下载状态
         [[SqlManager manager] insertAudio:topModels[i]];
     }
-    
+    //这里要做处理  如果  已经有队列 则加入队列 执行恢复下载选项
+    if (self.downLoadList.count>0) {
+        [self.downLoadList addObjectsFromArray:topModels];
+        for (int i = 0; i<topModels.count; i++) {
+            HomeTopModel * model = topModels[i];
+            NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+            if ([num integerValue] == 1000) {
+                [self.downLoadList addObject:model];
+            }
+        }
+        [self resumeDownLoading];
+        return;
+    }
     [self.downLoadList addObjectsFromArray:topModels];
     if (!self.currentModel) {
         self.currentModel = [self.downLoadList firstObject];
@@ -91,6 +103,9 @@
 }
 //暂停下载
 - (void)cancelDownLoading{
+    if (self.isDownLoading == NO) {
+        return;
+    }
     self.isDownLoading = NO;
     if (!self.currentModel) {
         return;
@@ -212,8 +227,10 @@ didFinishDownloadingToURL:(NSURL *)location
         self.downloadTask = [self.session downloadTaskWithURL:url];
         // 开始任务
         [self.downloadTask resume];
+    }else{
+        self.isDownLoading = NO;
     }
-    self.isDownLoading = NO;
+    
 }
 /**
  *  每次写入沙盒完毕调用

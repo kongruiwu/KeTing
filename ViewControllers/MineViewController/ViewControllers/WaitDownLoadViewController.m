@@ -39,7 +39,7 @@
     }
     [self.dataArray removeObjectAtIndex:index];
     [self.tabview reloadData];
-    if (self.dataArray.count == 1 ) {
+    if (self.dataArray.count == 0 ) {
         [self showNullViewWithNullViewType:NullTypeNoneDown];
     }
 }
@@ -56,7 +56,6 @@
     }else{
         [self hiddenNullView];
     }
-    self.header.cateBtn.selected = ![AudioDownLoader loader].isDownLoading;
 }
 - (void)creatUI{
     self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
@@ -93,6 +92,7 @@
     }
     [cell showSelectBotton:NO];
     [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:YES isDown:NO];
+    cell.downStatus.text = [AudioDownLoader loader].isDownLoading ?  @"" : @"已暂停";
     return cell;
 }
 
@@ -103,6 +103,8 @@
         [[AudioDownLoader loader] cancelDownLoading];
     }
     button.selected = !button.selected;
+    [self.tabview reloadData];
+    self.header.cateBtn.selected = ![AudioDownLoader loader].isDownLoading;
 }
 - (void)clearAllDownLoadList{
     for (int i = 0; i<self.dataArray.count; i++) {

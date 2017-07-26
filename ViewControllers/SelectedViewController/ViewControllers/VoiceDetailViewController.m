@@ -524,7 +524,16 @@
 /**音频下载完成*/
 - (void)audioDownLoadOver{
     if (self) {
-        NSInteger index = [self.listenModel.audio indexOfObject:[AudioDownLoader loader].currentModel];
+        NSInteger index = -1 ;
+        for (int i = 0; i<self.listenModel.audio.count; i++) {
+            HomeTopModel * model = self.listenModel.audio[i];
+            if ([[AudioDownLoader loader].currentModel.audioId integerValue] == [model.audioId integerValue]) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return;
+        }
         HomeTopModel * model = self.listenModel.audio[index];
         model.downStatus = @2;
         [self.tabview reloadData];

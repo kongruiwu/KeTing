@@ -328,7 +328,7 @@
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":@1,
-                                  @"relationId":model.audioId,
+                                  @"relationId":model.relationId,
                                   @"keyId":model.audioId,
                                   @"nickName":[UserManager manager].info.NICKNAME
                                   };
@@ -381,7 +381,16 @@
 #pragma mark - 音频下载完成
 - (void)audioDownLoadOver{
     if (self) {
-        NSInteger index = [self.dataArray indexOfObject:[AudioDownLoader loader].currentModel];
+        NSInteger index = -1 ;
+        for (int i = 0; i<self.dataArray.count; i++) {
+            HomeTopModel * model = self.dataArray[i];
+            if ([[AudioDownLoader loader].currentModel.audioId integerValue] == [model.audioId integerValue]) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return;
+        }
         HomeTopModel * model = self.dataArray[index];
         model.downStatus = @2;
         [self.tabview reloadData];
