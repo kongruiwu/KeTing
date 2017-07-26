@@ -40,7 +40,6 @@
     switch (self.webType) {
         case PROTOCOLTYPETEXT:
             title = @"文稿";
-//            [AudioPlayer instance].currentAudio.audioName;
             break;
         case PROTOCOLTYPEAGREE:
             title = @"服务协议";
@@ -53,14 +52,13 @@
             break;
         case PROTOCOLTYPEELSETEXT:
             title = @"文稿";
-//            self.model.audioName;
             break;
         default:
             break;
     }
     [self setNavTitle:title color:KTColor_MainBlack];
     [self creatUI];
-    if (self.webType == 0) {
+    if (self.webType == 0 || self.webType == PROTOCOLTYPEELSETEXT) {
         UIImage * image = [[UIImage imageNamed:@"Webshare"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClick)];
         self.navigationItem.rightBarButtonItem = rightItem;

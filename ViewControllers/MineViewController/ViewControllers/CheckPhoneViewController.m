@@ -149,12 +149,17 @@
                               };
     [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
+        if (!result[@"SUCCESS"] || [result[@"SUCCESS"] intValue] != 1) {
+            [self dismissLoadingView];
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误" duration:1.0f];
+            return ;
+        }
         NSDictionary * dic = @{@"mobile":self.phoneTF.text};
         [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ChangePhone complete:^(id result) {
             [self dismissLoadingView];
             NSDictionary * dic = (NSDictionary *)result;
             if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
-                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"绑定成功" duration:1.0f];
                 for (int i = 0; i<self.navigationController.viewControllers.count; i++) {
                     UIViewController * vc = self.navigationController.viewControllers[i];
                     if ([vc isKindOfClass:[AccountSafeViewController class]]) {

@@ -150,11 +150,15 @@
             }
 
         }else{
-            [[UserManager manager] userLoginWithInfoDic:result];
-            [UserManager manager].userid = [UserManager manager].info.USERID;
-            [[UserManager manager] getUserInfo];
-            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
-            [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
+            if (result && [result isKindOfClass:[NSDictionary class]]) {
+                [[UserManager manager] userLoginWithInfoDic:result];
+                [UserManager manager].userid = [UserManager manager].info.USERID;
+                [[UserManager manager] getUserInfo];
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
+                [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
+            }else{
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"手机号已注册" duration:1.0f];
+            }
         }
         
     } errorBlock:^(KTError *error) {

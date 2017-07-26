@@ -17,7 +17,7 @@
 #import "HistorySql.h"
 #import "AudioPlayer.h"
 #import "FristViewController.h"
-@interface AppDelegate ()
+@interface AppDelegate ()<AVAudioSessionDelegate>
 
 
 
@@ -54,6 +54,7 @@
     NSError * error ;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
     [[AVAudioSession sharedInstance] setActive:YES error:&error];
+    [[AVAudioSession sharedInstance] setDelegate:self];
 }
 - (void)IQKeyBoardSetting{
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -89,7 +90,19 @@
     }];
     [self.netManager startMonitoring];
 }
+- (void)beginInterruption
 
+{
+    [[AudioPlayer instance].audioPlayer pause];
+}
+
+
+- (void)endInterruption
+
+{
+    [[AudioPlayer instance].audioPlayer resume];
+    
+}
 
 - (void)UmengSetting{
     /* 打开调试日志 */

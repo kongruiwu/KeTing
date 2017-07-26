@@ -146,6 +146,8 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    NSString * str = self.textField.text.length>0 ? self.textField.text : self.textField.placeholder;
+    self.textField.text = str;
     [self searchRequest:self.textField.text];
     return NO;
 }

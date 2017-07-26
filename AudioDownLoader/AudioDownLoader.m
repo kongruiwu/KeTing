@@ -142,6 +142,7 @@
         return;
     }
     NSArray *paths = [self.fileManager subpathsAtPath:TemCachesPath];
+    BOOL rec = NO;
     for (NSString *filePath in paths)
     {
         if ([filePath rangeOfString:@"CFNetworkDownload"].length>0)
@@ -150,13 +151,22 @@
             NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:filePath];
             [self.fileManager copyItemAtPath:temp toPath:path error:nil];
             [self.fileManager removeItemAtPath:TemCachesPath error:nil];
+            rec = YES;
         }
     }
     if (!self.resumeData) {
         self.resumeData = [[NSUserDefaults standardUserDefaults] objectForKey:@"resumeData"];
     }
-    
-    self.downloadTask = [self.session downloadTaskWithResumeData:self.resumeData];
+    //这里判断下载信息 是否完全 如果不完全删除 下载信息重新下载
+    if (rec && self.resumeData) {
+        self.downloadTask = [self.session downloadTaskWithResumeData:self.resumeData];
+    }else{
+        [self clearDownLoadingData];
+        //刚开始下载的音频  刷新数据库中downloadstatus
+        [[SqlManager manager] updateAudioDownStatus:1 withAudioId:self.currentModel.audioId];
+        NSURL * url = [NSURL URLWithString:self.currentModel.audioSource];
+        self.downloadTask = [self.session downloadTaskWithURL:url];
+    }
     [self.downloadTask resume];
 }
 #pragma mark -- NSURLSessionDownloadDelegate

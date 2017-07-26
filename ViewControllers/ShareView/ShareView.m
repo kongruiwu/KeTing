@@ -148,7 +148,7 @@
 - (void)setFristValue{
     self.shareTitle = @"说者有心，听着有意，我正在收听“可听”，推荐给你。";
     self.shareDesc = @"你的财经小秘书，帮你轻松了解财经知识。";
-    self.targeturl = [NSString stringWithFormat:@"https://itunes.apple.com/app/id%@",APPID];
+    self.targeturl = [NSString stringWithFormat:@"http://fm.123.com.cn/"];
     self.imageUrl = @"";
     self.image = [UIImage imageNamed:@"logo"];
 }

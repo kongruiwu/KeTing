@@ -391,6 +391,10 @@
 #pragma mark - 上一曲
 - (void)upwardAudio{
     [[AudioPlayer instance] upwardAudio];
+    if (self.playBtn.selected == NO) {
+        self.playBtn.selected = YES;
+        [self animationResume];
+    }
 }
 - (void)playUpAudio:(BOOL)canPlay{
     if (canPlay) {
@@ -403,6 +407,11 @@
 #pragma mark - 下一曲
 - (void)nextAudioClick{
     [[AudioPlayer instance] nextAudio];
+    
+    if (self.playBtn.selected == NO) {
+        self.playBtn.selected = YES;
+        [self animationResume];
+    }
 }
 - (void)playNextAudio:(BOOL)canPlay isOver:(BOOL)rec{
     if (canPlay) {

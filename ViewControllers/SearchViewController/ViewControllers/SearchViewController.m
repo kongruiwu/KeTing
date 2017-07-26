@@ -28,6 +28,10 @@
 @end
 
 @implementation SearchViewController
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.textField becomeFirstResponder];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -282,6 +286,8 @@
     }];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    NSString * str = self.textField.text.length>0 ? self.textField.text : self.textField.placeholder;
+    self.textField.text = str;
     [self searchRequest:self.textField.text];
     return NO;
 }

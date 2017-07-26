@@ -64,8 +64,8 @@
     [self.view addSubview:spaceBtn];
     [spaceBtn addTarget:self action:@selector(pushToHome) forControlEvents:UIControlEventTouchUpInside];
     [spaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(@0);
-        make.top.equalTo(@(Anno750(100)));
+        make.right.equalTo(@(-Anno750(24)));
+        make.top.equalTo(@(Anno750(80)));
         make.width.equalTo(@(Anno750(100)));
         make.height.equalTo(@(Anno750(60)));
     }];
