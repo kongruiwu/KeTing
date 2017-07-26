@@ -39,6 +39,8 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [AudioDownLoader loader].delegate = self;
     [self getData];
+    
+    [self checkNetStatus];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{

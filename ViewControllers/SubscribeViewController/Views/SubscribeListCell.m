@@ -29,7 +29,7 @@
     return self;
 }
 - (void)creatUI{
-    self.leftImg = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.leftImg = [KTFactory creatImageViewWithImage:@"default"];
     self.nameLabel = [KTFactory creatLabelWithText:@"权利的游戏"
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
@@ -99,15 +99,24 @@
 }
 
 - (void)updateWithModel:(HomeListenModel *)model{
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"defaultImage"]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.name;
     self.timeLabel.text = [NSString stringWithFormat:@"%@更新",[KTFactory getUpdateTimeStringWithEditTime:model.editTime]];
+    
     if (model.audio.count >0) {
         self.updateIcon.hidden = NO;
         self.updateIcon.text = [NSString stringWithFormat:@"%ld篇更新",model.audio.count];
     }else{
         self.updateIcon.hidden = YES;
     }
+    
+    id obj = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",model.listenId]];
+    if (obj && [obj boolValue]) {
+        self.updateIcon.hidden = YES;
+    }else{
+        self.updateIcon.hidden = NO;
+    }
+    
     if (model.audio.count>0) {
         self.descLabel.text = model.audio[0].audioName;
     }else{

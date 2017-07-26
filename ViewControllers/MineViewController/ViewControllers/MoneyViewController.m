@@ -13,6 +13,7 @@
 #import "TopUpListViewController.h"
 #import "AcountModel.h"
 #import "RMIAPHelper.h"
+#import "OrderModel.h"
 
 #define iap6    @"keting6"     //商品的标识
 #define iap30   @"keting30"
@@ -144,12 +145,17 @@
 }
 - (void)getData{
     NSDictionary * params = @{};
-    [self showLoadingCantTouchAndClear];
+    if (!self.progressView) {
+        [self showLoadingCantTouchAndClear];
+    }
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
         [self dismissLoadingView];
         NSDictionary * dic = result[@"list"];
         self.acountModel = [[AcountModel alloc]initWithDictionary:dic];
         [self.tabview reloadData];
+        if (self.isBuy) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
     }];
@@ -206,7 +212,7 @@
 - (void)paymentRequest:(RMIAPHelper*)sender start:(SKPayment*)payment{
      //    NSLog(@"startpayment----------3发送支付请求--------");
      //    [SVProgressHUD dismiss];
-    [self dismissLoadingView];
+    
 }
 
 - (void)paymentRequest:(RMIAPHelper*)sender purchased:(SKPaymentTransaction*)transaction money:(NSString *)rechargeMoney {
@@ -273,9 +279,6 @@
          NSNumber* status = [dict objectForKey:@"status"];
          NSInteger myStatus = [status integerValue];
          if (myStatus == 0) {
-             //通知后台给用户加金币
-             
-             [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"苹果验证成功" duration:2];
              //验证成功通知合肥后台充值
              [self createPayOrders:transactionID time:paymentTime money:rechargeMoney];
          } else {
@@ -285,8 +288,46 @@
 }
 #pragma mark - 创建支付订单
 - (void)createPayOrders:(NSString *)transactionID time:(NSString *)paymentTime money:(NSString *)rechargeMoney {
-     NSLog(@"transactionID:%@   paymentTime:%@  rechargeMoney:%@",transactionID,paymentTime,rechargeMoney);
+    NSDictionary * params = @{@"userId":[UserManager manager].userid,
+                              @"nickName":[UserManager manager].info.NICKNAME,
+                              @"phone":[UserManager manager].info.MOBILE,
+                              @"orderType":@0,
+                              @"payAmount":rechargeMoney,
+                              @"payMethod":@1,
+                              @"goodList":@"",
+                              @"actFrom":@0
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Order complete:^(id result) {
+        OrderModel * model = [[OrderModel alloc]initWithDictionary:result];
+        NSDictionary * orderParams = @{
+                                       @"userId":[UserManager manager].userid,
+                                       @"orderId":model.orderId,
+                                       @"orderNo":model.orderNo,
+                                       @"payStatus":@1
+                                       };
+        [[NetWorkManager manager] POSTRequest:orderParams pageUrl:Page_PayStatus complete:^(id result) {
+            NSDictionary * dic = (NSDictionary *)result;
+            if ([dic[@"payStatus"] integerValue] == 1) {
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"充值成功" duration:1.0f];
+                [self getData];
+            }else{
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"支付失败" duration:1.0f];
+            }
+            
+        } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
+            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
+        [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+
+    
 }
+
 
 #pragma mark - 处理交易时间
 - (NSString *)stringFromDate:(NSDate *)date{

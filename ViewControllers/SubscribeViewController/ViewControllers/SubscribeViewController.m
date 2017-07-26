@@ -188,6 +188,11 @@
             NSArray * array = result[@"list"];
             for (int i = 0; i< array.count; i++) {
                 HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:array[i]];
+                id obj = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",model.listenId]];
+                if (!obj) {
+                    [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:[NSString stringWithFormat:@"%@",model.listenId]];
+                }
+                
                 [self.listArray addObject:model];
             }
             [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];

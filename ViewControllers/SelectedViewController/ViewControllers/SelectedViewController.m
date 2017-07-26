@@ -39,6 +39,8 @@
     [super viewWillAppear:animated];
     [self AudioPlayerPlayStatusReady];
     [AudioPlayer instance].delegate = self;
+    
+    [self checkNetStatus];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];

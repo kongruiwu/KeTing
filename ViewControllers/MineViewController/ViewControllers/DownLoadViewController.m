@@ -48,6 +48,11 @@
     [self.segmentbtn addTarget:self action:@selector(navSelectBtnChoose:) forControlEvents:UIControlEventValueChanged];
 }
 - (void)navSelectBtnChoose:(UISegmentedControl *)segembtn{
+    if (segembtn.selectedSegmentIndex == 0) {
+        [self.leftvc getData];
+    }else{
+        [self.rightvc getData];
+    }
     [UIView animateWithDuration:0.3f animations:^{
         self.mainScroll.contentOffset = CGPointMake(UI_WIDTH * segembtn.selectedSegmentIndex, 0);
     }];
@@ -75,11 +80,11 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int index = scrollView.contentOffset.x / UI_WIDTH;
     [self.segmentbtn setSelectedSegmentIndex:index];
-        if (index == 0) {
-            [self.leftvc getData];
-        }else{
-            [self.rightvc getData];
-        }
+    if (index == 0) {
+        [self.leftvc getData];
+    }else{
+        [self.rightvc getData];
+    }
 }
 - (void)audioDownLoadOver{
     int index = self.mainScroll.contentOffset.x / UI_WIDTH;

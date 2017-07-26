@@ -92,7 +92,7 @@
     }];
 }
 - (void)updateWithvoiceStockSecret:(HomeListenModel *)model{
-    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default_h"]];
     self.titleLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.hidden = model.isFree;

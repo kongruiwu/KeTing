@@ -131,10 +131,16 @@
 }
 
 - (void)updateWithListenModel:(HomeListenModel *)model{
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default_h"]];
     self.nameLabel.text = model.name;
     self.descLabel.text = model.summary;
-    self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",model.audioLong];
+    NSString * audioLongStr = [NSString stringWithFormat:@"%@",model.audioLong];
+    if ([audioLongStr containsString:@"分"]) {
+        self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",model.audioLong];
+    }else{
+        self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+    }
+    
     
     self.shopCar.hidden = model.Isbuy || model.isFree || [model.promotionType integerValue] == 2? YES: NO;
     self.buybtn.hidden = model.isFree || [model.promotionType integerValue] == 2? YES: NO;

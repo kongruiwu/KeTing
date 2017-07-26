@@ -27,6 +27,7 @@
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
     [self getListData];
+    [self checkNetStatus];
 }
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];

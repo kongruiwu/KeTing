@@ -23,6 +23,7 @@
     [super viewWillAppear:animated];
    
     [self setNavUnAlpha];
+    [self checkNetStatus];
 }
 
 - (void)viewDidLoad {

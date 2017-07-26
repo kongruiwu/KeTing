@@ -17,12 +17,11 @@
 @property (nonatomic, strong) NSFileManager * fileManager;
 
 
+
 @end
 
 /**
  存储 所有队列
- 
- 
  */
 
 
@@ -37,6 +36,12 @@
             loader.fileManager = [NSFileManager defaultManager];
             //先获取本地 正在下载音频 和 未下载音频
             loader.currentModel = nil;
+            //自动下载开关
+            loader.autoDownLoad = NO;//默认关闭
+            id obj = [[NSUserDefaults standardUserDefaults] objectForKey:@"autoDownLoad"];
+            if (obj) {
+                loader.autoDownLoad = [obj boolValue];
+            }
             NSMutableArray * loading = [[SqlManager manager] getDownLoadingAudio];
             if (loading.count>0) {
                 loader.currentModel = loading[0];
@@ -60,6 +65,9 @@
 }
 
 - (void)downLoadAudioWithHomeTopModel:(NSArray *)topModels{
+    
+    self.isDownLoading = YES;
+    
     [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"已加入下载队列中" duration:1.0f];
     for (int i = 0; i<topModels.count; i++) {
          //先将数据存储到数据库  然后在下载完成后修改数据下载状态
@@ -83,6 +91,7 @@
 }
 //暂停下载
 - (void)cancelDownLoading{
+    self.isDownLoading = NO;
     if (!self.currentModel) {
         return;
     }
@@ -110,8 +119,14 @@
         
     }];
 }
+
+- (void)clearDownLoadingData{
+    [self.fileManager removeItemAtPath:TemCachesPath error:nil];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"resumeData"];
+}
 //开始下载
 - (void)resumeDownLoading{
+    self.isDownLoading = YES;
     NSMutableArray * arr = [[SqlManager manager] getDownLoadingAudio];
     if (arr.count >0) {
         self.currentModel = arr[0];
@@ -188,6 +203,7 @@ didFinishDownloadingToURL:(NSURL *)location
         // 开始任务
         [self.downloadTask resume];
     }
+    self.isDownLoading = NO;
 }
 /**
  *  每次写入沙盒完毕调用

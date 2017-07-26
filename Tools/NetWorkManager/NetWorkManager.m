@@ -54,6 +54,7 @@
 #endif
             }else{
                 complete(dic[@"data"]);
+                DLog(@"%@",dic[@"msg"]);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [error localizedDescription];
@@ -79,6 +80,7 @@
 #endif
             }else{
                 complete(dic[@"data"]);
+                DLog(@"%@",dic[@"msg"]);
             }
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [error localizedDescription];

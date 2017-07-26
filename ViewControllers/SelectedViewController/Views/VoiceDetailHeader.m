@@ -18,7 +18,7 @@
     return self;
 }
 - (void)creatUI{
-    self.groundImg = [KTFactory creatImageViewWithImage:@"default_h"];
+    self.groundImg = [KTFactory creatImageViewWithImage:@"default_w"];
     [self.groundImg setContentMode:UIViewContentModeScaleAspectFill];
     [self.groundImg setClipsToBounds:YES];
     
@@ -110,7 +110,7 @@
 }
 
 - (void)updateWithImage:(NSString *)imgurl title:(NSString *)title{
-    [self.groundImg sd_setImageWithURL:[NSURL URLWithString:imgurl]];
+    [self.groundImg sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"default_w"]];
     self.nameLabel.text = title;
 }
 - (void)updateShopCarCount:(NSString *)count{

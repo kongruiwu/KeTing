@@ -23,7 +23,7 @@
     [self.groundImg setClipsToBounds:YES];
     
     self.groundImg.userInteractionEnabled = YES;
-    self.userIcon = [KTFactory creatImageViewWithImage:@""];
+    self.userIcon = [KTFactory creatImageViewWithImage:@"default"];
     self.userIcon.layer.cornerRadius = Anno750(64);
     self.userIcon.layer.masksToBounds = YES;
     self.username = [KTFactory creatLabelWithText:@""
@@ -120,7 +120,7 @@
     }];
 }
 - (void)updateWithAnchorModel:(AnchorModel *)model{
-    [self.userIcon sd_setImageWithURL:[NSURL URLWithString:model.face]];
+    [self.userIcon sd_setImageWithURL:[NSURL URLWithString:model.face] placeholderImage:[UIImage imageNamed:@"default"]];
     self.username.text = model.name;
     self.descLabel.text = model.summary;
     CGSize size = [KTFactory getSize:model.summary maxSize:CGSizeMake(99999, Anno750(30)) font:[UIFont systemFontOfSize:Anno750(26)]];

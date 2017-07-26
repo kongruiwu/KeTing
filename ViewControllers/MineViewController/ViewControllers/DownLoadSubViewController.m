@@ -90,7 +90,7 @@
     if (!cell) {
         cell = [[DownLoadListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:NO];
+    [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:NO isDown:YES];
     [cell showSelectBotton:self.isDelete];
     return cell;
 }

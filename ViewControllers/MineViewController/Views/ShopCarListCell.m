@@ -32,7 +32,7 @@
     self.clearBtn = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
     [self.clearBtn addTarget:self action:@selector(cleaderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.selctButton = [KTFactory creatButtonWithNormalImage:@"icon_unselect" selectImage:@"icon_select"];
-    self.leftImg = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.leftImg = [KTFactory creatImageViewWithImage:@"default"];
     self.namelabel = [KTFactory creatLabelWithText:@"周小川：“一行三会”"
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
@@ -106,7 +106,7 @@
     }];
 }
 - (void)updateWithHomeListenModel:(HomeListenModel *)model{
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"defaultImage"]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.namelabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.text = model.timePrice;

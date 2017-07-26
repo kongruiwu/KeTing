@@ -140,7 +140,7 @@
 }
 - (void)updateUI{
     HomeTopModel * model =[AudioPlayer instance].currentAudio;
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.audioName;
     self.progressView.progress = [[AudioPlayer instance].audioPlayer progress];
 }

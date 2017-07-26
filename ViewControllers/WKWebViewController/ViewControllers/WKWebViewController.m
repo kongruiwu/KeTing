@@ -27,7 +27,7 @@
     if (self.isFromNav) {
         self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
     }else{
-        self.webView.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT- 64);
+        self.webView.frame = CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT- 64);
     }
     
     
@@ -39,7 +39,8 @@
     NSString * title;
     switch (self.webType) {
         case PROTOCOLTYPETEXT:
-            title = [AudioPlayer instance].currentAudio.audioName;
+            title = @"文稿";
+//            [AudioPlayer instance].currentAudio.audioName;
             break;
         case PROTOCOLTYPEAGREE:
             title = @"服务协议";
@@ -51,7 +52,8 @@
             title = @"隐私协议";
             break;
         case PROTOCOLTYPEELSETEXT:
-            title = self.model.audioName;
+            title = @"文稿";
+//            self.model.audioName;
             break;
         default:
             break;
@@ -59,18 +61,24 @@
     [self setNavTitle:title color:KTColor_MainBlack];
     [self creatUI];
     if (self.webType == 0) {
-        [self drawRightShareButton];
+        UIImage * image = [[UIImage imageNamed:@"Webshare"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClick)];
+        self.navigationItem.rightBarButtonItem = rightItem;
+
     }
     [self getCommonInfo];
+    self.view.backgroundColor = [UIColor whiteColor];
     
 }
+
 - (void)shareButtonClick{
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = self.model.audioName;
     model.shareDesc = self.model.summary;
     UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.model.thumbnail]]];
     model.image = image;
-    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,self.model.audioId,@1,self.model.audioId];
+    NSNumber * rid = self.listenID ? self.listenID : self.model.topId;
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,self.model.audioId,@1,rid];
     if (self.isFromNav) {
         RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
         [tbc.shareView updateWithShareModel:model];
@@ -83,19 +91,33 @@
 }
 - (void)creatUI{
     
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64)];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT - 64)];
     if (self.webType == 0) {
-        [self.webView loadHTMLString:[Commond getStringFromHTML5String:[AudioPlayer instance].currentAudio.audioContent].string baseURL:nil];
+        [self.webView loadHTMLString:[self replaceHtmlString:[AudioPlayer instance].currentAudio.audioContent] baseURL:nil];
     }else if(self.webType == PROTOCOLTYPEELSETEXT){
-        [self.webView loadHTMLString:[Commond getStringFromHTML5String:self.model.audioContent].string baseURL:nil];
+        [self.webView loadHTMLString:[self replaceHtmlString:self.model.audioContent] baseURL:nil];
     }
     self.webView.navigationDelegate = self;
+    self.webView.scrollView.showsVerticalScrollIndicator = NO;
+    self.webView.scrollView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:self.webView];
     if (!self.isFromNav) {
         self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) hasNav:YES];
         [self.view addSubview:self.shareView];
     }
     
+}
+
+- (NSString *)replaceHtmlString:(NSString *)string{
+    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"detail"
+                                                         ofType:@"html"];
+    NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:nil];
+    htmlCont = [htmlCont stringByReplacingOccurrencesOfString:@"ReplaceTitle" withString:self.model.audioName ? self.model.audioName : [AudioPlayer instance].currentAudio.audioName];
+    htmlCont = [htmlCont stringByReplacingOccurrencesOfString:@"ReplaceContent" withString:string];
+    
+    return htmlCont;
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     //修改字体大小 300%

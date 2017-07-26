@@ -179,7 +179,7 @@
                               @"longTime":@(num)
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:page_TimeListen complete:^(id result) {
-        float value = (1.0 - self.TimeprogressView.progressView.progress)/(2/0.05);
+        float value = (1.0 - self.TimeprogressView.progressView.progress)/(5/0.05);
         NSArray * list = result[@"list"];
         for (int i = 0; i<list.count; i++) {
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:list[i]];
@@ -188,7 +188,7 @@
         [self.timer invalidate];
         self.timer = nil;
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewQuick) userInfo:[NSNumber numberWithFloat:value] repeats:YES];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (!self.canNext) {
                 self.canNext = YES;
                 return ;

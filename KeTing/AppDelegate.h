@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Reachability.h>
+#import <AFNetworking.h>
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) AFNetworkReachabilityManager * netManager;
 
-@property (nonatomic, strong) Reachability * hostReach;
-@property (nonatomic, assign) NetworkStatus netStatus;
 @end
 

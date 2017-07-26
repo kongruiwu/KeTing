@@ -179,6 +179,7 @@
         if (dic[@"SUCCESS"] && [dic[@"SUCCESS"] intValue] != 0) {
             ChangePwdViewController * vc = [ChangePwdViewController new];
             vc.phoneNum = self.phoneTF.text;
+            vc.TICKET = dic[@"TICKET"];
             vc.isChange = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else{

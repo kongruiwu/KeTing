@@ -29,6 +29,7 @@
     [super viewDidLoad];
     [self creatUI];
     [self getData];
+    [self checkNetStatus];
 }
 - (void)creatUI{
     

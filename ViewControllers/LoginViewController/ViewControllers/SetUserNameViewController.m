@@ -196,4 +196,7 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+- (void)doBack{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

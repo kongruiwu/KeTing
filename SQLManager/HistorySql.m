@@ -30,7 +30,7 @@
     // 3.打开数据库
     if ([self.PDO open]) {
         // 4.创表
-        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS play (id integer PRIMARY KEY AUTOINCREMENT,audioId INTEGER,audioSource TEXT,audioName TEXT,playLong INTEGER,audioSize INTEGER,tagString TEXT,isprase INTEGER,audioContent TEXT,thumbnail TEXT,audioLong INTEGER,relationType INTEGER,relationId INTEGER,praseNum INTEGER);"];
+        BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS play (id integer PRIMARY KEY AUTOINCREMENT,audioId INTEGER,audioSource TEXT,audioName TEXT,playLong INTEGER,audioSize INTEGER,tagString TEXT,isprase INTEGER,audioContent TEXT,thumbnail TEXT,audioLong INTEGER,relationType INTEGER,relationId INTEGER,praseNum INTEGER,topId INTEGER,summary TEXT);"];
         if (result) {
             NSLog(@"成功创表");
         } else {
@@ -39,7 +39,7 @@
     }
 }
 - (void)insertAudio:(HomeTopModel *)model{
-    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong,relationType,relationId,praseNum) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong,model.relationType,model.relationId,model.praseNum];
+    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong,relationType,relationId,praseNum) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong,model.relationType,model.relationId,model.praseNum,model.topId,model.summary];
     
     [self.PDO executeUpdate:sqlStr];
     
@@ -102,6 +102,8 @@
     /*
      audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail
      */
+    model.topId = [result objectForColumn:@"topId"];
+    model.summary = [result objectForColumn:@"summary"];
     model.audioId = [result objectForColumn:@"audioId"];
     model.audioName = [result objectForColumn:@"audioName"];
     model.audioSource = [result objectForColumn:@"audioSource"];

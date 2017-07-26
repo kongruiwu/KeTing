@@ -30,15 +30,16 @@
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
+    [self checkNetStatus];
 }
 
 - (void)creatUI{
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.modelDic = @{
-                      @"听书":@3,
-                      @"财经头条":@2,
-                      @"声度":@4
+                      @"听书":@2,
+                      @"财经头条":@1,
+                      @"声度":@3
                       };
     NSArray * keys = self.dataDic.allKeys;
     self.typeStr = keys[0];

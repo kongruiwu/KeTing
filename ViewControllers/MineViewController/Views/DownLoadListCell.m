@@ -7,7 +7,7 @@
 //
 
 #import "DownLoadListCell.h"
-
+#import "HistorySql.h"
 @implementation DownLoadListCell
 
 - (void)awakeFromNib {
@@ -48,7 +48,7 @@
                                         fontValue:font750(24)
                                         textColor:KTColor_lightGray
                                     textAlignment:NSTextAlignmentLeft];
-    self.playStatus = [KTFactory creatLabelWithText:@"已播放3%"
+    self.playStatus = [KTFactory creatLabelWithText:@""
                                           fontValue:font750(24)
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
@@ -95,18 +95,26 @@
     }];
     
 }
-- (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec{
-    self.downLoadImg.hidden = [model.downStatus intValue] == 2 ? NO :YES;
+- (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec isDown:(BOOL)isDown{
+
+    self.downLoadImg.hidden = !isDown;
     if (!self.downLoadImg.hidden && !rec) {
         self.downStatus.text = @"    ";
     }
     if (rec) {
-        self.downStatus.text = @"已暂停，点击继续下载";
+        self.downStatus.text = @"已暂停";
     }
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.selectButton.selected = model.isSelectDown;
     self.tagLabel.text = [NSString stringWithFormat:@"  %@  %@",time,model.tagString];
+    model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
+    if ([model.playLong integerValue] == 0) {
+        self.playStatus.hidden = YES;
+    }else{
+        self.playStatus.text = [NSString stringWithFormat:@"%@%%",model.playLong];
+    }
+    
 //    float value = [model.playLong floatValue]/[model.audioLong floatValue];
 //    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
 }

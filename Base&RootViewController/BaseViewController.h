@@ -43,6 +43,6 @@
 - (void)showLoadingCantClear:(BOOL)rec;
 - (void)showLoadingCantTouchAndGround;
 - (void)dismissLoadingView;
-
+- (void)checkNetStatus;
 
 @end

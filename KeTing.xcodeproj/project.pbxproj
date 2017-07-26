@@ -113,6 +113,7 @@
 		8BBACBEA1F277A27002A8D79 /* ShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBE91F277A27002A8D79 /* ShareModel.m */; };
 		8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBED1F27889F002A8D79 /* FristViewController.m */; };
 		8BBACBF11F2796DE002A8D79 /* SearchSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */; };
+		8BBACBF31F284347002A8D79 /* detail.html in Resources */ = {isa = PBXBuildFile; fileRef = 8BBACBF21F284347002A8D79 /* detail.html */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
@@ -404,6 +405,7 @@
 		8BBACBED1F27889F002A8D79 /* FristViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FristViewController.m; sourceTree = "<group>"; };
 		8BBACBEF1F2796DE002A8D79 /* SearchSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSubViewController.h; sourceTree = "<group>"; };
 		8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSubViewController.m; sourceTree = "<group>"; };
+		8BBACBF21F284347002A8D79 /* detail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = detail.html; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -938,6 +940,7 @@
 		8B8742ED1EEE52FF00324FA2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8BBACBF21F284347002A8D79 /* detail.html */,
 				8B8742EF1EEE531200324FA2 /* WKWebViewController.h */,
 				8B8742F01EEE531200324FA2 /* WKWebViewController.m */,
 			);
@@ -1497,6 +1500,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BBACBF31F284347002A8D79 /* detail.html in Resources */,
 				8BF692071EE7A245001CECEE /* toast_bg@2x.png in Resources */,
 				8BF692091EE7A245001CECEE /* toast_icon_bg@2x.png in Resources */,
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,

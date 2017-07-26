@@ -26,7 +26,7 @@
     [self setNavTitle:@"我的消息" color:KTColor_MainBlack];
     [self creatUI];
     [self getData];
-    
+    [self checkNetStatus];
 }
 - (void)creatUI{
     self.page = 1;

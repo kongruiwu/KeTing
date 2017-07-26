@@ -12,7 +12,6 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super initWithDictionary:dic];
-    /**草泥马  渣b的服务端*/
     if (self) {
         if (dic[@"USERNAME"]) {
             self.UNAME = dic[@"USERNAME"];

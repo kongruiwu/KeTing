@@ -25,4 +25,6 @@ typedef NS_ENUM(NSInteger, PROTOCOLTYPE){
 @property (nonatomic, strong) HomeTopModel * model;
 //是否是从root上进来
 @property (nonatomic, assign) BOOL isFromNav;
+/**分享时 做判断用*/
+@property (nonatomic, strong) NSNumber * listenID;
 @end

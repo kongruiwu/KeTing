@@ -11,7 +11,7 @@
 @interface HomeTopModel : BaseModel
 
 /**头条Id*/
-@property (nonatomic, strong) NSString * topId;
+@property (nonatomic, strong) NSNumber * topId;
 /**标签名称*/
 @property (nonatomic, strong) NSString * tagName;
 /**头条名称*/

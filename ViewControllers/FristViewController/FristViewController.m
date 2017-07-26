@@ -24,6 +24,16 @@
 }
 
 - (void)creatUI{
+    
+    
+    UIButton * spaceBtn = [KTFactory creatButtonWithTitle:@"跳过>"
+                                          backGroundColor:[UIColor clearColor]
+                                                textColor:KTColor_MainBlack
+                                                 textSize:font750(30)];
+    
+    
+    
+    
     self.view.backgroundColor = KTColor_BackGround;
     [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:@"Frist"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -50,6 +60,15 @@
         [self.mainScroll addSubview:imgView];
     }
     self.mainScroll.delegate = self;
+    
+    [self.view addSubview:spaceBtn];
+    [spaceBtn addTarget:self action:@selector(pushToHome) forControlEvents:UIControlEventTouchUpInside];
+    [spaceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(@0);
+        make.top.equalTo(@(Anno750(100)));
+        make.width.equalTo(@(Anno750(100)));
+        make.height.equalTo(@(Anno750(60)));
+    }];
 }
 - (void)pushToHome{
     

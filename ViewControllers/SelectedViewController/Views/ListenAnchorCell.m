@@ -29,7 +29,7 @@
     return self;
 }
 - (void)creatUI{
-    self.leftImg = [KTFactory creatImageViewWithImage:@""];
+    self.leftImg = [KTFactory creatImageViewWithImage:@"default_head"];
     self.leftImg.layer.masksToBounds = YES;
     self.leftImg.layer.cornerRadius = Anno750(40);
     self.nameLabel = [KTFactory creatLabelWithText:@""
@@ -68,7 +68,7 @@
     }];
 }
 - (void)updateWithIcon:(NSString *)imgurl name:(NSString *)name{
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:imgurl]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:imgurl] placeholderImage:[UIImage imageNamed:@"default_head"]];
     NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"讲述人  %@",name]];
     [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_lightGray range:NSMakeRange(0, 3)];
     [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_MainBlack range:NSMakeRange(3, attstr.length -3)];

@@ -15,6 +15,7 @@
 #import "HomeListenModel.h"
 #import "OrderModel.h"
 #import "MyShopedViewController.h"
+#import "MoneyViewController.h"
 @interface SetAccoutViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -26,6 +27,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.tabview reloadData];
+    
+    [self checkNetStatus];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +42,6 @@
 }
 
 - (void)creatUI{
-    self.isBook = NO;
     self.isCart = NO;
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -133,6 +137,7 @@
             if (!cell) {
                 cell = [[TopUpCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
+            [cell.topUpBtn addTarget:self action:@selector(pushToTopUpViewController) forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }
     }
@@ -149,15 +154,11 @@
     for (int i = 0; i<self.products.count; i++) {
         HomeListenModel * model = self.products[i];
         //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
-        NSDictionary * dic = @{
-                               @"relationType":self.isBook ? @2 : @3,
-                               @"relationId" : model.listenId,
-                               };
+        NSDictionary * dic = @{@"relationType":self.isBook?@2:@3,@"relationId":model.listenId};
         [arr addObject:dic];
     }
     NSData *data=[NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    
     NSDictionary * params = @{@"userId":[UserManager manager].userid,
                               @"nickName":[UserManager manager].info.NICKNAME,
                               @"phone":[UserManager manager].info.MOBILE,
@@ -212,5 +213,9 @@
     vc.webType = PROTOCOLTYPEBALANCE;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
+- (void)pushToTopUpViewController{
+    MoneyViewController * vc = [[MoneyViewController alloc]init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+}
 @end

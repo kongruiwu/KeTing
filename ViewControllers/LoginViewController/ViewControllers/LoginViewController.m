@@ -12,7 +12,7 @@
 #import <ReactiveObjC.h>
 #import "UserManager.h"
 #import <UMSocialCore/UMSocialCore.h>
-@interface LoginViewController ()
+@interface LoginViewController ()<UserManagerDelegate>
 
 @property (nonatomic, strong) UITextField * phoneTF;
 @property (nonatomic, strong) UITextField * pwdTextF;
@@ -180,13 +180,7 @@
     [RACObserve(self.loginBtn, enabled) subscribeNext:^(id  _Nullable x) {
         self.loginBtn.backgroundColor =  [x boolValue]?KTColor_IconOrange:KTColor_MainOrangeAlpha;
     }];
-    [self.phoneTF.rac_textSignal subscribeNext:^(NSString * _Nullable x) {
-        if (x.length >= 11) {
-            if (![Commond isMobileNumber:x]) {
-                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"您输入的手机号格式不正确" duration:1.0f];
-            }
-        }
-    }];
+
 }
 
 - (void)forgetPassword{
@@ -205,10 +199,8 @@
                                    @"userid":[UserManager manager].userid
                                    };
         [[NetWorkManager manager] GETRequest:params1 pageUrl:Page_UserInfo complete:^(id result) {
-            [self dismissLoadingView];
-            [[UserManager manager] userLoginWithInfoDic:result];
-            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"登录成功" duration:2.0f];
-            [self doBack];
+            [UserManager manager].delegate = self;
+            [[UserManager manager] getUserInfo];
         } errorBlock:^(KTError *error) {
             [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请求超时" duration:1.0f];
@@ -217,6 +209,11 @@
         [self dismissLoadingView];
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
+}
+- (void)getUserInfoSucess{
+    [self dismissLoadingView];
+    [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"登录成功" duration:2.0f];
+    [self doBack];
 }
 - (void)userRegister{
     [self.navigationController pushViewController:[RegisterViewController new] animated:YES];

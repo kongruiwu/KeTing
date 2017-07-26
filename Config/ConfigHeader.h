@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger,BackImgType){
 #define     UmengKey            @"596eeee475ca35794b001d60"
 #define     WxAppID             @"wx6c606ab1645ec900"
 #define     WxAppSecret         @"01f9546287a51655a34fc114fe6d524b"
+#define     QQAPPID             @"1106146839"
+#define     QQAPPKEY            @"4zZM56dUmbGAauOO"
 #define     JpushKey            @""
 #define     APPID               @"1261272564"
 #endif /* ConfigHeader_h */

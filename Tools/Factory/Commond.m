@@ -9,7 +9,6 @@
 #import "Commond.h"
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
-#import <Reachability.h>
 
 @implementation Commond
 
@@ -157,23 +156,6 @@
     return size.height;
 }
 
-#pragma mark - 判断当前网络状态
-+ (int)isWiFiOK {
-    Reachability *rrr = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-    int returnNum;
-    switch ([rrr currentReachabilityStatus]) {
-        case NotReachable:     // 没有网络连接
-            returnNum = 0;
-            break;
-        case ReachableViaWWAN: // 使用3G网络
-            returnNum = 1;
-            break;
-        case ReachableViaWiFi: // 使用WiFi网络
-            returnNum = 2;
-            break;
-    }
-    return returnNum;
-}
 
 #pragma mark - 时间对象转换为时间字段信息
 + (NSDateComponents *)dateComponentsWithDate:(NSDate *)date {

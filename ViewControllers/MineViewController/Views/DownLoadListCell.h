@@ -21,6 +21,6 @@
 @property (nonatomic, strong) UIButton * selectButton;
 @property (nonatomic, strong) UIView * moveView;
 
-- (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec;
+- (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec isDown:(BOOL)isDown;
 - (void)showSelectBotton:(BOOL)rec;
 @end

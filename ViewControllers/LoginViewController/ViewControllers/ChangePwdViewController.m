@@ -130,16 +130,29 @@
                               @"mobileEmail":self.phoneNum,
                               @"password":self.pwdT.text
                               };
-    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Register complete:^(id result) {
+    NSString * pageurl =Page_Register;
+    if (self.isChange) {
+        pageurl = Page_SetPwd;
+        params = @{
+//                   @"mobileEmail":self.phoneNum,
+                   @"password":self.pwdT.text,
+                   @"ticket":self.TICKET
+                   };
+    }
+    [[NetWorkManager manager] POSTRequest:params pageUrl:pageurl complete:^(id result) {
         [self dismissLoadingView];
         if (self.isChange) {
-            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
-            [self.navigationController popToRootViewControllerAnimated:YES];
-//            [UserManager manager].delegate = self;
-//            [[UserManager manager] getUserInfo];
+            if (result[@"SUCCESS"] && [result[@"SUCCESS"] boolValue]) {
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改成功" duration:1.0f];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }else{
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"修改失败" duration:1.0f];
+            }
+
         }else{
             [[UserManager manager] userLoginWithInfoDic:result];
             [UserManager manager].userid = [UserManager manager].info.USERID;
+            [[UserManager manager] getUserInfo];
             [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"注册成功" duration:2.0f];
             [self.navigationController pushViewController:[SetUserNameViewController new] animated:YES];
         }
@@ -150,7 +163,4 @@
     }];
 }
 
-//- (void)getUserInfoSucess{
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//}
 @end

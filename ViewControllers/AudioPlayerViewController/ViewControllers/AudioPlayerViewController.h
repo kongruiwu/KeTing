@@ -14,5 +14,7 @@
 //是否从root跳转进来
 @property (nonatomic, assign) BOOL isFromRoot;
 
+/**分享时使用*/
+@property (nonatomic, strong) NSNumber * listenID;
 
 @end

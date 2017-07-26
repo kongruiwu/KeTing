@@ -24,6 +24,7 @@
     [self setNavTitle:@"财经头条" color:KTColor_MainBlack];
     [self creatUI];
     [self getData];
+    [self checkNetStatus];
 }
 - (void)creatUI{
     self.view.backgroundColor = [UIColor whiteColor];

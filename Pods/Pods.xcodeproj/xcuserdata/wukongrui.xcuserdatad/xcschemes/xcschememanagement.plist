@@ -49,11 +49,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Reachability.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>ReactiveObjC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,7 +72,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3890C10D8581867DCEDD5D13C2049C1B</key>
+		<key>45A936C2EAF8C8757810CE4B28494FF4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>57929A1CC38CC3083D34BE52523B60D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>586F2DFA9BDCC6675C2546793A69E5CC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6BA0E5EE74CD13379A62E8B263E512D8</key>
+		<key>5D63ACEAEE247DFB1E2D28AE74AFD240</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,11 +112,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>978B6F67C91885EC65C5B259671A83A8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
 		<dict>
 			<key>primary</key>
@@ -127,12 +122,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B77CE8738CAC0BB050FA242258B335C8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CA2D2DA254845ECA48C6D04279CF081A</key>
+		<key>A0E79686E9FC10A986882B707D02EE90</key>
 		<dict>
 			<key>primary</key>
 			<true/>

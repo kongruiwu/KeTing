@@ -14,6 +14,7 @@
 #import "AboutusViewController.h"
 #import "LoginViewController.h"
 #import "RootViewController.h"
+#import "AudioDownLoader.h"
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -119,6 +120,8 @@
         if (!cell) {
             cell = [[WI_FISettingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
+        cell.switchView.on = [AudioDownLoader loader].autoDownLoad;
+        [cell.switchView addTarget:self action:@selector(switchViewValueChange:) forControlEvents:UIControlEventValueChanged];
         return cell;
     }
     static NSString * cellid = @"SettingListCell";
@@ -184,7 +187,22 @@
     }
 }
 - (void)userLogOut{
-    [[UserManager manager] userLogout];
-    [self doBack];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定退出登录么？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UserManager manager] userLogout];
+        [self doBack];
+    }];
+    [alert addAction:action];
+    [alert addAction:sure];
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
+- (void)switchViewValueChange:(UISwitch *)switchView{
+    switchView.on = !switchView.on;
+    [AudioDownLoader loader].autoDownLoad = switchView.on;
+    [[NSUserDefaults standardUserDefaults] setObject:@([AudioDownLoader loader].autoDownLoad) forKey:@"autoDownLoad"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

@@ -34,6 +34,7 @@
     [self setNavUnAlpha];
     [self CreatUI];
     [self getHotWord];
+    [self checkNetStatus];
 }
 
 - (void)CreatUI{
@@ -301,7 +302,7 @@
     self.dataArray = [NSMutableArray new];
     NSDictionary * params = @{
                               @"search":text,
-                              @"searchType":@1
+                              @"searchType":@0
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_Search complete:^(id result) {
         [self dismissLoadingView];

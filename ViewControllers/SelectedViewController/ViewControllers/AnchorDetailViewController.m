@@ -31,6 +31,8 @@
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self getData];
+    
+    [self checkNetStatus];
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;

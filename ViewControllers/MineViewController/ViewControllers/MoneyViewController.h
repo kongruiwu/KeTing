@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface MoneyViewController : BaseViewController
-
+@property (nonatomic) BOOL isBuy;
 @end

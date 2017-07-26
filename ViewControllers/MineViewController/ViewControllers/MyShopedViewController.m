@@ -28,7 +28,7 @@
         CGRect frame = self.collectView.frame;
         self.collectView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
     }
-    
+    [self checkNetStatus];
 }
 
 - (void)viewDidLoad {
@@ -88,12 +88,14 @@
 }
 
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     NSDictionary * params = @{
                               @"page":@(self.page),
                               @"pagesize":@"9"
                               };
     
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_Buys complete:^(id result) {
+        [self dismissLoadingView];
         NSArray * datas = (NSArray *)result;
         if (self.dataArray.count != 0 && datas.count< 9) {
             if (datas.count == 0) {
@@ -117,6 +119,7 @@
             [self showNullViewWithNullViewType:NullTypeNoneAudio];
         }
     } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
         if (self.page > 1) {
             self.page -= 1;
         }

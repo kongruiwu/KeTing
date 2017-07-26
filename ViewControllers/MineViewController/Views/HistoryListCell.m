@@ -30,7 +30,7 @@
     return self;
 }
 - (void)creatUI{
-    self.leftImg = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.leftImg = [KTFactory creatImageViewWithImage:@"default"];
     self.nameLabel = [KTFactory creatLabelWithText:@"权利的游戏"
                                          fontValue:font750(30)
                                          textColor:KTColor_MainBlack
@@ -79,7 +79,7 @@
     }];
 }
 - (void)updateWithHistoryModel:(HomeTopModel *)model{
-    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"defaultImage"]];
+    [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.tagLabel.text = [NSString stringWithFormat:@"%@  %@",time,model.tagString];

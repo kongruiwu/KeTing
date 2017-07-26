@@ -38,7 +38,8 @@
 @property (nonatomic, strong) HomeTopModel * currentModel;
 
 @property (nonatomic, assign) id <AudioDownLoadDelegate> delegate;
-
+/**是否处于正在下载状态*/
+@property (nonatomic) BOOL isDownLoading;
 
 
 + (instancetype)loader;
@@ -51,4 +52,5 @@
 /**删除数据*/
 - (void)deleteAudioWithLocalPath:(NSString *)LocalPath;
 
+- (void)clearDownLoadingData;
 @end

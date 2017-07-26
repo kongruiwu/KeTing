@@ -44,6 +44,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [AudioDownLoader loader].delegate = self;
+    [self checkNetStatus];
 }
 
 - (void)viewDidLoad {
@@ -135,7 +136,7 @@
     }
     
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdelegete.netStatus == ReachableViaWiFi) {
+    if (appdelegete.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
     }else{
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
@@ -153,9 +154,11 @@
 - (void)downAllSelectAudio{
     
     NSMutableArray * muarr = [NSMutableArray new];
+    BOOL rec = NO;
     for (int i = 0; i<self.dataArray.count; i++) {
         HomeTopModel * model = self.dataArray[i];
         if (model.isSelectDown) {
+            rec = YES;
             NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
             if ([num integerValue] == 1000) {
                 [muarr addObject:model];
@@ -163,12 +166,17 @@
         }
     }
     if (muarr.count ==0) {
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请选择您要下载的音频" duration:1.0f];
+        NSString * message = @"请选择您要下载的音频";
+        if (rec) {
+            message = @"所选音频已在下载队列中";
+        }
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:message duration:1.0f];
         return;
     }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdelegete.netStatus == ReachableViaWiFi) {
+    if (appdelegete.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
+        
     }else{
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -240,7 +248,7 @@
     model.shareDesc = Audio.summary;
     UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
     model.image = image;
-    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,Audio.audioId];
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,Audio.topId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];

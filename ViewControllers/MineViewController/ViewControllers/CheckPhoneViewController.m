@@ -149,7 +149,7 @@
                               };
     [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] POSTRequest:params pageUrl:Page_CheckCode complete:^(id result) {
-        NSDictionary * dic = @{};
+        NSDictionary * dic = @{@"mobile":self.phoneTF.text};
         [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ChangePhone complete:^(id result) {
             [self dismissLoadingView];
             NSDictionary * dic = (NSDictionary *)result;
@@ -166,11 +166,12 @@
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
             }
         } errorBlock:^(KTError *error) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
             [self dismissLoadingView];
         }];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"验证码错误，请重新输入" duration:1.0f];
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
     }];
 }
 #pragma mark - 获取验证码

@@ -25,6 +25,8 @@
     [super viewWillAppear:animated];
     [self setNavUnAlpha];
     [self refreshData];
+    
+    [self checkNetStatus];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,7 +48,7 @@
     self.tabview.mj_footer = self.refreshFooter;
 }
 - (void)drawRightShopCar{    
-    UIButton * button = [KTFactory creatButtonWithNormalImage:@"shopcar" selectImage:nil];
+    UIButton * button = [KTFactory creatButtonWithNormalImage:@"listenshopping cart" selectImage:nil];
     button.frame = CGRectMake(0, 0, Anno750(64), Anno750(64));
     self.countLabel = [KTFactory creatLabelWithText:@"0"
                                           fontValue:font750(20)

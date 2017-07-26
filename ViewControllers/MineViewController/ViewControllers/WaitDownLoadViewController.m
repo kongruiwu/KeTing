@@ -39,8 +39,8 @@
     }
     [self.dataArray removeObjectAtIndex:index];
     [self.tabview reloadData];
-    if (self.dataArray.count == 0) {
-        [self getData];
+    if (self.dataArray.count == 1 ) {
+        [self showNullViewWithNullViewType:NullTypeNoneDown];
     }
 }
 - (void)getData{
@@ -56,14 +56,16 @@
     }else{
         [self hiddenNullView];
     }
-    
+    self.header.cateBtn.selected = ![AudioDownLoader loader].isDownLoading;
 }
 - (void)creatUI{
     self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
     [self.header updateWithImages:@[@"my_ stop",@"my_ delete"] titles:@[@"    全部暂停",@"    全部清空"]];
     [self.header.cateBtn addTarget:self action:@selector(pauseAllDownLoad:) forControlEvents:UIControlEventTouchUpInside];
     [self.header.downLoadBtn addTarget:self action:@selector(clearAllDownLoadList) forControlEvents:UIControlEventTouchUpInside];
+    [self.header.cateBtn setImage:[UIImage imageNamed:@"my_play"] forState:UIControlStateSelected];
     [self.header.cateBtn setTitle:@"    开始下载" forState:UIControlStateSelected];
+    self.header.cateBtn.selected = ![AudioDownLoader loader].isDownLoading;
     [self.view addSubview:self.header];
     
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64 ) style:UITableViewStyleGrouped];
@@ -90,27 +92,10 @@
         cell = [[DownLoadListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
     [cell showSelectBotton:NO];
-    [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:YES];
+    [cell updateWithHistoryModel:self.dataArray[indexPath.row] pausStatus:YES isDown:NO];
     return cell;
 }
-//- (void)audioDownLoadOver{
-//    NSInteger index = -1 ;
-//    for (int i = 0; i<self.dataArray.count; i++) {
-//        HomeTopModel * model = self.dataArray[i];
-//        if ([model.audioId longLongValue] == [[AudioDownLoader loader].currentModel.audioId longLongValue]) {
-//            index = i;
-//            break;
-//        }
-//    }
-//    if (index == -1) {
-//        return;
-//    }
-//    [self.dataArray removeObjectAtIndex:index];
-//    [self.tabview reloadData];
-//    if (self.dataArray.count == 0) {
-//        [self getData];
-//    }
-//}
+
 - (void)pauseAllDownLoad:(UIButton *)button{
     if (button.selected) {
         [[AudioDownLoader loader] resumeDownLoading];
@@ -124,6 +109,8 @@
         HomeTopModel * model = self.dataArray[i];
         [[SqlManager manager] deleteAudioWithID:model.audioId];
     }
+    //清空正在下载数据
+    [[AudioDownLoader loader] clearDownLoadingData];
     [self getData];
 }
 

@@ -27,6 +27,7 @@
     [super viewWillAppear:animated];
     [self getData];
     self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
+    [self checkNetStatus];
 }
 
 - (void)viewDidLoad {
@@ -157,7 +158,14 @@
     vc.isBook = YES;
     vc.isCart = YES;
     vc.money = [NSNumber numberWithFloat:self.hander.money];
-    vc.products = self.hander.dataArray;
+    NSMutableArray * muarr = [NSMutableArray new];
+    for (int i = 0; i<self.hander.dataArray.count; i++) {
+        HomeListenModel * model = self.hander.dataArray[i];
+        if (model.isSelect) {
+            [muarr addObject:model];
+        }
+    }
+    vc.products = muarr;
     [self.navigationController pushViewController:vc animated:YES];
 }
 @end

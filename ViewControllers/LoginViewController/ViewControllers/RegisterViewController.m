@@ -88,7 +88,7 @@
                                           textSize:font750(24)];
     [self.getCode setTitleColor:KTColor_lightGray forState:UIControlStateDisabled];
     [self.getCode addTarget:self action:@selector(getCodeRequest) forControlEvents:UIControlEventTouchUpInside];
-    self.getCode.frame = CGRectMake(0, 0, Anno750(170), Anno750(50));
+    self.getCode.frame = CGRectMake(0, 0, Anno750(190), Anno750(50));
     self.getCode.layer.borderWidth = 1.0f;
     self.getCode.layer.cornerRadius = 2.0f;
     self.phoneTF.rightView = self.getCode;

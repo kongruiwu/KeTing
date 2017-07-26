@@ -25,6 +25,7 @@
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
     [self getData];
+    [self checkNetStatus];
 }
 - (void)creatUI{
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];

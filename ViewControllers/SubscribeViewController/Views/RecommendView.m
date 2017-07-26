@@ -18,7 +18,7 @@
     return self;
 }
 - (void)creatUI{
-    self.topImg = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.topImg = [KTFactory creatImageViewWithImage:@"default"];
     self.nameLabel = [KTFactory creatLabelWithText:@"权利的游戏"
                                          fontValue:font750(30)
                                          textColor:KTColor_darkGray
@@ -76,7 +76,7 @@
     }];
 }
 - (void)updateWithHomeListenModel:(HomeListenModel *)model{
-    [self.topImg sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.topImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.iconLabel.hidden = NO;

@@ -49,7 +49,9 @@
         }
         self.orderNames = [NSArray arrayWithArray:names];
         self.orderIDs = [NSArray arrayWithArray:ids];
-        /**草泥马的傻逼后台， 用户信息你tmd 不能查下，还要我们自己存到本地取 去你妈逼*/
+        
+        self.amount = @[@6,@30,@68,@98,@198,@298];
+        
         [[NSUserDefaults standardUserDefaults] setObject:self.typNames  forKey:@"TYPNAMES"];
         [[NSUserDefaults standardUserDefaults] setObject:self.typIds    forKey:@"TYPIDS"];
         [[NSUserDefaults standardUserDefaults] setObject:self.eduNames  forKey:@"EDUNAMES"];

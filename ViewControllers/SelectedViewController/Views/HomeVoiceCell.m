@@ -25,7 +25,7 @@
 }
 - (void)creatUI{
     self.backgroundColor = [UIColor whiteColor];
-    self.leftImage = [KTFactory creatImageViewWithImage:@"defaultImage"];
+    self.leftImage = [KTFactory creatImageViewWithImage:@"default"];
     self.titleLabel = [KTFactory creatLabelWithText:@""
                                           fontValue:font750(30)
                                           textColor:KTColor_MainBlack
@@ -106,7 +106,7 @@
     }];
 }
 - (void)updateWithVoiceModel:(HomeListenModel *)model{
-    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.titleLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.hidden = model.isFree;
@@ -134,7 +134,7 @@
     self.updateTime.text =  [NSString stringWithFormat:@"%@更新",[KTFactory getUpdateTimeStringWithEditTime:model.editTime]];
 }
 - (void)updateWithVoiceModel:(HomeListenModel *)model andSortNum:(NSInteger)num{
-    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.titleLabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.hidden = model.isFree;

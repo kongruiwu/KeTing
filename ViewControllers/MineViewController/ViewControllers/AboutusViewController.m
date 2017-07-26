@@ -44,19 +44,19 @@
     return 0.01;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(500);
+    return Anno750(300);
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * header = [KTFactory creatViewWithColor:[UIColor whiteColor]];
-    header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(500));
+    header.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(300));
     UIView * grayView = [KTFactory creatViewWithColor:KTColor_BackGround];
     grayView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
     [header addSubview:grayView];
     
-    UIImageView * imageView = [KTFactory creatImageViewWithImage:@""];
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].logo]];
+    UIImageView * imageView = [KTFactory creatImageViewWithImage:@"default"];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].logo] placeholderImage:[UIImage imageNamed:@"default"]];
     [header addSubview:imageView];
-    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"版本号 v%@",[[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"]]
+    UILabel * label = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"版本号 V%@",[[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"]]
                                           fontValue:font750(24)
                                           textColor:KTColor_darkGray
                                       textAlignment:NSTextAlignmentLeft];
@@ -66,6 +66,8 @@
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
         make.top.equalTo(grayView.mas_bottom).offset(Anno750(60));
+        make.width.equalTo(@(Anno750(210)));
+        make.height.equalTo(@(Anno750(130)));
     }];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);

@@ -91,8 +91,11 @@
     [self audioImageAnimtion];
     [self playAudio];
 }
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 - (void)creatUI{
-    UIImage * image = [[UIImage imageNamed:@"voice_drop-down"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage * image = [[UIImage imageNamed:@"play_return"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(doBack)];
     self.navigationItem.leftBarButtonItem = leftItem;
     
@@ -139,6 +142,7 @@
     self.slider.minimumTrackTintColor = KTColor_MainOrange;
     self.slider.maximumTrackTintColor = Audio_progessWhite;
     self.slider.thumbTintColor = KTColor_MainOrange;
+    [self.slider setThumbImage:[UIImage imageNamed:@"play_round"] forState:UIControlStateNormal];
     [self.slider addTarget:self action:@selector(pressSlider) forControlEvents:UIControlEventValueChanged];
     
     self.totalTime = [KTFactory creatLabelWithText:@"1:45"
@@ -236,7 +240,7 @@
         make.width.equalTo(@(Anno750(500)));
         make.centerX.equalTo(@0);
         make.top.equalTo(self.playBtn.mas_bottom).offset(Anno750(48));
-        make.height.equalTo(@(Anno750(10)));
+        make.height.equalTo(@(Anno750(30)));
     }];
     [self.currentTime mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.slider.mas_left).offset(Anno750(-10));
@@ -337,6 +341,9 @@
 #pragma mark - 查看文档
 - (void)checkAudioText{
     WKWebViewController * webVC = [[WKWebViewController alloc]init];
+    if (self.listenID) {
+        webVC.listenID = self.listenID;
+    }
     webVC.model = self.newmodel ? self.newmodel : [AudioPlayer instance].currentAudio;
     [self.navigationController pushViewController:webVC animated:YES];
 }
@@ -353,7 +360,8 @@
     model.shareDesc = Audio.summary;
     UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
     model.image = image;
-    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,Audio.audioId];
+    NSNumber * rid = self.listenID ? self.listenID : (self.newmodel.topId ? self.newmodel.topId : [AudioPlayer instance].currentAudio.topId);
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,@1,rid];
     [self.shareView updateWithShareModel:model];
     [self.shareView show];
 }
@@ -464,15 +472,20 @@
 - (void)pressSlider{
     [[AudioPlayer instance] changePlayeAudioTime:self.slider.value];
 }
+
+
 - (void)playAudio{
-    if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
+    if (self.isFromRoot) {
+        if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
+            self.playBtn.selected = YES;
+            [self animationResume];
+        }else{
+            self.playBtn.selected = NO ;
+            [self animationStop];
+        }
+    }else{
         self.playBtn.selected = YES;
         [self animationResume];
-    }else{
-        self.playBtn.selected = NO ;
-        [self animationStop];
-    }
-    if (!self.isFromRoot) {
         [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
     }
     

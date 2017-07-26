@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "AppDelegate.h"
 @interface BaseViewController ()
 
 @property (nonatomic, assign) BOOL hasReduce;
@@ -31,6 +31,14 @@
     [super viewDidLoad];
     self.view.backgroundColor = KTColor_BackGround;
     [self creatNullView];
+    
+}
+
+- (void)checkNetStatus{
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (delegate.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+        [self showNullViewWithNullViewType:NullTypeNetError];
+    }
 }
 - (void)creatLoadingViewWithColor:(UIColor *)color canTouch:(BOOL)rec{
     self.progressView = [[LoadingView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH ,UI_HEGIHT)];

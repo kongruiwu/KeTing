@@ -73,7 +73,7 @@
     }];
 }
 - (void)updateWithListenModel:(HomeListenModel *)model{
-    [self.topImage sd_setImageWithURL:[NSURL URLWithString:model.thumb]];
+    [self.topImage sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default_h"]];
     self.nameLabel.text = model.name;
     if (model.isFree) {
         self.iconLabel.text = @"免费";

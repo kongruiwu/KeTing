@@ -49,11 +49,13 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.tabview reloadData];
     [AudioDownLoader loader].delegate = self;
+    
+    [self checkNetStatus];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [AudioDownLoader loader].delegate = self;
+    [AudioDownLoader loader].delegate = nil;
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
@@ -61,6 +63,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
+    
+    id obj = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",self.voiceID]];
+    if (obj) {
+        [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:[NSString stringWithFormat:@"%@",self.voiceID]];
+    }
 }
 
 - (void)creatUI{
@@ -310,29 +317,30 @@
 }
 #pragma mark - 订阅按钮 / 批量下载
 - (void)buyButtonClick:(UIButton *)button{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
+    
+    if (self.isOpen) {
+        CGRect frame = self.footView.frame;
+        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+        button.selected = !button.selected;
+        self.isDownLoad = button.selected;
+        NSMutableArray * muarr = [NSMutableArray new];
+        for (int i = 0; i<self.listenModel.audio.count; i++) {
+            NSIndexPath * index = [NSIndexPath indexPathForRow:(i+1) inSection:0];
+            [muarr addObject:index];
+        }
+        [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
+        if (self.isDownLoad) {
+            self.footView.hidden = NO;
+            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        }else{
+            self.footView.hidden = YES;
+            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        }
     }else{
-        if (self.isOpen) {
-            CGRect frame = self.footView.frame;
-            self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
-            button.selected = !button.selected;
-            self.isDownLoad = button.selected;
-            NSMutableArray * muarr = [NSMutableArray new];
-            for (int i = 0; i<self.listenModel.audio.count; i++) {
-                NSIndexPath * index = [NSIndexPath indexPathForRow:(i+1) inSection:0];
-                [muarr addObject:index];
-            }
-            [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
-            if (self.isDownLoad) {
-                self.footView.hidden = NO;
-                self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
-            }else{
-                self.footView.hidden = YES;
-                self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
-            }
+        if (![UserManager manager].isLogin) {
+            LoginViewController * vc = [LoginViewController new];
+            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+            [self presentViewController:nvc animated:YES completion:nil];
         }else{
             //订阅
             SetAccoutViewController * vc = [SetAccoutViewController new];
@@ -342,6 +350,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
+    
 }
 #pragma mark - 查看简介
 - (void)checkVoiceSummy:(UIButton *)button{
@@ -401,7 +410,7 @@
         return;
     }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdelegete.netStatus == ReachableViaWiFi) {
+    if (appdelegete.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:@[model]];
     }else{
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您正在使用流量，是否确定下载？" preferredStyle:UIAlertControllerStyleAlert];
@@ -432,7 +441,7 @@
         return;
     }
     AppDelegate * appdelegete = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appdelegete.netStatus == ReachableViaWiFi) {
+    if (appdelegete.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
         [[AudioDownLoader loader] downLoadAudioWithHomeTopModel:muarr];
         [self buyButtonClick:self.buyBtn];
     }else{
@@ -458,6 +467,7 @@
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
     vc.isFromNav = YES;
+    vc.listenID = self.listenModel.listenId;
     vc.webType = PROTOCOLTYPEELSETEXT;
     [self hiddenToolsBar];
     [self.navigationController pushViewController:vc animated:YES];
@@ -505,7 +515,7 @@
     model.shareDesc = Audio.summary;
     UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:Audio.thumbnail]]];
     model.image = image;
-    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,Audio.relationType,Audio.relationId];
+    model.targeturl = [NSString stringWithFormat:@"%@%@%@/type/%@/rid/%@",Base_Url,Page_ShareAudio,Audio.audioId,Audio.relationType,self.listenModel.listenId];
     RootViewController * tbc = (RootViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     [tbc.shareView updateWithShareModel:model];
     [tbc.shareView show];

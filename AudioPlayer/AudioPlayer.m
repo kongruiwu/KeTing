@@ -10,6 +10,7 @@
 #import "RootViewController.h"
 #import "HistorySql.h"
 #import "AudioDownLoader.h"
+#import "NetWorkManager.h"
 @implementation AudioPlayer
 
 + (instancetype)instance{
@@ -114,6 +115,7 @@
         }
         self.currentAudio = self.playList[index];
         [self audioPlay:self.currentAudio];
+        [self AddListenListoryIsOver:NO];
         if ([self.delegate respondsToSelector:@selector(playNextAudio: isOver:)]) {
             [self.delegate playNextAudio:YES isOver:rec];
         }
@@ -137,6 +139,7 @@
         }
         self.currentAudio =self.playList[index - 2];
         [self audioPlay:self.currentAudio];
+        [self AddListenListoryIsOver:NO];
         if ([self.delegate respondsToSelector:@selector(playUpAudio:)]) {
             [self.delegate playUpAudio:YES];
         }
@@ -226,7 +229,9 @@
 // 当播放器 状态发生改变的时候调用，暂停-开始播放都会调用
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
 {
-//    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"歌曲暂停了" duration:1.0f];
+    if (previousState == STKAudioPlayerStatePaused || previousState == STKAudioPlayerStateStopped) {
+        [self AddListenListoryIsOver:NO];
+    }
 }
 // 引发的意外和可能发生的不可恢复的错误，极少概率会调用。  就是此歌曲不能加载，或者url是不可用的
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
@@ -237,12 +242,13 @@
 //当一个项目开始播放调用
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
 {
-
+    
 }
 // 一般是歌曲快结束提前5秒调用
 - (void)audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
 {
     [[HistorySql sql] updatePlayLong:@(100) withAudioID:self.currentAudio.audioId];
+    [self AddListenListoryIsOver:YES];
 }
 //当一个项目完成后，就调用
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
@@ -273,6 +279,23 @@
         [self.audioPlayer stop];
     }
 }
+
+- (void)AddListenListoryIsOver:(BOOL)rec{
+    NSDictionary * params = @{
+                              @"nickName":INCASE_EMPTY([UserManager manager].info.NICKNAME, @""),
+                              @"relationType":self.currentAudio.relationType ? self.currentAudio.relationType : @1,
+                              @"relationId":self.currentAudio.relationId ? self.currentAudio.relationId : self.currentAudio.topId,
+                              @"keyId":self.currentAudio.audioId,
+                              @"playLong":rec?self.currentAudio.audioLong:@(self.audioPlayer.progress),
+                              @"audioLong":self.currentAudio.audioLong
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddListory complete:^(id result) {
+        
+    } errorBlock:^(KTError *error) {
+        
+    }];
+}
+
 
 
 

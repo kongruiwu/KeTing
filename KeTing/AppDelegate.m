@@ -27,7 +27,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [self netNotificationCenterSetting];
     [[SqlManager manager] openDB];
     [[HistorySql sql] openDB];
     
@@ -61,60 +61,35 @@
     [IQKeyboardManager sharedManager].shouldShowTextFieldPlaceholder = NO;
 }
 - (void)netNotificationCenterSetting{
-    //开启网络状况的监听
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    self.hostReach = [Reachability reachabilityWithHostName:@"www.baidu.com"] ;
-    //开始监听，会启动一个run loop
-    [self.hostReach startNotifier];
+    //1.创建网络监听管理者
+    self.netManager = [AFNetworkReachabilityManager sharedManager];
+    __weak AppDelegate * weakSelf = self;
+    [self.netManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            {
+                if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStatePlaying ) {
+                    [[AudioPlayer instance].audioPlayer pause];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"当前网络已切换，确定继续播放么？" preferredStyle:(UIAlertControllerStyleAlert)];
+                    
+                    UIAlertAction *action = [UIAlertAction actionWithTitle:@"继续" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        [[AudioPlayer instance].audioPlayer resume];
+                    }];
+                    [alertController addAction:action];
+                    
+                    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    [alertController addAction:action1];
+                    [[weakSelf getCurrentVC] presentViewController:alertController animated:YES completion:nil];
+                }
+            }
+                break;
+            default:
+                break;
+        }
+    }];
+    [self.netManager startMonitoring];
 }
--(void)reachabilityChanged:(NSNotification *)note
 
-{
-    
-    Reachability *currReach = [note object];
-    
-    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);
-    
-    //对连接改变做出响应处理动作
-    
-    self.netStatus = [currReach currentReachabilityStatus];
-    if (self.netStatus == ReachableViaWiFi) {
-        //开始下载
-        
-    }else{
-        //暂停下载 与暂停播放
-        
-        
-    }
-//    //如果没有连接到网络就弹出提醒实况
-//    
-//    self.isReachable = YES;
-//    
-//    if(status == NotReachable)
-//        
-//    {
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        
-//        [alert show];
-//        
-//        [alert release];
-//        
-//        self.isReachable = NO;
-//        
-//        return;
-//        
-//    }
-//    
-//    if (status==kReachableViaWiFi||status==kReachableViaWWAN) {
-//        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接正常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        
-//        //        [alert show];
-//        [alert release];
-//        self.isReachable = YES;
-//    }
-}
 
 - (void)UmengSetting{
     /* 打开调试日志 */
@@ -123,8 +98,8 @@
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:UmengKey];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WxAppID appSecret:WxAppSecret redirectURL:@"keting"];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:@"1105821097"/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"http://mobile.umeng.com/social"];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3921700954"  appSecret:@"04b48b094faeb16683c32669824ebdad" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"keting"];
+//    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3921700954"  appSecret:@"04b48b094faeb16683c32669824ebdad" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
 
 }
 // Umeng 分享回调
@@ -159,17 +134,30 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     //当进入前台时  且开启自动下载功能时 调用
-
-    [self netNotificationCenterSetting];
-    if (self.netStatus == ReachableViaWiFi && [AudioDownLoader loader].autoDownLoad) {
-        [[AudioDownLoader loader] resumeDownLoading];
+    if (self.netManager) {
+        [self.netManager startMonitoring];
     }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.netManager.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi && [AudioDownLoader loader].autoDownLoad) {
+            [[AudioDownLoader loader] resumeDownLoading];
+        }
+    });
+    
+    
+    
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+#pragma mark - 获取当前界面
+- (UIViewController *)getCurrentVC
+{
+    UITabBarController *tbc = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+    UINavigationController  *nvc = tbc.selectedViewController;
+    UIViewController *vc = nvc.visibleViewController;
+    return vc;
+}
 
 @end
