@@ -251,7 +251,12 @@
         make.centerY.equalTo(self.slider.mas_centerY);
     }];
     [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.slider.mas_bottom).offset(Anno750(110));
+        if (iphone5x_4_0) {
+            make.top.equalTo(self.slider.mas_bottom).offset(Anno750(80));
+        }else{
+            make.top.equalTo(self.slider.mas_bottom).offset(Anno750(110));
+        }
+        
         make.centerX.equalTo(@0);
         make.height.equalTo(@(Anno750(90)));
         make.width.equalTo(@(PlayWidth));

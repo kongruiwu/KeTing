@@ -39,7 +39,7 @@
     }
 }
 - (void)insertAudio:(HomeTopModel *)model{
-    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong,relationType,relationId,praseNum) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong,model.relationType,model.relationId,model.praseNum,model.topId,model.summary];
+    NSString *sqlStr=[NSString stringWithFormat:@"insert into play (audioId,audioName,audioSource,playLong,audioSize,tagString,isprase,audioContent,thumbnail,audioLong,relationType,relationId,praseNum,topId,summary) values ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",model.audioId ,model.audioName,model.audioSource,model.playLong,model.audioSize,model.tagString,@(model.isprase),model.audioContent,model.thumbnail,model.audioLong,model.relationType,model.relationId,model.praseNum,model.topId,model.summary];
     
     [self.PDO executeUpdate:sqlStr];
     

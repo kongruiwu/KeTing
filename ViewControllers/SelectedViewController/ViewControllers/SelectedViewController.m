@@ -37,7 +37,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self AudioPlayerPlayStatusReady];
+    AppDelegate * delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //断网状态下不能运行
+    if (delegate.netManager.networkReachabilityStatus >0) {
+        [self AudioPlayerPlayStatusReady];
+    }
     [AudioPlayer instance].delegate = self;
     
     [self checkNetStatus];

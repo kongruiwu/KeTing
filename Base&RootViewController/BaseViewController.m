@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "AppDelegate.h"
+
 @interface BaseViewController ()
 
 @property (nonatomic, assign) BOOL hasReduce;
