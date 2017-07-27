@@ -281,10 +281,12 @@
 }
 
 - (void)AddListenListoryIsOver:(BOOL)rec{
+    
     NSDictionary * params = @{
                               @"nickName":INCASE_EMPTY([UserManager manager].info.NICKNAME, @""),
                               @"relationType":self.currentAudio.relationType ? self.currentAudio.relationType : @1,
-                              @"relationId":self.currentAudio.relationId ? self.currentAudio.relationId : self.currentAudio.topId,
+#warning 这里没有传topid
+                              @"relationId":self.currentAudio.relationId ? self.currentAudio.relationId : @45,
                               @"keyId":self.currentAudio.audioId,
                               @"playLong":rec?self.currentAudio.audioLong:@(self.audioPlayer.progress),
                               @"audioLong":self.currentAudio.audioLong
