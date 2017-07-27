@@ -1869,7 +1869,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74ae7948-9fe1-425c-a269-58656ef1b582";
+				PROVISIONING_PROFILE = "824b0dd1-9040-425f-859f-758c0ebf8b6d";
 				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Debug;
@@ -1880,15 +1880,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = E9ZKTSD9RK;
 				INFOPLIST_FILE = KeTing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "179fd816-d6b7-4dbc-a1b1-45660cb231b4";
-				PROVISIONING_PROFILE_SPECIFIER = KetingDis;
+				PROVISIONING_PROFILE = "824b0dd1-9040-425f-859f-758c0ebf8b6d";
+				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
 			};
 			name = Release;
 		};
