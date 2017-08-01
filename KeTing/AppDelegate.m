@@ -54,7 +54,6 @@
     NSError * error ;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
     [[AVAudioSession sharedInstance] setActive:YES error:&error];
-    [[AVAudioSession sharedInstance] setDelegate:self];
 }
 - (void)IQKeyBoardSetting{
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -90,30 +89,13 @@
     }];
     [self.netManager startMonitoring];
 }
-- (void)beginInterruption
-
-{
-    [[AudioPlayer instance].audioPlayer pause];
-}
-
-
-- (void)endInterruption
-
-{
-    [[AudioPlayer instance].audioPlayer resume];
-    
-}
-
 - (void)UmengSetting{
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
-    
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:UmengKey];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WxAppID appSecret:WxAppSecret redirectURL:@"keting"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"keting"];
-//    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:@"3921700954"  appSecret:@"04b48b094faeb16683c32669824ebdad" redirectURL:@"https://sns.whalecloud.com/sina2/callback"];
-
 }
 // Umeng 分享回调
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
