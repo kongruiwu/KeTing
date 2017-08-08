@@ -231,6 +231,7 @@
 }
 
 - (void)paymentRequest:(RMIAPHelper*)sender failed:(SKPaymentTransaction*)transaction {
+    NSLog(@"%@",transaction);
      [[RMIAPHelper sharedInstance] finishWithWithTransation:transaction];
     [self dismissLoadingView];
 }
