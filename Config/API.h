@@ -9,9 +9,9 @@
 #ifndef API_h
 #define API_h
 //#ifdef DEBUG
-//    #define Base_Url    @"http://fm.123.com.cn/"
+    #define Base_Url    @"http://fm.123.com.cn/"
 //#else
-    #define Base_Url    @"http://36.7.79.242:8091/"
+//    #define Base_Url    @"http://36.7.79.242:8091/"
 //#endif
 
 //首页 精选
