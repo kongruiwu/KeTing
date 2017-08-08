@@ -9,7 +9,6 @@
 #import "CateDetailViewController.h"
 #import "HomeTopModel.h"
 #import "TopListCell.h"
-#import "AudioPlayerViewController.h"
 #import "AppDelegate.h"
 #import "AudioDownLoader.h"
 #import "WKWebViewController.h"
@@ -90,11 +89,10 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+//    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
     [AudioPlayer instance].playList = self.dataArray;
-    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+    [self reloadTabviewFrame];
 }
 
 - (void)getData{

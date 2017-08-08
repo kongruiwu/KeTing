@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatUI];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOrHiddenFoot) name:@"CANHIDDENFOOT" object:nil];
 }
 - (void)creatUI{
     
@@ -60,7 +62,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)showOrHiddenFoot{
+    if ([AudioPlayer instance].showFoot) {
+        self.playFoot.hidden = !self.playFoot.hidden;
+    }
+    
+}
 /*
 #pragma mark - Navigation
 

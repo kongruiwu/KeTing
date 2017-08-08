@@ -27,11 +27,8 @@
     NSString * sandBoxPath = sandBox[0];
     NSString * documentPath = [sandBoxPath stringByAppendingPathComponent:@"Keting.sqlite"];
     NSLog(@"数据库地址%@",documentPath);
-    // 2.得到数据库
     self.PDO = [FMDatabase databaseWithPath:documentPath];
-    // 3.打开数据库
     if ([self.PDO open]) {
-        // 4.创表
         BOOL result = [self.PDO executeUpdate:@"CREATE TABLE IF NOT EXISTS audio (id integer PRIMARY KEY AUTOINCREMENT,topId INTEGER,topName TEXT,audioId INTEGER,anchorId INTEGER,columnId INTEGER,audioName TEXT,summary TEXT,audioContent TEXT,audioSource TEXT,audioSize INTEGER,audioLong INTEGER,thumbnail TEXT,anchorName TEXT,isprase INTEGER,downStatus INTEGER,playLong INTEGER,tagString TEXT,localAddress TEXT,relationType INTEGER,relationId INTEGER,praseNum INTEGER);"];
         if (result) {
             NSLog(@"成功创表");

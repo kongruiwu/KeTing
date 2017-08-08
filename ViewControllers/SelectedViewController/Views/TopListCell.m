@@ -65,7 +65,7 @@
     [self.shareBtn addTarget:self action:@selector(shareThisAudio) forControlEvents:UIControlEventTouchUpInside];
     self.toolsbar.hidden = YES;
     
-    
+    [self addSubview:self.textBtn];
     [self addSubview:self.nameLabel];
     [self addSubview:self.downLoadImg];
     [self addSubview:self.timeLabel];
@@ -74,8 +74,8 @@
     [self addSubview:self.moreBtn];
     [self addSubview:self.bottomLine];
     [self addSubview:self.toolsbar];
+    
     [self.toolsbar addSubview:self.downLoadBtn];
-    [self.toolsbar addSubview:self.textBtn];
     [self.toolsbar addSubview:self.likeBtn];
     [self.toolsbar addSubview:self.shareBtn];
     
@@ -137,6 +137,10 @@
         make.bottom.equalTo(@0);
         make.right.equalTo(@(-Anno750(24)));
     }];
+    [self.textBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.moreBtn.mas_left).offset(Anno750(-25));
+        make.centerY.equalTo(@0);
+    }];
     [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.right.equalTo(@(Anno750(-24)));
@@ -148,21 +152,16 @@
         make.centerY.equalTo(@0);
         make.right.equalTo(self.moreBtn.mas_left).offset(-Anno750(24));
     }];
-    float with = (img.size.width - Anno750(10))/4;
+    float with = (img.size.width - Anno750(10))/3;
     [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
         make.centerY.equalTo(@0);
         make.width.equalTo(@(with));
         make.height.equalTo(@(img.size.height));
     }];
-    [self.textBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.downLoadBtn.mas_right);
-        make.centerY.equalTo(@0);
-        make.width.equalTo(@(with));
-        make.height.equalTo(@(img.size.height));
-    }];
+    
     [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.textBtn.mas_right);
+        make.left.equalTo(self.downLoadBtn.mas_right);
         make.centerY.equalTo(@0);
         make.width.equalTo(@(with));
         make.height.equalTo(@(img.size.height));
@@ -173,6 +172,8 @@
         make.width.equalTo(@(with));
         make.height.equalTo(@(img.size.height));
     }];
+    
+    
 }
 
 

@@ -10,6 +10,7 @@
 
 @interface HotSortViewController : BaseViewController
 
-@property (nonatomic, assign) BOOL isHot;
+@property (nonatomic) BOOL isHot;
+@property (nonatomic) BOOL isBook;
 
 @end

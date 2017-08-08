@@ -19,7 +19,12 @@
     dispatch_once(&onceToken, ^{
         player = [[AudioPlayer alloc]init];
         [player AudioPlayerReady];
-        player.showFoot = NO;
+        id foot = [[NSUserDefaults standardUserDefaults] objectForKey:@"showAudioFoot"];
+        if (foot && [foot isEqualToString:@"1"]) {
+            player.showFoot = YES;
+        }else{
+            player.showFoot = NO;
+        }
     });
     return player;
 }
@@ -33,7 +38,7 @@
 }
 
 - (void)audioPlay:(HomeTopModel *)model{
-    
+    [[NSUserDefaults standardUserDefaults] setObject:model.audioId forKey:@"current"];
     model.playLong = @0;
     if ([[HistorySql sql] checkAudio:model.audioId]) {
         [[HistorySql sql] updatePlayLong:model.playLong withAudioID:model.audioId];
@@ -43,6 +48,8 @@
     //播放音频
     if (!self.showFoot) {
         self.showFoot = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"showAudioFoot"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     if ([model.downStatus integerValue] == 2) {
         NSString * locatAdd = [[SqlManager manager] checkAudioLocaltionAddressWithAudioid:model.audioId];

@@ -11,7 +11,7 @@
 #import "HomeListenModel.h"
 #import "SearchListCell.h"
 
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
 #import "VoiceDetailViewController.h"
 #import "ListenDetailViewController.h"
 
@@ -127,11 +127,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.typeStr isEqualToString:@"财经头条"]) {
-        [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+//        [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
         [AudioPlayer instance].playList = self.dataArray;
-        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-        [self presentViewController:nav animated:YES completion:nil];
+        [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+        [self reloadTabviewFrame];
+//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+//        [self presentViewController:nav animated:YES completion:nil];
     }else if([self.typeStr isEqualToString:@"听书"]){
         ListenDetailViewController * vc = [ListenDetailViewController new];
         HomeListenModel * model = self.dataArray[indexPath.row];

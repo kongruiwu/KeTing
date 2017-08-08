@@ -85,4 +85,5 @@ typedef NS_ENUM(NSInteger,BackImgType){
 #define     QQAPPKEY            @"4zZM56dUmbGAauOO"
 #define     JpushKey            @""
 #define     APPID               @"1261272564"
+#define     GrowingID           @"803d8bf2bf8caa4e"
 #endif /* ConfigHeader_h */

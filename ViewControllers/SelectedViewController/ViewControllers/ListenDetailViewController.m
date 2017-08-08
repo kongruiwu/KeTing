@@ -13,7 +13,7 @@
 #import "ListenAnchorCell.h"
 #import "AnchorDetailViewController.h"
 #import "ShopCarViewController.h"
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
 #import "SetAccoutViewController.h"
 #import "LoginViewController.h"
 #import "AudioDownLoader.h"
@@ -28,18 +28,17 @@
 @property (nonatomic, strong) UIButton * shopBtn;
 @property (nonatomic, strong) UIButton * buyBtn;
 
+
+@property (nonatomic, strong) UILabel * countLabel;
+
 @end
 
 @implementation ListenDetailViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    [self.view addSubview:clearView];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [AudioDownLoader loader].delegate = self;
     [self getData];
-    
     [self checkNetStatus];
 }
 
@@ -47,14 +46,41 @@
     [super viewWillDisappear:animated];
     [AudioDownLoader loader].delegate = nil;
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNavUnAlpha];
+    [self drawBackButtonWithType:BackImgTypeBlack];
+    [self drawRightShopCar];
     [self creatUI];
 }
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
+- (void)drawRightShopCar{
+    UIButton * button = [KTFactory creatButtonWithNormalImage:@"listenshopping cart" selectImage:nil];
+    button.frame = CGRectMake(0, 0, Anno750(64), Anno750(64));
+    self.countLabel = [KTFactory creatLabelWithText:@"0"
+                                          fontValue:font750(20)
+                                          textColor:[UIColor whiteColor]
+                                      textAlignment:NSTextAlignmentCenter];
+    self.countLabel.backgroundColor = KTColor_IconOrange;
+    self.countLabel.layer.masksToBounds = YES;
+    self.countLabel.layer.cornerRadius = Anno750(15);
+    self.countLabel.hidden = YES;
+    [button addSubview:self.countLabel];
+    [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(button.mas_centerX).offset(Anno750(5));
+        make.bottom.equalTo(button.mas_centerY).offset(Anno750(-5));
+        make.height.equalTo(@(Anno750(30)));
+        make.width.equalTo(@(Anno750(30)));
+    }];
+    [button addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    
+    UIImage * image = [[UIImage imageNamed:@"Webshare"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showShareView)];
+    self.navigationItem.rightBarButtonItems = @[barItem,rightItem];
 }
 - (void)creatUI{
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT  ) style:UITableViewStylePlain];
@@ -63,17 +89,13 @@
     [self.view addSubview:self.tabview];
     
     self.header  = [[VoiceDetailHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(485))];
-    self.header.shopCar.hidden = NO;
-    [self.header.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
-    [self.header.shareBtn addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
-    [self.header.shopCar addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.header;
     
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
     UIView * headView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
-    headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(120));
+    headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(80));
     UIButton * likeBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum ? self.listenModel.praseNum : @0]
                                          backGroundColor:[UIColor clearColor]
                                                textColor:KTColor_MainOrange
@@ -120,7 +142,7 @@
     [headView addSubview:buyBtn];
     [likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
-        make.centerY.equalTo(@10);
+        make.centerY.equalTo(@0);
         make.width.equalTo(@(Anno750(170)));
         make.height.equalTo(@(Anno750(68)));
     }];
@@ -128,11 +150,11 @@
         make.left.equalTo(likeBtn.mas_right).offset(Anno750(30));
         make.width.equalTo(@(Anno750(170)));
         make.height.equalTo(@(Anno750(68)));
-        make.centerY.equalTo(@10);
+        make.centerY.equalTo(@0);
     }];
     [buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(@(-Anno750(24)));
-        make.centerY.equalTo(@10);
+        make.centerY.equalTo(@0);
         make.left.equalTo(shopCar.mas_right).offset(Anno750(30));
         make.height.equalTo(@(Anno750(68)));
     }];
@@ -147,7 +169,7 @@
     return headView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(120);
+    return Anno750(80);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 2;
@@ -239,7 +261,8 @@
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
         NSString * count = [NSString stringWithFormat:@"%@",result];
-        [self.header updateShopCarCount:count];
+        self.countLabel.text = count;
+        self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
     } errorBlock:^(KTError *error) {
         
     }];
@@ -307,9 +330,10 @@
                 [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
                     [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
                     [btn setImage:[UIImage imageNamed:@"Listen-Shoped"] forState:UIControlStateNormal];
-                    int count = [self.header.countLabel.text intValue] + 1;
+                    int count = [self.countLabel.text intValue] + 1;
                     self.listenModel.iscart = YES;
-                    [self.header updateShopCarCount:[NSString stringWithFormat:@"%d",count]];
+                    self.countLabel.text = [NSString stringWithFormat:@"%d",count];
+                    self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
                 } errorBlock:^(KTError *error) {
                     
                 }];
@@ -323,11 +347,13 @@
 - (void)buyThisBookRequest:(UIButton *)btn{
     if (btn.selected) {
         //进入播放器
-        [AudioPlayer instance].currentAudio = self.listenModel.audioModel;
+//        [AudioPlayer instance].currentAudio = self.listenModel.audioModel;
         [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.listenModel.audioModel];
-        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-        [self presentViewController:nav animated:YES completion:nil];
+        [[AudioPlayer instance] audioPlay:self.listenModel.audioModel];
+        [self reloadTabviewFrame];
+//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+//        [self presentViewController:nav animated:YES completion:nil];
     }else{
         if (![UserManager manager].isLogin) {
             LoginViewController * vc = [LoginViewController new];

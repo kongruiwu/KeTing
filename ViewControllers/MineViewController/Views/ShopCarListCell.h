@@ -28,5 +28,5 @@
 @property (nonatomic, assign) id<ShopCarDelegate> delegate;
 
 
-- (void)updateWithHomeListenModel:(HomeListenModel *)model;
+- (void)updateWithHomeListenModel:(HomeListenModel *)model andEditStatus:(BOOL)rec;
 @end

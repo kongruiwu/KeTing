@@ -105,12 +105,12 @@
         make.height.equalTo(@0.5);
     }];
 }
-- (void)updateWithHomeListenModel:(HomeListenModel *)model{
+- (void)updateWithHomeListenModel:(HomeListenModel *)model andEditStatus:(BOOL)rec{
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.namelabel.text = model.name;
     self.descLabel.text = model.summary;
     self.priceLabel.text = model.timePrice;
-    self.selctButton.selected = model.isSelect;
+    self.selctButton.selected = rec ? model.isDelete : model.isSelect;
     self.timeLabel.text = [NSString stringWithFormat:@"音频时长：%@",model.audioLong];
 }
 - (void)cleaderBtnClick:(UIButton *)btn{

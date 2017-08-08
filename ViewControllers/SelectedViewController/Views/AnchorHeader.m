@@ -34,8 +34,7 @@
                                          fontValue:font750(26)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentCenter];
-    self.descLabel.numberOfLines = 2;
-    self.showBtn = [KTFactory creatButtonWithNormalImage:@"voice_drop-down" selectImage:@"voice_pack up"];
+    self.descLabel.numberOfLines = 0;
     self.navView = [KTFactory creatViewWithColor:[UIColor clearColor]];
     self.backBtn = [KTFactory creatButtonWithNormalImage:@"back_white" selectImage:nil];
     self.shareBtn = [KTFactory creatButtonWithNormalImage:@"listen_ share" selectImage:nil];
@@ -58,7 +57,6 @@
     [self addSubview:self.userIcon];
     [self addSubview:self.username];
     [self addSubview:self.descLabel];
-    [self addSubview:self.showBtn];
     [self addSubview:self.countLabel];
 }
 - (void)layoutSubviews{
@@ -100,15 +98,9 @@
         make.centerX.equalTo(@0);
         make.top.equalTo(self.userIcon.mas_bottom).offset(Anno750(10));
     }];
-    [self.showBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(@(Anno750(-20)));
-        make.right.equalTo(@(-Anno750(24)));
-        make.height.equalTo(@(Anno750(40)));
-        make.width.equalTo(@(Anno750(40)));
-    }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(74)));
-        make.right.equalTo(self.showBtn.mas_left).offset(Anno750(-10));
+        make.right.equalTo(@(-Anno750(74)));
         make.top.equalTo(self.username.mas_bottom).offset(Anno750(30));
     }];
     
@@ -123,18 +115,6 @@
     [self.userIcon sd_setImageWithURL:[NSURL URLWithString:model.face] placeholderImage:[UIImage imageNamed:@"default"]];
     self.username.text = model.name;
     self.descLabel.text = model.summary;
-    CGSize size = [KTFactory getSize:model.summary maxSize:CGSizeMake(99999, Anno750(30)) font:[UIFont systemFontOfSize:Anno750(26)]];
-    if (size.width < Anno750(750 - 150)) {
-        self.showBtn.hidden = YES;
-        self.descLabel.textAlignment = NSTextAlignmentCenter;
-    }else{
-        self.descLabel.textAlignment = NSTextAlignmentLeft;
-    }
-    if (size.width > Anno750(750 - 160) * 2) {
-        self.showBtn.hidden = NO;
-    }else{
-        self.showBtn.hidden = YES;
-    }
 }
 - (void)updateShopCarCount:(NSString *)count{
     self.countLabel.text = count;

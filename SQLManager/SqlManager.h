@@ -14,6 +14,7 @@
 @property (nonatomic, strong) FMDatabase * PDO;
 
 + (instancetype)manager;
+
 - (void)openDB;
 /**添加数据*/
 - (void)insertAudio:(HomeTopModel *)model;

@@ -77,5 +77,15 @@
     }
     self.selectBtn.selected = hander.isAllSelect;
 }
-
+- (void)updateDeleteStatusWithShopCarHander:(ShopCarHander *)hander{
+    self.moneyLabel.text = @"全选";
+    [self.buyBtn setTitle:@"删除" forState:UIControlStateNormal];
+    self.buyBtn.enabled = hander.deletCount>0 ;
+    if (self.buyBtn.enabled) {
+        self.buyBtn.backgroundColor = KTColor_IconOrange;
+    }else{
+        self.buyBtn.backgroundColor = KTColor_MainOrangeAlpha;
+    }
+    self.selectBtn.selected = hander.isAllDelete;
+}
 @end

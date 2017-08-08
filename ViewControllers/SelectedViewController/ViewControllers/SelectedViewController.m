@@ -21,8 +21,6 @@
 #import "VoiceListViewController.h"
 //听书
 #import "ListenListViewController.h"
-//播放器
-#import "AudioPlayerViewController.h"
 
 #import <MBProgressHUD.h>
 @interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate,AudioPlayerDelegate>
@@ -167,16 +165,14 @@
     
 }
 - (void)PlayAudioAtIndex:(NSInteger)index{
-    [AudioPlayer instance].currentAudio = self.model.tops[index];
+    [[AudioPlayer instance] audioPlay:self.model.tops[index]];
     [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.model.tops];
-    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-    [self presentViewController:nav animated:YES completion:nil];
-    
+    [self reloadTabviewFrame];
 }
 - (void)PlayTopList{
     [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.model.tops];
     [[AudioPlayer instance] audioPlay:self.model.tops[0]];
+    [self reloadTabviewFrame];
 }
 - (void)checkBookAtIndex:(NSInteger)index{
     ListenDetailViewController * vc = [ListenDetailViewController new];
@@ -210,10 +206,6 @@
             [self.navigationController pushViewController:[ListenListViewController new] animated:YES];
             break;
         default:
-        {
-            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[AudioPlayerViewController new]];
-            [self presentViewController:nav animated:YES completion:nil];
-        }
             break;
     }
 }

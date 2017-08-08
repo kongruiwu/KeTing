@@ -10,7 +10,6 @@
 #import "DownLoadListCell.h"
 #import "HomeTopModel.h"
 #import "AudioDownLoader.h"
-#import "AudioPlayerViewController.h"
 #import "TopListBottomView.h"
 #import "DownLoadHeaderView.h"
 @interface DownLoadSubViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -103,11 +102,9 @@
         [self.tabview reloadData];
     }else{
         HomeTopModel * model = self.dataArray[indexPath.row];
-        [AudioPlayer instance].currentAudio = model;
         [AudioPlayer instance].playList = self.dataArray;
-        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-        [self presentViewController:nav animated:YES completion:nil];
+        [[AudioPlayer instance] audioPlay:model];
+        [self reloadTabviewFrame];
     }
 }
 - (void)slectAllAudio:(UIButton *)button{

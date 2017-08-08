@@ -13,7 +13,7 @@
 #import "CateListViewController.h"
 #import "TopListDownCell.h"
 #import "TopListBottomView.h"
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
 #import "AudioDownLoader.h"
 #import "WKWebViewController.h"
 #import "LoginViewController.h"
@@ -147,11 +147,13 @@
     }else{
         [self hiddenToolsBar];
         //进入音乐播放器
-        [AudioPlayer instance].currentAudio = model;
+//        [AudioPlayer instance].currentAudio = model;
         [AudioPlayer instance].playList = self.dataArray;
-        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:audioVC];
-        [self presentViewController:nav animated:YES completion:nil];
+        [[AudioPlayer instance] audioPlay:model];
+        [self reloadTabviewFrame];
+//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+//        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:audioVC];
+//        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 - (void)refreshData{

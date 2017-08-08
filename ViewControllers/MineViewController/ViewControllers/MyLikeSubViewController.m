@@ -12,7 +12,7 @@
 #import "HomeTopModel.h"
 #import "HomeVoiceCell.h"
 #import "ListenListCell.h"
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
 #import "ListenDetailViewController.h"
 #import "VoiceDetailViewController.h"
 
@@ -106,11 +106,12 @@
         vc.voiceID = model.listenId;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
+        [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
         [AudioPlayer instance].playList = self.dataArray;
-        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-        [self presentViewController:nav animated:YES completion:nil];
+        [self reloadTabviewFrame];
+//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+//        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 

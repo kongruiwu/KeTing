@@ -23,4 +23,5 @@
 - (NSMutableArray *)getAllHistoryAudios;
 - (void)deleteAudioWithID:(NSNumber *)audioID;
 - (void)updateAudioWithModel:(HomeTopModel *)model;
+- (HomeTopModel *)getHometopModel:(NSNumber *)audioID;
 @end

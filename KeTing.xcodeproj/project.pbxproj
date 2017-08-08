@@ -136,6 +136,9 @@
 		8BF091C81F04F5F5006478E9 /* MoneyHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091C71F04F5F5006478E9 /* MoneyHeaderCell.m */; };
 		8BF091CB1F04FB89006478E9 /* MoneyCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091CA1F04FB89006478E9 /* MoneyCountCell.m */; };
 		8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091CD1F050144006478E9 /* MoneyDescCell.m */; };
+		8BF494671F380E5E00D40727 /* RankHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494661F380E5E00D40727 /* RankHeaderView.m */; };
+		8BF4946A1F38129A00D40727 /* HotRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494691F38129A00D40727 /* HotRankViewController.m */; };
+		8BF494841F3966E000D40727 /* ListenDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494831F3966E000D40727 /* ListenDetailHeader.m */; };
 		8BF6028F1EEF6D6600322545 /* VoiceDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6028E1EEF6D6600322545 /* VoiceDetailHeader.m */; };
 		8BF602921EEF755B00322545 /* VoiceSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF602911EEF755B00322545 /* VoiceSummaryCell.m */; };
 		8BF602951EEF7B1400322545 /* VoiceUpdateListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF602941EEF7B1400322545 /* VoiceUpdateListCell.m */; };
@@ -450,6 +453,12 @@
 		8BF091CA1F04FB89006478E9 /* MoneyCountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyCountCell.m; sourceTree = "<group>"; };
 		8BF091CC1F050144006478E9 /* MoneyDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyDescCell.h; sourceTree = "<group>"; };
 		8BF091CD1F050144006478E9 /* MoneyDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyDescCell.m; sourceTree = "<group>"; };
+		8BF494651F380E5E00D40727 /* RankHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankHeaderView.h; sourceTree = "<group>"; };
+		8BF494661F380E5E00D40727 /* RankHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankHeaderView.m; sourceTree = "<group>"; };
+		8BF494681F38129A00D40727 /* HotRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotRankViewController.h; sourceTree = "<group>"; };
+		8BF494691F38129A00D40727 /* HotRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotRankViewController.m; sourceTree = "<group>"; };
+		8BF494821F3966E000D40727 /* ListenDetailHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenDetailHeader.h; sourceTree = "<group>"; };
+		8BF494831F3966E000D40727 /* ListenDetailHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenDetailHeader.m; sourceTree = "<group>"; };
 		8BF6028D1EEF6D6600322545 /* VoiceDetailHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceDetailHeader.h; sourceTree = "<group>"; };
 		8BF6028E1EEF6D6600322545 /* VoiceDetailHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceDetailHeader.m; sourceTree = "<group>"; };
 		8BF602901EEF755B00322545 /* VoiceSummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceSummaryCell.h; sourceTree = "<group>"; };
@@ -866,6 +875,8 @@
 				8B8743091EEE799400324FA2 /* ListenListCell.m */,
 				8BF6028D1EEF6D6600322545 /* VoiceDetailHeader.h */,
 				8BF6028E1EEF6D6600322545 /* VoiceDetailHeader.m */,
+				8BF494821F3966E000D40727 /* ListenDetailHeader.h */,
+				8BF494831F3966E000D40727 /* ListenDetailHeader.m */,
 				8BB90B441F14C761004B29A8 /* VoiceSectionCell.h */,
 				8BB90B451F14C761004B29A8 /* VoiceSectionCell.m */,
 				8BF602901EEF755B00322545 /* VoiceSummaryCell.h */,
@@ -1156,6 +1167,8 @@
 			children = (
 				8BF602B11EEFCE4400322545 /* FindViewController.h */,
 				8BF602B21EEFCE4400322545 /* FindViewController.m */,
+				8BF494681F38129A00D40727 /* HotRankViewController.h */,
+				8BF494691F38129A00D40727 /* HotRankViewController.m */,
 				8B4F22A91EF130A4005E1D21 /* HotSortViewController.h */,
 				8B4F22AA1EF130A4005E1D21 /* HotSortViewController.m */,
 			);
@@ -1167,6 +1180,8 @@
 			children = (
 				8BF602B41EEFD59400322545 /* FindListCell.h */,
 				8BF602B51EEFD59400322545 /* FindListCell.m */,
+				8BF494651F380E5E00D40727 /* RankHeaderView.h */,
+				8BF494661F380E5E00D40727 /* RankHeaderView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1589,6 +1604,7 @@
 				8B40FE5E1EE64994005F9342 /* MineViewModel.m in Sources */,
 				8B8742FB1EEE646800324FA2 /* PlayCloseListView.m in Sources */,
 				8B53EA9A1EE550BD009EA76D /* HomeFinancialCell.m in Sources */,
+				8BF494841F3966E000D40727 /* ListenDetailHeader.m in Sources */,
 				8B4F22991EF0DA69005E1D21 /* AnchorModel.m in Sources */,
 				8B2D73FE1F0CB06F00E1BF4B /* AboutusViewController.m in Sources */,
 				8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */,
@@ -1600,6 +1616,7 @@
 				8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */,
 				8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */,
 				8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */,
+				8BF494671F380E5E00D40727 /* RankHeaderView.m in Sources */,
 				8BC1266E1F1DB094005CF363 /* PayMomentCell.m in Sources */,
 				8B4F22AB1EF130A4005E1D21 /* HotSortViewController.m in Sources */,
 				8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */,
@@ -1660,6 +1677,7 @@
 				8BF602B61EEFD59400322545 /* FindListCell.m in Sources */,
 				8B4095F31F0206D000AA22D3 /* LoginViewController.m in Sources */,
 				8B40FE6F1EE69656005F9342 /* HomeViewModel.m in Sources */,
+				8BF4946A1F38129A00D40727 /* HotRankViewController.m in Sources */,
 				8B8742FE1EEE661300324FA2 /* CloseListCell.m in Sources */,
 				8B8DAF331F1CAAF800BDF1AA /* SearchListCell.m in Sources */,
 				8B2D73981F0B897500E1BF4B /* PushSettingCell.m in Sources */,

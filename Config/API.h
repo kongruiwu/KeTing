@@ -9,9 +9,9 @@
 #ifndef API_h
 #define API_h
 //#ifdef DEBUG
-    #define Base_Url    @"http://fm.123.com.cn/"
+//    #define Base_Url    @"http://fm.123.com.cn/"
 //#else
-//    #define Base_Url    @"http://36.7.79.242:8091/"
+    #define Base_Url    @"http://36.7.79.242:8091/"
 //#endif
 
 //首页 精选
@@ -126,4 +126,10 @@
 #define Page_ShareAudio     @"shareAudio/audioId/"
 //增加收听历史
 #define Page_AddListory     @"v1/listenAdd"
+//购物车删除
+#define Page_ShopCarDelete  @"v2/cartDel"
+//三方登录
+#define Page_ThirdLogin     @"v2/thirdLogin"
+//三方绑定
+#define Page_ThirdBind      @"v2/thirdBind"
 #endif /* API_h */

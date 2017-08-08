@@ -99,6 +99,7 @@
         }
         
         self.isDownLoad = NO;
+        self.isDelete = NO;
         if (self.audioModel) {
             NSNumber * downStatu = [[SqlManager manager] checkDownStatusWithAudioid:self.audioModel.audioId];
             if ([downStatu integerValue] == 2) {

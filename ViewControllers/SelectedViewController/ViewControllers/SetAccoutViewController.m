@@ -28,7 +28,7 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.tabview reloadData];
-    
+    self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64);
     [self checkNetStatus];
     
 }

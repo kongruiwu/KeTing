@@ -12,7 +12,9 @@
 #import <ReactiveObjC.h>
 #import "UserManager.h"
 #import <UMSocialCore/UMSocialCore.h>
-@interface LoginViewController ()<UserManagerDelegate>
+#import <WXApi.h>
+#import "AppDelegate.h"
+@interface LoginViewController ()<UserManagerDelegate,WXLoingDelegate>
 
 @property (nonatomic, strong) UITextField * phoneTF;
 @property (nonatomic, strong) UITextField * pwdTextF;
@@ -26,9 +28,13 @@
     UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appde.wxDelegate =self;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    appde.wxDelegate =nil;
 //    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -150,17 +156,22 @@
     
     
 //    UIButton * QQBtn = [KTFactory creatButtonWithNormalImage:@"register_qq" selectImage:nil];
-//    UIButton * WechatBtn = [KTFactory creatButtonWithNormalImage:@"register_ weixin" selectImage:nil];
+    UIButton * WechatBtn = [KTFactory creatButtonWithNormalImage:@"register_ weixin" selectImage:nil];
 //    [QQBtn addTarget:self action:@selector(QQuserLogin) forControlEvents:UIControlEventTouchUpInside];
-//    [WechatBtn addTarget:self action:@selector(WechatUserLogin) forControlEvents:UIControlEventTouchUpInside];
+    [WechatBtn addTarget:self action:@selector(WechatUserLogin) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:QQBtn];
-//    [self.view addSubview:WechatBtn];
-//    [WechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(regisBtn.mas_bottom).offset(Anno750(180));
-//        make.height.equalTo(@(Anno750(115)));
-//        make.width.equalTo(@(Anno750(115)));
-//        make.left.equalTo(@((UI_WIDTH - Anno750(230))/3));
-//    }];
+    BOOL rec = [WXApi isWXAppInstalled];
+    if (rec) {
+        [self.view addSubview:WechatBtn];
+        [WechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(regisBtn.mas_bottom).offset(Anno750(180));
+            make.height.equalTo(@(Anno750(115)));
+            make.width.equalTo(@(Anno750(115)));
+            //        make.left.equalTo(@((UI_WIDTH - Anno750(230))/3));
+            make.centerX.equalTo(@0);
+        }];
+    }
+    
 //    [QQBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(regisBtn.mas_bottom).offset(Anno750(180));
 //        make.height.equalTo(@(Anno750(115)));
@@ -222,26 +233,44 @@
     [self getUserInfoForPlatform:UMSocialPlatformType_QQ];
 }
 - (void)WechatUserLogin{
-    [self getUserInfoForPlatform:UMSocialPlatformType_WechatSession];
+    [self showLoadingCantTouchAndClear];
+    SendAuthReq* req =[[SendAuthReq alloc ] init ];
+    req.scope = @"snsapi_userinfo" ;
+    req.state = @"123" ;
+    [WXApi sendReq:req];
+}
+- (void)loginWithResq:(BaseResp *)resp{
+    if (resp.errStr && resp.errStr.length>1) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:resp.errStr duration:1.0f];
+        [self dismissLoadingView];
+    }else{
+        SendAuthResp * res = (SendAuthResp *)resp;
+        NSDictionary * dic = @{
+                               @"code":res.code,
+                               };
+        [[NetWorkManager manager] POSTRequest:dic pageUrl:Page_ThirdLogin complete:^(id result) {
+            [[UserManager manager] userLoginWithInfoDic:result];
+            NSDictionary * params1 =  @{
+                                        @"userid":[UserManager manager].userid
+                                        };
+            [[NetWorkManager manager] GETRequest:params1 pageUrl:Page_UserInfo complete:^(id result) {
+                [UserManager manager].delegate = self;
+                [[UserManager manager] getUserInfo];
+            } errorBlock:^(KTError *error) {
+                [self dismissLoadingView];
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请求超时" duration:1.0f];
+            }];
+        } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
+        }];
+    }
 }
 
 - (void)getUserInfoForPlatform:(UMSocialPlatformType)platformType
 {
     [[UMSocialManager defaultManager] getUserInfoWithPlatform:platformType currentViewController:self completion:^(id result, NSError *error) {
+   
         
-        UMSocialUserInfoResponse *resp = result;
-        [UserManager manager].userid = resp.uid;
-        NSDictionary * params1 =  @{
-                                    @"userid":[UserManager manager].userid
-                                    };
-        [[NetWorkManager manager] GETRequest:params1 pageUrl:Page_UserInfo complete:^(id result) {
-            [[UserManager manager] userLoginWithInfoDic:result];
-            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"登录成功" duration:2.0f];
-            [self doBack];
-        } errorBlock:^(KTError *error) {
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"请求超时" duration:1.0f];
-        }];
-
     }];
 }
 @end

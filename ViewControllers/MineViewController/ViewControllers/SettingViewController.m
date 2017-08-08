@@ -28,11 +28,16 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tabview reloadData];
+    self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CANHIDDENFOOT" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CANHIDDENFOOT" object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"设置" color:KTColor_MainBlack];

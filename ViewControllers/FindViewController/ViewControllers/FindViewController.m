@@ -8,7 +8,7 @@
 
 #import "FindViewController.h"
 #import "FindListCell.h"
-#import "HotSortViewController.h"
+#import "HotRankViewController.h"
 @interface FindViewController ()<UITableViewDelegate,UITableViewDataSource>
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSArray * titles;
@@ -48,7 +48,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    HotSortViewController * vc = [HotSortViewController new];
+    HotRankViewController * vc = [HotRankViewController new];
     if (indexPath.row == 0) {
         vc.isHot = YES;
     }else{

@@ -10,39 +10,33 @@
 #import "HomeVoiceCell.h"
 #import "ListenDetailViewController.h"
 #import "VoiceDetailViewController.h"
+
 @interface HotSortViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray<HomeListenModel *> * dataArray;
 @property (nonatomic) int page;
 
+
+
 @end
 
 @implementation HotSortViewController
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self setNavUnAlpha];
-    [self checkNetStatus];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self drawBackButtonWithType:BackImgTypeBlack];
-    if (self.isHot) {
-        [self setNavTitle:@"热门排行" color:KTColor_MainBlack];
-    }else{
-        [self setNavTitle:@"限免" color:KTColor_MainBlack];
-    }
-    
     [self creatUI];
     [self getData];
 }
 - (void)creatUI{
     self.page = 1;
+    
     self.dataArray = [NSMutableArray new];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0,0, UI_WIDTH, UI_HEGIHT - 64 - Anno750(80)) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
+    
     self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
     self.tabview.mj_header = self.refreshHeader;

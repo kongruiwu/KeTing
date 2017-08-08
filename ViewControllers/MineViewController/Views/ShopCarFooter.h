@@ -18,4 +18,5 @@
 @property (nonatomic, strong) UIButton * buyBtn;
 
 - (void)updateWithShopCarHnader:(ShopCarHander *)hander;
+- (void)updateDeleteStatusWithShopCarHander:(ShopCarHander *)hander;
 @end

@@ -89,6 +89,16 @@
     }
     return audios;
 }
+- (HomeTopModel *)getHometopModel:(NSNumber *)audioID{
+    NSString *sqlQuery = [NSString stringWithFormat:@"SELECT * FROM play WHERE audioId='%@';",audioID];
+    //根据条件查询
+    FMResultSet *resultSet = [self.PDO executeQuery:sqlQuery];
+    while ([resultSet next]) {
+        HomeTopModel * model = [self getModelWithResultset:resultSet];
+        return model;
+    }
+    return nil;
+}
 - (void)updateAudioWithModel:(HomeTopModel *)model{
     [self deleteAudioWithID:model.audioId];
     [self insertAudio:model];
@@ -111,7 +121,11 @@
     model.audioSize = [result objectForColumn:@"audioSize"];
     model.tagString = [result objectForColumn:@"tagString"];
     NSNumber * num = [result objectForColumn:@"isprase"];
-    model.isprase = [num boolValue];
+    if (num || [num isKindOfClass:[NSNull class]]) {
+        model.isprase = NO;
+    }else{
+        model.isprase = [num boolValue];
+    }
     model.audioContent = [result objectForColumn:@"audioContent"];
     model.thumbnail = [result objectForColumn:@"thumbnail"];
     model.audioLong = [result objectForColumn:@"audioLong"];

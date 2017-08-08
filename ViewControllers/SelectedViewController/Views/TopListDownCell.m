@@ -46,6 +46,9 @@
                                           fontValue:font750(24)
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];
+    
+    
+    
     self.bottomLine = [KTFactory creatLineView];
     
     

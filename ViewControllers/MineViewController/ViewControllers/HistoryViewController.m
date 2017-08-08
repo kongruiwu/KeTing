@@ -10,7 +10,6 @@
 #import "TopHeaderView.h"
 #import "HistoryListCell.h"
 #import "HomeTopModel.h"
-#import "AudioPlayerViewController.h"
 #import "HistorySql.h"
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -110,11 +109,9 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
     [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.dataArray[indexPath.row]];
-    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+    [self reloadTabviewFrame];
 }
 - (void)getData{
     [self showLoadingCantTouchAndClear];
@@ -202,10 +199,9 @@
 //    }];
 }
 - (void)playAllAudio{
-    [AudioPlayer instance].currentAudio = self.dataArray[0];
     [AudioPlayer instance].playList = self.dataArray;
-    AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    [[AudioPlayer instance] audioPlay:self.dataArray[0]];
+    [self reloadTabviewFrame];
+    
 }
 @end

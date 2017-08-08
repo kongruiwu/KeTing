@@ -15,7 +15,7 @@
 #import "TopListCell.h"
 #import "TopListDownCell.h"
 #import "TopListBottomView.h"
-#import "AudioPlayerViewController.h"
+//#import "AudioPlayerViewController.h"
 #import "SetAccoutViewController.h"
 #import "AudioDownLoader.h"
 #import "AppDelegate.h"
@@ -271,11 +271,13 @@
         }else{
             [self hiddenToolsBar];
             //进入音乐播放器
-            [AudioPlayer instance].currentAudio = model;
+//            [AudioPlayer instance].currentAudio = model;
             [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.listenModel.audio];
-            AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-            [self presentViewController:nav animated:YES completion:nil];
+            [[AudioPlayer instance] audioPlay:model];
+            [self reloadTabviewFrame];
+//            AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
+//            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
+//            [self presentViewController:nav animated:YES completion:nil];
         }
     }
     

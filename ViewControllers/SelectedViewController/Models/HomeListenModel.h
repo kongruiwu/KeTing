@@ -77,6 +77,8 @@
 @property (nonatomic, assign) BOOL isDownLoad;
 /**是否正在下载*/
 @property (nonatomic, assign) BOOL isDownLoading;
+/**是否选择要删除*/
+@property (nonatomic, assign) BOOL isDelete;
 
 
 - (void)checkForDownLoadList:(NSArray *)arr;

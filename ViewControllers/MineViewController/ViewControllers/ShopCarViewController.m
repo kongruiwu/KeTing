@@ -15,9 +15,10 @@
 #import "SetAccoutViewController.h"
 @interface ShopCarViewController ()<UITableViewDelegate,UITableViewDataSource,ShopCarDelegate>
 
-//@property (nonatomic, strong) UITableView *tabview;
 @property (nonatomic, strong) ShopCarFooter * footer;
 @property (nonatomic, strong) ShopCarHander * hander;
+@property (nonatomic) BOOL isEditStaus;
+@property (nonatomic, strong) UIBarButtonItem * barItem;
 
 @end
 
@@ -52,7 +53,7 @@
   
 }
 - (void)drawRightDeleteBtn{
-    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithTitle:@"清空购物车" style:UIBarButtonItemStylePlain target:self action:@selector(removeAllDatas)];
+    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(changeEditStatus:)];
     self.navigationItem.rightBarButtonItem = barItem;
     [self.navigationItem.rightBarButtonItem setTintColor:KTColor_darkGray];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:font750(28)],NSFontAttributeName, nil] forState:UIControlStateNormal];
@@ -81,7 +82,7 @@
     if (!cell) {
         cell = [[ShopCarListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithHomeListenModel:self.hander.dataArray[indexPath.row]];
+    [cell updateWithHomeListenModel:self.hander.dataArray[indexPath.row] andEditStatus:self.isEditStaus];
     cell.delegate = self;
     return cell;
 }
@@ -115,57 +116,80 @@
         [self dismissLoadingView];
     }];
 }
-- (void)removeAllDatas{
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要清空购物车么？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSDictionary * params = @{
-                                  @"userId":[UserManager manager].userid
-                                  };
-        [self showLoadingCantClear:YES];
-        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ClearS complete:^(id result) {
-            [self dismissLoadingView];
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"购物车清空成功" duration:1.0f];
-            [self showNullViewWithNullViewType:NullTypeNoneShopCar];
-        } errorBlock:^(KTError *error) {
-            [self dismissLoadingView];
-        }];
-    }];
-    UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:sure];
-    [alert addAction:cannce];
-    [self presentViewController:alert animated:YES completion:nil];
+- (void)changeEditStatus:(UIBarButtonItem *)baritem{
+    
+    self.isEditStaus = !self.isEditStaus;
+    baritem.title = self.isEditStaus ? @"完成" : @"编辑";
+    [self.tabview reloadData];
+    if (self.isEditStaus) {
+        [self.footer updateDeleteStatusWithShopCarHander:self.hander];
+    }else{
+        [self.footer updateWithShopCarHnader:self.hander];
+    }
     
 }
 
 #pragma mark -购物车全选
 - (void)ShopCarSelectAll:(UIButton *)btn{
     btn.selected = !btn.selected;
-    [self.hander selectAllShopCarGoods:btn.selected];
-    [self.footer updateWithShopCarHnader:self.hander];
+    if (self.isEditStaus) {
+        [self.hander selectAllToDelete:btn.selected];
+        [self.footer updateDeleteStatusWithShopCarHander:self.hander];
+    }else{
+        [self.hander selectAllShopCarGoods:btn.selected];
+        [self.footer updateWithShopCarHnader:self.hander];
+    }
     [self.tabview reloadData];
 }
 #pragma mark -选择物品
 - (void)selectBook:(UIButton *)btn{
     UITableViewCell * cell = (UITableViewCell *)[btn superview];
     NSIndexPath * indexPath = [self.tabview indexPathForCell:cell];
-    [self.hander selectAtIndex:indexPath.row];
-    [self.footer updateWithShopCarHnader:self.hander];
+    if (self.isEditStaus) {
+        [self.hander selectToDeleteAtIndex:indexPath.row];
+        [self.footer updateDeleteStatusWithShopCarHander:self.hander];
+    }else{
+        [self.hander selectAtIndex:indexPath.row];
+        [self.footer updateWithShopCarHnader:self.hander];
+    }
     [self.tabview reloadData];
 }
 #pragma mark - 购买
 - (void)buyAllBooks{
-    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
-    vc.isBook = YES;
-    vc.isCart = YES;
-    vc.money = [NSNumber numberWithFloat:self.hander.money];
-    NSMutableArray * muarr = [NSMutableArray new];
-    for (int i = 0; i<self.hander.dataArray.count; i++) {
-        HomeListenModel * model = self.hander.dataArray[i];
-        if (model.isSelect) {
-            [muarr addObject:model];
+    if (self.isEditStaus) {
+        UIAlertController * altert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要删除吗？" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cannnce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSDictionary * params = @{
+                                      @"idStr":[self.hander getDeleteIdStr]
+                                      };
+            [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ShopCarDelete complete:^(id result) {
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除陈功" duration:1.0f];
+                self.isEditStaus = NO;
+                [self.tabview reloadData];
+            } errorBlock:^(KTError *error) {
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
+            }];
+        }];
+        [altert addAction:sure];
+        [altert addAction:cannnce];
+        [self presentViewController:altert animated:YES completion:nil];
+        
+    }else{
+        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+        vc.isBook = YES;
+        vc.isCart = YES;
+        vc.money = [NSNumber numberWithFloat:self.hander.money];
+        NSMutableArray * muarr = [NSMutableArray new];
+        for (int i = 0; i<self.hander.dataArray.count; i++) {
+            HomeListenModel * model = self.hander.dataArray[i];
+            if (model.isSelect) {
+                [muarr addObject:model];
+            }
         }
+        vc.products = muarr;
+        [self.navigationController pushViewController:vc animated:YES];
     }
-    vc.products = muarr;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 @end

@@ -11,9 +11,11 @@
 #import "CheckPhoneViewController.h"
 #import "ChangePhoneViewController.h"
 #import "ChangeMinepwdViewController.h"
+#import <UMSocialCore/UMSocialCore.h>
 @interface AccountSafeViewController ()<UITableViewDelegate,UITableViewDataSource>
-//@property (nonatomic, strong) UITableView * tabview;
+
 @property (nonatomic, strong) NSArray * titles;
+
 @end
 
 @implementation AccountSafeViewController
@@ -28,7 +30,7 @@
 }
 - (void)creatUI{
 //    self.titles = @[@"手机",@"微信",@"QQ",@"微博",@"密码设置"];
-    self.titles = @[@"手机",@"密码设置"];
+    self.titles = @[@"手机",@"微信",@"密码设置"];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -66,6 +68,12 @@
         }else{
             [cell updateWithName:self.titles[indexPath.row] desc:@"未绑定"];
         }
+    }else if(indexPath.row == 1){
+        if ([[UserManager manager].info.V_STATE boolValue]) {
+            [cell updateWithName:self.titles[indexPath.row] desc:@"已认证"];
+        }else{
+            [cell updateWithName:self.titles[indexPath.row] desc:@"未认证"];
+        }
     }else{
         [cell updateWithName:self.titles[indexPath.row] desc:@""];
     }
@@ -79,9 +87,37 @@
         }else{
             [self.navigationController pushViewController:[CheckPhoneViewController new] animated:YES];
         }
-    }else if(indexPath.row == 1){
+    }else if(indexPath.row == 2){
         [self.navigationController pushViewController:[ChangeMinepwdViewController new] animated:YES];
+    }else if(indexPath.row == 1){
+        [self getUserInfoForPlatform:UMSocialPlatformType_WechatSession];
     }
 }
+- (void)getUserInfoForPlatform:(UMSocialPlatformType)platformType
+{
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:platformType currentViewController:self completion:^(id result, NSError *error) {
+        if (error) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.description duration:1.0f];
+            return ;
+        }
+        UMSocialUserInfoResponse *resp = result;
+        NSDictionary * params = @{
+                                  @"userid":[UserManager manager].info.USERID,
+                                  @"Unionid":resp.unionId,
+                                  @"openid":resp.openid,
+                                  @"token":resp.accessToken,
+                                  @"type":@"6",
+                                  @"nickname":resp.name,
+                                  @"icon":resp.iconurl,
+                                  };
+        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ThirdBind complete:^(id result) {
+            NSLog(@"222");
+        } errorBlock:^(KTError *error) {
+            NSLog(@"123");
+        }];
+    }];
+}
+
+
 
 @end

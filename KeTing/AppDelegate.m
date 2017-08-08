@@ -17,9 +17,10 @@
 #import "HistorySql.h"
 #import "AudioPlayer.h"
 #import "FristViewController.h"
-@interface AppDelegate ()<AVAudioSessionDelegate>
+#import <Growing.h>
+#import <MLTransition.h>
 
-
+@interface AppDelegate ()<AVAudioSessionDelegate,WXApiDelegate>
 
 @end
 
@@ -30,6 +31,8 @@
     [self netNotificationCenterSetting];
     [[SqlManager manager] openDB];
     [[HistorySql sql] openDB];
+    [MLTransition validatePanBackWithMLTransitionGestureRecognizerType:MLTransitionGestureRecognizerTypePan];
+    [Growing startWithAccountId:GrowingID];
     
     [self IQKeyBoardSetting];
     [self audioPlayerSetting];
@@ -94,18 +97,43 @@
     [[UMSocialManager defaultManager] openLog:YES];
     /* 设置友盟appkey */
     [[UMSocialManager defaultManager] setUmSocialAppkey:UmengKey];
+    [WXApi registerApp:WxAppID];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WxAppID appSecret:WxAppSecret redirectURL:@"keting"];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:@"keting"];
 }
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    if([WXApi handleOpenURL:url delegate:self]){
+        if ([self.wxDelegate respondsToSelector:@selector(loginWithResq:)]) {
+            return YES;
+        }
+    }
+    if ([Growing handleUrl:url]) // 请务必确保该函数被调用
+    {
+        return YES;
+    }
+    return NO;
+}
+
+
 // Umeng 分享回调
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    if ([WXApi handleOpenURL:url delegate:self]) {
+        if ([self.wxDelegate respondsToSelector:@selector(loginWithResq:)]) {
+            return YES;
+        }
+    }
+    
+    if ([Growing handleUrl:url]) // 请务必确保该函数被调用
+    {
+        return YES;
+    }
     //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
     BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url sourceApplication:sourceApplication annotation:annotation];
-    if (!result) {
-        // 其他如支付等SDK的回调
+    if (result) {
+        return  YES;
     }
-    return result;
+    return NO;
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -154,6 +182,17 @@
     UINavigationController  *nvc = tbc.selectedViewController;
     UIViewController *vc = nvc.visibleViewController;
     return vc;
+}
+#pragma mark - 微信代理
+- (void)onReq:(BaseReq *)req{
+
+}
+- (void)onResp:(BaseResp *)resp{
+//接收code 继续登录
+    if ([self.wxDelegate respondsToSelector:@selector(loginWithResq:)]) {
+        [self.wxDelegate loginWithResq:resp];
+    }
+
 }
 
 @end

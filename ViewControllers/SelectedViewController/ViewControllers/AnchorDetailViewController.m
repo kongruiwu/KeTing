@@ -52,7 +52,6 @@
     [self.anchorHeader.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
     [self.anchorHeader.shareBtn addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
     [self.anchorHeader.shopCar addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
-    [self.anchorHeader.showBtn addTarget:self action:@selector(showAnchorDetail) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.anchorHeader;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -139,15 +138,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
-#pragma mark - 主播描述文字 展开／收起
-- (void)showAnchorDetail{
-    self.anchorHeader.showBtn.selected = !self.anchorHeader.showBtn.selected;
-    self.anchorHeader.descLabel.numberOfLines = self.anchorHeader.showBtn.selected ? 0 : 2;
-    CGSize size = [KTFactory getSize:self.anchor.summary maxSize:CGSizeMake(Anno750(750 - 148), 999999) font:[UIFont systemFontOfSize:Anno750(26)]];
-    float height = self.anchorHeader.showBtn.selected ? Anno750(440 - 60) + size.height : Anno750(440);
-    self.anchorHeader.frame = CGRectMake(0, 0, UI_WIDTH, height);
-    self.tabview.tableHeaderView = self.anchorHeader;
-}
+
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
     if (![UserManager manager].isLogin) {

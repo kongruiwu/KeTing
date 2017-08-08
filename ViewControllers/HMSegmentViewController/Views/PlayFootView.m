@@ -7,7 +7,7 @@
 //
 
 #import "PlayFootView.h"
-
+#import "HistorySql.h"
 @implementation PlayFootView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -51,6 +51,16 @@
     [self addSubview:self.progressView];
     [self addSubview:self.line];
     [self addSubview:self.clearButton];
+    if (![AudioPlayer instance].currentAudio) {
+        NSNumber * num = [[NSUserDefaults standardUserDefaults] objectForKey:@"current"];
+        if (num) {
+            if ([[HistorySql sql] checkAudio:num]) {
+                [AudioPlayer instance].currentAudio = [[HistorySql sql] getHometopModel:num];
+                [self updateUI:[AudioPlayer instance].currentAudio];
+            }
+        }
+    }
+    
 }
 - (void)tick{
     self.progressView.progress = ((float)[[AudioPlayer instance] audioProgress])/100;
@@ -128,21 +138,30 @@
     }else{
         self.playBtn.selected = NO ;
     }
-    [self updateUI];
+    [self updateUI:[AudioPlayer instance].currentAudio];
 }
 - (void)playBtnClick:(UIButton *)btn{
     btn.selected = !btn.selected;
-    [[AudioPlayer instance] audioResume];
+    if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStateStopped) {
+        NSLog(@"%ld",[AudioPlayer instance].audioPlayer.state);
+        [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
+    }else{
+        [[AudioPlayer instance] audioResume];
+    }
+    
 }
 - (void)playNextAudio{
     [[AudioPlayer instance] nextAudio];
-    [self updateUI];
+    [self updateUI:[AudioPlayer instance].currentAudio];
 }
-- (void)updateUI{
-    HomeTopModel * model =[AudioPlayer instance].currentAudio;
+- (void)updateUI:(HomeTopModel *)model1{
+    HomeTopModel * model = model1;
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.audioName;
     self.progressView.progress = [[AudioPlayer instance].audioPlayer progress];
 }
+
+
+
 
 @end

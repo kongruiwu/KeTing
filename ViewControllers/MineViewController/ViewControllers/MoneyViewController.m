@@ -251,6 +251,7 @@
      // appStoreReceiptURL iOS7.0增加的，购买交易完成后，会将凭据存放在该地址
      NSURL *receiptURL   = [[NSBundle mainBundle] appStoreReceiptURL];
      NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    
      NSURL *url = [NSURL URLWithString:BUY_VIRIFY_RECEIPT_URL];
      // 国内访问苹果服务器比较慢，timeoutInterval需要长一点
      NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
