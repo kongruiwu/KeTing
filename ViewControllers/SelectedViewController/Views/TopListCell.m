@@ -40,10 +40,7 @@
                                          fontValue:font750(24)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
-    self.tagLabel = [KTFactory creatLabelWithText:@"财经"
-                                        fontValue:font750(24)
-                                        textColor:KTColor_lightGray
-                                    textAlignment:NSTextAlignmentLeft];
+    
     self.playStutas = [KTFactory creatLabelWithText:@"已播100%"
                                           fontValue:font750(24)
                                           textColor:KTColor_MainOrange
@@ -69,7 +66,6 @@
     [self addSubview:self.nameLabel];
     [self addSubview:self.downLoadImg];
     [self addSubview:self.timeLabel];
-    [self addSubview:self.tagLabel];
     [self addSubview:self.playStutas];
     [self addSubview:self.moreBtn];
     [self addSubview:self.bottomLine];
@@ -113,7 +109,7 @@
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.top.equalTo(@(Anno750(24)));
-        make.right.equalTo(@(-Anno750(80)));
+        make.right.equalTo(@(-Anno750(120)));
     }];
     [self.downLoadImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.nameLabel.mas_left);
@@ -123,12 +119,8 @@
         make.left.equalTo(self.nameLabel.mas_left);
         make.centerY.equalTo(self.downLoadImg.mas_centerY);
     }];
-    [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.timeLabel.mas_right).offset(Anno750(20));
-        make.centerY.equalTo(self.timeLabel.mas_centerY);
-    }];
     [self.playStutas mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.tagLabel.mas_right).offset(Anno750(20));
+        make.left.equalTo(self.timeLabel.mas_right).offset(Anno750(20));
         make.centerY.equalTo(self.timeLabel.mas_centerY);
         make.width.equalTo(@(Anno750(150)));
     }];
@@ -188,26 +180,17 @@
         self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
     }
     self.likeBtn.selected = model.isprase;
-    self.tagLabel.text = model.tagString;
     self.toolsbar.hidden = !model.showTools;
     self.downLoadImg.hidden = [model.downStatus intValue] == 2 ? NO : YES;
-    NSString * time = [NSString stringWithFormat:@"时长 %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+    NSString * addTime = [KTFactory timestampSwitchTime2:[model.addTime integerValue]];
+    NSMutableString * time = [NSMutableString stringWithFormat:@"%@  时长%@",addTime,[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+    [time appendFormat:@"  %@",[KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]]];
     if (!self.downLoadImg.hidden) {
         self.timeLabel.text = [NSString stringWithFormat:@"      %@",time];
     }else{
         self.timeLabel.text = time;
     }
 }
-- (void)updateTimeWithAddTime:(HomeTopModel *)model{
-    NSString * addTime = [KTFactory timestampSwitchTime:[model.addTime integerValue]];
-    NSString * time = [NSString stringWithFormat:@"时长 %@  %@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]],[KTFactory getAudioSizeWithdataSize:[model.audioSize longLongValue]]];
-    if (!self.downLoadImg.hidden) {
-        self.timeLabel.text = [NSString stringWithFormat:@"      %@  %@",addTime,time];
-    }else{
-        self.timeLabel.text = [NSString stringWithFormat:@"%@  %@",addTime,time];
-    }
-    self.tagLabel.text = @"";
-    self.tagLabel.hidden = YES;
-}
+
 
 @end

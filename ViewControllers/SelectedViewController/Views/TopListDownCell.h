@@ -15,11 +15,10 @@
 @property (nonatomic, strong) UIButton * selctButton;
 @property (nonatomic, strong) UILabel * nameLabel;
 @property (nonatomic, strong) UILabel * timeLabel;
-@property (nonatomic, strong) UILabel * tagLabel;
 @property (nonatomic, strong) UILabel * playStutas;
 @property (nonatomic, strong) UIButton * TextBtn;
 
 @property (nonatomic, strong) UIView * bottomLine;
 - (void)updateWithHomeTopModel:(HomeTopModel *)model;
-- (void)updateTimeWithAddTime:(HomeTopModel *)model;
+-(void)updateVoiceDetailWithHomeTopModel:(HomeTopModel *)model;
 @end

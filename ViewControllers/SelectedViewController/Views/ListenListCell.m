@@ -62,6 +62,9 @@
     self.buybtn.layer.borderWidth = 1.0f;
     self.buybtn.layer.cornerRadius = 2.0f;
     self.bottomLine = [KTFactory creatLineView];
+    self.sortImg = [KTFactory creatImageViewWithImage:@""];
+    self.sortImg.hidden = YES;
+    [self.leftImg addSubview:self.sortImg];
     
     [self.shopCar addTarget:self action:@selector(shopCarBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.buybtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -127,7 +130,35 @@
         make.bottom.equalTo(@0);
         make.height.equalTo(@0.5);
     }];
-
+    [self.sortImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@0);
+        make.top.equalTo(@0);
+    }];
+}
+- (void)updateWithNum:(NSInteger)num{
+    switch (num) {
+        case 0:
+        {
+            self.sortImg.hidden = NO;
+            self.sortImg.image = [UIImage imageNamed:@"find_ one"];
+        }
+            break;
+        case 1:
+        {
+            self.sortImg.hidden = NO;
+            self.sortImg.image = [UIImage imageNamed:@"find_ two"];
+        }
+            break;
+        case 2:
+        {
+            self.sortImg.hidden = NO;
+            self.sortImg.image = [UIImage imageNamed:@"find_three"];
+        }
+            break;
+        default:
+            self.sortImg.hidden = YES;
+            break;
+    }
 }
 
 - (void)updateWithListenModel:(HomeListenModel *)model{

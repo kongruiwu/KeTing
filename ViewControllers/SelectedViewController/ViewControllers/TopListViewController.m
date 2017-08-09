@@ -306,7 +306,7 @@
 }
 #pragma mark - 查看音频文档
 - (void)checkAudioText:(UIButton *)button{
-    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    UITableViewCell * cell = (UITableViewCell *)[button superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.dataArray[index.row];
     WKWebViewController * vc= [[WKWebViewController alloc]init];

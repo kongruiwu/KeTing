@@ -56,6 +56,7 @@
     [self presentViewController:nvc animated:YES completion:nil];
 }
 - (void)showPlayList{
+    
     [self.listView show];
 }
 - (void)didReceiveMemoryWarning {

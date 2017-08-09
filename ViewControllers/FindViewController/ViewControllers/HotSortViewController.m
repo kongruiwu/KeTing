@@ -10,6 +10,7 @@
 #import "HomeVoiceCell.h"
 #import "ListenDetailViewController.h"
 #import "VoiceDetailViewController.h"
+#import "ListenListCell.h"
 
 @interface HotSortViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -52,9 +53,25 @@
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return Anno750(190);
+    return self.isBook ? Anno750(250) : Anno750(190);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.isBook) {
+        static NSString * cellid = @"ListenListCell";
+        ListenListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+        if (!cell) {
+            cell = [[ListenListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+        }
+        if (self.isHot) {
+            [cell updateWithListenModel:self.dataArray[indexPath.row]];
+            [cell updateWithNum:indexPath.row];
+        }else{
+            [cell updateWithListenModel:self.dataArray[indexPath.row]];
+        }
+        return cell;
+    }
+    
     static NSString * cellid = @"voiceCell";
     HomeVoiceCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
     if (!cell) {
@@ -65,7 +82,6 @@
     }else{
         [cell updateWithVoiceModel:self.dataArray[indexPath.row]];
     }
-    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

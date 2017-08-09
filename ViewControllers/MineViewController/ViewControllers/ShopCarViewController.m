@@ -17,7 +17,6 @@
 
 @property (nonatomic, strong) ShopCarFooter * footer;
 @property (nonatomic, strong) ShopCarHander * hander;
-@property (nonatomic) BOOL isEditStaus;
 @property (nonatomic, strong) UIBarButtonItem * barItem;
 
 @end
@@ -82,7 +81,7 @@
     if (!cell) {
         cell = [[ShopCarListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithHomeListenModel:self.hander.dataArray[indexPath.row] andEditStatus:self.isEditStaus];
+    [cell updateWithHomeListenModel:self.hander.dataArray[indexPath.row] andEditStatus:self.hander.isEditStatus];
     cell.delegate = self;
     return cell;
 }
@@ -94,6 +93,7 @@
 
 - (void)getData{
     [self showLoadingCantClear:YES];
+    NSArray * arr1 = [NSArray arrayWithArray:self.hander.dataArray];
     [self.hander.dataArray removeAllObjects];
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid
@@ -104,11 +104,23 @@
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:arr[i]];
-            model.isSelect = NO;
+            for (int i = 0; i<arr1.count; i++) {
+                HomeListenModel * model2 = arr1[i];
+                if (model.listenId == model2.listenId) {
+                    model.isDelete = model2.isDelete;
+                }
+            }
+            model.isSelect =YES;
             [self.hander.dataArray addObject:model];
         }
-        self.footer.selectBtn.selected = NO;
-        [self ShopCarSelectAll:self.footer.selectBtn];
+        if (self.hander.isEditStatus) {
+            [self.hander updateDeleteData];
+            [self.footer updateDeleteStatusWithShopCarHander:self.hander];
+        }else{
+            [self.hander updateData];
+            [self.footer updateWithShopCarHnader:self.hander];
+        }
+        [self.tabview reloadData];
         if (arr.count == 0) {
             [self showNullViewWithNullViewType:NullTypeNoneShopCar];
         }
@@ -118,21 +130,25 @@
 }
 - (void)changeEditStatus:(UIBarButtonItem *)baritem{
     
-    self.isEditStaus = !self.isEditStaus;
-    baritem.title = self.isEditStaus ? @"完成" : @"编辑";
-    [self.tabview reloadData];
-    if (self.isEditStaus) {
+    self.hander.isEditStatus = !self.hander.isEditStatus;
+    baritem.title = self.hander.isEditStatus ? @"完成" : @"编辑";
+    
+    if (self.hander.isEditStatus) {
+        [self.hander updateDeleteData];
         [self.footer updateDeleteStatusWithShopCarHander:self.hander];
     }else{
+        [self.hander updateData];
         [self.footer updateWithShopCarHnader:self.hander];
     }
+    [self.tabview reloadData];
+    
     
 }
 
 #pragma mark -购物车全选
 - (void)ShopCarSelectAll:(UIButton *)btn{
     btn.selected = !btn.selected;
-    if (self.isEditStaus) {
+    if (self.hander.isEditStatus) {
         [self.hander selectAllToDelete:btn.selected];
         [self.footer updateDeleteStatusWithShopCarHander:self.hander];
     }else{
@@ -145,7 +161,7 @@
 - (void)selectBook:(UIButton *)btn{
     UITableViewCell * cell = (UITableViewCell *)[btn superview];
     NSIndexPath * indexPath = [self.tabview indexPathForCell:cell];
-    if (self.isEditStaus) {
+    if (self.hander.isEditStatus) {
         [self.hander selectToDeleteAtIndex:indexPath.row];
         [self.footer updateDeleteStatusWithShopCarHander:self.hander];
     }else{
@@ -156,7 +172,7 @@
 }
 #pragma mark - 购买
 - (void)buyAllBooks{
-    if (self.isEditStaus) {
+    if (self.hander.isEditStatus) {
         UIAlertController * altert = [UIAlertController alertControllerWithTitle:@"提示" message:@"确定要删除吗？" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction * cannnce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -166,7 +182,7 @@
                                       };
             [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ShopCarDelete complete:^(id result) {
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除陈功" duration:1.0f];
-                self.isEditStaus = NO;
+                self.hander.isEditStatus = NO;
                 [self.tabview reloadData];
             } errorBlock:^(KTError *error) {
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];

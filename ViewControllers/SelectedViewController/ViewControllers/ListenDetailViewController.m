@@ -18,10 +18,12 @@
 #import "LoginViewController.h"
 #import "AudioDownLoader.h"
 #import "RootViewController.h"
+#import <MLTransition.h>
+#import "ListenDetailHeader.h"
 @interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
-@property (nonatomic, strong) VoiceDetailHeader * header;
+@property (nonatomic, strong) ListenDetailHeader * header;
 @property (nonatomic, strong) HomeListenModel * listenModel;
 
 @property (nonatomic, strong) UIButton * likeBtn;
@@ -37,9 +39,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [AudioDownLoader loader].delegate = self;
     [self getData];
     [self checkNetStatus];
+    [self setNavUnAlpha];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -88,14 +92,14 @@
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
     
-    self.header  = [[VoiceDetailHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(485))];
+    self.header  = [[ListenDetailHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(410))];
     self.tabview.tableHeaderView = self.header;
     
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 
     UIView * headView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
-    headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(80));
+    headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(100));
     UIButton * likeBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum ? self.listenModel.praseNum : @0]
                                          backGroundColor:[UIColor clearColor]
                                                textColor:KTColor_MainOrange
@@ -169,7 +173,7 @@
     return headView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(80);
+    return Anno750(100);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 2;
@@ -252,7 +256,7 @@
         [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
         self.listenModel = [[HomeListenModel alloc]initWithDictionary:dic];
-        [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
+        [self.header updateWithImage:self.listenModel.thumb];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
@@ -381,24 +385,6 @@
     [self.shopBtn setTitle:[NSString stringWithFormat:@"  %@",progress] forState:UIControlStateNormal];
 }
 
-//设置头部拉伸效果
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    //图片高度
-    CGFloat imageHeight = self.header.frame.size.height;
-    //图片宽度
-    CGFloat imageWidth = UI_WIDTH;
-    //图片上下偏移量
-    CGFloat imageOffsetY = scrollView.contentOffset.y;
-    //上移
-    if (imageOffsetY < 0) {
-        CGFloat totalOffset = imageHeight + ABS(imageOffsetY);
-        CGFloat f = totalOffset / imageHeight;
-        
-        self.header.groundImg.frame = CGRectMake(-(imageWidth * f - imageWidth) * 0.5, imageOffsetY, imageWidth * f, totalOffset);
-    }
-    
-}
 
 
 @end

@@ -24,7 +24,7 @@
 /**主播id*/
 @property (nonatomic, strong) NSString * anchorId;
 /**栏目Id*/
-@property (nonatomic, strong) NSString * columnId;
+@property (nonatomic, strong) NSNumber * columnId;
 /**音频名称*/
 @property (nonatomic, strong) NSString * audioName;
 /**简介*/

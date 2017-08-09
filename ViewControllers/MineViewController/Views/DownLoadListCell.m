@@ -62,7 +62,58 @@
     [self.moveView addSubview:self.playStatus];
     [self addSubview:self.line];
     
+//    self.moreBtn = [KTFactory creatButtonWithNormalImage:@"icon_more" selectImage:@""];
+//    self.toolsbar = [KTFactory creatImageViewWithImage:@"top_inputbox"];
+//    self.downLoadBtn = [KTFactory creatButtonWithNormalImage:@"voice_download" selectImage:@""];
+//    self.textBtn = [KTFactory creatButtonWithNormalImage:@"voice_draft" selectImage:@""];
+//    self.likeBtn = [KTFactory creatButtonWithNormalImage:@"voice_like" selectImage:@"listen_liked"];
+//    self.shareBtn = [KTFactory creatButtonWithNormalImage:@"voice_ share" selectImage:@""];
+//    
+//    self.toolsbar.userInteractionEnabled = YES;
+//    [self.moreBtn addTarget:self action:@selector(moreButtonClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.downLoadBtn addTarget:self action:@selector(downLoadThisAudio) forControlEvents:UIControlEventTouchUpInside];
+//    [self.textBtn addTarget:self action:@selector(checkThisAudioText) forControlEvents:UIControlEventTouchUpInside];
+//    [self.likeBtn addTarget:self action:@selector(likeThisAudio) forControlEvents:UIControlEventTouchUpInside];
+//    [self.shareBtn addTarget:self action:@selector(shareThisAudio) forControlEvents:UIControlEventTouchUpInside];
+//    self.toolsbar.hidden = YES;
+//    
+//    [self addSubview:self.moreBtn];
+//    [self addSubview:self.textBtn];
+//    [self addSubview:self.toolsbar];
+//    [self.toolsbar addSubview:self.downLoadBtn];
+//    [self.toolsbar addSubview:self.likeBtn];
+//    [self.toolsbar addSubview:self.shareBtn];
+    
 }
+//- (void)moreButtonClick{
+//    
+//    if ([self.delegate respondsToSelector:@selector(moreBtnClick:)]) {
+//        [self.delegate moreBtnClick:self.moreBtn];
+//    }
+//}
+//
+//- (void)downLoadThisAudio{
+//    if ([self.delegate respondsToSelector:@selector(downLoadAudio:)]) {
+//        [self.delegate downLoadAudio:self.downLoadBtn];
+//    }
+//}
+//- (void)checkThisAudioText{
+//    if ([self.delegate respondsToSelector:@selector(checkAudioText:)]) {
+//        [self.delegate checkAudioText:self.textBtn];
+//    }
+//}
+//- (void)likeThisAudio{
+//    if ([self.delegate respondsToSelector:@selector(likeAudioClick:)]) {
+//        [self.delegate likeAudioClick:self.likeBtn];
+//    }
+//}
+//- (void)shareThisAudio{
+//    if ([self.delegate respondsToSelector:@selector(shareBtnClick:)]) {
+//        [self.delegate shareBtnClick:self.shareBtn];
+//    }
+//}
+
+
 - (void)layoutSubviews{
     [super layoutSubviews];
     
@@ -94,6 +145,44 @@
         make.height.equalTo(@0.5);
     }];
     
+    
+    
+//    [self.moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(@0);
+//        make.bottom.equalTo(@0);
+//        make.right.equalTo(@(-Anno750(24)));
+//    }];
+//    [self.textBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.moreBtn.mas_left).offset(Anno750(-25));
+//        make.centerY.equalTo(@0);
+//    }];
+//    UIImage * img = [UIImage imageNamed:@"top_inputbox"];
+//    [self.toolsbar mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(@0);
+//        make.right.equalTo(self.moreBtn.mas_left).offset(-Anno750(24));
+//    }];
+//    float with = (img.size.width - Anno750(10))/3;
+//    [self.downLoadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(@0);
+//        make.centerY.equalTo(@0);
+//        make.width.equalTo(@(with));
+//        make.height.equalTo(@(img.size.height));
+//    }];
+//    
+//    [self.likeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.downLoadBtn.mas_right);
+//        make.centerY.equalTo(@0);
+//        make.width.equalTo(@(with));
+//        make.height.equalTo(@(img.size.height));
+//    }];
+//    [self.shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.likeBtn.mas_right);
+//        make.centerY.equalTo(@0);
+//        make.width.equalTo(@(with));
+//        make.height.equalTo(@(img.size.height));
+//    }];
+
+    
 }
 - (void)updateWithHistoryModel:(HomeTopModel *)model pausStatus:(BOOL)rec isDown:(BOOL)isDown{
 
@@ -107,16 +196,14 @@
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
     self.selectButton.selected = model.isSelectDown;
-    self.tagLabel.text = [NSString stringWithFormat:@"  %@  %@",time,model.tagString];
-    model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
-    if ([model.playLong integerValue] == 0) {
-        self.playStatus.hidden = YES;
-    }else{
-        self.playStatus.text = [NSString stringWithFormat:@"%@%%",model.playLong];
-    }
+    NSString * size = [KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]];
+    self.tagLabel.text = [NSString stringWithFormat:@"  %@  %@  %@",time,size,model.tagString];
+    self.playStatus.hidden = YES;
     
-//    float value = [model.playLong floatValue]/[model.audioLong floatValue];
-//    self.playStatus.text = [NSString stringWithFormat:@"已播：%d%%",(int)(value * 100)];
+
+    
+//    self.toolsbar.hidden = !model.showTools;
+    
 }
 - (void)showSelectBotton:(BOOL)rec{
     if (rec) {

@@ -181,6 +181,27 @@
     
     return confromTimespStr;
 }
+/**
+ 格式为  08-12
+ */
++(NSString *)timestampSwitchTime2:(NSInteger)timestamp{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    [formatter setDateFormat:@"MM-dd"];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
+    
+    [formatter setTimeZone:timeZone];
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    
+    NSString *confromTimespStr = [formatter stringFromDate:confromTimesp];
+    
+    return confromTimespStr;
+}
 
 + (NSString *)getUpdateTimeStringWithEditTime:(NSNumber *)edittime{
     long timevalue = time(NULL);

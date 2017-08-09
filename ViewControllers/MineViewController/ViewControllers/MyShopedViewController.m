@@ -43,8 +43,8 @@
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
     UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(Anno750(190), Anno750(320));
-    layout.sectionInset = UIEdgeInsetsMake(Anno750(30), Anno750(24), Anno750(24), Anno750(30));
+    layout.itemSize = CGSizeMake(Anno750(185), Anno750(300));
+    layout.sectionInset = UIEdgeInsetsMake(Anno750(30), Anno750(30), Anno750(30), Anno750(30));
     layout.minimumLineSpacing = Anno750(50);
     layout.minimumInteritemSpacing = Anno750(30);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;

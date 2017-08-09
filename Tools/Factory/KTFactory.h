@@ -44,6 +44,8 @@
 
 + (NSString *)timestampSwitchTime:(NSInteger)timestamp;
 
++(NSString *)timestampSwitchTime2:(NSInteger)timestamp;
+
 + (NSString *)getUpdateTimeStringWithEditTime:(NSNumber *)edittime;
 
 /**

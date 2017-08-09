@@ -31,7 +31,7 @@
     [self setNavTitle:@"声度" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
-    [self getData];
+    [self refreshData];
 }
 
 - (void)creatUI{
@@ -70,10 +70,12 @@
 }
 
 - (void)getMoreData{
+    [self showLoadingCantTouchAndClear];
     self.page += 1;
     [self getData];
 }
 - (void)refreshData{
+    [self showLoadingCantTouchAndClear];
     self.page = 1;
     [self.dataArray removeAllObjects];
     [self getData];
@@ -101,12 +103,14 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
         }
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
+        [self dismissLoadingView];
     }];
 }
 

@@ -101,6 +101,9 @@
 
 - (void)show{
     self.hidden = NO;
+    if ([AudioPlayer instance].playList.count == 0) {
+        [[AudioPlayer instance].playList addObject: [AudioPlayer instance].currentAudio];
+    }
     self.titleLabel.text = [NSString stringWithFormat:@"播放列表（%ld）",[AudioPlayer instance].playList.count];
     [self.tabview reloadData];
     [UIView animateWithDuration:0.5 animations:^{

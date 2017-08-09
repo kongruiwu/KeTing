@@ -96,10 +96,12 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)getMoreData{
+    [self showLoadingCantTouchAndClear];
     self.page += 1;
     [self getData];
 }
 - (void)refreshData{
+    [self showLoadingCantTouchAndClear];
     self.page = 1;
     [self.dataArray removeAllObjects];
     [self getData];
@@ -127,12 +129,14 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
         }
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
+        [self dismissLoadingView];
     }];
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {

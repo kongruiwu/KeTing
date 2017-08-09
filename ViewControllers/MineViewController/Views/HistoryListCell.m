@@ -49,6 +49,7 @@
     [self addSubview:self.tagLabel];
     [self addSubview:self.playStatus];
     [self addSubview:self.lineView];
+    
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
@@ -82,12 +83,9 @@
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.audioName;
     NSString * time = [KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]];
-    self.tagLabel.text = [NSString stringWithFormat:@"%@  %@",time,model.tagString];
-    if ([model.playLong integerValue] == 0) {
-        self.playStatus.hidden = YES;
-    }else{
-        self.playStatus.text = [NSString stringWithFormat:@"已播：%@%%",model.playLong];
-    }
+    NSString * size = [KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]];
+    self.tagLabel.text = [NSString stringWithFormat:@"时长%@  %@",time,size];
+    self.playStatus.hidden = YES;
     
 }
 

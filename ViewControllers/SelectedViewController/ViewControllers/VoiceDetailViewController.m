@@ -229,7 +229,6 @@
                         cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                     }
                     [cell updateWithHomeTopModel:model];
-                    [cell updateTimeWithAddTime:model];
                     cell.moreBtn.hidden = YES;
                     return cell;
                 }
@@ -239,8 +238,7 @@
                 if (!cell) {
                     cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
-                [cell updateWithHomeTopModel:model];
-                [cell updateTimeWithAddTime:model];
+                [cell updateVoiceDetailWithHomeTopModel:model];
                 return cell;
             }else{
                 static NSString * cellid = @"topListCell";
@@ -249,7 +247,6 @@
                     cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 }
                 [cell updateWithHomeTopModel:self.listenModel.audio[indexPath.row - 1]];
-                [cell updateTimeWithAddTime:self.listenModel.audio[indexPath.row - 1]];
                 cell.delegate =self;
                 return cell;
             }
@@ -463,7 +460,7 @@
 }
 #pragma mark - 查看音频文档
 - (void)checkAudioText:(UIButton *)button{
-    UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
+    UITableViewCell * cell = (UITableViewCell *)[button superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * model = self.listenModel.audio[index.row - 1];
     WKWebViewController * vc= [[WKWebViewController alloc]init];

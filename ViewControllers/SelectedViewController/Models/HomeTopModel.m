@@ -43,7 +43,11 @@
         self.isSelectDown = NO;
         self.downStatus = @0;
         if (!self.relationId) {
-            self.relationId = self.topId;
+            if (self.topId) {
+                self.relationId = self.topId;
+            }else if(self.columnId){
+                self.relationId = self.columnId;
+            }
         }
         if (!self.relationType) {
             self.relationType = @1;

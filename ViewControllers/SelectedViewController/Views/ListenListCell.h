@@ -29,8 +29,10 @@
 @property (nonatomic, strong) UIButton * shopCar;
 @property (nonatomic, strong) UIButton * buybtn;
 @property (nonatomic, strong) UIView * bottomLine;
+@property (nonatomic, strong) UIImageView * sortImg;
 @property (nonatomic, assign) id<ListenListDelegate> delegate;
 
 - (void)updateWithListenModel:(HomeListenModel *)model;
+- (void)updateWithNum:(NSInteger)num;
 
 @end

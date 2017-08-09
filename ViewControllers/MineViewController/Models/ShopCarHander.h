@@ -19,6 +19,10 @@
 @property (nonatomic, assign) float money;
 /**选择总数*/
 @property (nonatomic, assign) int count;
+
+/**编辑状态*/
+@property (nonatomic, assign) BOOL isEditStatus;
+
 /**删除选择总数*/
 @property (nonatomic) int deletCount;
 + (instancetype)hander;
@@ -32,4 +36,8 @@
 - (void)selectAllToDelete:(BOOL)rec;
 
 - (NSMutableString *)getDeleteIdStr;
+
+- (void)updateData;
+
+- (void)updateDeleteData;
 @end
