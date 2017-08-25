@@ -43,6 +43,7 @@
     [self setNavUnAlpha];
     [AudioDownLoader loader].delegate = self;
     [self checkNetStatus];
+    [self refreshData];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -62,7 +63,7 @@
     
     self.isDownLoad = NO;
     [self creatUI];
-    [self refreshData];
+    // [self refreshData];
     
     
 }

@@ -69,6 +69,7 @@
         }else{
             [cell updateWithListenModel:self.dataArray[indexPath.row]];
         }
+        cell.timeLabel.hidden = YES;
         return cell;
     }
     
@@ -116,6 +117,7 @@
         pageUrl = Page_Free;
     }
     NSDictionary * dic = @{
+                           @"type":self.isBook ? @"2" :@"3",
                            @"pagesize":@"10",
                            @"page":@(self.page)
                            };

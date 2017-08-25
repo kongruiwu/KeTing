@@ -23,39 +23,22 @@
     return self;
 }
 - (void)creatUI{
-    self.topline = [KTFactory creatLineView];
     
-
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:@"（1）购买后的商品，在苹果系统和其他系统均可使用\n（2）通过iOS内购平台充值后的余额仅限苹果系统使用，不与其他平台互通"];
+    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:@"1.苹果公司规定，虚拟商品必须使用苹果系统充值购买。\n2.充值如遇问题，请关注「可听kting」微信公众号，我们会为你解决。"];
     NSMutableParagraphStyle *paraStyle02 = [[NSMutableParagraphStyle alloc] init];
     paraStyle02.lineHeightMultiple = 1.3;
     [attstr addAttribute:NSParagraphStyleAttributeName value:paraStyle02 range:NSMakeRange(0, attstr.length)];
     self.topLabel = [KTFactory creatLabelWithText:@""
-                                        fontValue:font750(26)
+                                        fontValue:font750(24)
                                         textColor:KTColor_darkGray
                                     textAlignment:NSTextAlignmentLeft];
     self.topLabel.attributedText = attstr;
     self.topLabel.numberOfLines = 0;
-
-    self.bottomLine = [KTFactory creatLineView];
+    
     [self addSubview:self.topLabel];
-    [self addSubview:self.topline];
-    [self addSubview:self.bottomLine];
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
-    [self.topline mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(Anno750(24)));
-        make.right.equalTo(@(-Anno750(24)));
-        make.height.equalTo(@0.5);
-        make.top.equalTo(@0);
-    }];
-    [self.bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(Anno750(24)));
-        make.right.equalTo(@(-Anno750(24)));
-        make.height.equalTo(@0.5);
-        make.bottom.equalTo(@0);
-    }];
     [self.topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
         make.right.equalTo(@(-Anno750(24)));

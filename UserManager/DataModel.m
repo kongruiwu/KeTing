@@ -50,7 +50,7 @@
         self.orderNames = [NSArray arrayWithArray:names];
         self.orderIDs = [NSArray arrayWithArray:ids];
         
-        self.amount = @[@6,@30,@68,@98,@198,@298];
+        self.amount = @[@6,@30,@108,@208,@298,@518];
         
         [[NSUserDefaults standardUserDefaults] setObject:self.typNames  forKey:@"TYPNAMES"];
         [[NSUserDefaults standardUserDefaults] setObject:self.typIds    forKey:@"TYPIDS"];

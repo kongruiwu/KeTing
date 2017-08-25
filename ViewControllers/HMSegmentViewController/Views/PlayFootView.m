@@ -14,7 +14,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self creatUI];
-        [self audioImageAnimtion];
     }
     return self;
 }
@@ -135,19 +134,22 @@
 - (void)changePlayStatus{
     if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
         self.playBtn.selected = YES;
+        [self animationResume];
     }else{
         self.playBtn.selected = NO ;
+        [self animationStop];
     }
     [self updateUI:[AudioPlayer instance].currentAudio];
 }
 - (void)playBtnClick:(UIButton *)btn{
     btn.selected = !btn.selected;
     if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStateStopped) {
-        NSLog(@"%ld",[AudioPlayer instance].audioPlayer.state);
         [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
+        [self audioImageAnimtion];
     }else{
         [[AudioPlayer instance] audioResume];
     }
+    
     
 }
 - (void)playNextAudio{
@@ -161,7 +163,25 @@
     self.progressView.progress = [[AudioPlayer instance].audioPlayer progress];
 }
 
-
+#pragma 暂停动画
+- (void)animationStop
+{
+    CALayer *layer = self.leftImg.layer;
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0;
+    layer.timeOffset = pausedTime;
+}
+#pragma 继续动画
+- (void)animationResume
+{
+    CALayer *layer = self.leftImg.layer;
+    CFTimeInterval pauseTime = [layer timeOffset];
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    CFTimeInterval timeSince = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pauseTime;
+    layer.beginTime = timeSince;
+}
 
 
 @end

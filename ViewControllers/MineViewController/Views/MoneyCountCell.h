@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
 
+
 @protocol SendPriceDelegate <NSObject>
 - (void)sendPrice:(NSInteger )price;
 @end
 
 @interface MoneyCountCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel * titleLabel;
 
 @property (nonatomic, strong) id <SendPriceDelegate > delegate;
 

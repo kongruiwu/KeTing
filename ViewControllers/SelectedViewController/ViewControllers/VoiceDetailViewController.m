@@ -22,7 +22,11 @@
 #import "WKWebViewController.h"
 #import "LoginViewController.h"
 #import "RootViewController.h"
-@interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate>
+#import "RMIAPHelper.h"
+#import "OrderModel.h"
+
+
+@interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate,RMIAPHelperDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
 
@@ -293,7 +297,6 @@
             self.isOpen = NO;
         }
         [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
-        
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
@@ -342,11 +345,13 @@
             [self presentViewController:nvc animated:YES completion:nil];
         }else{
             //订阅
-            SetAccoutViewController * vc = [SetAccoutViewController new];
-            vc.money = self.listenModel.PRICE;
-            vc.products = @[self.listenModel];
-            vc.isBook = NO;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self recharge];
+            
+//            SetAccoutViewController * vc = [SetAccoutViewController new];
+//            vc.money = self.listenModel.PRICE;
+//            vc.products = @[self.listenModel];
+//            vc.isBook = NO;
+//            [self.navigationController pushViewController:vc animated:YES];
         }
     }
     
@@ -589,6 +594,186 @@
         self.header.groundImg.frame = CGRectMake(-(imageWidth * f - imageWidth) * 0.5, imageOffsetY, imageWidth * f, totalOffset);
     }
     
+}
+
+#pragma mark- ------内购支付------
+
+
+#pragma makr- 立即充值    按钮点击事件
+- (void)recharge{
+    [self showLoadingCantTouchAndClear];
+    RMIAPHelper *storeShared = [RMIAPHelper sharedInstance];
+    storeShared.delegate = self;
+    [storeShared setup];  //开始交易监听
+    [storeShared buy:[NSString stringWithFormat:@"keting0098"
+                      ]];
+//                      ,self.listenModel.PRICE]];
+}
+
+#pragma mark - 充值请求失败
+- (void)paymentRequestFaild{
+    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"交易请求失败" duration:1.0f];
+    [self dismissLoadingView];
+}
+
+#pragma mark - RMIAPHelperdelegate
+-(void)requestProduct:(RMIAPHelper*)sender start:(SKProductsRequest*)request{
+    
+    //    NSLog(@"start---------1发送交易请求------------");
+    //    [SVProgressHUD showWithStatus:@"发送交易请求,获取产品信息" maskType:SVProgressHUDMaskTypeBlack];
+    
+}
+-(void)requestProduct:(RMIAPHelper*)sender received:(SKProductsRequest*)request{
+    //    NSLog(@"received----------2收到响应-------------");
+}
+
+- (void)paymentRequest:(RMIAPHelper*)sender start:(SKPayment*)payment{
+    //    NSLog(@"startpayment----------3发送支付请求--------");
+    //    [SVProgressHUD dismiss];
+    
+}
+
+- (void)paymentRequest:(RMIAPHelper*)sender purchased:(SKPaymentTransaction*)transaction money:(NSString *)rechargeMoney {
+    
+    NSString * transactionID     = transaction.transactionIdentifier;
+    NSString * paymentTime       = [self stringFromDate:transaction.transactionDate];
+    
+    if (rechargeMoney != nil) {
+        [self verifyPruchase:transactionID time:paymentTime money:rechargeMoney];
+    }
+    [[RMIAPHelper sharedInstance] finishWithWithTransation:transaction];
+}
+
+- (void)paymentRequest:(RMIAPHelper*)sender restored:(SKPaymentTransaction*)transaction {
+    [[RMIAPHelper sharedInstance] restore];
+}
+
+- (void)paymentRequest:(RMIAPHelper*)sender failed:(SKPaymentTransaction*)transaction {
+    [[RMIAPHelper sharedInstance] finishWithWithTransation:transaction];
+    [self dismissLoadingView];
+}
+
+//恢复
+-(BOOL)restoredArray:(RMIAPHelper*)sender withArray:(NSArray*)productsIdArray{
+    return YES;
+}
+//不支持内购
+-(void)iapNotSupported:(RMIAPHelper*)sender{
+    [self dismissLoadingView];
+}
+
+
+#pragma mark 验证购买凭据
+- (void)verifyPruchase:(NSString *)transactionID time:(NSString *)paymentTime money:(NSString *)rechargeMoney {
+    // 验证凭据，获取到苹果返回的交易凭据
+    // appStoreReceiptURL iOS7.0增加的，购买交易完成后，会将凭据存放在该地址
+    NSURL *receiptURL   = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+    NSURL *url = [NSURL URLWithString:BUY_VIRIFY_RECEIPT_URL];
+    // 国内访问苹果服务器比较慢，timeoutInterval需要长一点
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
+    request.HTTPMethod = @"POST";
+    
+    // 在网络中传输数据，大多情况下是传输的字符串而不是二进制数据
+    // 传输的是BASE64编码的字符串
+    /**
+     BASE64 常用的编码方案，通常用于数据传输，以及加密算法的基础算法，传输过程中能够保证数据传输的稳定性
+     BASE64是可以编码和解码的
+     */
+    NSString *encodeStr = [receiptData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    
+    NSString *payload = [NSString stringWithFormat:@"{\"receipt-data\" : \"%@\"}", encodeStr];
+    NSData *payloadData = [payload dataUsingEncoding:NSUTF8StringEncoding];
+    
+    request.HTTPBody = payloadData;
+    
+    // 提交验证请求，并获得官方的验证JSON结果
+    NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    
+    // 官方验证结果为空
+    if (result == nil) {
+        [self dismissLoadingView];
+        [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"苹果验证失败" duration:1.5];
+    } else {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingAllowFragments error:nil];
+        NSNumber* status = [dict objectForKey:@"status"];
+        NSInteger myStatus = [status integerValue];
+        if (myStatus == 0) {
+            //验证成功通知合肥后台充值
+            [self createPayOrders:transactionID time:paymentTime money:rechargeMoney];
+        } else {
+            [self dismissLoadingView];
+            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"苹果验证失败" duration:1.5];
+        }
+    }
+}
+#pragma mark - 创建支付订单
+- (void)createPayOrders:(NSString *)transactionID time:(NSString *)paymentTime money:(NSString *)rechargeMoney {
+    NSMutableArray * arr = [[NSMutableArray alloc]init];
+    //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+    NSDictionary * dic = @{@"relationType":@3,@"relationId":self.listenModel.listenId};
+    [arr addObject:dic];
+    NSData *data=[NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary * params = @{
+                              @"userId":[UserManager manager].userid,
+                              @"nickName":[UserManager manager].info.NICKNAME,
+                              @"phone":[UserManager manager].info.MOBILE,
+                              //订单类型  0 充值  1消费
+                              @"orderType":@1,
+                              //充值金额
+                              @"payAmount":rechargeMoney,
+                              //支付方式  1微信  2  余额支付
+                              @"payMethod":@1,
+                              //商品字符串
+                              @"goodList":jsonStr,
+                              //生成订单来源 0 购物车   1  直接购买
+                              @"actFrom":@1
+                              };
+    [[NetWorkManager manager] POSTRequest:params pageUrl:Page_Order complete:^(id result) {
+        OrderModel * model = [[OrderModel alloc]initWithDictionary:result];
+        NSDictionary * orderParams = @{
+                                       @"userId":[UserManager manager].userid,
+                                       @"orderId":model.orderId,
+                                       @"orderNo":model.orderNo,
+                                       @"payStatus":@1
+                                       };
+        [[NetWorkManager manager] POSTRequest:orderParams pageUrl:Page_PayStatus complete:^(id result) {
+            NSDictionary * dic = (NSDictionary *)result;
+            if ([dic[@"payStatus"] integerValue] == 1) {
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"充值成功" duration:1.0f];
+                [self getData];
+            }else{
+                [self dismissLoadingView];
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"支付失败" duration:1.0f];
+            }
+            
+        } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
+            [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
+        [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    
+}
+
+
+#pragma mark - 处理交易时间
+- (NSString *)stringFromDate:(NSDate *)date{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    //zzz表示时区，zzz可以删除，这样返回的日期字符将不包含时区信息。
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    
+    return destDateString;
 }
 
 @end

@@ -15,18 +15,24 @@
 
 //@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) NSMutableArray * dataArray;
+@property (nonatomic) int page;
 
 @end
 
 @implementation SubscriListViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setNavUnAlpha];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavUnAlpha];
-    [self setNavTitle:@"我的订阅" color:KTColor_MainBlack];
+    [self setNavTitle:@"声度订阅" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
-    [self getListData];
+    [self refreshData];
     [self checkNetStatus];
 }
 - (void)creatUI{
@@ -37,6 +43,11 @@
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
     
+    
+//    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
+//    self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
+//    self.tabview.mj_header = self.refreshHeader;
+//    self.tabview.mj_footer = self.refreshFooter;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -75,11 +86,22 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
 }
-
+- (void)getMoreData{
+    self.page += 1;
+    [self getListData];
+}
+- (void)refreshData{
+    self.page = 1;
+    [self.dataArray removeAllObjects];
+    [self getListData];
+}
 
 - (void)getListData{
     [self showLoadingCantClear:YES];
-    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Subscribed complete:^(id result) {
+    NSDictionary * params = @{
+//                              @"pagesize":@(self.page),
+                              };
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_Subscribed complete:^(id result) {
         [self dismissLoadingView];
         if (result[@"list"] && [result[@"list"] isKindOfClass:[NSArray class]]) {
             [self hiddenNullView];
@@ -89,11 +111,23 @@
                 [self.dataArray addObject:model];
             }
             [self.tabview reloadData];
+            
+            if (array.count<10) {
+                [self.refreshFooter endRefreshingWithNoMoreData];
+            }else{
+                [self.refreshFooter endRefreshing];
+            }
         }
         if (self.dataArray.count == 0) {
             [self showNullViewWithNullViewType:NullTypeNoneAudio];
         }
+        [self.refreshHeader endRefreshing];
     } errorBlock:^(KTError *error) {
+        if (self.page > 1) {
+            self.page -= 1;
+        }
+        [self.refreshHeader endRefreshing];
+        [self.refreshFooter endRefreshing];
         [self dismissLoadingView];
         [self showNullViewWithNullViewType:NullTypeNoneAudio];
     }];

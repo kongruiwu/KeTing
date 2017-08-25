@@ -30,7 +30,7 @@
 }
 - (void)creatUI{
 //    self.titles = @[@"手机",@"微信",@"QQ",@"微博",@"密码设置"];
-    self.titles = @[@"手机",@"微信",@"密码设置"];
+    self.titles = @[@"手机",@"密码设置"];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -68,13 +68,15 @@
         }else{
             [cell updateWithName:self.titles[indexPath.row] desc:@"未绑定"];
         }
-    }else if(indexPath.row == 1){
-        if ([[UserManager manager].info.V_STATE boolValue]) {
-            [cell updateWithName:self.titles[indexPath.row] desc:@"已认证"];
-        }else{
-            [cell updateWithName:self.titles[indexPath.row] desc:@"未认证"];
-        }
-    }else{
+    }
+//    else if(indexPath.row == 1){
+//        if ([[UserManager manager].info.V_STATE boolValue]) {
+//            [cell updateWithName:self.titles[indexPath.row] desc:@"已绑定"];
+//        }else{
+//            [cell updateWithName:self.titles[indexPath.row] desc:@"未绑定"];
+//        }
+//    }
+    else{
         [cell updateWithName:self.titles[indexPath.row] desc:@""];
     }
     return cell;
@@ -87,11 +89,12 @@
         }else{
             [self.navigationController pushViewController:[CheckPhoneViewController new] animated:YES];
         }
-    }else if(indexPath.row == 2){
-        [self.navigationController pushViewController:[ChangeMinepwdViewController new] animated:YES];
     }else if(indexPath.row == 1){
-        [self getUserInfoForPlatform:UMSocialPlatformType_WechatSession];
+        [self.navigationController pushViewController:[ChangeMinepwdViewController new] animated:YES];
     }
+//    else if(indexPath.row == 1){
+//        [self getUserInfoForPlatform:UMSocialPlatformType_WechatSession];
+//    }
 }
 - (void)getUserInfoForPlatform:(UMSocialPlatformType)platformType
 {

@@ -10,6 +10,12 @@
 #import <StoreKit/StoreKit.h>
 #import <StoreKit/SKPaymentTransaction.h>
 
+#ifdef DEBUG
+#define BUY_VIRIFY_RECEIPT_URL      @"https://sandbox.itunes.apple.com/verifyReceipt"      //AppStore验证URL
+#else
+#define BUY_VIRIFY_RECEIPT_URL      @"https://buy.itunes.apple.com/verifyReceipt"      //AppStore验证URL
+#endif
+
 @class RMIAPHelper;
 @protocol RMIAPHelperDelegate <NSObject>
 
@@ -21,7 +27,7 @@
 - (void)paymentRequest:(RMIAPHelper*)sender purchased:(SKPaymentTransaction*)transaction money:(NSString *)rechargeMoney;
 - (void)paymentRequest:(RMIAPHelper*)sender restored:(SKPaymentTransaction*)transaction;
 - (void)paymentRequest:(RMIAPHelper*)sender failed:(SKPaymentTransaction*)transaction;
-
+- (void)paymentRequestFaild;
 //恢复
 - (BOOL)restoredArray:(RMIAPHelper*)sender withArray:(NSArray*)productsIdArray;
 

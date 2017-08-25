@@ -32,7 +32,7 @@
     self.backgroundColor = KTColor_BackGround;
     self.whiteView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
     self.whiteView.layer.cornerRadius = 3.0f;
-    self.moneyLabel = [KTFactory creatLabelWithText:@"¥  199.00"
+    self.moneyLabel = [KTFactory creatLabelWithText:@"0.00牛币"
                                           fontValue:font750(48)
                                           textColor:KTColor_IconOrange
                                       textAlignment:NSTextAlignmentCenter];
@@ -64,12 +64,6 @@
     }];
 }
 - (void)updateMoneyLabel:(NSString *)money{
-    NSString * moneyStr = money;
-    if (![money containsString:@"¥"]) {
-        moneyStr = [NSString stringWithFormat:@"¥  %@",money];
-    }
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:moneyStr];
-    [attstr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:font750(28)] range:NSMakeRange(0, 1)];
-    self.moneyLabel.attributedText = attstr;
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@牛币",money];
 }
 @end

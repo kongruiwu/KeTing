@@ -47,12 +47,12 @@
                                        textColor:[UIColor colorWithRed:0.41 green:0.59 blue:0.84 alpha:1.00]
                                    textAlignment:NSTextAlignmentCenter];
     
-    self.navView = [KTFactory creatViewWithColor:[UIColor clearColor]];
-    self.backBtn = [KTFactory creatButtonWithNormalImage:@"back_white" selectImage:nil];
-    self.titleLabel = [KTFactory creatLabelWithText:@"我的"
-                                          fontValue:font750(34)
-                                          textColor:[UIColor whiteColor]
-                                      textAlignment:NSTextAlignmentCenter];
+//    self.navView = [KTFactory creatViewWithColor:[UIColor clearColor]];
+//    self.backBtn = [KTFactory creatButtonWithNormalImage:@"back_white" selectImage:nil];
+//    self.titleLabel = [KTFactory creatLabelWithText:@"我的"
+//                                          fontValue:font750(34)
+//                                          textColor:[UIColor whiteColor]
+//                                      textAlignment:NSTextAlignmentCenter];
     [self addSubview:self.clearButton];
     [self addSubview:self.groundImg];
     [self addSubview:self.userIcon];
@@ -63,9 +63,9 @@
     [self addSubview:self.bookCount];
     [self addSubview:self.dayTime];
     [self addSubview:self.dayLabel];
-    [self addSubview:self.navView];
-    [self.navView addSubview:self.backBtn];
-    [self.navView addSubview:self.titleLabel];
+//    [self addSubview:self.navView];
+//    [self.navView addSubview:self.backBtn];
+//    [self.navView addSubview:self.titleLabel];
     
 }
 - (UILabel *)creatBottomLabel:(NSString *)title{
@@ -127,22 +127,22 @@
         make.width.equalTo(@(UI_WIDTH/3));
         make.top.equalTo(self.dayLabel.mas_top);
     }];
-    [self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.right.equalTo(@0);
-        make.top.equalTo(@20);
-        make.height.equalTo(@44);
-    }];
-    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(Anno750(30)));
-        make.centerY.equalTo(@0);
-        make.width.equalTo(@(Anno750(64)));
-        make.height.equalTo(@(Anno750(64)));
-    }];
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(@0);
-        make.centerX.equalTo(@0);
-    }];
+//    [self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(@0);
+//        make.right.equalTo(@0);
+//        make.top.equalTo(@20);
+//        make.height.equalTo(@44);
+//    }];
+//    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(@(Anno750(30)));
+//        make.centerY.equalTo(@0);
+//        make.width.equalTo(@(Anno750(64)));
+//        make.height.equalTo(@(Anno750(64)));
+//    }];
+//    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(@0);
+//        make.centerX.equalTo(@0);
+//    }];
 }
 - (void)updateDatas{
     [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"default_head"]];

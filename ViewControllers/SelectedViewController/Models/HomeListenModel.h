@@ -9,6 +9,9 @@
 #import "BaseModel.h"
 #import "HomeTopModel.h"
 @interface HomeListenModel : BaseModel
+
+@property (nonatomic, strong) NSNumber * id;
+
 /**书籍Id*/
 @property (nonatomic, strong) NSNumber * listenId;
 /**书籍名称*/

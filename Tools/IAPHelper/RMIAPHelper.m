@@ -99,6 +99,8 @@ static RMIAPHelper*    _instance = NULL;
         [_paymentQueue addPayment:payment];
         [self.delegate paymentRequest:self start:payment];
     
+    }else{
+        [self.delegate paymentRequestFaild];
     }
 }
 

@@ -54,6 +54,7 @@
 - (void)drawRightDeleteBtn{
     UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:@selector(changeEditStatus:)];
     self.navigationItem.rightBarButtonItem = barItem;
+    self.barItem = barItem;
     [self.navigationItem.rightBarButtonItem setTintColor:KTColor_darkGray];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:font750(28)],NSFontAttributeName, nil] forState:UIControlStateNormal];
 }
@@ -86,9 +87,16 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ListenDetailViewController * vc = [[ListenDetailViewController alloc]init];
-    vc.listenID = self.hander.dataArray[indexPath.row].listenId;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.hander.isEditStatus) {
+        [self.hander selectToDeleteAtIndex:indexPath.row];
+        [self.footer updateDeleteStatusWithShopCarHander:self.hander];
+        [self.tabview reloadData];
+    }else{
+        ListenDetailViewController * vc = [[ListenDetailViewController alloc]init];
+        vc.listenID = self.hander.dataArray[indexPath.row].listenId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 - (void)getData{
@@ -182,8 +190,9 @@
                                       };
             [[NetWorkManager manager] POSTRequest:params pageUrl:Page_ShopCarDelete complete:^(id result) {
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"删除陈功" duration:1.0f];
+                self.barItem.title = @"编辑";
                 self.hander.isEditStatus = NO;
-                [self.tabview reloadData];
+                [self getData];
             } errorBlock:^(KTError *error) {
                 [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
             }];

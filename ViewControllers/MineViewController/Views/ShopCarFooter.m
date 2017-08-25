@@ -20,7 +20,7 @@
 - (void)creatUI{
     self.backgroundColor = [UIColor whiteColor];
     self.selectBtn = [KTFactory creatButtonWithNormalImage:@"icon_unselect" selectImage:@"icon_select"];
-    self.moneyLabel = [KTFactory creatLabelWithText:@"合计：¥0.00"
+    self.moneyLabel = [KTFactory creatLabelWithText:@"合计：0.00牛币"
                                           fontValue:font750(28)
                                           textColor:KTColor_darkGray
                                       textAlignment:NSTextAlignmentLeft];
@@ -66,7 +66,7 @@
 }
 
 - (void)updateWithShopCarHnader:(ShopCarHander *)hander{
-    self.moneyLabel.text = [NSString stringWithFormat:@"合计：¥%.2f",hander.money];
+    self.moneyLabel.text = [NSString stringWithFormat:@"合计：%.2f牛币",hander.money];
     self.buyBtn.enabled = hander.count>0 ;
     if (self.buyBtn.enabled) {
         self.buyBtn.backgroundColor = KTColor_IconOrange;

@@ -51,17 +51,7 @@
     [self.view addSubview:self.tabview];
     
     UIView * footer = [KTFactory creatViewWithColor:[UIColor whiteColor]];
-    footer.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(200));
-    
-    UIButton * protobtn = [KTFactory creatButtonWithTitle:@"已阅读并同意一下内容《付费阅读服务协议》"
-                                          backGroundColor:[UIColor clearColor]
-                                                textColor:KTColor_darkGray
-                                                 textSize:font750(24)];
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:@"已阅读并同意以下内容《付费阅读服务协议》"];
-    [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_MainOrange range:NSMakeRange(10, attstr.length - 10)];
-    [protobtn setAttributedTitle:attstr forState:UIControlStateNormal];
-    [protobtn addTarget:self action:@selector(pushTpprotoViewController) forControlEvents:UIControlEventTouchUpInside];
-    
+    footer.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(120));
     
     UIButton * sureBuy = [KTFactory creatButtonWithTitle:@"确认支付"
                                          backGroundColor:[UIColor clearColor]
@@ -70,15 +60,9 @@
     sureBuy.layer.borderColor = KTColor_MainOrange.CGColor;
     sureBuy.layer.borderWidth = 1.0f;
     sureBuy.layer.cornerRadius = 3.0f;
-    [footer addSubview:protobtn];
     [footer addSubview:sureBuy];
     
     [sureBuy addTarget:self action:@selector(sureBuyClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [protobtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(Anno750(35)));
-        make.centerX.equalTo(@0);
-    }];
     [sureBuy mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
         make.left.equalTo(@(Anno750(95)));

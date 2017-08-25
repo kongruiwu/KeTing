@@ -70,9 +70,7 @@
     }];
 }
 - (void)updateUserBlance{
-    NSString * moneyStr = [NSString stringWithFormat:@"剩余余额 ¥ %.2f",[[UserManager manager].balance floatValue]];
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:moneyStr];
-    [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_IconOrange range:NSMakeRange(4, moneyStr.length - 4)];
-    self.descLabel.attributedText = attstr;
+    NSString * moneyStr = [NSString stringWithFormat:@"剩余余额 %.2f牛币",[[UserManager manager].balance floatValue]];
+    self.descLabel.text = moneyStr;
 }
 @end

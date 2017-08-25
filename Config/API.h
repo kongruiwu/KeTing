@@ -44,9 +44,9 @@
 //我的订阅
 #define Page_Subscribed     @"v1/subscribed"
 //热门排行数据
-#define Page_Hots           @"v1/hots"
+#define Page_Hots           @"v2/hots"
 //限时免费
-#define Page_Free           @"v1/free"
+#define Page_Free           @"v2/free"
 
 //登录
 #define Page_Login          @"v1/login"

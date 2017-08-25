@@ -22,9 +22,9 @@
 @property (nonatomic, strong) UILabel * bookCount;
 @property (nonatomic, strong) UILabel * dayTime;
 
-@property (nonatomic, strong) UIView * navView;
-@property (nonatomic, strong) UIButton * backBtn;
-@property (nonatomic, strong) UILabel * titleLabel;
+//@property (nonatomic, strong) UIView * navView;
+//@property (nonatomic, strong) UIButton * backBtn;
+//@property (nonatomic, strong) UILabel * titleLabel;
 
 - (void)updateDatas;
 @end

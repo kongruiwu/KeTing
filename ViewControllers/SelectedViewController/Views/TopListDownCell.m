@@ -96,9 +96,9 @@
         self.playStutas.hidden = NO;
         self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
     }
-    NSString * addTime = [KTFactory timestampSwitchTime2:[model.addTime integerValue]];
-    NSMutableString * time = [NSMutableString stringWithFormat:@"%@  时长%@",addTime,[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
+    NSMutableString * time = [NSMutableString stringWithFormat:@"时长%@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
     [time appendFormat:@"  %@",[KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]]];
+    [time appendFormat:@"  %@",model.tagString];
     self.timeLabel.text = [NSString stringWithFormat:@"%@",time];
 }
 

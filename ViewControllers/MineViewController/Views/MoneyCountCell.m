@@ -24,9 +24,16 @@
     return self;
 }
 - (void)creatUI{
+    
+    self.titleLabel = [KTFactory creatLabelWithText:@"请选择充值金额"
+                                          fontValue:font750(30)
+                                          textColor:KTColor_MainBlack
+                                      textAlignment:NSTextAlignmentLeft];
+    [self addSubview:self.titleLabel];
+    
     self.btnArray = [NSMutableArray new];
     for (int i = 0; i<6; i++) {
-        UIButton * moneyBtn = [KTFactory creatButtonWithTitle:@"66元"
+        UIButton * moneyBtn = [KTFactory creatButtonWithTitle:@""
                                               backGroundColor:[UIColor clearColor]
                                                     textColor:KTColor_darkGray
                                                      textSize:font750(28)];
@@ -44,12 +51,18 @@
 }
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(24)));
+        make.top.equalTo(@(Anno750(32)));
+    }];
+    
     float with = (UI_WIDTH - Anno750(48) - Anno750(210) * 3)/2;
     for (int i = 0; i<6; i++) {
         UIButton * moneyBtn = self.btnArray[i];
         [moneyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@(Anno750(24) + (Anno750(210)+with) * (i % 3)));
-            make.top.equalTo(@(Anno750(40)+ Anno750(100) * (i/3)));
+            make.top.equalTo(self.titleLabel.mas_bottom).offset(Anno750(30)+ Anno750(100) * (i/3));
             make.width.equalTo(@(Anno750(210)));
             make.height.equalTo(@(Anno750(80)));
         }];
@@ -70,7 +83,7 @@
     for (int i = 0; i<amount.count; i++) {
         UIButton * btn = self.btnArray[i];
         btn.hidden = NO;
-        [btn setTitle:[NSString stringWithFormat:@"%@元",amount[i]] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"%@牛币",amount[i]] forState:UIControlStateNormal];
     }
 }
 @end

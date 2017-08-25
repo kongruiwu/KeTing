@@ -48,7 +48,7 @@
                                      textAlignment:NSTextAlignmentCenter];
     [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
     
-    self.priceLabel = [KTFactory creatLabelWithText:@"¥0.99/季度"
+    self.priceLabel = [KTFactory creatLabelWithText:@"¥ 0.99/季度"
                                           fontValue:font750(24)
                                           textColor:KTColor_MainOrange
                                       textAlignment:NSTextAlignmentLeft];

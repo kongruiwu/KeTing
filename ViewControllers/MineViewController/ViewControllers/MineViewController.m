@@ -34,9 +34,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    [self.view addSubview:clearView];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self setNavAlpha];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
     [[UserManager manager] getUserInfo];
     [[UserManager manager] registerDelgate:self];
     [self getMessageCount];
@@ -50,15 +50,15 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self setNavUnAlpha];
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"我的" color:[UIColor whiteColor]];
+    [self setNavAlpha];
+    [self drawBackButton];
+//    [self setNavTitle:@"我的" color:[UIColor whiteColor]];
     [self drawBackButtonWithType:BackImgTypeWhite];
     [self creatUI];
 }
@@ -70,7 +70,6 @@
     [self.view addSubview:self.tabview];
     
     self.header = [[MineHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(440))];
-    [self.header.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
     [self.header.clearButton addTarget:self action:@selector(userInfoClick) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.header;
     
@@ -83,6 +82,9 @@
     return arr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        return 0;
+    }
     return Anno750(100);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -99,6 +101,9 @@
     }
     NSArray<MineListModel *> * datas = self.viewModel.dataArray[indexPath.section];
     [cell updateWithListModel:datas[indexPath.row]];
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        cell.hidden = YES;
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -197,7 +202,7 @@
             NSArray * datas = self.viewModel.dataArray[0];
             MineListModel * model = datas[0];
             [UserManager manager].balance = dic[@"accountBalance"];
-            model.desc = [NSString stringWithFormat:@"¥%.2f",[[UserManager manager].balance floatValue]];
+            model.desc = [NSString stringWithFormat:@"%.2f",[[UserManager manager].balance floatValue]];
             NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         }

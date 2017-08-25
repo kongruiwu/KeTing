@@ -45,6 +45,9 @@
     }
 }
 - (void)creatLoadingViewWithColor:(UIColor *)color canTouch:(BOOL)rec{
+    if (self.progressView) {
+        return;
+    }
     self.progressView = [[LoadingView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH ,UI_HEGIHT)];
     self.progressView.backgroundColor = color;
     self.progressView.userInteractionEnabled = rec;
@@ -57,6 +60,7 @@
     [self creatLoadingViewWithColor:[UIColor clearColor] canTouch:!rec];
 }
 - (void)showLoadingCantTouchAndGround{
+
     [self creatLoadingViewWithColor:[UIColor clearColor] canTouch:YES];
 }
 

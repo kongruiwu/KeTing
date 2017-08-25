@@ -55,11 +55,13 @@
 }
 - (void)creatUI{
     
-    
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
+    
+    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getData)];
+    self.tabview.mj_header = self.refreshHeader;
     
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -180,6 +182,7 @@
     vc.listenID = model.listenId;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)getData{
     [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_home complete:^(id result) {
@@ -187,8 +190,10 @@
         NSDictionary * dic = (NSDictionary *)result;
         self.model = [[HomeViewModel alloc]initWithDictionary:dic];
         [self.tabview reloadData];
+        [self.refreshHeader endRefreshing];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
+        [self.refreshHeader endRefreshing];
     }];
 }
 

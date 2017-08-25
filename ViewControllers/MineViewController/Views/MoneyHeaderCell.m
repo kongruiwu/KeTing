@@ -67,8 +67,8 @@
     }];
 }
 - (void)updateWithMoneyNumber:(NSString *)money{
-    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"¥ %@",money]];
-    [attstr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Anno750(35)] range:NSMakeRange(0, 1)];
+    NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@牛币",money]];
+    [attstr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Anno750(35)] range:NSMakeRange(attstr.length - 2, 2)];
     self.moneyNumber.attributedText = attstr;
 }
 

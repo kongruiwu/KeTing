@@ -164,7 +164,7 @@
     if (rec) {
         [self.view addSubview:WechatBtn];
         [WechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(regisBtn.mas_bottom).offset(Anno750(180));
+            make.top.equalTo(regisBtn.mas_bottom).offset(Anno750(100));
             make.height.equalTo(@(Anno750(115)));
             make.width.equalTo(@(Anno750(115)));
             //        make.left.equalTo(@((UI_WIDTH - Anno750(230))/3));

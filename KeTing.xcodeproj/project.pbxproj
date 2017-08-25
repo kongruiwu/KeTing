@@ -124,6 +124,7 @@
 		8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126761F1DE40F005CF363 /* CommonInfo.m */; };
 		8BC1267A1F1DF580005CF363 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126791F1DF580005CF363 /* OrderModel.m */; };
 		8BC1267D1F1E0E63005CF363 /* TopTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC1267C1F1E0E63005CF363 /* TopTagModel.m */; };
+		8BCDEB921F4D750100D14D89 /* VoiceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8743031EEE774E00324FA2 /* VoiceDetailViewController.m */; };
 		8BE25E151F05F1E200FFACA9 /* TopUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E141F05F1E200FFACA9 /* TopUpListViewController.m */; };
 		8BE25E181F05F34C00FFACA9 /* TopUpListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E171F05F34C00FFACA9 /* TopUpListCell.m */; };
 		8BE25E1B1F05F5AF00FFACA9 /* MyShopedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE25E1A1F05F5AF00FFACA9 /* MyShopedViewController.m */; };
@@ -1764,6 +1765,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BCDEB921F4D750100D14D89 /* VoiceDetailViewController.m in Sources */,
 				8BF84CE41EE4F6620072637D /* KeTingUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,8 +26,8 @@
     [self.bookImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
         make.centerY.equalTo(@0);
-        make.width.equalTo(@(Anno750(235)));
-        make.height.equalTo(@(Anno750(335)));
+        make.width.equalTo(@(Anno750(230)));
+        make.height.equalTo(@(Anno750(330)));
     }];
     [self.groundImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bookImg.mas_left);

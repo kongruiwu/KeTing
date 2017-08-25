@@ -32,7 +32,7 @@
                                     textAlignment:NSTextAlignmentLeft];
     self.descLabel = [KTFactory creatLabelWithText:@""
                                          fontValue:font750(26)
-                                         textColor:KTColor_lightGray
+                                         textColor:[UIColor colorWithRed:0.82 green:0.82 blue:0.82 alpha:1.00]
                                      textAlignment:NSTextAlignmentCenter];
     self.descLabel.numberOfLines = 0;
     self.navView = [KTFactory creatViewWithColor:[UIColor clearColor]];

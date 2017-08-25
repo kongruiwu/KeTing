@@ -42,6 +42,7 @@
         self.showTools = NO;
         self.isSelectDown = NO;
         self.downStatus = @0;
+        
         if (!self.relationId) {
             if (self.topId) {
                 self.relationId = self.topId;

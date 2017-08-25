@@ -83,9 +83,9 @@
     for (int i = 0; i<self.dataArray.count; i++) {
         if (self.dataArray[i].isDelete) {
             if (i == 0) {
-                [str appendFormat:@"%@",self.dataArray[i].listenId];
+                [str appendFormat:@"%@",self.dataArray[i].id];
             }else{
-                [str appendFormat:@",%@",self.dataArray[i].listenId];
+                [str appendFormat:@",%@",self.dataArray[i].id];
             }
         }
     }
