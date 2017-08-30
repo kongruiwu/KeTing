@@ -17,9 +17,9 @@
 #import "RootViewController.h"
 @interface AnchorDetailViewController ()<UITableViewDelegate,UITableViewDataSource,ListenListDelegate>
 
-//@property (nonatomic, strong)UITableView * tabview;
 @property (nonatomic, strong) AnchorHeader * anchorHeader;
 @property (nonatomic, strong) AnchorModel * anchor;
+@property (nonatomic, strong) UILabel * countLabel;
 @property (nonatomic) int page;
 @end
 
@@ -27,32 +27,60 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    [self.view addSubview:clearView];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self setNavAlpha];
     [self getData];
-    
     [self checkNetStatus];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 }
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self creatUI];    
+    [self setNavAlpha];
+    [self drawBackButtonWithType:BackImgTypeWhite];
+    [self drawRightBarButton];
+    [self creatUI];
+}
+- (void)drawRightBarButton{
+    UIButton * button = [KTFactory creatButtonWithNormalImage:@"listen__shopcar" selectImage:nil];
+    button.frame = CGRectMake(0, 0, Anno750(64), Anno750(64));
+    self.countLabel = [KTFactory creatLabelWithText:@"0"
+                                          fontValue:font750(20)
+                                          textColor:[UIColor whiteColor]
+                                      textAlignment:NSTextAlignmentCenter];
+    self.countLabel.backgroundColor = KTColor_IconOrange;
+    self.countLabel.layer.masksToBounds = YES;
+    self.countLabel.layer.cornerRadius = Anno750(15);
+    self.countLabel.hidden = YES;
+    [button addSubview:self.countLabel];
+    [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(button.mas_centerX).offset(Anno750(5));
+        make.bottom.equalTo(button.mas_centerY).offset(Anno750(-5));
+        make.height.equalTo(@(Anno750(30)));
+        make.width.equalTo(@(Anno750(30)));
+    }];
+    [button addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc]initWithCustomView:button];
+    
+    UIImage * image = [[UIImage imageNamed:@"listen_ share"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showShareView)];
+    self.navigationItem.rightBarButtonItems = @[barItem,rightItem];
 }
 - (void)creatUI{
+    self.anchorHeader = [[AnchorHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(440))];
+    [self.view addSubview:self.anchorHeader];
+    
     self.page = 1;
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT ) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(440), UI_WIDTH, UI_HEGIHT - Anno750(440)) style:UITableViewStylePlain];
     self.tabview.delegate =self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
     
-    self.anchorHeader = [[AnchorHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(440))];
-    [self.anchorHeader.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
-    [self.anchorHeader.shareBtn addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
-    [self.anchorHeader.shopCar addTarget:self action:@selector(goShopCar) forControlEvents:UIControlEventTouchUpInside];
-    self.tabview.tableHeaderView = self.anchorHeader;
+    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getData)];
+    self.tabview.mj_header = self.refreshHeader;
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.anchor.listenVolice.count;
@@ -103,13 +131,18 @@
         self.anchor = [[AnchorModel alloc]initWithDictionary:dic];
         [self.anchorHeader updateWithAnchorModel:self.anchor];
         [self.tabview reloadData];
+        [self hiddenNullView];
+        [self.refreshHeader endRefreshing];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
+        [self.refreshHeader endRefreshing];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
         NSString * count = [NSString stringWithFormat:@"%@",result];
-        [self.anchorHeader updateShopCarCount:count];
+        self.countLabel.text = count;
+        self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
     } errorBlock:^(KTError *error) {
         
     }];
@@ -174,8 +207,9 @@
         [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
             [self dismissLoadingView];
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
-            int count = [self.anchorHeader.countLabel.text intValue] + 1;
-            [self.anchorHeader updateShopCarCount:[NSString stringWithFormat:@"%d",count]];
+            int count = [self.countLabel.text intValue] + 1;
+            self.countLabel.text = [NSString stringWithFormat:@"%d",count];
+            self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
             btn.selected = !btn.selected;
         } errorBlock:^(KTError *error) {
             [self dismissLoadingView];
@@ -187,23 +221,5 @@
     [self goShopCar];
 }
 
-//设置头部拉伸效果
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    //图片高度
-    CGFloat imageHeight = self.anchorHeader.frame.size.height;
-    //图片宽度
-    CGFloat imageWidth = UI_WIDTH;
-    //图片上下偏移量
-    CGFloat imageOffsetY = scrollView.contentOffset.y;
-    //上移
-    if (imageOffsetY < 0) {
-        CGFloat totalOffset = imageHeight + ABS(imageOffsetY);
-        CGFloat f = totalOffset / imageHeight;
-        
-        self.anchorHeader.groundImg.frame = CGRectMake(-(imageWidth * f - imageWidth) * 0.5, imageOffsetY, imageWidth * f, totalOffset);
-    }
-    
-}
 
 @end

@@ -98,9 +98,11 @@
             model.hasSelect = NO;
             [self.dataArray addObject:model];
         }
+        [self hiddenNullView];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

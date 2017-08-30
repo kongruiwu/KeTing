@@ -85,14 +85,16 @@
     //用户协议
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_About complete:^(id result) {
         NSDictionary * dic = (NSDictionary *)result;
-        if (dic[@"serviceWeChat"]) {
-            self.serviceWeChat = dic[@"serviceWeChat"];
-        }
-        if (dic[@"serviceMail"]) {
-            self.serviceMail = dic[@"serviceMail"];
-        }
-        if (dic[@"logo"]){
-            self.logo = dic[@"logo"];
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            if (dic[@"serviceWeChat"]) {
+                self.serviceWeChat = dic[@"serviceWeChat"];
+            }
+            if (dic[@"serviceMail"]) {
+                self.serviceMail = dic[@"serviceMail"];
+            }
+            if (dic[@"logo"]){
+                self.logo = dic[@"logo"];
+            }
         }
     } errorBlock:^(KTError *error) {
         

@@ -59,6 +59,7 @@
         }else{
             self.timePrice = [NSString stringWithFormat:@"  %@牛币%@",self.price,time];
         }
+        self.timePrice2 = [NSString stringWithFormat:@"%@牛币%@",self.price,time];
         
         NSArray * tags = dic[@"tags"];
         NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];

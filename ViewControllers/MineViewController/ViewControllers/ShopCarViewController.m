@@ -36,10 +36,9 @@
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"购物车" color:KTColor_MainBlack];
     [self creatUI];
-    [self drawRightDeleteBtn];
 }
 - (void)creatUI{
-    self.hander = [ShopCarHander hander];
+    self.hander = [[ShopCarHander alloc]init];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64 - Anno750(98)) style:UITableViewStyleGrouped];
     self.tabview.backgroundColor = [UIColor whiteColor];
     self.tabview.delegate =self;
@@ -63,7 +62,7 @@
     return self.hander.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return Anno750(190);
+    return Anno750(250);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
@@ -101,7 +100,6 @@
 
 - (void)getData{
     [self showLoadingCantClear:YES];
-    NSArray * arr1 = [NSArray arrayWithArray:self.hander.dataArray];
     [self.hander.dataArray removeAllObjects];
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid
@@ -112,13 +110,8 @@
         NSArray * arr = (NSArray *)result;
         for (int i = 0; i<arr.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:arr[i]];
-            for (int i = 0; i<arr1.count; i++) {
-                HomeListenModel * model2 = arr1[i];
-                if (model.listenId == model2.listenId) {
-                    model.isDelete = model2.isDelete;
-                }
-            }
-            model.isSelect =YES;
+            model.isDelete = NO;
+            model.isSelect = YES;
             [self.hander.dataArray addObject:model];
         }
         if (self.hander.isEditStatus) {
@@ -130,7 +123,10 @@
         }
         [self.tabview reloadData];
         if (arr.count == 0) {
+            self.navigationItem.rightBarButtonItem = nil;
             [self showNullViewWithNullViewType:NullTypeNoneShopCar];
+        }else{
+            [self drawRightDeleteBtn];
         }
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];

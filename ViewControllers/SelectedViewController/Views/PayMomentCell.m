@@ -38,7 +38,7 @@
                                      textAlignment:NSTextAlignmentCenter];
     self.descLabel = [KTFactory creatLabelWithText:@"剩余余额¥ 0.00"
                                          fontValue:font750(24)
-                                         textColor:KTColor_lightGray
+                                         textColor:KTColor_MainOrange
                                      textAlignment:NSTextAlignmentCenter];
     self.line = [KTFactory creatLineView];
     
@@ -71,6 +71,8 @@
 }
 - (void)updateUserBlance{
     NSString * moneyStr = [NSString stringWithFormat:@"剩余余额 %.2f牛币",[[UserManager manager].balance floatValue]];
-    self.descLabel.text = moneyStr;
+    NSMutableAttributedString * attStr = [[NSMutableAttributedString alloc]initWithString:moneyStr];
+    [attStr addAttribute:NSForegroundColorAttributeName value:KTColor_lightGray range:NSMakeRange(0, 4)];
+    self.descLabel.attributedText = attStr;
 }
 @end

@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger,NullType){
 @property (nonatomic, strong) UIImageView * imgView;
 @property (nonatomic, strong) UILabel * descLabel;
 @property (nonatomic, assign) NullType nullType;
-
+@property (nonatomic, strong) UIButton * reloadBtn;
 
 - (instancetype)initWithFrame:(CGRect)frame andNullType:(NullType)type;
 @end

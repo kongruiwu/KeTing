@@ -62,6 +62,7 @@
 		8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EAA21EE55CAF009EA76D /* ListenBookCollectionCell.m */; };
 		8B5916BD1F26D5B5008841E2 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5916BC1F26D5B5008841E2 /* LoadingView.m */; };
 		8B5916BF1F26D74B008841E2 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B5916BE1F26D74B008841E2 /* loading.gif */; };
+		8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */; };
 		8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6437431EE8D36700FA53EF /* AudioPlayer.m */; };
 		8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64374A1EE9356D00FA53EF /* PlayTextButton.m */; };
 		8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E171EEA39CF00A11A0F /* CateListViewController.m */; };
@@ -306,6 +307,8 @@
 		8B5916BB1F26D5B5008841E2 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		8B5916BC1F26D5B5008841E2 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		8B5916BE1F26D74B008841E2 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
+		8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVQueenPlayer.h; sourceTree = "<group>"; };
+		8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVQueenPlayer.m; sourceTree = "<group>"; };
 		8B6437421EE8D36700FA53EF /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		8B6437431EE8D36700FA53EF /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		8B6437491EE9356D00FA53EF /* PlayTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTextButton.h; sourceTree = "<group>"; };
@@ -913,6 +916,8 @@
 			children = (
 				8B6437421EE8D36700FA53EF /* AudioPlayer.h */,
 				8B6437431EE8D36700FA53EF /* AudioPlayer.m */,
+				8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */,
+				8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -1472,7 +1477,7 @@
 					8BF84CBA1EE4F6620072637D = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = E9ZKTSD9RK;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1631,6 +1636,7 @@
 				8B53EA971EE53CE6009EA76D /* HomeVoiceCell.m in Sources */,
 				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,
 				8B8A05511F1F8B0C00590344 /* WaitDownLoadViewController.m in Sources */,
+				8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */,
 				8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */,
 				8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */,
 				8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */,
@@ -1882,15 +1888,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ShuLei Yu (UQ2Z377N3L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = E9ZKTSD9RK;
 				INFOPLIST_FILE = KeTing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "824b0dd1-9040-425f-859f-758c0ebf8b6d";
-				PROVISIONING_PROFILE_SPECIFIER = ketingdev;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1900,15 +1906,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AnHui HuangPu Network Technology Co., Ltd. (E9ZKTSD9RK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = E9ZKTSD9RK;
 				INFOPLIST_FILE = KeTing/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hpkj.yzfm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d981f31-b41d-4d14-843f-f1ed92a46fc6";
-				PROVISIONING_PROFILE_SPECIFIER = KetingDis;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -47,8 +47,8 @@
     [self.topImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
         make.top.equalTo(@0);
-        make.width.equalTo(@(Anno750(190)));
-        make.height.equalTo(@(Anno750(270)));
+        make.width.equalTo(@(Anno750(188)));
+        make.height.equalTo(@(Anno750(268)));
     }];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);

@@ -116,6 +116,10 @@
                                         fontValue:font750(24)
                                         textColor:KTColor_lightGray
                                     textAlignment:NSTextAlignmentCenter];
+    UIView * crycleLine = [KTFactory creatViewWithColor:[UIColor clearColor]];
+    crycleLine.layer.cornerRadius = Anno750(572/2);
+    crycleLine.layer.borderColor = UIColorFromRGBA(0xFFFFFF, 0.1).CGColor;
+    crycleLine.layer.borderWidth = 0.2;
     self.audioImg = [KTFactory creatImageViewWithImage:@"player2"];
     self.audioPhoto = [KTFactory creatImageViewWithImage:@""];
     self.audioImg.layer.cornerRadius = Anno750(552/2);
@@ -165,7 +169,9 @@
     self.closeList = [[PlayCloseListView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
     [bgImgView addSubview:self.titleLabel];
     [bgImgView addSubview:self.tagLabel];
-    [bgImgView addSubview:self.audioImg];
+    [bgImgView addSubview:crycleLine];
+    [crycleLine addSubview:self.audioImg];
+    [self.audioImg addSubview:self.audioPhoto];
     [bgImgView addSubview:self.currntNum];
     [bgImgView addSubview:self.playBtn];
     [bgImgView addSubview:self.backButton];
@@ -180,7 +186,6 @@
     [bgImgView addSubview:self.likeBtn];
     [bgImgView addSubview:self.downLoadBtn];
     [bgImgView addSubview:self.moreBtn];
-    [self.audioImg addSubview:self.audioPhoto];
     [bgImgView addSubview:self.playList];
     [bgImgView addSubview:self.MoreView];
     [bgImgView addSubview:self.shareView];
@@ -194,11 +199,18 @@
     
     [self.tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(@(Anno750(30) + 64));
+        make.top.equalTo(@(64));
+        make.height.equalTo(@(Anno750(40)));
+    }];
+    [crycleLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.top.equalTo(self.tagLabel.mas_bottom).offset(Anno750(16));
+        make.width.equalTo(@(Anno750(572)));
+        make.height.equalTo(@(Anno750(572)));
     }];
     [self.audioImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.tagLabel.mas_bottom).offset(Anno750(36));
+        make.centerY.equalTo(@0);
         make.width.equalTo(@(Anno750(552)));
         make.height.equalTo(@(Anno750(552)));
     }];

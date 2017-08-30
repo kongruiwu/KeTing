@@ -36,7 +36,7 @@
                                          textColor:KTColor_MainBlack
                                      textAlignment:NSTextAlignmentLeft];
     self.descLabel = [KTFactory creatLabelWithText:@""
-                                         fontValue:font750(24)
+                                         fontValue:font750(22)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
     self.descLabel.numberOfLines = 2;
@@ -84,8 +84,8 @@
     [super layoutSubviews];
     [self.leftImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(Anno750(24)));
-        make.top.equalTo(@(Anno750(30)));
-        make.height.equalTo(@(Anno750(190)));
+        make.centerY.equalTo(@0);
+        make.height.equalTo(@(Anno750(200)));
         make.width.equalTo(@(Anno750(140)));
     }];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

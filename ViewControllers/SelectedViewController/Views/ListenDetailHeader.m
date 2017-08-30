@@ -18,7 +18,7 @@
     return self;
 }
 - (void)creatUI{
-    self.backgroundColor = KTColor_BackGround;
+    self.backgroundColor = UIColorFromRGB(0xf9f9f9);
     self.groundImg = [KTFactory creatImageViewWithImage:@"book_3"];
     self.bookImg = [KTFactory creatImageViewWithImage:@"default_h"];
     [self addSubview:self.groundImg];

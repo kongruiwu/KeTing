@@ -27,12 +27,12 @@
     self.backgroundColor = [UIColor whiteColor];
     self.leftImage = [KTFactory creatImageViewWithImage:@"default"];
     self.titleLabel = [KTFactory creatLabelWithText:@""
-                                          fontValue:font750(30)
+                                          fontValue:font750(32)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];
     self.titleLabel.font = [UIFont boldSystemFontOfSize:font750(28)];
     self.descLabel = [KTFactory creatLabelWithText:@""
-                                         fontValue:font750(26)
+                                         fontValue:font750(22)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
     self.descLabel.numberOfLines = 2;

@@ -57,7 +57,9 @@
 
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
+    
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"财经头条" color:KTColor_MainBlack];
     
@@ -195,6 +197,7 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self hiddenNullView];
         [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
@@ -203,7 +206,7 @@
         [self dismissLoadingView];
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:1.0f];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 #pragma mark - 进入分类列表页

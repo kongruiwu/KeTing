@@ -25,7 +25,8 @@ typedef NS_ENUM(NSInteger, SelectorBackType){
 typedef NS_ENUM(NSInteger,BackImgType){
     BackImgTypeNomal = 0,
     BackImgTypeWhite = 1,
-    BackImgTypeBlack
+    BackImgTypeBlack ,
+    BackImgTypeNone
 };
 
 //750状态下字体适配
@@ -54,6 +55,7 @@ typedef NS_ENUM(NSInteger,BackImgType){
 #define UIColorFromRGBA(rgbValue,sec) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:sec]
 //字体主色调  橙色
 #define KTColor_MainOrange  UIColorFromRGB(0xcfaa5b)
+#define KTColor_OrangeAlpha UIColorFromRGBA(0xcfaa5b,0.5)
 
 #define KTColor_MainOrangeAlpha [UIColor colorWithRed:0.98 green:0.57 blue:0.01 alpha:0.3]
 //标签橙色
@@ -66,7 +68,7 @@ typedef NS_ENUM(NSInteger,BackImgType){
 //字体深灰色
 #define KTColor_darkGray    UIColorFromRGB(0x666666)
 //背景色
-#define KTColor_BackGround  UIColorFromRGB(0xf2f2f2)
+#define KTColor_BackGround  UIColorFromRGB(0xf9f9f9)
 //线条色
 #define KTColor_Line        [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00]
 //金钱余额红色

@@ -48,4 +48,5 @@
 /**修改frame值  貌似 有点问题 以后待修复*/
 - (void)reloadTabviewFrame;
 
+- (void)getData;
 @end

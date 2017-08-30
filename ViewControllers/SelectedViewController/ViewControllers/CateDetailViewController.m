@@ -89,7 +89,6 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [AudioPlayer instance].currentAudio = self.dataArray[indexPath.row];
     [AudioPlayer instance].playList = self.dataArray;
     [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
     [self reloadTabviewFrame];
@@ -112,9 +111,11 @@
             model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
             [self.dataArray addObject:model];
         }
+        [self hiddenNullView];
         [self.tabview reloadData];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

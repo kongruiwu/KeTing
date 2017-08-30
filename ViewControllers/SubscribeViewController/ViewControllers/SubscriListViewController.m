@@ -88,15 +88,15 @@
 }
 - (void)getMoreData{
     self.page += 1;
-    [self getListData];
+    [self getData];
 }
 - (void)refreshData{
     self.page = 1;
     [self.dataArray removeAllObjects];
-    [self getListData];
+    [self getData];
 }
 
-- (void)getListData{
+- (void)getData{
     [self showLoadingCantClear:YES];
     NSDictionary * params = @{
 //                              @"pagesize":@(self.page),
@@ -129,7 +129,7 @@
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
         [self dismissLoadingView];
-        [self showNullViewWithNullViewType:NullTypeNoneAudio];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

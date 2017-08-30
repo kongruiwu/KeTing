@@ -130,6 +130,7 @@
             [self.refreshFooter endRefreshing];
         }
         [self dismissLoadingView];
+        [self hiddenNullView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
@@ -137,6 +138,7 @@
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
         [self dismissLoadingView];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {

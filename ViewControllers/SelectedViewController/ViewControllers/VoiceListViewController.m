@@ -103,6 +103,7 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self hiddenNullView];
         [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
@@ -111,6 +112,7 @@
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
         [self dismissLoadingView];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

@@ -99,7 +99,7 @@
 
 + (NSAttributedString *)setFreePriceString:(NSString *)price{
     NSMutableAttributedString * attstr = [[NSMutableAttributedString alloc]initWithString:price];
-    [attstr addAttribute:NSForegroundColorAttributeName value:KTColor_lightGray range:NSMakeRange(0, price.length)];
+    [attstr addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbbbbbb) range:NSMakeRange(0, price.length)];
     [attstr addAttributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName:@(0)} range:NSMakeRange(0, price.length)];
     
     return attstr;
@@ -241,9 +241,6 @@
     [attributedString addAttribute:NSForegroundColorAttributeName
                              value:KTColor_darkGray
                              range:NSMakeRange(0, attributedString.length)];
-//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//    paragraphStyle.lineSpacing = 2;  // 段落高度
-//    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attributedString.length)];
     [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:font] range:NSMakeRange(0, attributedString.length)];
     return attributedString;
 }

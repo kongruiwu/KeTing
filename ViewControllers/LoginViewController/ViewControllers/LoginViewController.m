@@ -35,12 +35,12 @@
     [super viewWillDisappear:animated];
     AppDelegate * appde = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appde.wxDelegate =nil;
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatBackGroundImg];
+    [self setNavUnAlpha];
     [self creatUI];
     [self bindSignal];
     

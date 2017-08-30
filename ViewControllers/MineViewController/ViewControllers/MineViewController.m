@@ -22,7 +22,6 @@
 #import "SettingViewController.h"
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource,UserManagerDelegate>
 
-//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) MineViewModel * viewModel;
 @property (nonatomic, strong) MineHeader * header;
 @property (nonatomic, strong) UIView * clearView;
@@ -50,15 +49,12 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self setNavUnAlpha];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavAlpha];
-    [self drawBackButton];
-//    [self setNavTitle:@"我的" color:[UIColor whiteColor]];
     [self drawBackButtonWithType:BackImgTypeWhite];
     [self creatUI];
 }
@@ -190,7 +186,7 @@
     if (![UserManager manager].isLogin) {
         NSArray * datas = self.viewModel.dataArray[0];
         MineListModel * model = datas[0];
-        model.desc = @"0";
+        model.desc = @"0牛币";
         NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         return;
@@ -202,7 +198,7 @@
             NSArray * datas = self.viewModel.dataArray[0];
             MineListModel * model = datas[0];
             [UserManager manager].balance = dic[@"accountBalance"];
-            model.desc = [NSString stringWithFormat:@"%.2f",[[UserManager manager].balance floatValue]];
+            model.desc = [NSString stringWithFormat:@"%.2f牛币",[[UserManager manager].balance floatValue]];
             NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
         }

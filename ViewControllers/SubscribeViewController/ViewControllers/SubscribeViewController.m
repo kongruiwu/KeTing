@@ -35,7 +35,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self getListData];
+    [self getData];
 }
 
 - (void)viewDidLoad {
@@ -179,7 +179,7 @@
         
     }];
 }
-- (void)getListData{
+- (void)getData{
     [self showLoadingCantClear:YES];
     [self.listArray removeAllObjects];
     NSDictionary * params = @{
@@ -205,8 +205,10 @@
             self.NullString = result[@"nobuy"];
             [self.tabview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }
+        [self hiddenNullView];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

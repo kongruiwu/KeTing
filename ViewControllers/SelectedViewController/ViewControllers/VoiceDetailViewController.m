@@ -15,7 +15,6 @@
 #import "TopListCell.h"
 #import "TopListDownCell.h"
 #import "TopListBottomView.h"
-//#import "AudioPlayerViewController.h"
 #import "SetAccoutViewController.h"
 #import "AudioDownLoader.h"
 #import "AppDelegate.h"
@@ -111,10 +110,10 @@
     [likeBtn addTarget:self action:@selector(likeThisBookClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton * buyBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"订阅：%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00]
+    UIButton * buyBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00]
                                         backGroundColor:KTColor_MainOrange
                                               textColor:[UIColor whiteColor]
-                                               textSize:font750(30)];
+                                               textSize:font750(28)];
     buyBtn.layer.borderColor = KTColor_MainOrange.CGColor;
     buyBtn.layer.borderWidth = 1.0f;
     buyBtn.layer.cornerRadius = 4.0f;
@@ -127,7 +126,7 @@
         [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
         [buyBtn setImage:[UIImage imageNamed:@"finance_ close"] forState:UIControlStateSelected];
     }else{
-        [buyBtn setTitle:[NSString stringWithFormat:@"订阅：%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00] forState:UIControlStateNormal];
+        [buyBtn setTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00] forState:UIControlStateNormal];
     }
     
     
@@ -272,13 +271,9 @@
         }else{
             [self hiddenToolsBar];
             //进入音乐播放器
-//            [AudioPlayer instance].currentAudio = model;
             [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.listenModel.audio];
             [[AudioPlayer instance] audioPlay:model];
             [self reloadTabviewFrame];
-//            AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-//            UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-//            [self presentViewController:nav animated:YES completion:nil];
         }
     }
     
@@ -298,9 +293,10 @@
         }
         [self.header updateWithImage:self.listenModel.thumb title:self.listenModel.name];
         [self.tabview reloadData];
+        [self hiddenNullView];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:2.0f];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 #pragma mark - 分享
@@ -605,9 +601,7 @@
     RMIAPHelper *storeShared = [RMIAPHelper sharedInstance];
     storeShared.delegate = self;
     [storeShared setup];  //开始交易监听
-    [storeShared buy:[NSString stringWithFormat:@"keting0098"
-                      ]];
-//                      ,self.listenModel.PRICE]];
+    [storeShared buy:self.listenModel.appleStoreId];
 }
 
 #pragma mark - 充值请求失败
@@ -741,7 +735,7 @@
         [[NetWorkManager manager] POSTRequest:orderParams pageUrl:Page_PayStatus complete:^(id result) {
             NSDictionary * dic = (NSDictionary *)result;
             if ([dic[@"payStatus"] integerValue] == 1) {
-                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"充值成功" duration:1.0f];
+                [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:@"订阅成功" duration:1.0f];
                 [self getData];
             }else{
                 [self dismissLoadingView];

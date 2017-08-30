@@ -22,10 +22,7 @@
 //听书
 #import "ListenListViewController.h"
 
-#import <MBProgressHUD.h>
 @interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate,AudioPlayerDelegate>
-
-//@property (nonatomic, strong) UITableView * tabview;
 
 @property (nonatomic, strong) HomeViewModel * model;
 
@@ -188,12 +185,18 @@
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_home complete:^(id result) {
         [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
-        self.model = [[HomeViewModel alloc]initWithDictionary:dic];
-        [self.tabview reloadData];
-        [self.refreshHeader endRefreshing];
+        if (!dic) {
+            [self showNullViewWithNullViewType:NullTypeNetError];
+        }else{
+            [self hiddenNullView];
+            self.model = [[HomeViewModel alloc]initWithDictionary:dic];
+            [self.tabview reloadData];
+            [self.refreshHeader endRefreshing];
+        }
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
         [self.refreshHeader endRefreshing];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

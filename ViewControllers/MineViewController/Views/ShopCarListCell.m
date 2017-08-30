@@ -41,6 +41,7 @@
                                          fontValue:font750(25)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
+    self.descLabel.numberOfLines = 0;
     self.timeLabel = [KTFactory creatLabelWithText:@"音频时长：22分22秒"
                                          fontValue:font750(25)
                                          textColor:KTColor_lightGray
@@ -70,8 +71,8 @@
     }];
     [self.leftImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.selctButton.mas_right).offset(Anno750(14));
-        make.width.equalTo(@(Anno750(150)));
-        make.height.equalTo(@(Anno750(140)));
+        make.width.equalTo(@(Anno750(138)));
+        make.height.equalTo(@(Anno750(197)));
         make.centerY.equalTo(@0);
     }];
     [self.clearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -87,12 +88,12 @@
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.namelabel.mas_left);
-        make.top.equalTo(self.namelabel.mas_bottom).offset(Anno750(4));
+        make.top.equalTo(self.namelabel.mas_bottom).offset(Anno750(10));
         make.right.equalTo(@(Anno750(-24)));
     }];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.namelabel.mas_left);
-        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(4));
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(10));
     }];
     [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.leftImg.mas_bottom).offset(Anno750(5));
@@ -109,9 +110,9 @@
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"default"]];
     self.namelabel.text = model.name;
     self.descLabel.text = model.summary;
-    self.priceLabel.text = model.timePrice;
+    self.priceLabel.text = model.timePrice2;
     self.selctButton.selected = rec ? model.isDelete : model.isSelect;
-    self.timeLabel.text = [NSString stringWithFormat:@"音频时长：%@",model.audioLong];
+    self.timeLabel.text = [NSString stringWithFormat:@"时长：%@",model.audioLong];
 }
 - (void)cleaderBtnClick:(UIButton *)btn{
     if ([self.delegate respondsToSelector:@selector(selectBook:)]) {

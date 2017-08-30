@@ -11,6 +11,8 @@
 #import "HistorySql.h"
 #import "AudioDownLoader.h"
 #import "NetWorkManager.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 @implementation AudioPlayer
 
 + (instancetype)instance{
@@ -25,6 +27,7 @@
         }else{
             player.showFoot = NO;
         }
+        [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     });
     return player;
 }
@@ -70,6 +73,7 @@
     if ([self.delegate respondsToSelector:@selector(AudioPlayerPlayStatusReady)]) {
         [self.delegate AudioPlayerPlayStatusReady];
     }
+    [self setPlayingInfo];
 }
 - (void)setPlayList:(NSMutableArray *)playList{
     _playList = playList;
@@ -306,6 +310,48 @@
 }
 
 
-
-
+#pragma mark - 接收方法的设置
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    if (event.type == UIEventTypeRemoteControl) {  //判断是否为远程控制
+        switch (event.subtype) {
+                //播放
+            case  UIEventSubtypeRemoteControlPlay:
+                [self audioResume];
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self audioResume];
+                break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                [self nextAudio];
+                break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                [self upwardAudio];
+                break;
+            default:
+                break;
+        }
+    }
+}
+- (void)setPlayingInfo {
+    //    <MediaPlayer/MediaPlayer.h>
+    UIImage * image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.currentAudio.thumbnail]]];
+    MPMediaItemArtwork *artWork = [[MPMediaItemArtwork alloc] initWithImage:image];
+    
+    NSDictionary *dic = @{MPMediaItemPropertyTitle:self.currentAudio.audioName,
+                          MPMediaItemPropertyArtist:@"",
+                          MPMediaItemPropertyArtwork:artWork
+                          };
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dic];
+}
+//- (void)viewDidAppear:(BOOL)animated {
+//    //    接受远程控制
+//    [self becomeFirstResponder];
+//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//    //    取消远程控制
+//    [self resignFirstResponder];
+//    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+//}
 @end

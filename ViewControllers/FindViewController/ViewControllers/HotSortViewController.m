@@ -69,6 +69,8 @@
         }else{
             [cell updateWithListenModel:self.dataArray[indexPath.row]];
         }
+        cell.buybtn.hidden = YES;
+        cell.shopCar.hidden = YES;
         cell.timeLabel.hidden = YES;
         return cell;
     }
@@ -83,6 +85,7 @@
     }else{
         [cell updateWithVoiceModel:self.dataArray[indexPath.row]];
     }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -110,6 +113,7 @@
     [self getData];
 }
 - (void)getData{
+    [self showLoadingCantTouchAndClear];
     NSString * pageUrl ;
     if (self.isHot) {
         pageUrl = Page_Hots;
@@ -145,12 +149,16 @@
         }else{
             [self.refreshFooter endRefreshing];
         }
+        [self hiddenNullView];
+        [self dismissLoadingView];
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;
         }
+        [self dismissLoadingView];
         [self.refreshHeader endRefreshing];
         [self.refreshFooter endRefreshing];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

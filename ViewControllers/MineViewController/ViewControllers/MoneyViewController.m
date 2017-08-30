@@ -15,12 +15,12 @@
 #import "RMIAPHelper.h"
 #import "OrderModel.h"
 
-#define iap6    @"keting06"     //商品的标识
-#define iap30   @"keting030"
-#define iap108  @"keting0108"
-#define iap208  @"keting0208"
-#define iap298  @"keting0298"
-#define iap518  @"keting0518"
+#define iap6    @"keting006"     //商品的标识
+#define iap30   @"keting0030"
+#define iap108  @"keting00108"
+#define iap208  @"keting00208"
+#define iap298  @"keting00298"
+#define iap518  @"keting00518"
 
 
 @interface MoneyViewController ()<UITableViewDelegate,UITableViewDataSource,RMIAPHelperDelegate,SendPriceDelegate>

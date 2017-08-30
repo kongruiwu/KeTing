@@ -25,7 +25,7 @@
                                           textColor:KTColor_darkGray
                                       textAlignment:NSTextAlignmentLeft];
     self.buyBtn = [KTFactory creatButtonWithTitle:@"结算"
-                                  backGroundColor:KTColor_MainOrangeAlpha
+                                  backGroundColor:KTColor_OrangeAlpha
                                         textColor:[UIColor whiteColor]
                                          textSize:font750(30)];
     self.buyBtn.enabled = NO;
@@ -69,10 +69,10 @@
     self.moneyLabel.text = [NSString stringWithFormat:@"合计：%.2f牛币",hander.money];
     self.buyBtn.enabled = hander.count>0 ;
     if (self.buyBtn.enabled) {
-        self.buyBtn.backgroundColor = KTColor_IconOrange;
+        self.buyBtn.backgroundColor = KTColor_MainOrange;
         [self.buyBtn setTitle:[NSString stringWithFormat:@"结算 (%d)",hander.count] forState:UIControlStateNormal];
     }else{
-        self.buyBtn.backgroundColor = KTColor_MainOrangeAlpha;
+        self.buyBtn.backgroundColor = KTColor_OrangeAlpha;
         [self.buyBtn setTitle:@"结算" forState:UIControlStateNormal];
     }
     self.selectBtn.selected = hander.isAllSelect;
@@ -82,9 +82,9 @@
     [self.buyBtn setTitle:@"删除" forState:UIControlStateNormal];
     self.buyBtn.enabled = hander.deletCount>0 ;
     if (self.buyBtn.enabled) {
-        self.buyBtn.backgroundColor = KTColor_IconOrange;
+        self.buyBtn.backgroundColor = KTColor_MainOrange;
     }else{
-        self.buyBtn.backgroundColor = KTColor_MainOrangeAlpha;
+        self.buyBtn.backgroundColor = KTColor_OrangeAlpha;
     }
     self.selectBtn.selected = hander.isAllDelete;
 }

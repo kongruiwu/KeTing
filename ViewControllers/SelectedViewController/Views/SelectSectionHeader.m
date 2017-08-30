@@ -21,6 +21,7 @@
     self.backgroundColor = [UIColor whiteColor];
     
     self.leftView = [KTFactory creatViewWithColor:KTColor_MainOrange];
+    self.leftView.layer.cornerRadius = Anno750(3);
     self.titleLabel = [KTFactory creatLabelWithText:@"财经头条"
                                           fontValue:font750(34)
                                           textColor:KTColor_MainBlack

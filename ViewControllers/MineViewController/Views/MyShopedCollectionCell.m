@@ -33,7 +33,7 @@
         make.left.equalTo(@0);
         make.right.equalTo(@0);
         make.top.equalTo(@0);
-        make.height.equalTo(@(Anno750(290)));
+        make.height.equalTo(@(Anno750(268)));
     }];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);

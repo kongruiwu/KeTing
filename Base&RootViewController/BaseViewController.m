@@ -19,7 +19,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self RefreshSetting];
     [self reloadTabviewFrame];
     
 }
@@ -35,7 +35,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = KTColor_BackGround;
     [self creatNullView];
-    
 }
 
 - (void)checkNetStatus{
@@ -74,7 +73,11 @@
 - (void)creatNullView{
     self.nullView = [[NullView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) andNullType:0];
     [self.view addSubview:self.nullView];
+    [self.nullView.reloadBtn addTarget:self action:@selector(getData) forControlEvents:UIControlEventTouchUpInside];
     self.nullView.hidden = YES;
+}
+- (void)getData{
+
 }
 - (void)showNullViewWithNullViewType:(NullType)type{
     self.nullView.nullType = type;
@@ -137,7 +140,8 @@
     [self.refreshFooter setTitle:@"" forState:MJRefreshStateIdle];
     [self.refreshFooter setTitle:@"就是要加载" forState:MJRefreshStateWillRefresh];
     [self.refreshFooter setTitle:@"加载中 ..." forState:MJRefreshStateRefreshing];
-    [self.refreshFooter setTitle:@"已经全部加载完毕" forState:MJRefreshStateNoMoreData];
+    [self.refreshFooter setTitle:@"" forState:MJRefreshStateNoMoreData];
+    [self.refreshFooter setTitle:@"" forState:MJRefreshStateIdle];
 }
 - (void)setNavTitle:(NSString *)title color:(UIColor *)color{
     UILabel * titleLabel = [KTFactory creatLabelWithText:title
@@ -165,6 +169,7 @@
             imgName = @"back_black";
             break;
         default:
+            imgName = @"";
             break;
     }
     UIImage * image = [[UIImage imageNamed:imgName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];

@@ -23,6 +23,15 @@
     });
     return hander;
 }
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        self.dataArray = [NSMutableArray new];
+        self.money = 0;
+        self.count = 0;
+    }
+    return self;
+}
 
 - (void)updateData{
     float money = 0;

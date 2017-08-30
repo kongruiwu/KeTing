@@ -38,9 +38,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray  = [NSMutableArray new];
+    
     [self creatui];
 }
 - (void)creatui{
+    UIView * line = [KTFactory creatLineView];
+    line.frame = CGRectMake(0, 0, UI_WIDTH, 0.5);
+    [self.view addSubview:line];
+    self.view.backgroundColor = [UIColor whiteColor];
     UIButton * clearButton = [KTFactory creatButtonWithNormalImage:@"" selectImage:@""];
     [clearButton addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
     self.userIcon = [KTFactory creatImageViewWithImage:@"default_head"];
@@ -91,31 +96,23 @@
     }];
     [self.descLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.userName.mas_bottom).offset(Anno750(110));
+        make.top.equalTo(self.userName.mas_bottom).offset(Anno750(100));
     }];
     [self.threeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(60));
-        make.width.equalTo(@(Anno750(226)));
-        make.height.equalTo(@(Anno750(226)));
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(30));
     }];
     [self.fourBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.threeBtn.mas_bottom).offset(Anno750(72));
-        make.height.equalTo(@(Anno750(176)));
-        make.width.equalTo(@(Anno750(176)));
+        make.top.equalTo(self.threeBtn.mas_bottom);
     }];
     [self.tenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.fourBtn.mas_left).offset(Anno750(-80));
+        make.right.equalTo(self.fourBtn.mas_left);
         make.centerY.equalTo(self.fourBtn.mas_centerY);
-        make.height.equalTo(@(Anno750(176)));
-        make.width.equalTo(@(Anno750(176)));
     }];
     [self.hourBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.fourBtn.mas_right).offset(Anno750(80));
+        make.left.equalTo(self.fourBtn.mas_right);
         make.centerY.equalTo(self.fourBtn.mas_centerY);
-        make.height.equalTo(@(Anno750(176)));
-        make.width.equalTo(@(Anno750(176)));
     }];
     
     self.canNext = YES;

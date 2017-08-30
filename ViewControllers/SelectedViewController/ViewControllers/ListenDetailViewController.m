@@ -22,15 +22,12 @@
 #import "ListenDetailHeader.h"
 @interface ListenDetailViewController ()<UITableViewDelegate,UITableViewDataSource,AudioDownLoadDelegate>
 
-//@property (nonatomic, strong) UITableView * tabview;
 @property (nonatomic, strong) ListenDetailHeader * header;
 @property (nonatomic, strong) HomeListenModel * listenModel;
 
 @property (nonatomic, strong) UIButton * likeBtn;
 @property (nonatomic, strong) UIButton * shopBtn;
 @property (nonatomic, strong) UIButton * buyBtn;
-
-
 @property (nonatomic, strong) UILabel * countLabel;
 
 @end
@@ -258,9 +255,10 @@
         self.listenModel = [[HomeListenModel alloc]initWithDictionary:dic];
         [self.header updateWithImage:self.listenModel.thumb];
         [self.tabview reloadData];
+        [self hiddenNullView];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
-        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:error.message duration:2.0f];
+        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
@@ -351,13 +349,9 @@
 - (void)buyThisBookRequest:(UIButton *)btn{
     if (btn.selected) {
         //进入播放器
-//        [AudioPlayer instance].currentAudio = self.listenModel.audioModel;
         [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.listenModel.audioModel];
         [[AudioPlayer instance] audioPlay:self.listenModel.audioModel];
         [self reloadTabviewFrame];
-//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-//        [self presentViewController:nav animated:YES completion:nil];
     }else{
         if (![UserManager manager].isLogin) {
             LoginViewController * vc = [LoginViewController new];

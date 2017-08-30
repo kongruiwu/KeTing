@@ -26,6 +26,16 @@
                                          fontValue:font750(28)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentCenter];
+    self.reloadBtn = [KTFactory creatButtonWithTitle:@"重新加载"
+                                     backGroundColor:[UIColor clearColor]
+                                           textColor:KTColor_MainOrange
+                                            textSize:font750(28)];
+    self.reloadBtn.layer.borderWidth = 1.0f;
+    self.reloadBtn.layer.cornerRadius = 4.0f;
+    self.reloadBtn.layer.borderColor = KTColor_MainOrange.CGColor;
+    self.reloadBtn.hidden = YES;
+    
+    [self addSubview:self.reloadBtn];
     [self addSubview:self.imgView];
     [self addSubview:self.descLabel];
 }
@@ -39,7 +49,12 @@
         make.centerX.equalTo(@0);
         make.top.equalTo(self.imgView.mas_bottom).offset(Anno750(30));
     }];
-    
+    [self.reloadBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.descLabel.mas_bottom).offset(Anno750(60));
+        make.centerX.equalTo(@0);
+        make.height.equalTo(@(Anno750(80)));
+        make.width.equalTo(@(Anno750(340)));
+    }];
 }
 - (void)setNullType:(NullType)nullType{
     _nullType = nullType;
@@ -49,6 +64,7 @@
         case NullTypeNetError:
             imageName = @"empty_page3";
             desc = @"网络不给力，请检查网络";
+            self.reloadBtn.hidden = NO;
             break;
         case NullTypeNoneLike:
             imageName = @"empty_page7";

@@ -32,6 +32,7 @@
 @property (nonatomic, strong) NSString * price;
 /**价格带单位*/
 @property (nonatomic, strong) NSString * timePrice;
+@property (nonatomic, strong) NSString * timePrice2;
 /**排序值*/
 @property (nonatomic, strong) NSString * sortNo;
 /**发布状态*/
@@ -39,7 +40,7 @@
 /**是否免费 1免费0收费*/
 @property (nonatomic, assign) BOOL isFree;
 /**促销类型 0无 1自定义价格 2限免*/
-@property (nonatomic, strong) NSString * promotionType;
+@property (nonatomic, strong) NSNumber * promotionType;
 /**下载量*/
 @property (nonatomic, strong) NSString * orderNum;
 /**订阅时间*/
@@ -82,6 +83,8 @@
 @property (nonatomic, assign) BOOL isDownLoading;
 /**是否选择要删除*/
 @property (nonatomic, assign) BOOL isDelete;
+/**AppStore购买id*/
+@property (nonatomic, strong) NSString * appleStoreId;
 
 
 - (void)checkForDownLoadList:(NSArray *)arr;

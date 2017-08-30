@@ -43,7 +43,7 @@
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
     UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.itemSize = CGSizeMake(Anno750(185), Anno750(300));
+    layout.itemSize = CGSizeMake(Anno750(188), Anno750(300));
     layout.sectionInset = UIEdgeInsetsMake(Anno750(30), Anno750(30), Anno750(30), Anno750(30));
     layout.minimumLineSpacing = Anno750(70);
     layout.minimumInteritemSpacing = Anno750(30);

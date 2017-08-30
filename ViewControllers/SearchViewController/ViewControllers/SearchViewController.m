@@ -371,13 +371,10 @@
     NSString * key = keys[0];
     NSArray * arr = dic[key];
     if ([key isEqualToString:@"财经头条"]) {
-//        [AudioPlayer instance].currentAudio = arr[indexPath.row];
         [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:arr];
         [[AudioPlayer instance] audioPlay:arr[indexPath.row]];
         [self reloadTabviewFrame];
-//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-//        [self presentViewController:nav animated:YES completion:nil];
+
     }else if([key isEqualToString:@"听书"]){
         ListenDetailViewController * vc = [ListenDetailViewController new];
         HomeListenModel * model = arr[indexPath.row];

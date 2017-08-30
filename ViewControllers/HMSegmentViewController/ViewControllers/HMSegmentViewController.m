@@ -18,6 +18,7 @@
 
 #import "MineViewController.h"
 #import "SearchViewController.h"
+#import <UIImageView+WebCache.h>
 
 @interface HMSegmentViewController ()<UIScrollViewDelegate>
 
@@ -39,6 +40,24 @@
     [self.view addSubview:clearView];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
     self.navigationController.navigationBar.shadowImage=[UIImage new];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self updateUserIcon];
+    });
+}
+- (void)updateUserIcon{
+    if ([UserManager manager].isLogin) {
+        UIImageView * img = [KTFactory creatImageViewWithImage:@"Nav_head"];
+        img.frame = CGRectMake(0, 0, Anno750(40), Anno750(40));
+        img.layer.cornerRadius = Anno750(20);
+        img.layer.masksToBounds = YES;
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(checkUserInfo)];
+        [img addGestureRecognizer:tap];
+        [img sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"Nav_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            UIBarButtonItem * baritem  = [[UIBarButtonItem alloc]initWithCustomView:img];
+            self.navigationItem.leftBarButtonItem = baritem;
+        }];
+
+    }
 }
 
 - (void)viewDidLoad {
@@ -65,9 +84,10 @@
     self.hmsgControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     self.hmsgControl.selectionIndicatorHeight = Anno750(4);
     self.hmsgControl.selectionIndicatorColor = KTColor_MainOrange;
+    self.hmsgControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     
     self.navigationItem.titleView = self.hmsgControl;
- 
+    
     UIImage * headImage = [[UIImage imageNamed:@"Nav_head"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage * searchImg = [[UIImage imageNamed:@"nav_search"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
