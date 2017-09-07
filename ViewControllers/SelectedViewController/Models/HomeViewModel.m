@@ -10,6 +10,22 @@
 
 @implementation HomeViewModel
 
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeData"]) {
+            NSData * focusData = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeData"];
+            NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:focusData
+                                                                 options:NSJSONReadingAllowFragments
+                                                                   error:nil];
+            [self loadDataWithDic:dic];
+        }
+        
+    }
+    return self;
+}
+
+
 - (instancetype)initWithDictionary:(NSDictionary *)dic{
     self = [super initWithDictionary:dic];
     if (self) {

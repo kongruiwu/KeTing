@@ -17,6 +17,7 @@
 
 
 @property (nonatomic, strong) UIView * showView;
+@property (nonatomic, strong) MoreButton * rateButton;
 @property (nonatomic, strong) MoreButton * closedButton;
 @property (nonatomic, strong) MoreButton * shareButton;
 @property (nonatomic, strong) UIView * grayView;

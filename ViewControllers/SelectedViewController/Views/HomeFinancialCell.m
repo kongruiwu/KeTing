@@ -31,7 +31,7 @@
     self.topLine = [KTFactory creatLineView];
     self.playButton = [KTFactory creatButtonWithNormalImage:@"home_play" selectImage:@""];
     
-    for (int i = 0; i<5; i++) {
+    for (int i = 0; i<10; i++) {
         UIButton * topButton = [KTFactory creatButtonWithTitle:@""
                                                backGroundColor:[UIColor clearColor]
                                                      textColor:KTColor_lightGray
@@ -82,7 +82,8 @@
         HomeTopModel * model = models[i];
         UIButton * button = self.topButtons[i];
         button.hidden = NO;
-        if ([model.audioId isEqual:[AudioPlayer instance].currentAudio.audioId]) {
+        HomeTopModel * playmodel = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+        if ([model.audioId isEqual:playmodel.audioId]) {
             button.selected = YES;
         }else{
             button.selected = NO;

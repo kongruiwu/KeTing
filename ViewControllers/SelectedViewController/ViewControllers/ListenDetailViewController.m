@@ -47,6 +47,7 @@
     [super viewWillDisappear:animated];
     [AudioDownLoader loader].delegate = nil;
 }
+
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
@@ -84,7 +85,7 @@
     self.navigationItem.rightBarButtonItems = @[barItem,rightItem];
 }
 - (void)creatUI{
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT  ) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
@@ -211,6 +212,11 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
+    if (!self.listenModel) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
+    
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = self.listenModel.name;
     model.shareDesc = self.listenModel.summary;
@@ -349,8 +355,7 @@
 - (void)buyThisBookRequest:(UIButton *)btn{
     if (btn.selected) {
         //进入播放器
-        [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.listenModel.audioModel];
-        [[AudioPlayer instance] audioPlay:self.listenModel.audioModel];
+        [[AVQueenManager Manager] playAudios:@[self.listenModel.audioModel]];
         [self reloadTabviewFrame];
     }else{
         if (![UserManager manager].isLogin) {

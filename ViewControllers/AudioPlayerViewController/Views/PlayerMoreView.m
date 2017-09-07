@@ -14,7 +14,7 @@
     [super layoutSubviews];
     UIImage * img = self.imageView.image;
     self.imageView.frame = CGRectMake((self.bounds.size.width - img.size.width)/2, Anno750(50), img.size.width, img.size.height);
-    self.titleLabel.frame = CGRectMake(0, Anno750(145), UI_WIDTH / 2, Anno750(30));
+    self.titleLabel.frame = CGRectMake(0, Anno750(145), UI_WIDTH / 3, Anno750(30));
 }
 
 @end
@@ -42,22 +42,30 @@
     [self.cannceBtn addTarget:self action:@selector(disMiss) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.cannceBtn];
     
+    self.rateButton = [self creatSubMoreButtonTitle:@"正常播放" imageName:@"play_normal"];
     self.closedButton = [self creatSubMoreButtonTitle:@"定时关闭" imageName:@"play_ close"];
     self.shareButton = [self creatSubMoreButtonTitle:@"分享" imageName:@"play_ share"];
-    
+    [self.showView addSubview:self.rateButton];
     [self.showView addSubview:self.closedButton];
     [self.showView addSubview:self.shareButton];
     
-    [self.closedButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.rateButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@0);
         make.top.equalTo(@0);
-        make.width.equalTo(@(UI_WIDTH/2));
+        make.width.equalTo(@(UI_WIDTH/3));
+        make.height.equalTo(@(Anno750(220)));
+    }];
+    
+    [self.closedButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.rateButton.mas_right);
+        make.top.equalTo(@0);
+        make.width.equalTo(@(UI_WIDTH/3));
         make.height.equalTo(@(Anno750(220)));
     }];
     [self.shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(@0);
         make.top.equalTo(@0);
-        make.width.equalTo(@(UI_WIDTH/2));
+        make.width.equalTo(@(UI_WIDTH/3));
         make.height.equalTo(@(Anno750(220)));
     }];
     

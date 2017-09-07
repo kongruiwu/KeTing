@@ -194,8 +194,8 @@
             self.timer = nil;
             [self.TimeprogressView disMiss];
             
-            [AudioPlayer instance].currentAudio = self.dataArray[0];
-            [AudioPlayer instance].playList = self.dataArray;
+            [[AVQueenManager Manager] playAudios:self.dataArray];
+            
             AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
             UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
             [self presentViewController:nav animated:YES completion:nil];

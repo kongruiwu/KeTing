@@ -10,17 +10,19 @@
 
 #import <IQKeyboardManager.h>
 #import <UMSocialCore/UMSocialCore.h>
-//测试
 #import <AVFoundation/AVFoundation.h>
 #import "AudioDownLoader.h"
 #import "RootViewController.h"
 #import "HistorySql.h"
-#import "AudioPlayer.h"
 #import "FristViewController.h"
 #import <Growing.h>
 #import <MLTransition.h>
+#import "AVQueenManager.h"
 
 @interface AppDelegate ()<AVAudioSessionDelegate,WXApiDelegate>
+
+@property (nonatomic, strong) NSTimer * timer;
+
 
 @end
 
@@ -46,9 +48,8 @@
     }else{
         [self.window setRootViewController:[RootViewController new]];
     }
-    //缓存处理
-    NSURLCache *urlCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
-    [NSURLCache setSharedURLCache:urlCache];
+    
+    
     
     return YES;
 }
@@ -72,12 +73,12 @@
         switch (status) {
             case AFNetworkReachabilityStatusReachableViaWWAN:
             {
-                if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStatePlaying ) {
-                    [[AudioPlayer instance].audioPlayer pause];
+                if ([AVQueenManager Manager].isPlaying) {
+                    [[AVQueenManager Manager] pause];
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"当前网络已切换，确定继续播放么？" preferredStyle:(UIAlertControllerStyleAlert)];
                     
                     UIAlertAction *action = [UIAlertAction actionWithTitle:@"继续" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                        [[AudioPlayer instance].audioPlayer resume];
+                        [[AVQueenManager Manager] resume];
                     }];
                     [alertController addAction:action];
                     
@@ -141,13 +142,22 @@
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
 
-//应用进入后台之后 停止下载 已保证下载可以正常进行
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    if ([AudioPlayer instance].currentAudio) {
-        [[HistorySql sql] updatePlayLong:@([[AudioPlayer instance] audioProgress]) withAudioID:[AudioPlayer instance].currentAudio.audioId];
+    //当进入后台时  音频还在播放时 更新播放进度
+    if ([AVQueenManager Manager].isPlaying) {
+        HomeTopModel * model = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+        [[HistorySql sql] updatePlayLong:@((int)[AVQueenManager Manager].bottomProgress) withAudioID:model.audioId];
     }
+    //用户进入后台之后 停止下载
     [[AudioDownLoader loader] cancelDownLoading];
     
+    if ([AVQueenManager Manager].isPlaying) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateBackUI) userInfo:nil repeats:YES];
+    }
+}
+
+- (void)updateBackUI{
+    [[AVQueenManager Manager] setPlayingInfo];
 }
 
 
@@ -158,6 +168,11 @@
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    if (self.timer) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    
     //当进入前台时  且开启自动下载功能时 调用
     if (self.netManager) {
         [self.netManager startMonitoring];
@@ -168,7 +183,9 @@
         }
     });
     
+    //检测当前播放状态
     
+    [[AVQueenManager Manager] checkAudioPlayStatus];
     
 }
 

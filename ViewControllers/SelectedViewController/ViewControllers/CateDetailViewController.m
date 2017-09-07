@@ -39,11 +39,15 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [AudioDownLoader loader].delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [AudioDownLoader loader].delegate = self;
     [self checkNetStatus];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayStatus) name:AudioReadyPlaying object:nil];
+   
 }
 
 - (void)viewDidLoad {
@@ -57,7 +61,7 @@
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
     
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
@@ -74,7 +78,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTopModel * model = self.dataArray[indexPath.row];
-    CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(646), 9999) font:[UIFont systemFontOfSize:font750(30)]];
+    CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(600), 9999) font:[UIFont systemFontOfSize:font750(30)]];
     return Anno750(96) + size.height;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -89,8 +93,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [AudioPlayer instance].playList = self.dataArray;
-    [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+    [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
     [self reloadTabviewFrame];
 }
 
@@ -231,7 +234,7 @@
             button.selected = !button.selected;
             model.isprase = button.selected;
             [self.tabview reloadData];
-        } errorBlock:^(KTError *error) {
+        } errorBlock:^(KTError * error) {
             [self dismissLoadingView];
         }];
     }
@@ -239,6 +242,11 @@
 }
 #pragma mark - 分享
 - (void)shareBtnClick:(UIButton *)button{
+    if (!self.dataArray || self.dataArray.count == 0) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
+    
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * Audio = self.dataArray[index.row];
@@ -294,6 +302,10 @@
         HomeTopModel * model = self.dataArray[i];
         model.showTools = NO;
     }
+    [self.tabview reloadData];
+}
+
+- (void)updatePlayStatus{
     [self.tabview reloadData];
 }
 

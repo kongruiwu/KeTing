@@ -8,6 +8,7 @@
 
 #import "PlayFootView.h"
 #import "HistorySql.h"
+#import "AVQueenManager.h"
 @implementation PlayFootView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -42,6 +43,8 @@
     self.timer = [NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(tick) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     
+    [self audioImageAnimtion];
+    
     [self addSubview:self.leftImg];
     [self addSubview:self.nameLabel];
     [self addSubview:self.nextBtn];
@@ -50,19 +53,10 @@
     [self addSubview:self.progressView];
     [self addSubview:self.line];
     [self addSubview:self.clearButton];
-    if (![AudioPlayer instance].currentAudio) {
-        NSNumber * num = [[NSUserDefaults standardUserDefaults] objectForKey:@"current"];
-        if (num) {
-            if ([[HistorySql sql] checkAudio:num]) {
-                [AudioPlayer instance].currentAudio = [[HistorySql sql] getHometopModel:num];
-                [self updateUI:[AudioPlayer instance].currentAudio];
-            }
-        }
-    }
     
 }
 - (void)tick{
-    self.progressView.progress = ((float)[[AudioPlayer instance] audioProgress])/100;
+    self.progressView.progress = ([AVQueenManager Manager].bottomProgress)/100;
 }
 
 - (void)layoutSubviews{
@@ -132,35 +126,52 @@
 }
 
 - (void)changePlayStatus{
-    if ([AudioPlayer instance].audioPlayer.state != STKAudioPlayerStatePaused) {
-        self.playBtn.selected = YES;
-        [self animationResume];
-    }else{
-        self.playBtn.selected = NO ;
-        [self animationStop];
-    }
-    [self updateUI:[AudioPlayer instance].currentAudio];
-}
-- (void)playBtnClick:(UIButton *)btn{
-    btn.selected = !btn.selected;
-    if ([AudioPlayer instance].audioPlayer.state == STKAudioPlayerStateStopped) {
-        [[AudioPlayer instance] audioPlay:[AudioPlayer instance].currentAudio];
-        [self audioImageAnimtion];
-    }else{
-        [[AudioPlayer instance] audioResume];
-    }
     
+    if ([AVQueenManager Manager].endPlaying) {
+        CALayer *layer = self.leftImg.layer;
+        [layer removeAllAnimations];
+        self.playBtn.selected = NO;
+    }else{
+        if ([AVQueenManager Manager].isPlaying) {
+            self.playBtn.selected = YES;
+            [self animationResume];
+        }else{
+            self.playBtn.selected = NO;
+            [self animationStop];
+        }
+    }
+    NSInteger index = [AVQueenManager Manager].playAudioIndex;
+    HomeTopModel * model = [AVQueenManager Manager].playList[index];
+    [self updateUI:model];
+}
+
+
+- (void)playBtnClick:(UIButton *)btn{
+    if ([AVQueenManager Manager].endPlaying) {
+        
+        [[AVQueenManager Manager] playAudioAtIndex:[AVQueenManager Manager].playAudioIndex];
+        
+    }else{
+        if ([AVQueenManager Manager].isPlaying) {
+            [[AVQueenManager Manager] pause];
+            [self animationStop];
+        }else{
+            [[AVQueenManager Manager] resume];
+            [self animationResume];
+        }
+    }
     
 }
 - (void)playNextAudio{
-    [[AudioPlayer instance] nextAudio];
-    [self updateUI:[AudioPlayer instance].currentAudio];
+    
+    [[AVQueenManager Manager] playNextAudio];
+    
 }
 - (void)updateUI:(HomeTopModel *)model1{
     HomeTopModel * model = model1;
     [self.leftImg sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.audioName;
-    self.progressView.progress = [[AudioPlayer instance].audioPlayer progress];
+    self.progressView.progress = [[AVQueenManager Manager] bottomProgress];
 }
 
 #pragma 暂停动画
@@ -175,6 +186,13 @@
 - (void)animationResume
 {
     CALayer *layer = self.leftImg.layer;
+    if (![layer animationForKey:@"rotationAnimation"]) {
+        [self audioImageAnimtion];
+        return;
+    }
+    if (layer.speed == 1.0) {
+        return;
+    }
     CFTimeInterval pauseTime = [layer timeOffset];
     layer.speed = 1.0;
     layer.timeOffset = 0.0;

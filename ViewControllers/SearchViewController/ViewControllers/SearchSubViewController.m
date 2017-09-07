@@ -127,8 +127,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.typeStr isEqualToString:@"财经头条"]) {
-        [AudioPlayer instance].playList = self.dataArray;
-        [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+        [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
         [self reloadTabviewFrame];
     }else if([self.typeStr isEqualToString:@"听书"]){
         ListenDetailViewController * vc = [ListenDetailViewController new];

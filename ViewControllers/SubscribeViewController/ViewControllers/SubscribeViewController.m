@@ -45,8 +45,19 @@
 }
 
 - (void)creatUI{
-    self.NullString = @"尚未订阅，看看我们为你推荐的吧";
     self.recomendArray = [NSMutableArray new];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"recoendArray"]) {
+        NSData * newsData = [[NSUserDefaults standardUserDefaults] objectForKey:@"recoendArray"];
+        NSArray * news = [NSJSONSerialization JSONObjectWithData:newsData
+                                                         options:NSJSONReadingAllowFragments
+                                                           error:nil];
+        for (int i = 0; i<news.count; i++) {
+            HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:news[i]];
+            [self.recomendArray addObject:model];
+        }
+    }
+    
+    self.NullString = @"尚未订阅，看看我们为你推荐的吧";
     self.listArray = [NSMutableArray new];
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
@@ -167,9 +178,14 @@
 }
 
 - (void)getSubscribeData{
-    [self.recomendArray removeAllObjects];
+    
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_SubscribeRec complete:^(id result) {
+        [self.recomendArray removeAllObjects];
         NSArray * datas = (NSArray *)result;
+        if (datas.count>0) {
+            NSData * data = [NSJSONSerialization dataWithJSONObject:datas options:NSJSONWritingPrettyPrinted error:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"recoendArray"];
+        }
         for (int i = 0; i<datas.count; i++) {
             HomeListenModel * model = [[HomeListenModel alloc]initWithDictionary:datas[i]];
             [self.recomendArray addObject:model];
@@ -208,7 +224,6 @@
         [self hiddenNullView];
     } errorBlock:^(KTError *error) {
         [self dismissLoadingView];
-        [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
 

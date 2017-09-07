@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+#import "AVQueenManager.h"
 @interface PlayListCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel * nameLabel;

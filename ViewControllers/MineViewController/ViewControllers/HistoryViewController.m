@@ -109,8 +109,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [AudioPlayer instance].playList = [NSMutableArray arrayWithObject:self.dataArray[indexPath.row]];
-    [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
+    [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
     [self reloadTabviewFrame];
 }
 - (void)getData{
@@ -199,8 +198,7 @@
 //    }];
 }
 - (void)playAllAudio{
-    [AudioPlayer instance].playList = self.dataArray;
-    [[AudioPlayer instance] audioPlay:self.dataArray[0]];
+    [[AVQueenManager Manager] playAudios:self.dataArray];
     [self reloadTabviewFrame];
     
 }

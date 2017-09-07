@@ -46,19 +46,27 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
     [self getData];
     UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
     [self.view addSubview:clearView];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.tabview reloadData];
     [AudioDownLoader loader].delegate = self;
-    
     [self checkNetStatus];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCell) name:AudioReadyPlaying object:nil];
 }
+
+
+
 - (void)viewWillDisappear:(BOOL)animated{
+    
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [AudioDownLoader loader].delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self hiddenNullView];
+    
 }
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
@@ -270,9 +278,7 @@
             [self.tabview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }else{
             [self hiddenToolsBar];
-            //进入音乐播放器
-            [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.listenModel.audio];
-            [[AudioPlayer instance] audioPlay:model];
+            [[AVQueenManager Manager] playAudioList:self.listenModel.audio playAtIndex:indexPath.row - 1];
             [self reloadTabviewFrame];
         }
     }
@@ -299,8 +305,15 @@
         [self showNullViewWithNullViewType:NullTypeNetError];
     }];
 }
+
+
 #pragma mark - 分享
 - (void)showShareView{
+    
+    if (!self.listenModel) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
     
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = [NSString stringWithFormat:@"可听声度：%@",self.listenModel.name];
@@ -318,7 +331,7 @@
     
     if (self.isOpen) {
         CGRect frame = self.footView.frame;
-        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AVQueenManager Manager].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
         button.selected = !button.selected;
         self.isDownLoad = button.selected;
         NSMutableArray * muarr = [NSMutableArray new];
@@ -329,10 +342,10 @@
         [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
         if (self.isDownLoad) {
             self.footView.hidden = NO;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
         }else{
             self.footView.hidden = YES;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
         }
     }else{
         if (![UserManager manager].isLogin) {
@@ -342,12 +355,7 @@
         }else{
             //订阅
             [self recharge];
-            
-//            SetAccoutViewController * vc = [SetAccoutViewController new];
-//            vc.money = self.listenModel.PRICE;
-//            vc.products = @[self.listenModel];
-//            vc.isBook = NO;
-//            [self.navigationController pushViewController:vc animated:YES];
+
         }
     }
     
@@ -507,6 +515,12 @@
 }
 #pragma mark - 分享
 - (void)shareBtnClick:(UIButton *)button{
+    
+    if (!self.listenModel || !self.listenModel.audio) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
+    
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * Audio = self.listenModel.audio[index.row - 1];
@@ -752,11 +766,7 @@
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    
-    
 }
-
-
 #pragma mark - 处理交易时间
 - (NSString *)stringFromDate:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -768,6 +778,11 @@
     NSString *destDateString = [dateFormatter stringFromDate:date];
     
     return destDateString;
+}
+
+#pragma mark - 刷新cell
+- (void)refreshCell{
+    [self.tabview reloadData];
 }
 
 @end

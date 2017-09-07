@@ -106,12 +106,8 @@
         vc.voiceID = model.listenId;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        [[AudioPlayer instance] audioPlay:self.dataArray[indexPath.row]];
-        [AudioPlayer instance].playList = self.dataArray;
+        [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
         [self reloadTabviewFrame];
-//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:audioVC];
-//        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 

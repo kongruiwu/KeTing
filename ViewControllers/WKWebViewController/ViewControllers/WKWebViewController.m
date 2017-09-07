@@ -25,7 +25,7 @@
     [self setNavUnAlpha];
     CGRect frame = self.webView.frame;
     if (self.isFromNav) {
-        self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }else{
         self.webView.frame = CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT- 64);
     }
@@ -70,6 +70,12 @@
 }
 
 - (void)shareButtonClick{
+    
+    if (!self.model) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
+    
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = self.model.audioName;
     model.shareDesc = self.model.summary;
@@ -91,7 +97,8 @@
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT - 64)];
     if (self.webType == 0) {
-        [self.webView loadHTMLString:[self replaceHtmlString:[AudioPlayer instance].currentAudio.audioContent] baseURL:nil];
+        HomeTopModel * model = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+        [self.webView loadHTMLString:[self replaceHtmlString:model.audioContent] baseURL:nil];
     }else if(self.webType == PROTOCOLTYPEELSETEXT){
         [self.webView loadHTMLString:[self replaceHtmlString:self.model.audioContent] baseURL:nil];
     }
@@ -112,7 +119,8 @@
     NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath
                                                    encoding:NSUTF8StringEncoding
                                                       error:nil];
-    htmlCont = [htmlCont stringByReplacingOccurrencesOfString:@"ReplaceTitle" withString:self.model.audioName ? self.model.audioName : [AudioPlayer instance].currentAudio.audioName];
+    HomeTopModel * model = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+    htmlCont = [htmlCont stringByReplacingOccurrencesOfString:@"ReplaceTitle" withString:self.model.audioName ? self.model.audioName : model.audioName];
     htmlCont = [htmlCont stringByReplacingOccurrencesOfString:@"ReplaceContent" withString:string];
     
     return htmlCont;

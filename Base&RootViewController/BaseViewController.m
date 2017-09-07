@@ -25,9 +25,9 @@
 }
 - (void)reloadTabviewFrame{
     CGRect fram = self.tabview.frame;
-    if (!_hasReduce && [AudioPlayer instance].showFoot && self.tabview) {
+    if (!_hasReduce && [AVQueenManager Manager].showFoot && self.tabview) {
         _hasReduce = YES;
-        self.tabview.frame = CGRectMake(fram.origin.x, fram.origin.y, fram.size.width, fram.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        self.tabview.frame = CGRectMake(fram.origin.x, fram.origin.y, fram.size.width, fram.size.height -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }
 }
 

@@ -149,6 +149,12 @@
 }
 #pragma mark - 分享
 - (void)showShareView{
+    
+    if (!self.anchor || !self.anchor.summary ||!self.anchor.face) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"无网络，暂时无法分享" duration:1.0f];
+        return;
+    }
+    
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = [NSString stringWithFormat:@"我在听%@讲述的音频，推荐给你。",self.anchor.name];
     model.shareDesc = self.anchor.summary;

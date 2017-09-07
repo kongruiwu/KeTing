@@ -43,7 +43,10 @@
     [self setNavUnAlpha];
     [AudioDownLoader loader].delegate = self;
     [self checkNetStatus];
-    [self refreshData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayStatus) name:AudioReadyPlaying object:nil];
+    
+//    [self refreshData];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -53,6 +56,7 @@
         model.showTools = NO;
     }
     [AudioDownLoader loader].delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -65,7 +69,7 @@
     
     self.isDownLoad = NO;
     [self creatUI];
-    // [self refreshData];
+    [self refreshData];
     
     
 }
@@ -101,7 +105,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeTopModel * model = self.dataArray[indexPath.row];
-    CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(646), 9999) font:[UIFont systemFontOfSize:font750(30)]];
+    CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(600), 9999) font:[UIFont systemFontOfSize:font750(30)]];
     return Anno750(96) + size.height;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -150,13 +154,8 @@
     }else{
         [self hiddenToolsBar];
         //进入音乐播放器
-//        [AudioPlayer instance].currentAudio = model;
-        [AudioPlayer instance].playList = self.dataArray;
-        [[AudioPlayer instance] audioPlay:model];
+        [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
         [self reloadTabviewFrame];
-//        AudioPlayerViewController * audioVC = [AudioPlayerViewController new];
-//        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:audioVC];
-//        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 - (void)refreshData{
@@ -218,7 +217,7 @@
     btn.selected = !btn.selected;
     CGRect frame = self.footView.frame;
     if (!_hasReduce) {
-        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
     }
     _hasReduce = !_hasReduce;
     //隐藏toolsbar
@@ -229,10 +228,10 @@
     self.isDownLoad = !self.isDownLoad;
     if (self.isDownLoad) {
         self.footView.hidden = NO;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }else{
         self.footView.hidden = YES;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }
     [self.tabview reloadData];
 }
@@ -355,6 +354,11 @@
 }
 #pragma mark - 分享
 - (void)shareBtnClick:(UIButton *)button{
+    
+    if (!self.dataArray || self.dataArray.count == 0) {
+        return;
+    }
+    
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
     HomeTopModel * Audio = self.dataArray[index.row];
@@ -412,5 +416,9 @@
     [self.tabview reloadData];
 }
 
+#pragma mark - 更新界面
+- (void)updatePlayStatus{
+    [self.tabview reloadData];
+}
 
 @end

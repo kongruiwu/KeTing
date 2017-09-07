@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6232F2CE1F21D86C009DDC37 /* RMIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6232F2CD1F21D86C009DDC37 /* RMIAPHelper.m */; };
+		8B16FCCD1F57AC5500640C84 /* KRAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B16FCCC1F57AC5500640C84 /* KRAudioPlayer.m */; };
 		8B2D73861F0B224F00E1BF4B /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D73851F0B224F00E1BF4B /* MessageViewController.m */; };
 		8B2D73891F0B27FC00E1BF4B /* MessageListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D73881F0B27FC00E1BF4B /* MessageListCell.m */; };
 		8B2D738C1F0B2EEA00E1BF4B /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D738B1F0B2EEA00E1BF4B /* SettingViewController.m */; };
@@ -62,8 +63,7 @@
 		8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EAA21EE55CAF009EA76D /* ListenBookCollectionCell.m */; };
 		8B5916BD1F26D5B5008841E2 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5916BC1F26D5B5008841E2 /* LoadingView.m */; };
 		8B5916BF1F26D74B008841E2 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B5916BE1F26D74B008841E2 /* loading.gif */; };
-		8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */; };
-		8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6437431EE8D36700FA53EF /* AudioPlayer.m */; };
+		8B5B82B41F569735001C8B35 /* AVQueenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B82B31F569735001C8B35 /* AVQueenManager.m */; };
 		8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64374A1EE9356D00FA53EF /* PlayTextButton.m */; };
 		8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E171EEA39CF00A11A0F /* CateListViewController.m */; };
 		8B696E1B1EEA3AD500A11A0F /* CateListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E1A1EEA3AD500A11A0F /* CateListTableViewCell.m */; };
@@ -199,6 +199,8 @@
 		6232F2CC1F21D86C009DDC37 /* RMIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMIAPHelper.h; sourceTree = "<group>"; };
 		6232F2CD1F21D86C009DDC37 /* RMIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMIAPHelper.m; sourceTree = "<group>"; };
 		76003AEA8175C7294536DAB5 /* libPods-KeTing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KeTing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B16FCCB1F57AC5500640C84 /* KRAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRAudioPlayer.h; sourceTree = "<group>"; };
+		8B16FCCC1F57AC5500640C84 /* KRAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRAudioPlayer.m; sourceTree = "<group>"; };
 		8B2D73841F0B224F00E1BF4B /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		8B2D73851F0B224F00E1BF4B /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		8B2D73871F0B27FC00E1BF4B /* MessageListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageListCell.h; sourceTree = "<group>"; };
@@ -307,10 +309,8 @@
 		8B5916BB1F26D5B5008841E2 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		8B5916BC1F26D5B5008841E2 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		8B5916BE1F26D74B008841E2 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
-		8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVQueenPlayer.h; sourceTree = "<group>"; };
-		8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVQueenPlayer.m; sourceTree = "<group>"; };
-		8B6437421EE8D36700FA53EF /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
-		8B6437431EE8D36700FA53EF /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
+		8B5B82B21F569735001C8B35 /* AVQueenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVQueenManager.h; sourceTree = "<group>"; };
+		8B5B82B31F569735001C8B35 /* AVQueenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVQueenManager.m; sourceTree = "<group>"; };
 		8B6437491EE9356D00FA53EF /* PlayTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTextButton.h; sourceTree = "<group>"; };
 		8B64374A1EE9356D00FA53EF /* PlayTextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayTextButton.m; sourceTree = "<group>"; };
 		8B696E161EEA39CF00A11A0F /* CateListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CateListViewController.h; sourceTree = "<group>"; };
@@ -914,10 +914,10 @@
 		8B6437411EE8D35D00FA53EF /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				8B6437421EE8D36700FA53EF /* AudioPlayer.h */,
-				8B6437431EE8D36700FA53EF /* AudioPlayer.m */,
-				8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */,
-				8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */,
+				8B5B82B21F569735001C8B35 /* AVQueenManager.h */,
+				8B5B82B31F569735001C8B35 /* AVQueenManager.m */,
+				8B16FCCB1F57AC5500640C84 /* KRAudioPlayer.h */,
+				8B16FCCC1F57AC5500640C84 /* KRAudioPlayer.m */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -1634,9 +1634,8 @@
 				8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */,
 				8B3CEECC1F0DC6BE00AE5B81 /* PickerView.m in Sources */,
 				8B53EA971EE53CE6009EA76D /* HomeVoiceCell.m in Sources */,
-				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,
 				8B8A05511F1F8B0C00590344 /* WaitDownLoadViewController.m in Sources */,
-				8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */,
+				8B5B82B41F569735001C8B35 /* AVQueenManager.m in Sources */,
 				8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */,
 				8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */,
 				8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */,
@@ -1726,6 +1725,7 @@
 				8B7FA63D1F0A2EE500FA01B4 /* DownLoadViewController.m in Sources */,
 				8B8743011EEE6F7900324FA2 /* VoiceListViewController.m in Sources */,
 				8BF6920C1EE7A245001CECEE /* ToastView.m in Sources */,
+				8B16FCCD1F57AC5500640C84 /* KRAudioPlayer.m in Sources */,
 				8B2D74041F0CC51200E1BF4B /* OpenUDID.m in Sources */,
 				8BB516591F24A40C00C29643 /* GTMBase64.m in Sources */,
 				8BF602951EEF7B1400322545 /* VoiceUpdateListCell.m in Sources */,

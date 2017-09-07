@@ -371,8 +371,7 @@
     NSString * key = keys[0];
     NSArray * arr = dic[key];
     if ([key isEqualToString:@"财经头条"]) {
-        [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:arr];
-        [[AudioPlayer instance] audioPlay:arr[indexPath.row]];
+        [[AVQueenManager Manager] playAudios:arr];
         [self reloadTabviewFrame];
 
     }else if([key isEqualToString:@"听书"]){

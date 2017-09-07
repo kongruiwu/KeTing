@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+
+
+#import "AVQueenManager.h"
 @interface PlayFootView : UIView
 
 @property (nonatomic, strong) UIImageView * leftImg;

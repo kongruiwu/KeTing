@@ -97,7 +97,7 @@
     [self.sizeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.timeLabel.mas_right).offset(Anno750(20));
         make.centerY.equalTo(self.timeLabel.mas_centerY);
-        make.width.equalTo(@(size.width+Anno750(10)));
+        make.width.equalTo(@(size.width+Anno750(20)));
     }];
     [self.playStatusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.sizeLabel.mas_right).offset(Anno750(20));
@@ -106,7 +106,9 @@
 }
 - (void)updateWithHomeTopModel:(HomeTopModel *)model
 {
-    if ([[AudioPlayer instance].currentAudio.audioId integerValue] == [model.audioId integerValue]) {
+    NSInteger index = [AVQueenManager Manager].playAudioIndex;
+    HomeTopModel * playModel = [AVQueenManager Manager].playList[index];
+    if ([playModel.audioId isEqual:model.audioId]) {
         self.nameLabel.textColor = KTColor_MainOrange;
     }else{
         self.nameLabel.textColor = KTColor_MainBlack;

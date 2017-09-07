@@ -32,7 +32,7 @@
     
     UIView * headView = [KTFactory creatViewWithColor:[UIColor whiteColor]];
     headView.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(100));
-    self.titleLabel = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld）",[AudioPlayer instance].playList.count]
+    self.titleLabel = [KTFactory creatLabelWithText:[NSString stringWithFormat:@"播放列表  （%ld）",[AVQueenManager Manager].playList.count]
                                           fontValue:font750(32)
                                           textColor:KTColor_MainBlack
                                       textAlignment:NSTextAlignmentLeft];
@@ -74,10 +74,11 @@
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [AudioPlayer instance].playList.count;
+//    return [AudioPlayer instance].playList.count;
+    return [AVQueenManager Manager].playList.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeTopModel * model = [AudioPlayer instance].playList[indexPath.row];
+    HomeTopModel * model = [AVQueenManager Manager].playList[indexPath.row];
     CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(702), 99999) font:[UIFont systemFontOfSize:font750(30)]];
     return Anno750(74) + size.height;
 }
@@ -87,24 +88,19 @@
     if (!cell) {
         cell = [[PlayListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
     }
-    [cell updateWithHomeTopModel:[AudioPlayer instance].playList[indexPath.row]];
+    [cell updateWithHomeTopModel:[AVQueenManager Manager].playList[indexPath.row]];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeTopModel * model = [AudioPlayer instance].playList[indexPath.row];
-    [[AudioPlayer instance] audioPlay:model];
-    if ([self.delegate respondsToSelector:@selector(playAudioNeedUpdate:)]) {
-        [self.delegate playAudioNeedUpdate:model];
-    }
+    
+    [[AVQueenManager Manager] playAudioAtIndex:indexPath.row];
+    
     [self disMiss];
 }
 
 - (void)show{
     self.hidden = NO;
-    if ([AudioPlayer instance].playList.count == 0) {
-        [[AudioPlayer instance].playList addObject: [AudioPlayer instance].currentAudio];
-    }
-    self.titleLabel.text = [NSString stringWithFormat:@"播放列表（%ld）",[AudioPlayer instance].playList.count];
+    self.titleLabel.text = [NSString stringWithFormat:@"播放列表（%ld）",[AVQueenManager Manager].playList.count];
     [self.tabview reloadData];
     [UIView animateWithDuration:0.5 animations:^{
         self.backgroundColor = UIColorFromRGBA(0x000000, 0.5);

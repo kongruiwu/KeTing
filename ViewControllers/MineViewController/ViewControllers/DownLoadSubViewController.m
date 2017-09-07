@@ -101,9 +101,7 @@
         [self.headerView updateWithCount:self.dataArray];
         [self.tabview reloadData];
     }else{
-        HomeTopModel * model = self.dataArray[indexPath.row];
-        [AudioPlayer instance].playList = self.dataArray;
-        [[AudioPlayer instance] audioPlay:model];
+        [[AVQueenManager Manager] playAudioList:self.dataArray playAtIndex:indexPath.row];
         [self reloadTabviewFrame];
     }
 }
@@ -124,7 +122,7 @@
 - (void)changeDeleteStatus{
     self.isDelete = !self.isDelete;
     CGRect frame = self.footView.frame;
-    self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AudioPlayer instance].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+    self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
     if (self.isDelete) {
         self.footView.hidden = NO;
         self.tabview.frame = CGRectMake(0,0, UI_WIDTH, UI_HEGIHT - Anno750(88) - 64);

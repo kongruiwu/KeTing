@@ -23,10 +23,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if ([AudioPlayer instance].showFoot && _hasReduce) {
+    if ([AVQueenManager Manager].showFoot && _hasReduce) {
         _hasReduce = YES;
         CGRect frame = self.collectView.frame;
-        self.collectView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
+        self.collectView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }
     [self checkNetStatus];
 }

@@ -22,7 +22,11 @@
 //听书
 #import "ListenListViewController.h"
 
-@interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate,AudioPlayerDelegate>
+
+//测试
+#import "AVQueenManager.h"
+
+@interface SelectedViewController ()<UITableViewDelegate,UITableViewDataSource,ListenBookDelegate,HomeFinancialDelegate>
 
 @property (nonatomic, strong) HomeViewModel * model;
 
@@ -37,13 +41,12 @@
     if (delegate.netManager.networkReachabilityStatus >0) {
         [self AudioPlayerPlayStatusReady];
     }
-    [AudioPlayer instance].delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AudioPlayerPlayStatusReady) name:AudioReadyPlaying object:nil];
     
-    [self checkNetStatus];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [AudioPlayer instance].delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +54,8 @@
     [self getData];
 }
 - (void)creatUI{
+    
+    self.model = [[HomeViewModel alloc]init];
     
     self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
@@ -164,13 +169,16 @@
     
 }
 - (void)PlayAudioAtIndex:(NSInteger)index{
-    [[AudioPlayer instance] audioPlay:self.model.tops[index]];
-    [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.model.tops];
+    
+    [[AVQueenManager Manager] playAudioList:self.model.tops playAtIndex:index];
+    
     [self reloadTabviewFrame];
+    
 }
 - (void)PlayTopList{
-    [AudioPlayer instance].playList = [NSMutableArray arrayWithArray:self.model.tops];
-    [[AudioPlayer instance] audioPlay:self.model.tops[0]];
+    
+    [[AVQueenManager Manager] playAudios:self.model.tops];
+    
     [self reloadTabviewFrame];
 }
 - (void)checkBookAtIndex:(NSInteger)index{
@@ -181,22 +189,17 @@
 }
 
 - (void)getData{
-    [self showLoadingCantTouchAndClear];
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_home complete:^(id result) {
-        [self dismissLoadingView];
         NSDictionary * dic = (NSDictionary *)result;
-        if (!dic) {
-            [self showNullViewWithNullViewType:NullTypeNetError];
-        }else{
-            [self hiddenNullView];
-            self.model = [[HomeViewModel alloc]initWithDictionary:dic];
-            [self.tabview reloadData];
-            [self.refreshHeader endRefreshing];
+        if (dic && dic.allKeys.count>0) {
+            NSData * data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"homeData"];
         }
-    } errorBlock:^(KTError *error) {
-        [self dismissLoadingView];
+        self.model = [[HomeViewModel alloc]initWithDictionary:dic];
+        [self.tabview reloadData];
         [self.refreshHeader endRefreshing];
-        [self showNullViewWithNullViewType:NullTypeNetError];
+    } errorBlock:^(KTError *error) {
+        [self.refreshHeader endRefreshing];
     }];
 }
 

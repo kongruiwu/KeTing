@@ -9,12 +9,7 @@
 #ifndef ConfigHeader_h
 #define ConfigHeader_h
 
-#import "KTFactory.h"
-#import <Masonry.h>
-#import <UIImageView+WebCache.h>
-#import "ToastView.h"
-#import "AudioPlayer.h"
-#import "UserManager.h"
+
 //全局返回通用配置选项
 typedef NS_ENUM(NSInteger, SelectorBackType){
     SelectorBackTypePopBack = 0,
@@ -28,6 +23,22 @@ typedef NS_ENUM(NSInteger,BackImgType){
     BackImgTypeBlack ,
     BackImgTypeNone
 };
+//播放器自动关闭 类型
+typedef NS_ENUM(NSInteger, CloseTime){
+    CloseTimeNone = 0   ,  //没有倒计时
+    CloseTimeThisAudio  ,  //播放完当前音频
+    CloseTime30min      ,   //30分钟
+    CloseTime60min      ,   //60分钟
+    CloseTime90min          //90分钟
+};
+
+#import "KTFactory.h"
+#import <Masonry.h>
+#import <UIImageView+WebCache.h>
+#import "ToastView.h"
+#import "UserManager.h"
+#import "AVQueenManager.h"
+
 
 //750状态下字体适配
 #define font750(x) ((x)/ 1334.0f) * UI_HEGIHT

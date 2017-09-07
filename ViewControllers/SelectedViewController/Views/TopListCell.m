@@ -164,8 +164,6 @@
         make.width.equalTo(@(with));
         make.height.equalTo(@(img.size.height));
     }];
-    
-    
 }
 
 
@@ -173,11 +171,20 @@
 
 - (void)updateWithHomeTopModel:(HomeTopModel *)model{
     self.nameLabel.text = model.audioName;
-    if ([model.playLong integerValue] == 0) {
-        self.playStutas.hidden = YES;
-    }else{
+    
+    if ([[HistorySql sql] checkAudio:model.audioId]) {
         self.playStutas.hidden = NO;
-        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
+        HomeTopModel * hisModel = [[HistorySql sql] getHometopModel:model.audioId];
+        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",hisModel.playLong];
+        self.nameLabel.textColor = KTColor_lightGray;
+    }else{
+        self.playStutas.hidden = YES;
+        self.nameLabel.textColor = KTColor_MainBlack;
+    }
+    
+    HomeTopModel * playModel = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+    if ([model.audioId isEqual:playModel.audioId]) {
+        self.nameLabel.textColor = KTColor_MainOrange;
     }
     self.likeBtn.selected = model.isprase;
     self.toolsbar.hidden = !model.showTools;
@@ -190,6 +197,9 @@
     }else{
         self.timeLabel.text = time;
     }
+    
+    
+    
 }
 
 

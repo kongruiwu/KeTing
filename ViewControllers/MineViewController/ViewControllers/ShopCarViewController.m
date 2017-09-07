@@ -26,7 +26,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getData];
-    self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
+    self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AVQueenManager Manager].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
     [self checkNetStatus];
 }
 
@@ -44,7 +44,7 @@
     self.tabview.delegate =self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
-    self.footer = [[ShopCarFooter alloc]initWithFrame:CGRectMake(0,UI_HEGIHT - 64 - Anno750(98)  - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98))];
+    self.footer = [[ShopCarFooter alloc]initWithFrame:CGRectMake(0,UI_HEGIHT - 64 - Anno750(98)  - ([AVQueenManager Manager].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98))];
     [self.footer.selectBtn addTarget:self action:@selector(ShopCarSelectAll:) forControlEvents:UIControlEventTouchUpInside];
     [self.footer.buyBtn addTarget:self action:@selector(buyAllBooks) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.footer];

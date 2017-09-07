@@ -90,12 +90,21 @@
     
     self.selctButton.selected = model.isSelectDown;
     self.nameLabel.text = model.audioName;
-    if ([model.playLong integerValue] == 0) {
-    self.playStutas.hidden = YES;
-    }else{
+    
+    if ([[HistorySql sql] checkAudio:model.audioId]) {
         self.playStutas.hidden = NO;
-        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",model.playLong];
+        HomeTopModel * hisModel = [[HistorySql sql] getHometopModel:model.audioId];
+        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",hisModel.playLong];
+        self.nameLabel.textColor = KTColor_lightGray;
+    }else{
+        self.playStutas.hidden = YES;
+        self.nameLabel.textColor = KTColor_MainBlack;
     }
+    HomeTopModel * playModel = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+    if ([model.audioId isEqual:playModel.audioId]) {
+        self.nameLabel.textColor = KTColor_MainOrange;
+    }
+    
     NSMutableString * time = [NSMutableString stringWithFormat:@"时长%@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
     [time appendFormat:@"  %@",[KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]]];
     [time appendFormat:@"  %@",model.tagString];
@@ -106,6 +115,17 @@
     self.selctButton.selected = model.isSelectDown;
     self.nameLabel.text = model.audioName;
     self.playStutas.hidden = YES;
+    
+    if ([[HistorySql sql] checkAudio:model.audioId]) {
+        self.nameLabel.textColor = KTColor_lightGray;
+    }else{
+        self.nameLabel.textColor = KTColor_MainBlack;
+    }
+    HomeTopModel * playModel = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
+    if ([model.audioId isEqual:playModel.audioId]) {
+        self.nameLabel.textColor = KTColor_MainOrange;
+    }
+    
     NSMutableString * time = [NSMutableString stringWithFormat:@"时长%@",[KTFactory getTimeStingWithCurrentTime:[model.audioLong intValue] andTotalTime:[model.audioLong intValue]]];
     [time appendFormat:@"  %@",[KTFactory getAudioSizeWithdataSize:[model.audioSize longValue]]];
     [time appendFormat:@"  %@",model.tagString];
