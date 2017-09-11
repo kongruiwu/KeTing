@@ -27,11 +27,15 @@
 
 @implementation UserInfoViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setNavUnAlpha];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
-    [self setNavUnAlpha];
+    
     [self setNavTitle:@"个人资料" color:KTColor_MainBlack];
     [self creatUI];
 }

@@ -205,11 +205,11 @@
 }
 #pragma mark - 音频点赞
 - (void)likeAudioClick:(UIButton *)button{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
+//    if (![UserManager manager].isLogin) {
+//        LoginViewController * vc = [LoginViewController new];
+//        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+//        [self presentViewController:nvc animated:YES completion:nil];
+//    }else{
         UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
         NSIndexPath * index = [self.tabview indexPathForCell:cell];
         HomeTopModel * model = self.dataArray[index.row];
@@ -234,7 +234,7 @@
         } errorBlock:^(KTError *error) {
             [self dismissLoadingView];
         }];
-    }
+//    }
     [self hiddenToolsBar];
 }
 #pragma mark - 分享

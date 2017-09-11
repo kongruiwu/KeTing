@@ -62,7 +62,6 @@
 		8B53EAA31EE55CAF009EA76D /* ListenBookCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B53EAA21EE55CAF009EA76D /* ListenBookCollectionCell.m */; };
 		8B5916BD1F26D5B5008841E2 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5916BC1F26D5B5008841E2 /* LoadingView.m */; };
 		8B5916BF1F26D74B008841E2 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B5916BE1F26D74B008841E2 /* loading.gif */; };
-		8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */; };
 		8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6437431EE8D36700FA53EF /* AudioPlayer.m */; };
 		8B64374B1EE9356D00FA53EF /* PlayTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64374A1EE9356D00FA53EF /* PlayTextButton.m */; };
 		8B696E181EEA39CF00A11A0F /* CateListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B696E171EEA39CF00A11A0F /* CateListViewController.m */; };
@@ -100,6 +99,7 @@
 		8B8DAF391F1CB33E00BDF1AA /* HotWordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8DAF381F1CB33E00BDF1AA /* HotWordModel.m */; };
 		8B8F01081F00D8850027AABD /* MineHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F01071F00D8850027AABD /* MineHeader.m */; };
 		8B8F010B1F00EB9B0027AABD /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */; };
+		8B9730161F60FBBE0064311A /* KrUuid.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9730151F60FBBE0064311A /* KrUuid.m */; };
 		8BA1F0AF1F2056E200AAD63C /* DownLoadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */; };
 		8BA1F0B21F208C7F00AAD63C /* PlayFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B11F208C7F00AAD63C /* PlayFootView.m */; };
 		8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B41F20987E00AAD63C /* RootViewController.m */; };
@@ -115,6 +115,7 @@
 		8BBACBEE1F27889F002A8D79 /* FristViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBED1F27889F002A8D79 /* FristViewController.m */; };
 		8BBACBF11F2796DE002A8D79 /* SearchSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */; };
 		8BBACBF31F284347002A8D79 /* detail.html in Resources */ = {isa = PBXBuildFile; fileRef = 8BBACBF21F284347002A8D79 /* detail.html */; };
+		8BBB2BC91F622B4A001114A0 /* LoginMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB2BC81F622B4A001114A0 /* LoginMessageView.m */; };
 		8BC03A481F09DE0D00FF5705 /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */; };
 		8BC03A4B1F09F1A700FF5705 /* MyLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03A4A1F09F1A700FF5705 /* MyLikeViewController.m */; };
 		8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC126671F1DAA9A005CF363 /* SetAccoutViewController.m */; };
@@ -307,8 +308,6 @@
 		8B5916BB1F26D5B5008841E2 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		8B5916BC1F26D5B5008841E2 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		8B5916BE1F26D74B008841E2 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
-		8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVQueenPlayer.h; sourceTree = "<group>"; };
-		8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVQueenPlayer.m; sourceTree = "<group>"; };
 		8B6437421EE8D36700FA53EF /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		8B6437431EE8D36700FA53EF /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		8B6437491EE9356D00FA53EF /* PlayTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayTextButton.h; sourceTree = "<group>"; };
@@ -384,6 +383,8 @@
 		8B8F01071F00D8850027AABD /* MineHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineHeader.m; sourceTree = "<group>"; };
 		8B8F01091F00EB9B0027AABD /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		8B8F010A1F00EB9B0027AABD /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
+		8B9730141F60FBBE0064311A /* KrUuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KrUuid.h; sourceTree = "<group>"; };
+		8B9730151F60FBBE0064311A /* KrUuid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KrUuid.m; sourceTree = "<group>"; };
 		8BA1F0AD1F2056E200AAD63C /* DownLoadHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownLoadHeaderView.h; sourceTree = "<group>"; };
 		8BA1F0AE1F2056E200AAD63C /* DownLoadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownLoadHeaderView.m; sourceTree = "<group>"; };
 		8BA1F0B01F208C7F00AAD63C /* PlayFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayFootView.h; sourceTree = "<group>"; };
@@ -413,6 +414,8 @@
 		8BBACBEF1F2796DE002A8D79 /* SearchSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSubViewController.h; sourceTree = "<group>"; };
 		8BBACBF01F2796DE002A8D79 /* SearchSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSubViewController.m; sourceTree = "<group>"; };
 		8BBACBF21F284347002A8D79 /* detail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = detail.html; sourceTree = "<group>"; };
+		8BBB2BC71F622B4A001114A0 /* LoginMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginMessageView.h; sourceTree = "<group>"; };
+		8BBB2BC81F622B4A001114A0 /* LoginMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginMessageView.m; sourceTree = "<group>"; };
 		8BC03A461F09DE0D00FF5705 /* HistoryListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		8BC03A471F09DE0D00FF5705 /* HistoryListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
 		8BC03A491F09F1A700FF5705 /* MyLikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLikeViewController.h; sourceTree = "<group>"; };
@@ -762,6 +765,8 @@
 				8B40FE641EE680DB005F9342 /* NetWorkManager.m */,
 				8B40FE671EE682F3005F9342 /* KTError.h */,
 				8B40FE681EE682F3005F9342 /* KTError.m */,
+				8B9730141F60FBBE0064311A /* KrUuid.h */,
+				8B9730151F60FBBE0064311A /* KrUuid.m */,
 			);
 			path = NetWorkManager;
 			sourceTree = "<group>";
@@ -769,6 +774,7 @@
 		8B53EA801EE52097009EA76D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8BBB2BC61F622B2A001114A0 /* TopUpView */,
 				8B5916BA1F26D21C008841E2 /* LoadingProgress */,
 				6232F2CB1F21D865009DDC37 /* IAPHelper */,
 				8B8742F51EEE5FFF00324FA2 /* ShareView */,
@@ -916,8 +922,6 @@
 			children = (
 				8B6437421EE8D36700FA53EF /* AudioPlayer.h */,
 				8B6437431EE8D36700FA53EF /* AudioPlayer.m */,
-				8B5B82B21F569735001C8B35 /* AVQueenPlayer.h */,
-				8B5B82B31F569735001C8B35 /* AVQueenPlayer.m */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -1067,6 +1071,15 @@
 				8BBACBED1F27889F002A8D79 /* FristViewController.m */,
 			);
 			path = FristViewController;
+			sourceTree = "<group>";
+		};
+		8BBB2BC61F622B2A001114A0 /* TopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				8BBB2BC71F622B4A001114A0 /* LoginMessageView.h */,
+				8BBB2BC81F622B4A001114A0 /* LoginMessageView.m */,
+			);
+			path = TopUpView;
 			sourceTree = "<group>";
 		};
 		8BF6029F1EEFC7EC00322545 /* TimeListenViewController */ = {
@@ -1636,7 +1649,6 @@
 				8B53EA971EE53CE6009EA76D /* HomeVoiceCell.m in Sources */,
 				8B6437441EE8D36700FA53EF /* AudioPlayer.m in Sources */,
 				8B8A05511F1F8B0C00590344 /* WaitDownLoadViewController.m in Sources */,
-				8B5B82B41F569735001C8B35 /* AVQueenPlayer.m in Sources */,
 				8BF84CF41EE4FB480072637D /* BaseViewController.m in Sources */,
 				8B53EAA01EE55AD7009EA76D /* HomeCollectionCell.m in Sources */,
 				8BC126771F1DE40F005CF363 /* CommonInfo.m in Sources */,
@@ -1681,11 +1693,13 @@
 				8B4F22A21EF11634005E1D21 /* RecommendListCell.m in Sources */,
 				8BC1266B1F1DAE1A005CF363 /* SetAccountHeadCell.m in Sources */,
 				8BC126681F1DAA9A005CF363 /* SetAccoutViewController.m in Sources */,
+				8BBB2BC91F622B4A001114A0 /* LoginMessageView.m in Sources */,
 				8BF602B61EEFD59400322545 /* FindListCell.m in Sources */,
 				8B4095F31F0206D000AA22D3 /* LoginViewController.m in Sources */,
 				8B40FE6F1EE69656005F9342 /* HomeViewModel.m in Sources */,
 				8BF4946A1F38129A00D40727 /* HotRankViewController.m in Sources */,
 				8B8742FE1EEE661300324FA2 /* CloseListCell.m in Sources */,
+				8B9730161F60FBBE0064311A /* KrUuid.m in Sources */,
 				8B8DAF331F1CAAF800BDF1AA /* SearchListCell.m in Sources */,
 				8B2D73981F0B897500E1BF4B /* PushSettingCell.m in Sources */,
 				8BF602921EEF755B00322545 /* VoiceSummaryCell.m in Sources */,

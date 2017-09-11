@@ -161,40 +161,28 @@
 }
 #pragma mark - 查看购物车
 - (void)goShopCar{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
-        ShopCarViewController * vc = [ShopCarViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    ShopCarViewController * vc = [ShopCarViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        UITableViewCell * cell = (UITableViewCell *)[btn superview];
-        NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
-        HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
-        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
-        vc.isBook = YES;
-        vc.money = model.PRICE;
-        vc.products = @[model];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    
+    UITableViewCell * cell = (UITableViewCell *)[btn superview];
+    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+    HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
+    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+    vc.isBook = YES;
+    vc.money = model.PRICE;
+    vc.products = @[model];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 - (void)addToShopCar:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
+    
         UITableViewCell * cell = (UITableViewCell *)[btn superview];
         NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
         HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
@@ -215,7 +203,7 @@
             [self dismissLoadingView];
             
         }];
-    }
+    
 }
 - (void)checkShopCar{
     [self goShopCar];

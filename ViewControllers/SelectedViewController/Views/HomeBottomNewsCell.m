@@ -112,7 +112,7 @@
             if ([model.promotionType integerValue] == 1) {
                 [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
             }
-            self.priceLabel.text = model.timePrice;
+            self.priceLabel.text = model.rmbPrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }

@@ -32,7 +32,10 @@
 @property (nonatomic, strong) NSString * price;
 /**价格带单位*/
 @property (nonatomic, strong) NSString * timePrice;
+/**购物车专用*/
 @property (nonatomic, strong) NSString * timePrice2;
+/**人命币 价格*/
+@property (nonatomic, strong) NSString * rmbPrice;
 /**排序值*/
 @property (nonatomic, strong) NSString * sortNo;
 /**发布状态*/

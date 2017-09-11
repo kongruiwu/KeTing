@@ -56,8 +56,12 @@
             UIBarButtonItem * baritem  = [[UIBarButtonItem alloc]initWithCustomView:img];
             self.navigationItem.leftBarButtonItem = baritem;
         }];
-
+    }else{
+        UIImage * headImage = [[UIImage imageNamed:@"Nav_head"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIBarButtonItem * leftItem = [[UIBarButtonItem alloc]initWithImage:headImage style:UIBarButtonItemStylePlain target:self action:@selector(checkUserInfo)];
+        self.navigationItem.leftBarButtonItem = leftItem;
     }
+    
 }
 
 - (void)viewDidLoad {

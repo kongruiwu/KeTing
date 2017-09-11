@@ -24,10 +24,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getData];
+    [self setNavUnAlpha];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
+    
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"收听历史" color:KTColor_MainBlack];
     [self creatUI];

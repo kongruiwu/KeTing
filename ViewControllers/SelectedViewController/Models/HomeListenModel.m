@@ -56,10 +56,14 @@
         self.price = [NSString stringWithFormat:@"%.2f",[self.PRICE floatValue]];
         if ([self.promotionType integerValue] == 0) {
             self.timePrice = [NSString stringWithFormat:@"%@牛币%@",self.price,time];
+            self.rmbPrice = [NSString stringWithFormat:@"%@元%@",self.price,time];
         }else{
             self.timePrice = [NSString stringWithFormat:@"  %@牛币%@",self.price,time];
+            self.rmbPrice = [NSString stringWithFormat:@"  %@元%@",self.price,time];
         }
         self.timePrice2 = [NSString stringWithFormat:@"%@牛币%@",self.price,time];
+        
+        
         
         NSArray * tags = dic[@"tags"];
         NSMutableArray<TagsModel *> * muarr = [NSMutableArray new];

@@ -29,11 +29,11 @@
         self.collectView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AudioPlayer instance].showFoot ? Anno750(100) : 0));
     }
     [self checkNetStatus];
+    [self setNavUnAlpha];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"已购" color:KTColor_MainBlack];
     [self creatUI];

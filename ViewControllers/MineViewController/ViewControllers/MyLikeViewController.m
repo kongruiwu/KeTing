@@ -20,9 +20,14 @@
 
 @implementation MyLikeViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setNavUnAlpha];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
+    
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"我赞过的" color:KTColor_MainBlack];
     [self creatUI];

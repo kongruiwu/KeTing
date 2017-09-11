@@ -120,14 +120,14 @@
             self.iconLabel.hidden = NO;
             self.iconLabel.text = @"限免  ";
             [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
-            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
+            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.rmbPrice];
         }else{
             self.iconLabel.hidden = [model.promotionType integerValue] == 1 ? NO : YES;
             self.iconLabel.text = [model.promotionType integerValue] == 1 ? @"特惠  ":@"";
             if ([model.promotionType integerValue] == 1) {
                 [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
             }
-            self.priceLabel.text = model.timePrice;
+            self.priceLabel.text = model.rmbPrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }
@@ -148,14 +148,14 @@
             self.iconLabel.hidden = NO;
             self.iconLabel.text = @"限免  ";
             [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
-            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.timePrice];
+            self.priceLabel.attributedText = [KTFactory setFreePriceString:model.rmbPrice];
         }else{
             self.iconLabel.hidden = [model.promotionType integerValue] == 1 ? NO : YES;
             self.iconLabel.text = [model.promotionType integerValue] == 1 ? @"特惠  ":@"";
             if ([model.promotionType integerValue] == 1) {
                 [KTFactory setLabel:self.iconLabel BorderColor:KTColor_IconOrange with:0.5 cornerRadius:0];
             }
-            self.priceLabel.text = model.timePrice;
+            self.priceLabel.text = model.rmbPrice;
             self.priceLabel.textColor = KTColor_MainOrange;
         }
     }

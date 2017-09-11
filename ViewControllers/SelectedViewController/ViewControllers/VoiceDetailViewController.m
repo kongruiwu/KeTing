@@ -23,7 +23,7 @@
 #import "RootViewController.h"
 #import "RMIAPHelper.h"
 #import "OrderModel.h"
-
+#import "RootViewController.h"
 
 @interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate,RMIAPHelperDelegate>
 
@@ -110,7 +110,7 @@
     [likeBtn addTarget:self action:@selector(likeThisBookClick:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton * buyBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00]
+    UIButton * buyBtn = [KTFactory creatButtonWithTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.rmbPrice ? self.listenModel.rmbPrice:@0.00]
                                         backGroundColor:KTColor_MainOrange
                                               textColor:[UIColor whiteColor]
                                                textSize:font750(28)];
@@ -126,7 +126,7 @@
         [buyBtn setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
         [buyBtn setImage:[UIImage imageNamed:@"finance_ close"] forState:UIControlStateSelected];
     }else{
-        [buyBtn setTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.timePrice ? self.listenModel.timePrice:@0.00] forState:UIControlStateNormal];
+        [buyBtn setTitle:[NSString stringWithFormat:@"订阅:%@",self.listenModel.rmbPrice ? self.listenModel.rmbPrice:@0.00] forState:UIControlStateNormal];
     }
     
     
@@ -335,19 +335,16 @@
             self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AudioPlayer instance].showFoot ? Anno750(100) : 0));
         }
     }else{
-        if (![UserManager manager].isLogin) {
-            LoginViewController * vc = [LoginViewController new];
-            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:nil];
-        }else{
+        RootViewController * root = (RootViewController *)self.tabBarController;
+        __weak VoiceDetailViewController * weakself = self;
+        root.deviceclick = ^{
+            [weakself recharge];
+        };
+        if ([UserManager manager].isLogin) {
             //订阅
             [self recharge];
-            
-//            SetAccoutViewController * vc = [SetAccoutViewController new];
-//            vc.money = self.listenModel.PRICE;
-//            vc.products = @[self.listenModel];
-//            vc.isBook = NO;
-//            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            [root.loginView show];
         }
     }
     
@@ -362,11 +359,6 @@
 }
 #pragma mark - 点赞
 - (void)likeThisBookClick:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":@3,
@@ -392,7 +384,6 @@
         } errorBlock:^(KTError *error) {
             
         }];
-    }
 }
 
 #pragma mark - 下载音频
@@ -475,11 +466,7 @@
 }
 #pragma mark - 音频点赞
 - (void)likeAudioClick:(UIButton *)button{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
+    
         UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
         NSIndexPath * index = [self.tabview indexPathForCell:cell];
         HomeTopModel * model = self.listenModel.audio[index.row - 1];
@@ -502,7 +489,7 @@
         } errorBlock:^(KTError *error) {
             
         }];
-    }
+    
     [self hiddenToolsBar];
 }
 #pragma mark - 分享
@@ -712,7 +699,7 @@
     NSDictionary * params = @{
                               @"userId":[UserManager manager].userid,
                               @"nickName":[UserManager manager].info.NICKNAME,
-                              @"phone":[UserManager manager].info.MOBILE,
+                              @"phone":[UserManager manager].isLogin ?[UserManager manager].info.MOBILE: @"13000000000",
                               //订单类型  0 充值  1消费
                               @"orderType":@1,
                               //充值金额

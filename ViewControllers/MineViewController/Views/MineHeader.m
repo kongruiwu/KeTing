@@ -145,7 +145,11 @@
 //    }];
 }
 - (void)updateDatas{
-    [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    if ([UserManager manager].isLogin) {
+        [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    }else{
+        self.userIcon.image = [UIImage imageNamed:@"default_head"];
+    }
     self.userName.text = @"点击登录";
     if ([UserManager manager].isLogin) {
         self.userName.text = [UserManager manager].info.NICKNAME;

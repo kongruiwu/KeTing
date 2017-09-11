@@ -22,6 +22,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [AudioDownLoader loader].delegate = nil;
+    [self setNavUnAlpha];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -29,7 +30,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
+    
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self drawNavSelectView];
     [self creatUI];

@@ -131,7 +131,12 @@
     }
 }
 - (void)updateUI{
-    [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    if ([UserManager manager].isLogin) {
+        [self.userIcon sd_setImageWithURL:[NSURL URLWithString:[UserManager manager].info.ICON] placeholderImage:[UIImage imageNamed:@"default_head"]];
+    }else{
+        self.userIcon.image =[UIImage imageNamed:@"default_head"];
+    }
+    
     self.userName.text = [UserManager manager].isLogin ? [NSString stringWithFormat:@"%@,你好",[UserManager manager].info.NICKNAME]:@"你好";
 }
 - (void)request30{
@@ -172,7 +177,7 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(changeProgressViewSlow) userInfo:nil repeats:YES];
     [self.dataArray removeAllObjects];
     NSDictionary * params = @{
-                              @"userId":[UserManager manager].isLogin?[UserManager manager].userid:@0,
+                              @"userId":[UserManager manager].userid,
                               @"longTime":@(num)
                               };
     [[NetWorkManager manager] GETRequest:params pageUrl:page_TimeListen complete:^(id result) {

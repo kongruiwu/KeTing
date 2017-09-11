@@ -28,11 +28,12 @@
     [self getData];
     self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AudioPlayer instance].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
     [self checkNetStatus];
+    [self setNavUnAlpha];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
+    
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"购物车" color:KTColor_MainBlack];
     [self creatUI];

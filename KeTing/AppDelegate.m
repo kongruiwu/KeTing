@@ -33,12 +33,11 @@
     [[HistorySql sql] openDB];
     [MLTransition validatePanBackWithMLTransitionGestureRecognizerType:MLTransitionGestureRecognizerTypePan];
     [Growing startWithAccountId:GrowingID];
-    
     [self IQKeyBoardSetting];
     [self audioPlayerSetting];
     [self UmengSetting];
-    [[UserManager manager] getUserInfo];
     [[UserManager manager] getDataModel];
+    [[UserManager manager] getUserInfo];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Frist"]) {
@@ -46,9 +45,6 @@
     }else{
         [self.window setRootViewController:[RootViewController new]];
     }
-    //缓存处理
-    NSURLCache *urlCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
-    [NSURLCache setSharedURLCache:urlCache];
     
     return YES;
 }
