@@ -36,11 +36,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [AudioDownLoader loader].delegate = self;
     [self getData];
     [self checkNetStatus];
-    [self setNavUnAlpha];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -54,7 +52,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self drawRightShopCar];
     [self creatUI];
@@ -85,7 +82,7 @@
     self.navigationItem.rightBarButtonItems = @[barItem,rightItem];
 }
 - (void)creatUI{
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
@@ -235,18 +232,11 @@
         UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
         [self presentViewController:nvc animated:YES completion:nil];
     }else{
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
         ShopCarViewController * vc = [ShopCarViewController new];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
 #pragma mark - 重写返回方式
-- (void)doBack{
-    [super doBack];
-    if (!self.isFromAnchor) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
-}
 - (void)getData{
     NSNumber * listenid ;
     if (self.listenModel) {

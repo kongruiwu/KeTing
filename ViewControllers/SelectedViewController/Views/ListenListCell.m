@@ -199,15 +199,11 @@
     self.shopCar.selected = model.iscart;
 }
 - (void)shopCarBtnClick:(UIButton *)btn{
-    if (btn.selected) {
-        if ([self.delegate respondsToSelector:@selector(checkShopCar)]) {
-            [self.delegate checkShopCar];
-        }
-    }else{
-        if ([self.delegate respondsToSelector:@selector(addToShopCar:)]) {
-            [self.delegate addToShopCar:btn];
-        }
+
+    if ([self.delegate respondsToSelector:@selector(addToShopCar:)]) {
+        [self.delegate addToShopCar:btn];
     }
+    
 }
 - (void)buyBtnClick:(UIButton *)btn{
     if (btn.selected) {

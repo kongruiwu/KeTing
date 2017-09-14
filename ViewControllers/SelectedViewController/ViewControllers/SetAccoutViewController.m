@@ -28,13 +28,12 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     [self.tabview reloadData];
-    self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64);
+    self.tabview.frame = CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64);
     [self checkNetStatus];
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self setNavTitle:@"结算台" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
@@ -45,7 +44,7 @@
     self.isCart = NO;
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];

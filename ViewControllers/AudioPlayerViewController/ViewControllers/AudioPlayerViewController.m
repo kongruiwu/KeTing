@@ -77,14 +77,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playAudioNeedUpdate) name:AudioReadyPlaying object:nil];
     [AudioDownLoader loader].delegate = self;
-    [self setNavAlpha];
     [self playAudioNeedUpdate];
-    
-    
-    
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+
 }
 
 
@@ -93,6 +91,7 @@
     [AudioDownLoader loader].delegate = nil;
     [[AVQueenManager Manager] saveAudioPlayLong:(int)[AVQueenManager Manager].bottomProgress];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.navigationController.navigationBar lt_reset];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

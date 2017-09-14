@@ -23,12 +23,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavUnAlpha];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self setNavTitle:@"声度订阅" color:KTColor_MainBlack];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self creatUI];
@@ -38,7 +36,7 @@
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
     
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];

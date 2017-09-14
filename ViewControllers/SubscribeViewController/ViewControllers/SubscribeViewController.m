@@ -84,27 +84,40 @@
     return Anno750(520);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return Anno750(80);
+    return section == 1 ? Anno750(80) : 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section == 0) {
-        return Anno750(20);
+        return Anno750(100);
+        
     }
     return 0.01;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        SelectSectionHeader * header = [[SelectSectionHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(80))];
-        [header updateWithTitle:@"我的订阅" andSection:1];
-        [header.checkButton addTarget:self action:@selector(checkAllSubscri) forControlEvents:UIControlEventTouchUpInside];
-        return header;
-    }else if (section == 1) {
+    if (section == 1) {
         SubscribeSectionHeader * header = [[SubscribeSectionHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(80))];
         [header.changeBtn addTarget:self action:@selector(getSubscribeData) forControlEvents:UIControlEventTouchUpInside];
         return header;
     }
     return nil;
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
+        view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(100));
+        UIButton * button = [KTFactory creatButtonWithTitle:@"查看全部"
+                                            backGroundColor:[UIColor whiteColor]
+                                                  textColor:KTColor_lightGray
+                                                   textSize:font750(28)];
+        button.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(80));
+        [button addTarget:self action:@selector(checkAllSubscri) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:button];
+        return view;
+    }
+    return nil;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (self.listArray.count == 0) {

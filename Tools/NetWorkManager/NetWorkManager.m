@@ -60,7 +60,7 @@
             [error localizedDescription];
             KTError * err = [[KTError alloc]init];
             err.code = [NSString stringWithFormat:@"%ld",(long)error.code];
-            err.message = error.description;
+            err.message = @"网络似乎有点问题！";
             errorBlock(err);
 #ifdef DEBUG
 //            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
@@ -86,7 +86,7 @@
             [error localizedDescription];
             KTError * err = [[KTError alloc]init];
             err.code = [NSString stringWithFormat:@"%ld",(long)error.code];
-            err.message = error.description;
+            err.message = @"网络似乎有点问题！";
             errorBlock(err);
 #ifdef DEBUG
 //            [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:[NSString stringWithFormat:@"错误码：%@  \n 错误信息 %@",err.code,err.message] duration:2.0f];
@@ -94,21 +94,6 @@
         }];
     }
 }
-
-//- (void)uploadImage:(UIImage *)image{
-//    AFHTTPSessionManager * manger = [AFHTTPSessionManager manager];
-//    [self setReqeustHeader:manger];
-//    NSData *data = [KTFactory dealWithAvatarImage:image];
-//    [self setReqeustHeader:manger];
-//    [manger POST:[NSString stringWithFormat:@"%@%@",Base_Url,Page_UserAvater] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//        [formData appendPartWithFileData:data name:@"file" fileName:@"avatar.jpg" mimeType:@"JPG"];
-//    } progress:^(NSProgress * _Nonnull uploadProgress) {
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        [ToastView presentToastWithin:[UIApplication sharedApplication].keyWindow withIcon:APToastIconNone text:@"头像上传成功!" duration:1.0f];
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error.description);
-//    }];
-//}
 
 //请求头设置
 - (void)setReqeustHeader:(AFHTTPSessionManager *)manager{

@@ -151,6 +151,10 @@
         }
         [self hiddenNullView];
         [self dismissLoadingView];
+        if (self.dataArray.count == 0 && arr.count == 0) {
+            [self showNullViewWithNullViewType:NullTypeNoneSerach];
+        }
+
     } errorBlock:^(KTError *error) {
         if (self.page > 1) {
             self.page -= 1;

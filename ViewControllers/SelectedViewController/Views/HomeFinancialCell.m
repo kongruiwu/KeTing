@@ -32,20 +32,21 @@
     self.playButton = [KTFactory creatButtonWithNormalImage:@"home_play" selectImage:@""];
     
     for (int i = 0; i<10; i++) {
-        UIButton * topButton = [KTFactory creatButtonWithTitle:@""
-                                               backGroundColor:[UIColor clearColor]
-                                                     textColor:KTColor_lightGray
-                                                      textSize:font750(26)];
-        topButton.hidden = YES;
-        topButton.tag = i;
-        [topButton setImage:[UIImage imageNamed:@"listenSelected"] forState:UIControlStateSelected];
-        [topButton setImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
-        [topButton setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
-        topButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        topButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        [topButton addTarget:self action:@selector(playThisAudio:) forControlEvents:UIControlEventTouchUpInside];
-        [self.topButtons addObject:topButton];
-        [self addSubview:topButton];
+        GifPlayButton * button = [GifPlayButton buttonWithType:UIButtonTypeCustom];
+        [button setTitle:@"" forState:UIControlStateNormal];
+        [button setBackgroundColor:[UIColor clearColor]];
+        [button setTitleColor:KTColor_lightGray forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:font750(26)];
+        button.hidden = YES;
+        button.tag = i;
+        [button setImage:[UIImage imageNamed:@"dotwhite"] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
+        [button setTitleColor:KTColor_MainOrange forState:UIControlStateSelected];
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        [button addTarget:self action:@selector(playThisAudio:) forControlEvents:UIControlEventTouchUpInside];
+        [self.topButtons addObject:button];
+        [self addSubview:button];
     }
     [self.playButton addTarget:self action:@selector(playThisList) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.playButton];

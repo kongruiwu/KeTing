@@ -107,30 +107,30 @@
     }
 }
 
-- (void)setNavAlpha{
-    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
-    self.navigationController.navigationBar.translucent = YES;
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    [self.view addSubview:clearView];
-    //    导航栏变为透明
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
-    //    让黑线消失的方法
-    self.navigationController.navigationBar.shadowImage=[UIImage new];
-}
-- (void)setNavAlphaWithWiteColor{
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = YES;
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    clearView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:clearView];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
-    self.navigationController.navigationBar.shadowImage=[UIImage new];
-}
-- (void)setNavUnAlpha{
-    self.navigationController.navigationBar.translucent = NO;
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:0];
-    self.navigationController.navigationBar.shadowImage = nil;
-}
+//- (void)setNavAlpha{
+//    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+////    self.navigationController.navigationBar.translucent = YES;
+////    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
+////    [self.view addSubview:clearView];
+//    //    导航栏变为透明
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
+//    //    让黑线消失的方法
+//    self.navigationController.navigationBar.shadowImage=[UIImage new];
+//}
+//- (void)setNavAlphaWithWiteColor{
+//    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+////    self.navigationController.navigationBar.translucent = YES;
+////    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
+////    clearView.backgroundColor = [UIColor whiteColor];
+////    [self.view addSubview:clearView];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
+//    self.navigationController.navigationBar.shadowImage=[UIImage new];
+//}
+//- (void)setNavUnAlpha{
+////    self.navigationController.navigationBar.translucent = NO;
+//    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:0];
+//    self.navigationController.navigationBar.shadowImage = nil;
+//}
 - (void)RefreshSetting{
     [self.refreshHeader setTitle:@"继续下拉" forState:MJRefreshStateIdle];
     [self.refreshHeader setTitle:@"松开就刷新" forState:MJRefreshStatePulling];

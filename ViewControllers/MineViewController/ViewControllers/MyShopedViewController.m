@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"已购" color:KTColor_MainBlack];
     [self creatUI];
@@ -49,7 +48,7 @@
     layout.minimumInteritemSpacing = Anno750(30);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64 ) collectionViewLayout:layout];
+    self.collectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64 ) collectionViewLayout:layout];
     [self.collectView registerClass:[MyShopedCollectionCell class] forCellWithReuseIdentifier:@"MyShopedCollectionCell"];
     self.collectView.delegate = self;
     self.collectView.dataSource = self;

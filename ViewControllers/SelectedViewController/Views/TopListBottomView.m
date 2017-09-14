@@ -57,13 +57,28 @@
 - (void)updateWithArrays:(NSArray *)datas{
     long audioSize = 0;
     int num = 0;
-    for (int i = 0; i<datas.count; i++) {
-        HomeTopModel * model = datas[i];
-        if (model.isSelectDown) {
-            audioSize += [model.audioSize longValue];
-            num += 1;
+    
+    if ([datas.firstObject isKindOfClass:[NSArray class]]) {
+        for (int i = 0; i<datas.count; i++) {
+            NSArray * arr = datas[i];
+            for (int j = 0; j<arr.count; j++) {
+                HomeTopModel * model = arr[i];
+                if (model.isSelectDown) {
+                    audioSize += [model.audioSize longValue];
+                    num += 1;
+                }
+            }
+        }
+    }else{
+        for (int i = 0; i<datas.count; i++) {
+            HomeTopModel * model = datas[i];
+            if (model.isSelectDown) {
+                audioSize += [model.audioSize longValue];
+                num += 1;
+            }
         }
     }
+    
     int Gnum = (int)audioSize/1024/1024/1024;
     float Mnum = (float)(audioSize -  Gnum * 1024 * 1024 * 1024)/1024/1024;
     if (Gnum>0) {

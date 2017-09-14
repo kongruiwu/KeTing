@@ -13,6 +13,7 @@
 #import "NullView.h"
 #import "LoadingView.h"
 #import "AppDelegate.h"
+#import "UINavigationBar+Awesome.h"
 
 @interface BaseViewController : UIViewController
 
@@ -28,10 +29,7 @@
 - (void)setNavTitle:(NSString *)title color:(UIColor *)color;
 - (void)drawBackButton;
 - (void)drawBackButtonWithType:(BackImgType)type;
-- (void)setNavAlphaWithWiteColor;
 - (void)doBack;
-- (void)setNavAlpha;
-- (void)setNavUnAlpha;
 - (void)RefreshSetting;
 - (void)drawRightShareButton;
 - (void)drawRightShareButtonBlackGround;

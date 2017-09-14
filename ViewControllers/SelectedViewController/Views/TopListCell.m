@@ -175,7 +175,11 @@
     if ([[HistorySql sql] checkAudio:model.audioId]) {
         self.playStutas.hidden = NO;
         HomeTopModel * hisModel = [[HistorySql sql] getHometopModel:model.audioId];
-        self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",hisModel.playLong];
+        if (hisModel.playLong.integerValue>0) {
+            self.playStutas.text = [NSString stringWithFormat:@"已播放%@%%",hisModel.playLong];
+        }else{
+            self.playStutas.text = @"";
+        }
         self.nameLabel.textColor = KTColor_lightGray;
     }else{
         self.playStutas.hidden = YES;

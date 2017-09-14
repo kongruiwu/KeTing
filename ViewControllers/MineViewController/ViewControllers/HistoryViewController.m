@@ -14,8 +14,6 @@
 @interface HistoryViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) TopHeaderView * header;
-//@property (nonatomic, strong) UITableView * tabview;
-//@property (nonatomic, assign) int page;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 
 @end
@@ -27,33 +25,22 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"收听历史" color:KTColor_MainBlack];
     [self creatUI];
-    
-    
-    
-//    self.page = 1;
-    
 }
 - (void)creatUI{
     self.dataArray = [NSMutableArray new];
-    self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
+    self.header = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, Anno750(90))];
     [self.header updateWithImages:@[@"my_play",@"my_ delete"] titles:@[@"    播放全部",@"    全部清空"]];
     [self.header.cateBtn addTarget:self action:@selector(playAllAudio) forControlEvents:UIControlEventTouchUpInside];
     [self.header.downLoadBtn addTarget:self action:@selector(deleteAllHistory) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.header];
     
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90)+64, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate =self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
-    
-//    self.refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
-//    self.refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(getMoreData)];
-//    self.tabview.mj_header = self.refreshHeader;
-//    self.tabview.mj_footer = self.refreshFooter;
     
 }
 

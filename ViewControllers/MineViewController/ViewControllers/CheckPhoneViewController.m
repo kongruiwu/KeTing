@@ -22,7 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"手机号" color:KTColor_MainBlack];
     
@@ -34,7 +33,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
-    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
+    view.frame = CGRectMake(0, 64, UI_WIDTH, Anno750(30));
     [self.view addSubview:view];
     
     UILabel * numLabel = [KTFactory creatLabelWithText:@"+86"

@@ -19,6 +19,7 @@
 #import "MineViewController.h"
 #import "SearchViewController.h"
 #import <UIImageView+WebCache.h>
+#import "UINavigationBar+Awesome.h"
 
 @interface HMSegmentViewController ()<UIScrollViewDelegate>
 
@@ -33,17 +34,17 @@
 @implementation HMSegmentViewController
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = YES;
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    clearView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:clearView];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
-    self.navigationController.navigationBar.shadowImage=[UIImage new];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor whiteColor]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self updateUserIcon];
     });
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar lt_reset];
+}
+
 - (void)updateUserIcon{
     if ([UserManager manager].isLogin) {
         UIImageView * img = [KTFactory creatImageViewWithImage:@"Nav_head"];
@@ -56,7 +57,6 @@
             UIBarButtonItem * baritem  = [[UIBarButtonItem alloc]initWithCustomView:img];
             self.navigationItem.leftBarButtonItem = baritem;
         }];
-
     }
 }
 
@@ -68,7 +68,6 @@
 - (void)creatUI{
     self.indexNum = 0;
     self.viewControllers = [NSMutableArray new];
-    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     
     NSArray * titles = @[@"精选",@"随时听",@"订阅",@"发现"];
     self.hmsgControl = [[HMSegmentedControl alloc]initWithSectionTitles:titles];

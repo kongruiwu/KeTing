@@ -40,20 +40,20 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavUnAlpha];
     [AudioDownLoader loader].delegate = self;
     [self checkNetStatus];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayStatus) name:AudioReadyPlaying object:nil];
-    
-//    [self refreshData];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //隐藏toolsbar
     for (int i = 0; i<self.dataArray.count; i++) {
-        HomeTopModel * model = self.dataArray[i];
-        model.showTools = NO;
+        NSArray * arr = self.dataArray[i];
+        for (int  j = 0 ; j<arr.count; j++) {
+            HomeTopModel * model = arr[j];
+            model.showTools = NO;
+        }
     }
     [AudioDownLoader loader].delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -70,25 +70,23 @@
     self.isDownLoad = NO;
     [self creatUI];
     [self refreshData];
-    
-    
 }
 
 - (void)creatUI{
-    TopHeaderView * topView = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(90))];
+    TopHeaderView * topView = [[TopHeaderView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, Anno750(90))];
     [topView.cateBtn addTarget:self action:@selector(pushToTagListViewController) forControlEvents:UIControlEventTouchUpInside];
     [topView.downLoadBtn addTarget:self action:@selector(changeDownLoadStatus:) forControlEvents:UIControlEventTouchUpInside];
     self.downLoadBtn = topView.downLoadBtn;
     [self.view addSubview:topView];
     
     self.dataArray = [NSMutableArray new];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, Anno750(90) + 64, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
     
     self.footView = [[TopListBottomView alloc]init];
-    self.footView.frame = CGRectMake(0, UI_HEGIHT - Anno750(88) - 64, UI_WIDTH, Anno750(88));
+    self.footView.frame = CGRectMake(0, UI_HEGIHT - Anno750(88), UI_WIDTH, Anno750(88));
     [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     self.footView.hidden = YES;
     [self.view addSubview:self.footView];
@@ -99,26 +97,51 @@
     self.tabview.mj_header = self.refreshHeader;
     self.tabview.mj_footer = self.refreshFooter;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.dataArray.count;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSArray * arr = self.dataArray[section];
+    return arr.count;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return Anno750(80);
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
+    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(80));
+    NSMutableArray * muarr = self.dataArray[section];
+    HomeTopModel * model = muarr.firstObject;
+    UILabel * label = [KTFactory creatLabelWithText:model.topTitle
+                                          fontValue:font750(28)
+                                          textColor:KTColor_darkGray
+                                      textAlignment:NSTextAlignmentLeft];
+    [view addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(@0);
+        make.left.equalTo(@(Anno750(24)));
+    }];
+    return view;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeTopModel * model = self.dataArray[indexPath.row];
+    NSMutableArray * arr = self.dataArray[indexPath.section];
+    HomeTopModel * model = arr[indexPath.row];
     CGSize size = [KTFactory getSize:model.audioName maxSize:CGSizeMake(Anno750(600), 9999) font:[UIFont systemFontOfSize:font750(30)]];
     return Anno750(96) + size.height;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSArray * arr = self.dataArray[indexPath.section];
+    HomeTopModel * model = arr[indexPath.row];
     if (self.isDownLoad) {
-        
-        HomeTopModel * model = self.dataArray[indexPath.row];
         if ([model.downStatus intValue]== 2) {
             static NSString * cellid = @"topListCell";
             TopListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (!cell) {
                 cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
             }
-            [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+            [cell updateWithHomeTopModel:model];
             cell.moreBtn.hidden = YES;
             return cell;
         }
@@ -128,7 +151,7 @@
         if (!cell) {
             cell = [[TopListDownCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
-        [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+        [cell updateWithHomeTopModel:model];
         return cell;
     }else{
         static NSString * cellid = @"topListCell";
@@ -136,14 +159,15 @@
         if (!cell) {
             cell = [[TopListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
         }
-        [cell updateWithHomeTopModel:self.dataArray[indexPath.row]];
+        [cell updateWithHomeTopModel:model];
         cell.moreBtn.hidden = NO;
         cell.delegate =self;
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeTopModel * model = self.dataArray[indexPath.row];
+    NSArray * arr = self.dataArray[indexPath.section];
+    HomeTopModel * model = arr[indexPath.row];
     if (self.isDownLoad) {
         if ([model.downStatus integerValue] == 0 || [model.downStatus integerValue] == 1) {
             model.isSelectDown = !model.isSelectDown;
@@ -173,6 +197,7 @@
     [[NetWorkManager manager] GETRequest:@{} pageUrl:pageUrl complete:^(id result) {
         
         NSArray * datas = (NSArray *)result;
+        
         if (self.dataArray.count != 0 && datas.count< 10) {
             if (datas.count == 0) {
                 self.page -= 1;
@@ -180,13 +205,36 @@
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"没有更多了" duration:1.0f];
         }
         for (int i = 0; i<datas.count; i++) {
+            NSMutableArray * muarr;
+            if (self.dataArray.count > 0) {
+                muarr = self.dataArray.lastObject;
+            }else{
+                muarr = [NSMutableArray new];
+            }
+            HomeTopModel * lastModel;
+            if (muarr.count > 0) {
+                lastModel = muarr.lastObject;
+            }
             HomeTopModel * model = [[HomeTopModel alloc]initWithDictionary:datas[i]];
             NSNumber * status = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
             if ([status integerValue] != 1000) {
                 model.downStatus = status;
             }
             model.playLong = [[HistorySql sql] getPlayLongWithAudioID:model.audioId];
-            [self.dataArray addObject:model];
+            //如果muarr为新创建的muarr 则直接添加
+            if (!lastModel) {
+                [muarr addObject:model];
+                [self.dataArray addObject:muarr];
+            }else{
+                //如果时间相等 则在一个分组
+                if ([lastModel.topTitle isEqualToString:model.topTitle]) {
+                    [muarr addObject:model];
+                }else{//不相等 则在另外一个分组
+                    NSMutableArray * muarr2 = [NSMutableArray new];
+                    [muarr2 addObject:model];
+                    [self.dataArray addObject:muarr2];
+                }
+            }
         }
         
         [self.tabview reloadData];
@@ -217,21 +265,25 @@
     btn.selected = !btn.selected;
     CGRect frame = self.footView.frame;
     if (!_hasReduce) {
-        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) - 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
+        self.footView.frame = CGRectMake(frame.origin.x, UI_HEGIHT - Anno750(88) -([AVQueenManager Manager].showFoot ? Anno750(100) : 0), frame.size.width, frame.size.height);
     }
     _hasReduce = !_hasReduce;
     //隐藏toolsbar
     for (int i = 0; i<self.dataArray.count; i++) {
-        HomeTopModel * model = self.dataArray[i];
-        model.showTools = NO;
+        NSArray * arr = self.dataArray[i];
+        for (int j = 0; j< arr.count; j++) {
+            HomeTopModel * model = arr[j];
+            model.showTools = NO;
+        }
+        
     }
     self.isDownLoad = !self.isDownLoad;
     if (self.isDownLoad) {
         self.footView.hidden = NO;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
+        self.tabview.frame = CGRectMake(0, Anno750(90)+64, UI_WIDTH, UI_HEGIHT - Anno750(90) - Anno750(88) - 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }else{
         self.footView.hidden = YES;
-        self.tabview.frame = CGRectMake(0, Anno750(90), UI_WIDTH, UI_HEGIHT - Anno750(90) - 64-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
+        self.tabview.frame = CGRectMake(0, Anno750(90)+64, UI_WIDTH, UI_HEGIHT - Anno750(90) - 64 - ([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }
     [self.tabview reloadData];
 }
@@ -240,7 +292,7 @@
     
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.dataArray[index.row];
+    HomeTopModel * model = self.dataArray[index.section][index.row];
     NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
     [self hiddenToolsBar];
     if ([num integerValue] == 0) {
@@ -271,14 +323,18 @@
     NSMutableArray * muarr = [NSMutableArray new];
     BOOL rec = NO;
     for (int i = 0; i<self.dataArray.count; i++) {
-        HomeTopModel * model = self.dataArray[i];
-        if (model.isSelectDown) {
-            rec = YES;
-            NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
-            if ([num integerValue] == 1000) {
-                [muarr addObject:model];
+        NSArray * arr = self.dataArray[i];
+        for (int j = 0; j<arr.count; j++) {
+            HomeTopModel * model = arr[j];
+            if (model.isSelectDown) {
+                rec = YES;
+                NSNumber * num = [[SqlManager manager] checkDownStatusWithAudioid:model.audioId];
+                if ([num integerValue] == 1000) {
+                    [muarr addObject:model];
+                }
             }
         }
+        
     }
     if (muarr.count ==0) {
         NSString * message = @"请选择您要下载的音频";
@@ -311,7 +367,7 @@
 - (void)checkAudioText:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[button superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * model = self.dataArray[index.row];
+    HomeTopModel * model = self.dataArray[index.section][index.row];
     WKWebViewController * vc= [[WKWebViewController alloc]init];
     vc.model = model;
     vc.isFromNav = YES;
@@ -329,7 +385,7 @@
     }else{
         UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
         NSIndexPath * index = [self.tabview indexPathForCell:cell];
-        HomeTopModel * model = self.dataArray[index.row];
+        HomeTopModel * model = self.dataArray[index.section][index.row];
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
                                   @"relationType":@1,
@@ -361,7 +417,8 @@
     
     UITableViewCell * cell = (UITableViewCell *)[[button superview] superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
-    HomeTopModel * Audio = self.dataArray[index.row];
+    NSArray * arr = self.dataArray[index.section];
+    HomeTopModel * Audio = arr[index.row];
     ShareModel * model = [[ShareModel alloc]init];
     model.shareTitle = Audio.audioName;
     model.shareDesc = Audio.summary;
@@ -377,8 +434,9 @@
 - (void)moreBtnClick:(UIButton *)button{
     UITableViewCell * cell = (UITableViewCell *)[button superview];
     NSIndexPath * index = [self.tabview indexPathForCell:cell];
+    NSArray * arr = self.dataArray[index.section];
     for (int i = 0; i<self.dataArray.count; i++) {
-        HomeTopModel * model = self.dataArray[i];
+        HomeTopModel * model = arr[i];
         if (i == index.row) {
             model.showTools =!model.showTools;
         }else{
@@ -391,27 +449,34 @@
 #pragma mark - 音频下载完成
 - (void)audioDownLoadOver{
     if (self) {
-        NSInteger index = -1 ;
+        NSIndexPath * indexpatn;
         for (int i = 0; i<self.dataArray.count; i++) {
-            HomeTopModel * model = self.dataArray[i];
-            if ([[AudioDownLoader loader].currentModel.audioId integerValue] == [model.audioId integerValue]) {
-                index = i;
+            NSArray * arr = self.dataArray[i];
+            for (int j = 0; j< arr.count; j++) {
+                HomeTopModel * model = arr[j];
+                if ([[AudioDownLoader loader].currentModel.audioId integerValue] == [model.audioId integerValue]) {
+                    indexpatn = [NSIndexPath indexPathForRow:j inSection:i];
+                }
             }
         }
-        if (index == -1) {
-            return;
+        if (indexpatn) {
+            NSArray * arr = self.dataArray[indexpatn.section];
+            HomeTopModel * model = arr[indexpatn.row];
+            model.downloads = @2;
+            [self.tabview reloadData];
         }
-        HomeTopModel * model = self.dataArray[index];
-        model.downStatus = @2;
-        [self.tabview reloadData];
     }
 }
 
 #pragma mark - 隐藏toolbar
 - (void)hiddenToolsBar{
     for (int i = 0; i<self.dataArray.count; i++) {
-        HomeTopModel * model = self.dataArray[i];
-        model.showTools = NO;
+        NSArray * arr =self.dataArray[i];
+        for (int j = 0; j<arr.count; j++) {
+            HomeTopModel * model = arr[j];
+            model.showTools = NO;
+        }
+        
     }
     [self.tabview reloadData];
 }

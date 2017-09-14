@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self creatBackGroundImg];
-    [self setNavUnAlpha];
+//    [self setNavUnAlpha];
     [self creatUI];
     [self bindSignal];
     

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ConfigHeader.h"
+//#import <UIImage+GIF.h>
+//#import <FLAnimatedImageView.h>
+//#import <FLAnimatedImage.h>
+#import "GifPlayButton.h"
 
 @protocol HomeFinancialDelegate <NSObject>
 
@@ -21,6 +25,7 @@
 
 @property (nonatomic, strong) UIView * topLine;
 @property (nonatomic, strong) UIButton * playButton;
+
 @property (nonatomic, strong) NSMutableArray * topButtons;
 @property (nonatomic, assign) id<HomeFinancialDelegate> delegate;
 

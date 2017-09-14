@@ -176,11 +176,13 @@
     
 }
 - (void)PlayTopList{
+    if (self.model.tops.count>0) {
+        [[AVQueenManager Manager] playAudios:self.model.tops];
+        
+        [self reloadTabviewFrame];
+    }
+    }
     
-    [[AVQueenManager Manager] playAudios:self.model.tops];
-    
-    [self reloadTabviewFrame];
-}
 - (void)checkBookAtIndex:(NSInteger)index{
     ListenDetailViewController * vc = [ListenDetailViewController new];
     HomeListenModel * model = self.model.listen[index];

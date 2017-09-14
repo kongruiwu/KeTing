@@ -31,18 +31,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
-    [self setNavUnAlpha];
     [self setNavTitle:@"个人资料" color:KTColor_MainBlack];
     [self creatUI];
 }
 - (void)creatUI{
     
-    self.dateView = [[DatePickerSelectView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64)];
+    self.dateView = [[DatePickerSelectView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT)];
     [self.view addSubview:self.dateView];
     [self.dateView.datePicker setDate:[NSDate dateWithTimeIntervalSince1970:[[UserManager manager].info.BIRTHDAY longLongValue]]];
     [self.dateView.sureBtn addTarget:self action:@selector(setBirthdayReuqest) forControlEvents:UIControlEventTouchUpInside];
     
-    self.pickerView = [[PickerView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64)];
+    self.pickerView = [[PickerView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT)];
     [self.view addSubview:self.pickerView];
     [self.pickerView.sureBtn addTarget:self action:@selector(setEduRequest) forControlEvents:UIControlEventTouchUpInside];
     
@@ -53,7 +52,7 @@
                    INCASE_EMPTY([UserManager manager].info.Birthday, @"点击设置"),
                    INCASE_EMPTY([UserManager manager].info.EDU_NAME, @"点击设置"),
                    INCASE_EMPTY([UserManager manager].info.TYP_NAME, @"点击设置")];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];

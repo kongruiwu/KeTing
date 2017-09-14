@@ -25,6 +25,8 @@
 #import "OrderModel.h"
 
 
+#define NAVBAR_CHANGE_POINT 10
+
 @interface VoiceDetailViewController ()<UITableViewDelegate,UITableViewDataSource,TopListCellDelegate,AudioDownLoadDelegate,RMIAPHelperDelegate>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -46,15 +48,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    [self getData];
-    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, 20)];
-    [self.view addSubview:clearView];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.tabview reloadData];
     [AudioDownLoader loader].delegate = self;
     [self checkNetStatus];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCell) name:AudioReadyPlaying object:nil];
+    [self scrollViewDidScroll:self.tabview];
+    [self getData];
+    [self.tabview reloadData];
 }
 
 
@@ -62,29 +61,34 @@
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [AudioDownLoader loader].delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self hiddenNullView];
     
 }
-- (UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self drawBackButtonWithType:BackImgTypeBlack];
+    [self drawRightShare];
     [self creatUI];
-    
     id obj = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@",self.voiceID]];
     if (obj) {
         [[NSUserDefaults standardUserDefaults] setObject:@1 forKey:[NSString stringWithFormat:@"%@",self.voiceID]];
     }
 }
+- (void)drawRightShare{
+    UIImage * image = [[UIImage imageNamed:@"Webshare"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem * barItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showShareView)];
+    self.navigationItem.rightBarButtonItem = barItem;
+}
 
 - (void)creatUI{
     self.isDownLoad = NO;
     self.isOpen = NO;
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
+    
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
@@ -96,8 +100,10 @@
     [self.footView.downLoadBtn addTarget:self action:@selector(downAllSelectAudio) forControlEvents:UIControlEventTouchUpInside];
     
     self.header  = [[VoiceDetailHeader alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(485))];
-    [self.header.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
-    [self.header.shareBtn addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+//    [self.header.backBtn addTarget:self action:@selector(doBack) forControlEvents:UIControlEventTouchUpInside];
+//    [self.header.shareBtn addTarget:self action:@selector(showShareView) forControlEvents:UIControlEventTouchUpInside];
+    self.header.backBtn.hidden = YES;
+    self.header.shareBtn.hidden = YES;
     [self.header.checkSummy addTarget:self action:@selector(checkVoiceSummy:) forControlEvents:UIControlEventTouchUpInside];
     self.tabview.tableHeaderView = self.header;
     
@@ -342,10 +348,10 @@
         [self.tabview reloadRowsAtIndexPaths:muarr withRowAnimation:(self.isDownLoad ? UITableViewRowAnimationLeft : UITableViewRowAnimationRight)];
         if (self.isDownLoad) {
             self.footView.hidden = NO;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - Anno750(88)-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
+            self.tabview.frame = CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - Anno750(88)- 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
         }else{
             self.footView.hidden = YES;
-            self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT-([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
+            self.tabview.frame = CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64 -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
         }
     }else{
         if (![UserManager manager].isLogin) {
@@ -603,6 +609,7 @@
         
         self.header.groundImg.frame = CGRectMake(-(imageWidth * f - imageWidth) * 0.5, imageOffsetY, imageWidth * f, totalOffset);
     }
+
     
 }
 
@@ -784,5 +791,6 @@
 - (void)refreshCell{
     [self.tabview reloadData];
 }
+
 
 @end

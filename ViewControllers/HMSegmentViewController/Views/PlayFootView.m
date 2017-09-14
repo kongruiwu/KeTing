@@ -23,7 +23,7 @@
     self.leftImg = [KTFactory creatImageViewWithImage:@"register_logo"];
     self.leftImg.layer.masksToBounds = YES;
     self.leftImg.layer.cornerRadius = Anno750(35);
-    self.nameLabel = [KTFactory creatLabelWithText:@"创业时代决定股权"
+    self.nameLabel = [KTFactory creatLabelWithText:@"可听"
                                          fontValue:font750(24)
                                          textColor:KTColor_MainBlack
                                      textAlignment:NSTextAlignmentLeft];

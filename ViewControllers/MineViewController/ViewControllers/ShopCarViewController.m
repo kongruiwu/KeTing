@@ -26,20 +26,19 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self getData];
-    self.footer.frame = CGRectMake(0,UI_HEGIHT - 64 - Anno750(98) - ([AVQueenManager Manager].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
+    self.footer.frame = CGRectMake(0,UI_HEGIHT - Anno750(98) - ([AVQueenManager Manager].showFoot ? Anno750(100) : 0),UI_WIDTH,Anno750(98));
     [self checkNetStatus];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"购物车" color:KTColor_MainBlack];
     [self creatUI];
 }
 - (void)creatUI{
     self.hander = [[ShopCarHander alloc]init];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 64 - Anno750(98)) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64 - Anno750(98)) style:UITableViewStyleGrouped];
     self.tabview.backgroundColor = [UIColor whiteColor];
     self.tabview.delegate =self;
     self.tabview.dataSource = self;

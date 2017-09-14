@@ -33,7 +33,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavAlpha];
+//    [self setNavAlpha];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
 
     [[UserManager manager] getUserInfo];
@@ -42,6 +42,9 @@
     [self getUserBalance];
     [self getShopCarCount];
     [self.header updateDatas];
+    self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    
 }
 - (void)getUserInfoSucess{
     [self.header updateDatas];
@@ -50,11 +53,12 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    [self.navigationController.navigationBar lt_reset];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavAlpha];
+//    [self setNavAlpha];
     [self drawBackButtonWithType:BackImgTypeWhite];
     [self creatUI];
 }

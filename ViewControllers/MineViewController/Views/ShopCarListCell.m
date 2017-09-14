@@ -41,7 +41,7 @@
                                          fontValue:font750(25)
                                          textColor:KTColor_lightGray
                                      textAlignment:NSTextAlignmentLeft];
-    self.descLabel.numberOfLines = 0;
+    self.descLabel.numberOfLines = 2;
     self.timeLabel = [KTFactory creatLabelWithText:@"音频时长：22分22秒"
                                          fontValue:font750(25)
                                          textColor:KTColor_lightGray

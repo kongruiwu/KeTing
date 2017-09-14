@@ -22,7 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"我赞过的" color:KTColor_MainBlack];
     [self creatUI];
@@ -34,7 +33,7 @@
     self.viewControllers = [NSMutableArray new];
     self.titles = @[@"财经头条",@"书籍",@"订阅"];
     self.segmentControl = [[HMSegmentedControl alloc]initWithSectionTitles:self.titles];
-    self.segmentControl.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(90));
+    self.segmentControl.frame = CGRectMake(0, 64, UI_WIDTH, Anno750(90));
     //设置字体
     self.segmentControl.titleTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:font750(30)],
                                                 NSForegroundColorAttributeName : KTColor_lightGray};
@@ -56,7 +55,7 @@
         make.height.equalTo(@0.5);
     }];
     
-    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, Anno750(90), UI_WIDTH,  UI_HEGIHT - 64 - Anno750(90))];
+    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, Anno750(90)+64, UI_WIDTH,  UI_HEGIHT - 64 - Anno750(90))];
     self.mainScroll.contentSize = CGSizeMake(self.titles.count * UI_WIDTH, 0);
     [self.mainScroll autoresizingMask];
     self.mainScroll.pagingEnabled = YES;

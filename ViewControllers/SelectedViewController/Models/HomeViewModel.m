@@ -38,7 +38,7 @@
     
     NSMutableArray * muarr = [NSMutableArray new];
     NSArray * tops = dic[@"tops"];
-    int num = tops.count <= 5 ? (int)tops.count : 5;
+    int num = tops.count <= 10 ? (int)tops.count : 10;
     for (int i = 0; i< num; i++) {
         if ([tops[i] isKindOfClass:[NSNull class]]) {
             break;

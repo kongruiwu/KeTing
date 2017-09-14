@@ -28,7 +28,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tabview reloadData];
-    self.tabview.frame = CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT);
+    self.tabview.frame = CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"CANHIDDENFOOT" object:nil];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -38,7 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"设置" color:KTColor_MainBlack];
     
@@ -47,7 +46,7 @@
 - (void)creatUI{
     self.titles = @[@"推送消息设置",@"WI-FI时自动下载音频",@"推荐给好友",@"给软件打分",@"意见反馈",@"清除缓存",@"帐号与安全",@"关于我们"];
     
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) style:UITableViewStyleGrouped];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT-64) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];

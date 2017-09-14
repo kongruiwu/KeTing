@@ -21,7 +21,7 @@
 @implementation HotRankViewController
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavUnAlpha];
+//    [self setNavUnAlpha];
     [self checkNetStatus];
 }
 - (void)viewDidLoad {
@@ -37,10 +37,10 @@
 
 - (void)creatUI{
     
-    self.header = [[RankHeaderView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, Anno750(80))];
+    self.header = [[RankHeaderView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH, Anno750(80))];
     [self.view addSubview:self.header];
     
-    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, Anno750(80), UI_WIDTH, UI_HEGIHT - Anno750(80) - 64)];
+    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, Anno750(80) + 64, UI_WIDTH, UI_HEGIHT - Anno750(80) - 64)];
     self.mainScroll.contentSize = CGSizeMake(UI_WIDTH * 2, 0);
     [self.mainScroll autoresizingMask];
     self.mainScroll.pagingEnabled = YES;

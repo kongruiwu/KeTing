@@ -22,7 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self setNavTitle:@"修改密码" color:KTColor_MainBlack];
     [self creatUI];
@@ -32,7 +31,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView * view = [KTFactory creatViewWithColor:KTColor_BackGround];
-    view.frame = CGRectMake(0, 0, UI_WIDTH, Anno750(30));
+    view.frame = CGRectMake(0, 64, UI_WIDTH, Anno750(30));
     [self.view addSubview:view];
     
     self.oldPwdT = [KTFactory creattextfildWithPlaceHloder:@"原密码" placeColor:KTColor_lightGray];

@@ -35,7 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
+//    [self setNavUnAlpha];
     [self CreatUI];
     [self getHotWord];
     [self checkNetStatus];

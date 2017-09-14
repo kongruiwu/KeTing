@@ -22,12 +22,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    [self setNavUnAlpha];
+//    [self setNavUnAlpha];
     CGRect frame = self.webView.frame;
     if (self.isFromNav) {
         self.webView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height -([AVQueenManager Manager].showFoot ? Anno750(100) : 0));
     }else{
-        self.webView.frame = CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT- 64);
+        self.webView.frame = CGRectMake(Anno750(24), 64, UI_WIDTH - Anno750(48), UI_HEGIHT- 64);
     }
     
     
@@ -95,7 +95,7 @@
 }
 - (void)creatUI{
     
-    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(Anno750(24), 0, UI_WIDTH - Anno750(48), UI_HEGIHT - 64)];
+    self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(Anno750(24), 64, UI_WIDTH - Anno750(48), UI_HEGIHT - 64)];
     if (self.webType == 0) {
         HomeTopModel * model = [AVQueenManager Manager].playList[[AVQueenManager Manager].playAudioIndex];
         [self.webView loadHTMLString:[self replaceHtmlString:model.audioContent] baseURL:nil];

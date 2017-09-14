@@ -90,4 +90,6 @@
 @property (nonatomic, strong) NSString * tagString;
 /**音频存储的本地地址*/
 @property (nonatomic, strong) NSString * localAddress;
+/**头条时间*/
+@property (nonatomic, strong) NSString * topTitle;
 @end

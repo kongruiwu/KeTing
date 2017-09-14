@@ -29,7 +29,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavUnAlpha];
     [self drawBackButtonWithType:BackImgTypeBlack];
     [self drawNavSelectView];
     [self creatUI];
@@ -58,7 +57,7 @@
     }];
 }
 - (void)creatUI{
-    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH,  UI_HEGIHT - 64)];
+    self.mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, UI_WIDTH,  UI_HEGIHT - 64)];
     self.mainScroll.contentSize = CGSizeMake(2 * UI_WIDTH, UI_HEGIHT -Anno750(90)- 64);
     [self.mainScroll autoresizingMask];
     self.mainScroll.pagingEnabled = YES;

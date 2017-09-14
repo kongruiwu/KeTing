@@ -22,7 +22,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
    
-    [self setNavUnAlpha];
     [self checkNetStatus];
 }
 
@@ -37,7 +36,7 @@
 - (void)creatUI{
     self.page = 1;
     self.dataArray = [NSMutableArray new];
-    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT - 30) style:UITableViewStylePlain];
+    self.tabview = [KTFactory creatTabviewWithFrame:CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64) style:UITableViewStylePlain];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];

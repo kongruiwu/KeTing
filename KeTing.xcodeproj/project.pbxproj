@@ -105,6 +105,9 @@
 		8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B41F20987E00AAD63C /* RootViewController.m */; };
 		8BA1F0B81F20DC1600AAD63C /* HistorySql.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1F0B71F20DC1600AAD63C /* HistorySql.m */; };
 		8BA3DCFD1F1764FA00D5ACB5 /* AudioDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */; };
+		8BAE590C1F67ACF200CF9AAE /* home_playing@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8BAE590A1F67ACF200CF9AAE /* home_playing@2x.gif */; };
+		8BAE590D1F67ACF200CF9AAE /* home_playing@3x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8BAE590B1F67ACF200CF9AAE /* home_playing@3x.gif */; };
+		8BAE59101F67B02600CF9AAE /* GifPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BAE590F1F67B02600CF9AAE /* GifPlayButton.m */; };
 		8BB516591F24A40C00C29643 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB516581F24A40C00C29643 /* GTMBase64.m */; };
 		8BB516631F24A81E00C29643 /* CropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5165D1F24A81E00C29643 /* CropViewController.m */; };
 		8BB516641F24A81E00C29643 /* CropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB5165E1F24A81E00C29643 /* CropViewController.xib */; };
@@ -138,6 +141,7 @@
 		8BF091C81F04F5F5006478E9 /* MoneyHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091C71F04F5F5006478E9 /* MoneyHeaderCell.m */; };
 		8BF091CB1F04FB89006478E9 /* MoneyCountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091CA1F04FB89006478E9 /* MoneyCountCell.m */; };
 		8BF091CE1F050144006478E9 /* MoneyDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF091CD1F050144006478E9 /* MoneyDescCell.m */; };
+		8BF43E4D1F6A14580055EAAD /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF43E4C1F6A14580055EAAD /* UINavigationBar+Awesome.m */; };
 		8BF494671F380E5E00D40727 /* RankHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494661F380E5E00D40727 /* RankHeaderView.m */; };
 		8BF4946A1F38129A00D40727 /* HotRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494691F38129A00D40727 /* HotRankViewController.m */; };
 		8BF494841F3966E000D40727 /* ListenDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF494831F3966E000D40727 /* ListenDetailHeader.m */; };
@@ -394,6 +398,10 @@
 		8BA1F0B71F20DC1600AAD63C /* HistorySql.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistorySql.m; sourceTree = "<group>"; };
 		8BA3DCFB1F1764FA00D5ACB5 /* AudioDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDownLoader.h; sourceTree = "<group>"; };
 		8BA3DCFC1F1764FA00D5ACB5 /* AudioDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDownLoader.m; sourceTree = "<group>"; };
+		8BAE590A1F67ACF200CF9AAE /* home_playing@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "home_playing@2x.gif"; sourceTree = "<group>"; };
+		8BAE590B1F67ACF200CF9AAE /* home_playing@3x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "home_playing@3x.gif"; sourceTree = "<group>"; };
+		8BAE590E1F67B02600CF9AAE /* GifPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifPlayButton.h; sourceTree = "<group>"; };
+		8BAE590F1F67B02600CF9AAE /* GifPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifPlayButton.m; sourceTree = "<group>"; };
 		8BB516571F24A40C00C29643 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
 		8BB516581F24A40C00C29643 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		8BB5165A1F24A52900C29643 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -457,6 +465,8 @@
 		8BF091CA1F04FB89006478E9 /* MoneyCountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyCountCell.m; sourceTree = "<group>"; };
 		8BF091CC1F050144006478E9 /* MoneyDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyDescCell.h; sourceTree = "<group>"; };
 		8BF091CD1F050144006478E9 /* MoneyDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyDescCell.m; sourceTree = "<group>"; };
+		8BF43E4B1F6A14580055EAAD /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
+		8BF43E4C1F6A14580055EAAD /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 		8BF494651F380E5E00D40727 /* RankHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankHeaderView.h; sourceTree = "<group>"; };
 		8BF494661F380E5E00D40727 /* RankHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankHeaderView.m; sourceTree = "<group>"; };
 		8BF494681F38129A00D40727 /* HotRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotRankViewController.h; sourceTree = "<group>"; };
@@ -769,6 +779,7 @@
 		8B53EA801EE52097009EA76D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8BF43E4A1F6A14500055EAAD /* NavBarCate */,
 				8B5916BA1F26D21C008841E2 /* LoadingProgress */,
 				6232F2CB1F21D865009DDC37 /* IAPHelper */,
 				8B8742F51EEE5FFF00324FA2 /* ShareView */,
@@ -855,6 +866,10 @@
 				8B53EA901EE52C38009EA76D /* SelectSectionHeader.m */,
 				8B53EA951EE53CE6009EA76D /* HomeVoiceCell.h */,
 				8B53EA961EE53CE6009EA76D /* HomeVoiceCell.m */,
+				8BAE590A1F67ACF200CF9AAE /* home_playing@2x.gif */,
+				8BAE590B1F67ACF200CF9AAE /* home_playing@3x.gif */,
+				8BAE590E1F67B02600CF9AAE /* GifPlayButton.h */,
+				8BAE590F1F67B02600CF9AAE /* GifPlayButton.m */,
 				8B53EA981EE550BD009EA76D /* HomeFinancialCell.h */,
 				8B53EA991EE550BD009EA76D /* HomeFinancialCell.m */,
 				8B53EA9E1EE55AD7009EA76D /* HomeCollectionCell.h */,
@@ -1067,6 +1082,15 @@
 				8BBACBED1F27889F002A8D79 /* FristViewController.m */,
 			);
 			path = FristViewController;
+			sourceTree = "<group>";
+		};
+		8BF43E4A1F6A14500055EAAD /* NavBarCate */ = {
+			isa = PBXGroup;
+			children = (
+				8BF43E4B1F6A14580055EAAD /* UINavigationBar+Awesome.h */,
+				8BF43E4C1F6A14580055EAAD /* UINavigationBar+Awesome.m */,
+			);
+			path = NavBarCate;
 			sourceTree = "<group>";
 		};
 		8BF6029F1EEFC7EC00322545 /* TimeListenViewController */ = {
@@ -1521,7 +1545,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BAE590C1F67ACF200CF9AAE /* home_playing@2x.gif in Resources */,
 				8BBACBF31F284347002A8D79 /* detail.html in Resources */,
+				8BAE590D1F67ACF200CF9AAE /* home_playing@3x.gif in Resources */,
 				8BF692071EE7A245001CECEE /* toast_bg@2x.png in Resources */,
 				8BF692091EE7A245001CECEE /* toast_icon_bg@2x.png in Resources */,
 				8BF6920B1EE7A245001CECEE /* toast_success@2x.png in Resources */,
@@ -1693,6 +1719,7 @@
 				8BF6920F1EE7A2AF001CECEE /* TopListCell.m in Sources */,
 				8B2D74071F0CC55000E1BF4B /* iPhoneModel.m in Sources */,
 				8BF602A51EEFC7FC00322545 /* TimeListenViewController.m in Sources */,
+				8BF43E4D1F6A14580055EAAD /* UINavigationBar+Awesome.m in Sources */,
 				8B7AB4C71F037C7C0068CAE7 /* RegisterViewController.m in Sources */,
 				8BA1F0B51F20987E00AAD63C /* RootViewController.m in Sources */,
 				8B696E1B1EEA3AD500A11A0F /* CateListTableViewCell.m in Sources */,
@@ -1727,6 +1754,7 @@
 				8BF6920C1EE7A245001CECEE /* ToastView.m in Sources */,
 				8B16FCCD1F57AC5500640C84 /* KRAudioPlayer.m in Sources */,
 				8B2D74041F0CC51200E1BF4B /* OpenUDID.m in Sources */,
+				8BAE59101F67B02600CF9AAE /* GifPlayButton.m in Sources */,
 				8BB516591F24A40C00C29643 /* GTMBase64.m in Sources */,
 				8BF602951EEF7B1400322545 /* VoiceUpdateListCell.m in Sources */,
 				8BC126711F1DB3A3005CF363 /* TopUpCell.m in Sources */,

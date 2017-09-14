@@ -27,18 +27,20 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavAlpha];
     [self getData];
     [self checkNetStatus];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar lt_reset];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavAlpha];
     [self drawBackButtonWithType:BackImgTypeWhite];
     [self drawRightBarButton];
     [self creatUI];
@@ -172,7 +174,6 @@
         UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
         [self presentViewController:nvc animated:YES completion:nil];
     }else{
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
         ShopCarViewController * vc = [ShopCarViewController new];
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -201,26 +202,30 @@
         UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
         [self presentViewController:nvc animated:YES completion:nil];
     }else{
-        UITableViewCell * cell = (UITableViewCell *)[btn superview];
-        NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
-        HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
-        NSDictionary * params = @{
-                                  @"userId":[UserManager manager].userid,
-                                  @"relationId":model.listenId,
-                                  @"relationType":@2
-                                  };
-        [self showLoadingCantTouchAndClear];
-        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
-            [self dismissLoadingView];
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
-            int count = [self.countLabel.text intValue] + 1;
-            self.countLabel.text = [NSString stringWithFormat:@"%d",count];
-            self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
-            btn.selected = !btn.selected;
-        } errorBlock:^(KTError *error) {
-            [self dismissLoadingView];
-            
-        }];
+        if (btn.selected) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
+        }else{
+            UITableViewCell * cell = (UITableViewCell *)[btn superview];
+            NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+            HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
+            NSDictionary * params = @{
+                                      @"userId":[UserManager manager].userid,
+                                      @"relationId":model.listenId,
+                                      @"relationType":@2
+                                      };
+            [self showLoadingCantTouchAndClear];
+            [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+                [self dismissLoadingView];
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
+                int count = [self.countLabel.text intValue] + 1;
+                self.countLabel.text = [NSString stringWithFormat:@"%d",count];
+                self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
+                btn.selected = !btn.selected;
+            } errorBlock:^(KTError *error) {
+                [self dismissLoadingView];
+                
+            }];
+        }
     }
 }
 - (void)checkShopCar{
