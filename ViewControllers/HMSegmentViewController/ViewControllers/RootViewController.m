@@ -11,9 +11,12 @@
 #import "HMSegmentViewController.h"
 #import "PlayListView.h"
 #import "AudioPlayerViewController.h"
+#import "LoginViewController.h"
+
 @interface RootViewController ()
 
 @property (nonatomic, strong) PlayListView * listView;
+
 
 @end
 
@@ -69,15 +72,32 @@
     self.shareView = [[ShareView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT) hasNav:NO];
     [self.view addSubview:self.shareView];
     
+    self.loginView = [[LoginMessageView alloc]initWithFrame:CGRectMake(0, 0, UI_WIDTH, UI_HEGIHT)];
+    [self.loginView.loginBtn addTarget:self action:@selector(userLogin) forControlEvents:UIControlEventTouchUpInside];
+    [self.loginView.deviceBtn addTarget:self action:@selector(dismissLogin) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.loginView];
+    
 }
+- (void)userLogin{
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
+    [self presentViewController:nav animated:YES completion:nil];
+    [self.loginView dismiss];
+}
+
 - (void)pushToAudioPlayViewController{
     AudioPlayerViewController * vc = [AudioPlayerViewController new];
     UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
 }
 - (void)showPlayList{
-    
     [self.listView show];
+}
+- (void)dismissLogin{
+    [self.loginView dismiss];
+    if (self.deviceclick) {
+        self.deviceclick();
+    }
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

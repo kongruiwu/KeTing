@@ -16,6 +16,7 @@
 #import "OrderModel.h"
 #import "MyShopedViewController.h"
 #import "MoneyViewController.h"
+#import "RootViewController.h"
 @interface SetAccoutViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //@property (nonatomic, strong) UITableView * tabview;
@@ -30,8 +31,10 @@
     [self.tabview reloadData];
     self.tabview.frame = CGRectMake(0, 64, UI_WIDTH, UI_HEGIHT - 64);
     [self checkNetStatus];
-    
+    [self getUserBlance];
 }
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavTitle:@"结算台" color:KTColor_MainBlack];
@@ -128,6 +131,19 @@
 }
 #pragma mark 支付
 - (void)sureBuyClick{
+    RootViewController * root = (RootViewController *)self.tabBarController;
+    __weak SetAccoutViewController * weakself = self;
+    root.deviceclick = ^{
+        [weakself buyThisBook];
+    };
+    if ([UserManager manager].isLogin) {
+        [self buyThisBook];
+    }else{
+        [root.loginView show];
+    }
+}
+
+- (void)buyThisBook{
     if ([[UserManager manager].balance floatValue] < self.money.floatValue) {
         [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"账户余额不足，请先充值" duration:1.5f];
         return;
@@ -144,9 +160,9 @@
     NSString *jsonStr=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary * params = @{@"userId":[UserManager manager].userid,
                               @"nickName":[UserManager manager].info.NICKNAME,
-                              @"phone":[UserManager manager].info.MOBILE,
+                              @"phone":[UserManager manager].isLogin ? [UserManager manager].info.MOBILE : @"13000000000",
                               @"orderType":@1,
-                              @"payAmount":@0,
+                              @"payAmount":self.money,
                               @"payMethod":@2,
                               @"goodList":jsonStr,
                               @"actFrom":self.isCart ? @0 : @1
@@ -186,10 +202,8 @@
         [ToastView presentToastWithin:self.view.window withIcon:APToastIconNone text:error.message duration:1.0f];
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    
-    
-    
 }
+
 - (void)pushTpprotoViewController{
     WKWebViewController * vc = [WKWebViewController new];
     vc.isFromNav = YES;
@@ -200,5 +214,18 @@
     MoneyViewController * vc = [[MoneyViewController alloc]init];
     
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)getUserBlance{
+    NSDictionary * params = @{};
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
+        NSDictionary * dic = result[@"list"];
+        if (dic[@"accountBalance"]) {
+            [UserManager manager].balance = dic[@"accountBalance"];
+        }
+        [self.tabview reloadData];
+    } errorBlock:^(KTError *error) {
+        
+    }];
 }
 @end

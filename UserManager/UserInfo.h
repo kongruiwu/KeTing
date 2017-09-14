@@ -91,4 +91,7 @@
 @property (nonatomic, strong) NSString * BIRTHDAY;
 @property (nonatomic, strong) NSString * Pword;
 @property (nonatomic, strong) NSString * IND_ID;
+
+/**是否为游客模式*/
+@property (nonatomic, assign) BOOL isPort;
 @end

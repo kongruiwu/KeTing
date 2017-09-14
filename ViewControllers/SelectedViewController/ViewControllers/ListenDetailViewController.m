@@ -227,14 +227,10 @@
 
 #pragma mark - 查看购物车
 - (void)goShopCar{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        ShopCarViewController * vc = [ShopCarViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+
+    ShopCarViewController * vc = [ShopCarViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 #pragma mark - 重写返回方式
 - (void)getData{
@@ -268,39 +264,33 @@
 }
 #pragma mark - 点赞
 - (void)likeThisBookClick:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        //真尼玛傻逼啊  点赞还用两个接口
-        NSDictionary * params = @{
-                                  //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
-                                  @"relationType":@2,
-                                  @"relationId":self.listenID,
-                                  @"nickName":[UserManager manager].info.NICKNAME
-                                  };
-        NSString * pageUrl = Page_AddLike;
-        if (btn.selected) {
-            pageUrl = Page_DelLike;
-        }
-        [self showLoadingCantClear:YES];
-        [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
-            [self dismissLoadingView];
-            int num = [self.listenModel.praseNum intValue];
-            if (btn.selected) {
-                num -= 1;
-            }else{
-                num += 1;
-            }
-            self.listenModel.praseNum = @(num);
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:btn.selected ? @"取消成功":@"点赞成功" duration:1.0f];
-            [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
-            btn.selected = !btn.selected;
-        } errorBlock:^(KTError *error) {
-            [self dismissLoadingView];
-        }];
+
+    NSDictionary * params = @{
+                              //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
+                              @"relationType":@2,
+                              @"relationId":self.listenID,
+                              @"nickName":[UserManager manager].info.NICKNAME
+                              };
+    NSString * pageUrl = Page_AddLike;
+    if (btn.selected) {
+        pageUrl = Page_DelLike;
     }
+    [self showLoadingCantClear:YES];
+    [[NetWorkManager manager] POSTRequest:params pageUrl:pageUrl complete:^(id result) {
+        [self dismissLoadingView];
+        int num = [self.listenModel.praseNum intValue];
+        if (btn.selected) {
+            num -= 1;
+        }else{
+            num += 1;
+        }
+        self.listenModel.praseNum = @(num);
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:btn.selected ? @"取消成功":@"点赞成功" duration:1.0f];
+        [btn setTitle:[NSString stringWithFormat:@"  %@",self.listenModel.praseNum] forState:UIControlStateNormal];
+        btn.selected = !btn.selected;
+    } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
+    }];
 }
 #pragma mark - 详情购物车按钮点击
 - (void)addThisBookShopCar:(UIButton *)btn{
@@ -314,32 +304,28 @@
             [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"本地音频，无需下载" duration:1.0f];
         }
     }else if ([btn.titleLabel.text containsString:@"购物车"]) {//添加至购物车
-        if (![UserManager manager].isLogin) {
-            LoginViewController * vc = [LoginViewController new];
-            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:nil];
+    
+        if (!self.listenModel.iscart) {
+            NSDictionary * params = @{
+                                      @"userId":[UserManager manager].userid,
+                                      @"relationId":self.listenID,
+                                      @"relationType":@2
+                                      };
+            [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
+                [btn setImage:[UIImage imageNamed:@"Listen-Shoped"] forState:UIControlStateNormal];
+                int count = [self.countLabel.text intValue] + 1;
+                self.listenModel.iscart = YES;
+                self.countLabel.text = [NSString stringWithFormat:@"%d",count];
+                self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
+            } errorBlock:^(KTError *error) {
+                
+            }];
         }else{
-            if (!self.listenModel.iscart) {
-                NSDictionary * params = @{
-                                          @"userId":[UserManager manager].userid,
-                                          @"relationId":self.listenID,
-                                          @"relationType":@2
-                                          };
-                [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
-                    [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
-                    [btn setImage:[UIImage imageNamed:@"Listen-Shoped"] forState:UIControlStateNormal];
-                    int count = [self.countLabel.text intValue] + 1;
-                    self.listenModel.iscart = YES;
-                    self.countLabel.text = [NSString stringWithFormat:@"%d",count];
-                    self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
-                } errorBlock:^(KTError *error) {
-                    
-                }];
-            }else{
-                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
-            }
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
         }
     }
+    
 }
 #pragma mark - 购买
 - (void)buyThisBookRequest:(UIButton *)btn{
@@ -348,18 +334,14 @@
         [[AVQueenManager Manager] playAudios:@[self.listenModel.audioModel]];
         [self reloadTabviewFrame];
     }else{
-        if (![UserManager manager].isLogin) {
-            LoginViewController * vc = [LoginViewController new];
-            UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:nil];
-        }else{
-            //购买
-            SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
-            vc.isBook = YES;
-            vc.money = self.listenModel.PRICE;
-            vc.products = @[self.listenModel];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
+        
+        //购买
+        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+        vc.isBook = YES;
+        vc.money = self.listenModel.PRICE;
+        vc.products = @[self.listenModel];
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }
 }
 #pragma mark - 下载完成

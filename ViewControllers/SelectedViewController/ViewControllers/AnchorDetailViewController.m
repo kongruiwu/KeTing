@@ -169,63 +169,50 @@
 }
 #pragma mark - 查看购物车
 - (void)goShopCar{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        ShopCarViewController * vc = [ShopCarViewController new];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+
+    ShopCarViewController * vc = [ShopCarViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 #pragma mark - listenlistcell代理 加入购物车 购买 等
 - (void)buyThisBook:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
+    
+    UITableViewCell * cell = (UITableViewCell *)[btn superview];
+    NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
+    HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
+    SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
+    vc.isBook = YES;
+    vc.money = model.PRICE;
+    vc.products = @[model];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+- (void)addToShopCar:(UIButton *)btn{
+
+    if (btn.selected) {
+        [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
     }else{
         UITableViewCell * cell = (UITableViewCell *)[btn superview];
         NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
         HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
-        SetAccoutViewController * vc = [[SetAccoutViewController alloc]init];
-        vc.isBook = YES;
-        vc.money = model.PRICE;
-        vc.products = @[model];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
-- (void)addToShopCar:(UIButton *)btn{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
-        if (btn.selected) {
-            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"商品已加入购物车" duration:1.0f];
-        }else{
-            UITableViewCell * cell = (UITableViewCell *)[btn superview];
-            NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
-            HomeListenModel * model = self.anchor.listenVolice[indexpath.row];
-            NSDictionary * params = @{
-                                      @"userId":[UserManager manager].userid,
-                                      @"relationId":model.listenId,
-                                      @"relationType":@2
-                                      };
-            [self showLoadingCantTouchAndClear];
-            [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
-                [self dismissLoadingView];
-                [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
-                int count = [self.countLabel.text intValue] + 1;
-                self.countLabel.text = [NSString stringWithFormat:@"%d",count];
-                self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
-                btn.selected = !btn.selected;
-            } errorBlock:^(KTError *error) {
-                [self dismissLoadingView];
-                
-            }];
-        }
+        NSDictionary * params = @{
+                                  @"userId":[UserManager manager].userid,
+                                  @"relationId":model.listenId,
+                                  @"relationType":@2
+                                  };
+        [self showLoadingCantTouchAndClear];
+        [[NetWorkManager manager] POSTRequest:params pageUrl:Page_AddCar complete:^(id result) {
+            [self dismissLoadingView];
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"添加成功" duration:1.0f];
+            int count = [self.countLabel.text intValue] + 1;
+            self.countLabel.text = [NSString stringWithFormat:@"%d",count];
+            self.countLabel.hidden = [self.countLabel.text intValue] > 0 ? NO : YES;
+            btn.selected = !btn.selected;
+        } errorBlock:^(KTError *error) {
+            [self dismissLoadingView];
+            
+        }];
     }
 }
 - (void)checkShopCar{

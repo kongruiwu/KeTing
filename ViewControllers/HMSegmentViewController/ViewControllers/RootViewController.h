@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PlayFootView.h"
 #import "ShareView.h"
+#import "LoginMessageView.h"
+
+typedef void(^deviceClick)();
 
 @interface RootViewController : UITabBarController
 
@@ -16,4 +19,6 @@
 
 @property (nonatomic, strong) ShareView * shareView;
 
+@property (nonatomic, strong) LoginMessageView * loginView;
+@property (nonatomic,copy) deviceClick deviceclick;
 @end

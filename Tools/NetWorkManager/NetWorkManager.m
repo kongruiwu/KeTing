@@ -9,6 +9,7 @@
 #import "NetWorkManager.h"
 #import "ADTracking.h"
 #import "OpenUDID.h"
+#import "KrUuid.h"
 #import "iPhoneModel.h"
 @implementation NetWorkManager
 
@@ -113,14 +114,12 @@
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"%lld", curtime] forHTTPHeaderField:@"CURTIME"];
     [manager.requestSerializer setValue:MD5 forHTTPHeaderField:@"OPENKEY"];
     NSString * userid = @"0";
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"]) {
-        userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
-        if (userid.length ==0) {
-            userid = @"0";
-        }
+    NSString * num = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
+    if (num && num.length>0) {
+        userid = num;
     }
     [manager.requestSerializer setValue:userid forHTTPHeaderField:@"USERID"];
-    [manager.requestSerializer setValue:INCASE_EMPTY([[ADTracking instance] idfaString], [OpenUDID value]) forHTTPHeaderField:@"DEVICECODE"];
+    [manager.requestSerializer setValue:[KrUuid UUID] forHTTPHeaderField:@"DEVICECODE"];
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"DEVICENAME"];
     NSString * sysVersion = [NSString stringWithFormat:@"IOS %@", [[UIDevice currentDevice] systemVersion]];
     [manager.requestSerializer setValue:sysVersion forHTTPHeaderField:@"SYSTEMVERSION"];

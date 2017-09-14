@@ -14,6 +14,7 @@
 #import "AcountModel.h"
 #import "RMIAPHelper.h"
 #import "OrderModel.h"
+#import "RootViewController.h"
 
 #define iap6    @"keting006"     //商品的标识
 #define iap30   @"keting0030"
@@ -33,6 +34,12 @@
 
 @implementation MoneyViewController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self drawBackButtonWithType:BackImgTypeBlack];
@@ -40,7 +47,6 @@
     self.numId = 1;
     [self creatUI];
     [self drawRightButton];
-    [self getData];
 }
 - (void)creatUI{
     
@@ -174,6 +180,18 @@
 
 #pragma makr- 立即充值    按钮点击事件
 - (void)recharge{
+    RootViewController * root = (RootViewController *)self.tabBarController;
+    __weak MoneyViewController * weakself = self;
+    root.deviceclick = ^{
+        [weakself userTopUpMoney];
+    };
+    if ([UserManager manager].isLogin) {
+        [self userTopUpMoney];
+    }else{
+        [root.loginView show];
+    }
+}
+- (void)userTopUpMoney{
     [self showLoadingCantTouchAndClear];
     RMIAPHelper *storeShared = [RMIAPHelper sharedInstance];
     storeShared.delegate = self;
@@ -202,6 +220,7 @@
             break;
     }
 }
+
 #pragma mark - 充值请求失败
 - (void)paymentRequestFaild{
     [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"交易请求失败" duration:1.0f];
@@ -304,7 +323,7 @@
 - (void)createPayOrders:(NSString *)transactionID time:(NSString *)paymentTime money:(NSString *)rechargeMoney {
     NSDictionary * params = @{@"userId":[UserManager manager].userid,
                               @"nickName":[UserManager manager].info.NICKNAME,
-                              @"phone":[UserManager manager].info.MOBILE,
+                              @"phone":[UserManager manager].isLogin ? [UserManager manager].info.MOBILE : @"13000000000",
                               @"orderType":@0,
                               @"payAmount":rechargeMoney,
                               @"payMethod":@1,

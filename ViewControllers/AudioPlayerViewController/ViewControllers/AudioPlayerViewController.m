@@ -468,11 +468,7 @@
 }
 #pragma mark - 点赞
 - (void)likeButtonClick:(UIButton *)button{
-    if (![UserManager manager].isLogin) {
-        LoginViewController * vc = [LoginViewController new];
-        UINavigationController * nvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        [self presentViewController:nvc animated:YES completion:nil];
-    }else{
+
         HomeTopModel * model = [AVQueenManager Manager].currrentAudio;
         NSDictionary * params = @{
                                   //关联1.头条、2.听书、3.声度、0.音频(音频不是栏目所以为0)
@@ -502,7 +498,6 @@
         } errorBlock:^(KTError *error) {
             [self dismissLoadingView];
         }];
-    }
     
 }
 

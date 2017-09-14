@@ -35,12 +35,11 @@
     [[HistorySql sql] openDB];
     [MLTransition validatePanBackWithMLTransitionGestureRecognizerType:MLTransitionGestureRecognizerTypePan];
     [Growing startWithAccountId:GrowingID];
-    
     [self IQKeyBoardSetting];
     [self audioPlayerSetting];
     [self UmengSetting];
-    [[UserManager manager] getUserInfo];
     [[UserManager manager] getDataModel];
+    [[UserManager manager] getUserInfo];
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Frist"]) {
@@ -48,8 +47,6 @@
     }else{
         [self.window setRootViewController:[RootViewController new]];
     }
-    
-    
     
     return YES;
 }

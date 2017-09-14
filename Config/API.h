@@ -8,11 +8,13 @@
 
 #ifndef API_h
 #define API_h
-//#ifdef DEBUG
-//    #define Base_Url    @"http://fm.123.com.cn/"
-//#else
-    #define Base_Url    @"http://36.7.79.242:8091/"
-//#endif
+#ifdef DEBUG
+#define Base_Url    @"http://36.7.79.242:8091/"
+#else
+#define Base_Url    @"http://fm.123.com.cn/"
+#endif
+
+
 
 //首页 精选
 #define Page_home           @"v1/choice"
@@ -132,4 +134,7 @@
 #define Page_ThirdLogin     @"v2/thirdLogin"
 //三方绑定
 #define Page_ThirdBind      @"v2/thirdBind"
+//设备帐号
+#define Page_Register2      @"v2/register"
+
 #endif /* API_h */

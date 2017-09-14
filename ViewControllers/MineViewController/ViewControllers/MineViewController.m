@@ -111,8 +111,7 @@
         [self.navigationController pushViewController:[DownLoadViewController new] animated:YES];
     }else if(indexPath.section == 2 && indexPath.row == 1){
         [self.navigationController pushViewController:[SettingViewController new] animated:YES];
-    }else if ([UserManager manager].isLogin) {
-        if (indexPath.section == 0) {
+    }else if (indexPath.section == 0) {
             if (indexPath.row == 0) {
                 [self.navigationController pushViewController:[MoneyViewController new] animated:YES];
             }else if(indexPath.row == 1){
@@ -130,12 +129,8 @@
             if (indexPath.row == 0) {
                 [self readMessage];
                 [self.navigationController pushViewController:[MessageViewController new] animated:YES];
-            }
         }
-    }else{
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:[LoginViewController new]];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
+}
 }
 
 - (void)userInfoClick{
@@ -187,14 +182,14 @@
     }];
 }
 - (void)getUserBalance{
-    if (![UserManager manager].isLogin) {
-        NSArray * datas = self.viewModel.dataArray[0];
-        MineListModel * model = datas[0];
-        model.desc = @"0牛币";
-        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
-        return;
-    }
+//    if (![UserManager manager].isLogin) {
+//        NSArray * datas = self.viewModel.dataArray[0];
+//        MineListModel * model = datas[0];
+//        model.desc = @"0牛币";
+//        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+//        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+//        return;
+//    }
     NSDictionary * params = @{};
     [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserAccount complete:^(id result) {
         NSDictionary * dic = result[@"list"];
@@ -211,14 +206,14 @@
     }];
 }
 - (void)getShopCarCount{
-    if (![UserManager manager].isLogin) {
-        NSArray * datas = self.viewModel.dataArray[0];
-        MineListModel * model = datas[2];
-        model.desc = @"0";
-        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:2 inSection:0];
-        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
-        return;
-    }
+//    if (![UserManager manager].isLogin) {
+//        NSArray * datas = self.viewModel.dataArray[0];
+//        MineListModel * model = datas[2];
+//        model.desc = @"0";
+//        NSIndexPath * indexpath = [NSIndexPath indexPathForRow:2 inSection:0];
+//        [self.tabview reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+//        return;
+//    }
     
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_ShopCarCount complete:^(id result) {
         if (result) {

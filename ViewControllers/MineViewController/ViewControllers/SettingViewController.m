@@ -195,13 +195,40 @@
     UIAlertAction * action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction * sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UserManager manager] userLogout];
-        [self doBack];
+        [self requestDeviceInfo];
     }];
     [alert addAction:action];
     [alert addAction:sure];
     [self presentViewController:alert animated:YES completion:nil];
-    
 }
+
+- (void)requestDeviceInfo{
+    [self showLoadingCantTouchAndClear];
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Register2 complete:^(id result) {
+        NSDictionary * dic = result;
+        NSDictionary * user = dic[@"USER"];
+        [UserManager manager].info = [[UserInfo alloc]initWithDictionary:user];
+        [UserManager manager].userid = [UserManager manager].info.USERID;
+        [self getInfo];
+    } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
+        
+    }];
+}
+
+- (void)getInfo{
+    NSDictionary * params =  @{
+                               @"userid":[UserManager manager].userid
+                               };
+    [[NetWorkManager manager] GETRequest:params pageUrl:Page_UserInfo complete:^(id result) {
+        [self dismissLoadingView];
+        [[UserManager manager] userLoginWithInfoDic:result];
+        [self doBack];
+    } errorBlock:^(KTError *error) {
+        [self dismissLoadingView];
+    }];
+}
+
 - (void)switchViewValueChange:(UISwitch *)switchView{
     switchView.on = !switchView.on;
     [AudioDownLoader loader].autoDownLoad = switchView.on;

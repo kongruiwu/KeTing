@@ -16,38 +16,41 @@
     dispatch_once(&onceToken, ^{
         if (manager == nil) {
             manager = [[UserManager alloc]init];
-            manager.isLogin = NO;
             manager.userid = @"";
-            id userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
-            if (userID) {
-                NSString * idstr = (NSString *)userID;
-                if (idstr.length > 0) {
-                    manager.userid = (NSString *)userID;
-                    manager.isLogin = YES;
-                }
-            }
+            manager.isLogin = NO;
         }
     });
     return manager;
 }
 
+- (NSString *)userid{
+    id userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
+    if (userID) {
+        NSString * idstr = (NSString *)userID;
+        if (idstr.length > 0) {
+            return (NSString *)userID;
+        }
+    }
+    return @"";
+}
+
 - (void)userLoginWithInfoDic:(NSDictionary *)info{
-    self.info = [[UserInfo alloc]initWithDictionary:info];
+    self.info = [[UserInfo alloc] initWithDictionary:info];
     self.userid = self.info.USERID;
-    self.isLogin =YES;
+    self.isLogin = !self.info.isPort;
 }
 - (void)userLogout{
-    self.isLogin = NO;
     self.info = nil;
-    self.userid = @"";
-    self.balance = @0;
-    [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"USERID"];
+    self.userid = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"USERID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    self.balance = @0;
 }
 
 - (void)getUserInfo{
-    NSString * userid = [NSString stringWithFormat:@"%@",self.userid];
-    if (userid.length == 0) {
+    id userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERID"];
+    if (!userID) {
+        [self getDeviceUserInfo];
         return;
     }
     NSDictionary * params =  @{
@@ -59,7 +62,7 @@
             [self.delegate getUserInfoSucess];
         }
     } errorBlock:^(KTError *error) {
-        [self userLogout];
+
     }];
     
     if (![UserManager manager].isLogin) {
@@ -73,8 +76,22 @@
     } errorBlock:^(KTError *error) {
         
     }];
+}
+
+- (void)getDeviceUserInfo{
+    [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_Register2 complete:^(id result) {
+        NSDictionary * dic = result;
+        NSDictionary * user = dic[@"USER"];
+        [UserManager manager].info = [[UserInfo alloc]initWithDictionary:user];
+        [UserManager manager].userid = [NSString stringWithFormat:@"%@",[UserManager manager].info.USERID];
+        [self getUserInfo];
+    } errorBlock:^(KTError *error) {
+        
+        
+    }];
     
 }
+
 - (void)getDataModel{
     //数据字典
     [[NetWorkManager manager] GETRequest:@{} pageUrl:Page_DataModel complete:^(id result) {
